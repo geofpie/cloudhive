@@ -1,0 +1,177 @@
+body, label, input, button {
+    font-family: Lexend;
+    font-size: 12px; 
+    color: #555555;
+}
+
+h1 {
+    font-size: 38px;
+}
+
+h2 {
+    font-size: 28px;
+}
+
+h3 {
+
+}
+
+h4 {
+
+}
+
+h5 {
+
+}
+
+h6 {
+
+}
+
+p {
+    
+}
+
+a {
+    text-decoration: none;
+    color: #0b7fab;
+    transition: 0.2s;
+    -webkit-transition: 0.2s;
+}
+
+a:hover { 
+    color: #085777;
+    text-decoration: none;
+}
+
+.spacer {
+    border-style: none;
+    padding-top: 4px;
+}
+
+.spinner-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+.spinner-border {
+    width: 3rem;
+    height: 3rem;
+}
+
+.form-logo {
+    display: block;
+    margin: 0 auto 20px;
+}
+.login-register-links {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.login-register-links a {
+    margin: 0 10px;
+    cursor: pointer;
+}
+
+.login-form, .register-form {
+    display: none;
+    height: 0; /* Initially set height to 0 */
+}
+
+.fade-in {
+    opacity: 0;
+    transition: opacity 0.5s ease-in;
+}
+
+.fade-in.visible {
+    opacity: 1;
+    display: block;
+}
+
+.login-register-page { 
+    height: 100vh;
+    background-image: url('../assets/loginbg.jpg');
+    background-size: cover;
+}
+
+.login-register-form {
+    text-align: center;
+    border-radius: 22px;
+    padding: 46px 32px 46px 32px;
+    background: rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    overflow-y: hidden; /* Ensure content does not overflow */
+    transition: height 0.5s ease-in-out; /* Smooth transition for height changes */
+}
+
+.login-form.visible, .register-form.visible {
+    height: auto; /* Set height to auto when visible */
+    display: block;
+}
+
+.login-form-link, .register-form-link {
+    font-size: 18px;
+    font-weight: 500;
+    margin-right: 12px;
+    text-align: left;
+    color: #b7b7b7;
+}
+
+.login-register-links a.active {
+    color: #333333;
+    transition: 0.2s;
+    -webkit-transition: 0.2s;
+}
+
+.subtitle-text {
+    padding: 6px 0 12px 0;
+}
+
+.login-form-textfield {
+    width: 100%;
+    border-radius: 8px;
+    padding: 12px;
+    margin: 0px;
+    border-width: 1.5px;
+    border-style: solid;
+    border-color: #d7d7d7;
+    transition: 0.2s;
+    background-color: rgba(255,255,255,0.8);
+}
+
+.login-form-textfield:hover {
+    border-color: #0b7fab;
+}
+
+.login-form-textfield:active {
+    border-color: #085777;
+}
+
+.login-form-button { 
+    background-color: #0b7fab;
+    color: white; 
+    box-shadow: none;
+    border-radius: 8px;
+    padding: 16px 10px 16px 10px;
+    width: 100%;
+    border: none;
+    transition: 0.5s;
+    box-shadow: black;
+}
+
+.login-form-button:hover {
+    background-color: #085777;
+}
+
+.login-already-class { 
+    padding-top: 24px !important;
+}
