@@ -71,9 +71,11 @@ a:hover {
     margin: 0 auto 20px;
 }
 .login-register-links {
+    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
+    height: 28px;
     margin-bottom: 20px;
 }
 .login-register-links a {
@@ -119,11 +121,31 @@ a:hover {
 }
 
 .login-form-link, .register-form-link {
+    position: absolute;
     font-size: 18px;
     font-weight: 500;
     margin-right: 12px;
     text-align: left;
     color: #b7b7b7;
+    transition: transform 0.8s ease;
+}
+
+.login-form-link.active {
+    transform: translateX(0%);
+    opacity: 1;
+}
+
+.register-form-link.active {
+    transform: translateX(0%);
+    opacity: 1;
+}
+
+.login-form-link {
+    transform: translateX(-140%);
+}
+
+.register-form-link {
+    transform: translateX(120%);
 }
 
 .login-register-links a.active {
