@@ -60,13 +60,21 @@ document.addEventListener('DOMContentLoaded', function() {
             },
             body: JSON.stringify({ username, email, password }),
         })
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to register user');
+            }
+            return response.json();
+        })
         .then(data => {
-            // Handle successful registration
-            hideSpinner(registerButton, originalButtonText);
-            document.getElementById('register-message').innerText = 'User registered successfully';
-            document.getElementById('register-message').classList.remove('text-danger');
-            document.getElementById('register-message').classList.add('text-success');
+            // Check if registration was successful or user already exists
+            if (data.message === 'User registered successfully') {
+                document.getElementById('register-message').innerText = 'User registered successfully';
+                document.getElementById('register-message').classList.remove('text-danger');
+                document.getElementById('register-message').classList.add('text-success');
+            } else {
+                throw new Error(data.error || 'Unknown error');
+            }
         })
         .catch(error => {
             // Handle registration error
