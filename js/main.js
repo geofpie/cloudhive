@@ -4,44 +4,44 @@ document.addEventListener('DOMContentLoaded', function() {
     const loginForm = document.getElementById('login-form');
     const registerForm = document.getElementById('register-form');
     const spinnerWrapper = document.querySelector('.spinner-wrapper');
-    const container = document.querySelector('.container-fluid'); // Updated to select the main container
+    const container = document.querySelector('.container-fluid');
+    const registerMessage = document.getElementById('register-message');
 
-    // Event listener for login link
+    // Event listeners for switching between login and register forms
     loginLink.addEventListener('click', function(event) {
         event.preventDefault();
-        if (!loginLink.classList.contains('active')) {
-            registerLink.classList.remove('active');
-            loginLink.classList.add('active');
-            fadeForms(loginForm, registerForm);
-        }
+        switchForm(loginForm, registerForm);
+        switchActiveLink(loginLink, registerLink);
     });
 
-    // Event listener for register link
     registerLink.addEventListener('click', function(event) {
         event.preventDefault();
-        if (!registerLink.classList.contains('active')) {
-            loginLink.classList.remove('active');
-            registerLink.classList.add('active');
-            fadeForms(registerForm, loginForm);
-        }
+        switchForm(registerForm, loginForm);
+        switchActiveLink(registerLink, loginLink);
     });
 
-    // Function to handle form fading
-    function fadeForms(formToShow, formToHide) {
+    // Function to switch forms visibility
+    function switchForm(formToShow, formToHide) {
         formToShow.classList.add('fade-in', 'visible');
         formToHide.classList.remove('visible', 'fade-in');
-        container.classList.add('fade-in'); // Trigger fade-in effect on container
+        container.classList.add('fade-in');
+    }
+
+    // Function to switch active link
+    function switchActiveLink(activeLink, inactiveLink) {
+        activeLink.classList.add('active');
+        inactiveLink.classList.remove('active');
     }
 
     // Hide spinner when content is loaded
     window.addEventListener('load', function() {
         spinnerWrapper.style.display = 'none';
-        container.classList.add('visible'); // Ensure container is visible after loading
+        container.classList.add('visible');
     });
 
     // Event listener for register form submission
     registerForm.addEventListener('submit', function(event) {
-        event.preventDefault(); // Prevent default form submission
+        event.preventDefault();
 
         const username = document.getElementById('register-field-username').value;
         const email = document.getElementById('register-field-email').value;
@@ -67,34 +67,37 @@ document.addEventListener('DOMContentLoaded', function() {
             return response.json();
         })
         .then(data => {
-            // Check server response status
-            if (data.status === 200) {
-                document.getElementById('register-message').innerText = 'User registered successfully';
-                document.getElementById('register-message').classList.remove('text-danger');
-                document.getElementById('register-message').classList.add('text-success');
-            } else if (data.status === 409) {
-                throw new Error(data.error || 'Username or email already exists');
+            if (data.message) {
+                // Registration success
+                registerMessage.innerText = data.message;
+                registerMessage.classList.remove('text-danger');
+                registerMessage.classList.add('text-success');
             } else {
-                throw new Error('Unknown error');
+                // Registration error (username or email exists)
+                const errorMessage = data.error || 'Username or email already exists';
+                registerMessage.innerText = errorMessage;
+                registerMessage.classList.add('text-danger');
             }
         })
         .catch(error => {
-            // Handle registration error
+            // Handle other errors
+            registerMessage.innerText = error.message || 'Failed to register user';
+            registerMessage.classList.add('text-danger');
+        })
+        .finally(() => {
             hideSpinner(registerButton, originalButtonText);
-            document.getElementById('register-message').innerText = error.message || 'Failed to register user';
-            document.getElementById('register-message').classList.add('text-danger');
         });
     });
 
-    // Function to show spinner and replace button text
+    // Function to show spinner and disable button
     function showSpinner(button) {
         button.innerHTML = '<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>';
-        button.disabled = true; // Optionally disable the button while processing
+        button.disabled = true;
     }
 
     // Function to hide spinner and restore button text
     function hideSpinner(button, originalText) {
         button.innerHTML = originalText;
-        button.disabled = false; // Re-enable the button after processing
+        button.disabled = false;
     }
 });
