@@ -39,6 +39,43 @@ document.addEventListener('DOMContentLoaded', function() {
         container.classList.add('visible'); // Ensure container is visible after loading
     });
 
+    // Event listener for register form submission
+    registerForm.addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent default form submission
+
+        const username = document.getElementById('register-field-username').value;
+        const email = document.getElementById('register-field-email').value;
+        const password = document.getElementById('register-field-password').value;
+        const registerButton = document.getElementById('register-button');
+        const originalButtonText = registerButton.innerHTML;
+
+        // Show spinner and disable button
+        showSpinner(registerButton);
+
+        // Perform AJAX request
+        fetch('/api/register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ username, email, password }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Handle successful registration
+            hideSpinner(registerButton, originalButtonText);
+            document.getElementById('register-message').innerText = 'User registered successfully';
+            document.getElementById('register-message').classList.remove('text-danger');
+            document.getElementById('register-message').classList.add('text-success');
+        })
+        .catch(error => {
+            // Handle registration error
+            hideSpinner(registerButton, originalButtonText);
+            document.getElementById('register-message').innerText = error.message || 'Failed to register user';
+            document.getElementById('register-message').classList.add('text-danger');
+        });
+    });
+
     // Function to show spinner and replace button text
     function showSpinner(button) {
         button.innerHTML = '<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>';
