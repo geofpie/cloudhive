@@ -67,13 +67,15 @@ document.addEventListener('DOMContentLoaded', function() {
             return response.json();
         })
         .then(data => {
-            // Check if registration was successful or user already exists
-            if (data.message === 'User registered successfully') {
+            // Check server response status
+            if (data.status === 200) {
                 document.getElementById('register-message').innerText = 'User registered successfully';
                 document.getElementById('register-message').classList.remove('text-danger');
                 document.getElementById('register-message').classList.add('text-success');
+            } else if (data.status === 409) {
+                throw new Error(data.error || 'Username or email already exists');
             } else {
-                throw new Error(data.error || 'Unknown error');
+                throw new Error('Unknown error');
             }
         })
         .catch(error => {
