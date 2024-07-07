@@ -56,42 +56,39 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(response => response.json())
         .then(data => {
             hideSpinner(registerButton, originalButtonText);
-        
-            if (data.message) {
-                // Registration success
+    
+            if (data.token) {
+                // Registration success with token
                 registerMessage.innerText = data.message;
                 registerMessage.classList.remove('text-danger');
                 registerMessage.classList.add('text-success');
-        
-                // Check if token is received
-                const token = data.token; // Ensure 'token' matches what your backend sends
-        
-                if (token) {
-                    // Fetch user information using the token
-                    fetch('/api/userinfo', {
-                        method: 'GET',
-                        headers: {
-                            'Authorization': `Bearer ${token}`, // Send the JWT token in the Authorization header
-                            'Content-Type': 'application/json'
-                        },
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        // Update onboarding page with user information
-                        document.getElementById('username').innerText = data.username;
-                        document.getElementById('email').innerText = data.email;
-                    })
-                    .catch(error => {
-                        console.error('Error fetching user information:', error);
-                        // Handle error fetching user information
-                    });
-                } else {
-                    console.error('Token not received in response.'); // Log an error if token is not received
-                }
-        
-                // Redirect to onboarding page
+
+                // Check if token received
+                const token = data.token;
+                console.log('Received token:', token);
+    
+                // Redirect to onboarding page with token
                 console.log('Redirecting to onboarding');
                 window.location.href = '/onboarding.html';
+
+                // Immediately after redirecting to onboarding page
+                fetch('/api/userinfo', {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`, // Send the JWT token in the Authorization header
+                        'Content-Type': 'application/json'
+                    },
+                })
+                .then(response => response.json())
+                .then(data => {
+                    // Update onboarding page with user information
+                    document.getElementById('username').innerText = data.username;
+                    document.getElementById('email').innerText = data.email;
+                })
+                .catch(error => {
+                    console.error('Error fetching user information:', error);
+                    // Handle error
+                });
             } else {
                 // Registration error (username or email exists)
                 const errorMessage = data.error || 'Unknown Error';
@@ -101,10 +98,13 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         })
         .catch(error => {
-            console.error('Error during registration:', error);
-            // Handle registration error
+            // Handle other errors
+            registerMessage.innerText = error.message || 'Failed to register user';
+            registerMessage.classList.remove('text-success');
+            registerMessage.classList.add('text-danger');
+            hideSpinner(registerButton, originalButtonText);
         });
-        
+    });
 
     function showSpinner(button) {
         button.innerHTML = '<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>';
