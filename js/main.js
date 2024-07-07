@@ -98,31 +98,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Set token as a cookie
                 setCookie('token', data.token, 1); // Adjust expiry as needed (1 day in this case)
     
-                // Fetch user information
-                fetch('/api/fetchuserinfo', {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${data.token}`
-                    }
-                })
-                .then(response => {
-                    if (response.status === 302) {
-                        // Handle redirect manually
-                        window.location.href = response.headers.get('Location'); // Redirect to the specified location
-                        return; // Exit fetch chain since we've redirected
-                    }
-                    if (!response.ok) {
-                        throw new Error(`Network response was not ok: ${response.status} ${response.statusText}`);
-                    }
-                    return response.json();
-                })
-                .catch(error => {
-                    // Handle error fetching user info
-                    console.error('Error fetching user info:', error);
-                    displayPopup('Failed to fetch user info', 'text-danger');
-                });
-
+                // Redirect based on server response (handled by backend)
+                if (response.status === 302) {
+                    window.location.href = response.headers.get('Location');
+                    return;
+                }
+                
+                // Handle other cases (success scenario)
+                window.location.href = '/dashboard';
             } else {
                 // Login error (invalid credentials)
                 const errorMessage = data.error || 'Invalid credentials';
