@@ -102,14 +102,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 fetch('/api/fetchuserinfo', {
                     method: 'GET',
                     headers: {
-                        'Content-Type' : 'application/json',
+                        'Content-Type': 'application/json',
                         'Authorization': `Bearer ${data.token}`
                     }
                 })
                 .then(response => {
                     if (!response.ok) {
-                        throw new Error('Network response was not ok');
+                        throw new Error(`Network response was not ok: ${response.status} ${response.statusText}`);
                     }
+                    // Log the SQL query passed from the backend (if available)
                     console.log('SQL Query:', response.headers.get('X-SQL-Query'));
                     return response.json();
                 })
@@ -129,6 +130,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     console.error('Error fetching user info:', error);
                     displayPopup('Failed to fetch user info', 'text-danger');
                 });
+
             } else {
                 // Login error (invalid credentials)
                 const errorMessage = data.error || 'Invalid credentials';
