@@ -233,3 +233,52 @@ a:hover {
 .login-already-class { 
     padding-top: 24px !important;
 }
+
+.onboarding-page {
+    height: 100vh;
+    background-color: #f9f9f9;
+}
+
+.onboarding-form {
+    background-color: #fff;
+    padding: 48px;
+    border-radius: 32px;
+}
+
+.logged-in-user-subtitle {
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 9px;
+    margin-bottom: 0;
+}
+
+.logged-in-user {
+    font-weight: 400;
+    font-size: 16px;
+    margin-bottom: 0px;
+}
+
+.logged-in-user-email {
+    font-weight: 400;
+    font-size: 11px;
+}
+
+.onboard-form .form-group.row {
+    margin-bottom: 15px;
+}
+
+.onboard-form .form-group.row .col {
+    padding-right: 5px;
+    padding-left: 5px;
+}
+
+.onboard-name-field {
+    width: 100%; /* Initially takes full width */
+    min-width: 50px; /* Minimum width to prevent collapsing */
+}
+
+.img-preview {
+    width: 200px;
+    height: 200px;
+    border-radius: 100%;
+}
