@@ -1,10 +1,8 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const token = getTokenFromCookie(); // Function to get the token from cookies, adjust as needed
-    
-    fetchUserInfo(token);
-});
+    const token = localStorage.getItem('token');
+    console.log('Token on onboarding page:', token);
 
-function fetchUserInfo(token) {
+    // Fetch user information using the token
     fetch('/api/userinfo', {
         method: 'GET',
         headers: {
@@ -14,6 +12,7 @@ function fetchUserInfo(token) {
     })
     .then(response => response.json())
     .then(data => {
+        // Update user information on the page
         document.getElementById('username').innerText = data.username;
         document.getElementById('email').innerText = data.email;
     })
@@ -21,7 +20,10 @@ function fetchUserInfo(token) {
         console.error('Error fetching user information:', error);
         // Handle error
     });
-}
+
+    // Add any additional functionality related to onboarding page here
+});
+
 
 function getTokenFromCookie() {
     // Implement your logic to retrieve the token from cookies
