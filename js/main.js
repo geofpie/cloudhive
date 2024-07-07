@@ -37,15 +37,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
     registerForm.addEventListener('submit', function(event) {
         event.preventDefault();
-
+    
         const username = document.getElementById('register-field-username').value;
         const email = document.getElementById('register-field-email').value;
         const password = document.getElementById('register-field-password').value;
         const registerButton = document.getElementById('register-button');
         const originalButtonText = registerButton.innerHTML;
-
+    
         showSpinner(registerButton);
-
+    
         fetch('/api/register', {
             method: 'POST',
             headers: {
@@ -56,15 +56,14 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(response => response.json())
         .then(data => {
             hideSpinner(registerButton, originalButtonText);
-
-            if (data.message) {
-                // Registration success
+    
+            if (data.token) {
+                // Registration success with token
                 registerMessage.innerText = data.message;
                 registerMessage.classList.remove('text-danger');
                 registerMessage.classList.add('text-success');
-
-                // Redirect to onboarding page
-                console.log('Redirecting to onboarding page...');
+    
+                // Redirect to onboarding page with token
                 window.location.href = '/onboarding';
             } else {
                 // Registration error (username or email exists)
