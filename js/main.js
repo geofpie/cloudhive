@@ -19,17 +19,6 @@ document.addEventListener('DOMContentLoaded', function() {
         switchActiveLink(registerLink, loginLink);
     });
 
-    function switchForm(formToShow, formToHide) {
-        formToShow.classList.add('fade-in', 'visible');
-        formToHide.classList.remove('visible', 'fade-in');
-        container.classList.add('fade-in');
-    }
-
-    function switchActiveLink(activeLink, inactiveLink) {
-        activeLink.classList.add('active');
-        inactiveLink.classList.remove('active');
-    }
-
     window.addEventListener('load', function() {
         spinnerWrapper.style.display = 'none';
         container.classList.add('visible');
@@ -62,31 +51,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 registerMessage.innerText = data.message;
                 registerMessage.classList.remove('text-danger');
                 registerMessage.classList.add('text-success');
-    
-                // Redirect to onboarding page with token
-                const token = data.token;
-                console.log('Redirecting to onboarding with token:', token);
-                window.location.href = '/onboarding.html'; // Adjust path if necessary
 
-                // Immediately after redirecting to onboarding page
-                fetch('/api/userinfo', {
-                    method: 'GET',
-                    headers: {
-                        'Authorization': `Bearer ${token}`, // Send the JWT token in the Authorization header
-                        'Content-Type': 'application/json'
-                    },
-                })
-                .then(response => response.json())
-                .then(data => {
-                    // Update onboarding page with user information
-                    document.getElementById('username').innerText = data.username;
-                    document.getElementById('email').innerText = data.email;
-                })
-                .catch(error => {
-                    console.error('Error fetching user information:', error);
-                    // Handle error
-                });
-    
+                // Redirect to onboarding page with token
+                console.log('Redirecting to onboarding');
+                window.location.href = '/onboarding.html';
+
             } else {
                 // Registration error (username or email exists)
                 const errorMessage = data.error || 'Unknown Error';
@@ -103,6 +72,17 @@ document.addEventListener('DOMContentLoaded', function() {
             hideSpinner(registerButton, originalButtonText);
         });
     });
+
+    function switchForm(formToShow, formToHide) {
+        formToShow.classList.add('fade-in', 'visible');
+        formToHide.classList.remove('visible', 'fade-in');
+        container.classList.add('fade-in');
+    }
+
+    function switchActiveLink(activeLink, inactiveLink) {
+        activeLink.classList.add('active');
+        inactiveLink.classList.remove('active');
+    }
 
     function showSpinner(button) {
         button.innerHTML = '<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>';
