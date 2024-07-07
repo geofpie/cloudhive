@@ -62,14 +62,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 registerMessage.innerText = data.message;
                 registerMessage.classList.remove('text-danger');
                 registerMessage.classList.add('text-success');
-
-                // Check if token received
-                const token = data.token;
-                console.log('Received token:', token);
     
                 // Redirect to onboarding page with token
-                console.log('Redirecting to onboarding');
-                window.location.href = '/onboarding.html';
+                const token = data.token;
+                console.log('Redirecting to onboarding with token:', token);
+                window.location.href = '/onboarding.html'; // Adjust path if necessary
 
                 // Immediately after redirecting to onboarding page
                 fetch('/api/userinfo', {
@@ -89,6 +86,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     console.error('Error fetching user information:', error);
                     // Handle error
                 });
+    
             } else {
                 // Registration error (username or email exists)
                 const errorMessage = data.error || 'Unknown Error';
