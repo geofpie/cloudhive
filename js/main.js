@@ -100,7 +100,9 @@ document.addEventListener('DOMContentLoaded', function() {
     
                 // Fetch user information
                 fetch('/api/fetchuserinfo', {
+                    method: 'GET',
                     headers: {
+                        'Content-Type' : 'application/json',
                         'Authorization': `Bearer ${data.token}`
                     }
                 })
