@@ -89,9 +89,9 @@ a:hover {
 }
 
 .ajax-popup {
-    background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent black background */
-    color: #fff; /* Text color */
-    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent black background */
+    color: #000; /* Text color */
+    padding: 200px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Box shadow for depth */
     text-align: center;
