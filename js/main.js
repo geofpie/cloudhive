@@ -70,14 +70,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
     loginForm.addEventListener('submit', function(event) {
         event.preventDefault();
-
+    
         const identifier = document.getElementById('login-field-username').value; // Can be username or email
         const password = document.getElementById('login-field-password').value;
         const loginButton = document.getElementById('login-button');
         const originalButtonText = loginButton.innerHTML;
-
+    
         showSpinner(loginButton);
-
+    
         fetch('/api/login', {
             method: 'POST',
             headers: {
@@ -93,11 +93,16 @@ document.addEventListener('DOMContentLoaded', function() {
         })
         .then(data => {
             hideSpinner(loginButton, originalButtonText);
-
+    
             if (data.token) {
                 // Login successful with token
                 displayPopup('Login Successful', 'text-success');
+                
+                // Set token as a cookie
+                setCookie('token', data.token, 1); // Adjust expiry as needed (1 day in this case)
+    
                 // Optionally, you can redirect or handle success here
+                window.location.href = '/dashboard'; // Example redirect to dashboard
             } else {
                 // Login error (invalid credentials)
                 const errorMessage = data.error || 'Invalid credentials';
@@ -111,6 +116,13 @@ document.addEventListener('DOMContentLoaded', function() {
             hideSpinner(loginButton, originalButtonText);
         });
     });
+    
+    function setCookie(name, value, days) {
+        const expires = new Date();
+        expires.setTime(expires.getTime() + (days * 24 * 60 * 60 * 1000));
+        document.cookie = `${name}=${value};expires=${expires.toUTCString()};path=/`;
+    }
+    
 
     function switchForm(formToShow, formToHide) {
         formToShow.classList.add('fade-in', 'visible');
