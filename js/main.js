@@ -107,11 +107,14 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
                 })
                 .then(response => {
+                    if (response.status === 302) {
+                        // Handle redirect manually
+                        window.location.href = response.headers.get('Location'); // Redirect to the specified location
+                        return; // Exit fetch chain since we've redirected
+                    }
                     if (!response.ok) {
                         throw new Error(`Network response was not ok: ${response.status} ${response.statusText}`);
                     }
-                    // Log the SQL query passed from the backend (if available)
-                    console.log('SQL Query:', response.headers.get('X-SQL-Query'));
                     return response.json();
                 })
                 .then(userInfo => {
