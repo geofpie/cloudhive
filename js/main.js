@@ -62,9 +62,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 registerMessage.innerText = data.message;
                 registerMessage.classList.remove('text-danger');
                 registerMessage.classList.add('text-success');
+
+                // Check if token received
+                const token = data.token;
+                console.log('Received token:', token);
     
                 // Redirect to onboarding page with token
+                console.log('Redirecting to onboarding');
                 window.location.href = '/onboarding';
+
             } else {
                 // Registration error (username or email exists)
                 const errorMessage = data.error || 'Unknown Error';
