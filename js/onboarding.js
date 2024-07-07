@@ -71,28 +71,4 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
     });
-
-    // Fetch user information (example, replace with your implementation)
-    // Replace with your actual API endpoint and logic
-    fetch('/api/userinfo', {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-    })
-    .then(data => {
-        // Example: Update user information on the page
-        document.getElementById('username').innerText = data.username;
-        document.getElementById('email').innerText = data.email;
-    })
-    .catch(error => {
-        console.error('Error fetching user information:', error);
-        // Handle error
-    });
 });
