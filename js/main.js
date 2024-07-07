@@ -113,6 +113,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     return response.json();
                 })
                 .then(userInfo => {
+                    console.log('User Info:', userInfo); // Log the fetched user information
                     // Check if required fields are filled
                     if (!userInfo.first_name || !userInfo.last_name || !userInfo.country) {
                         // Redirect to onboarding process
