@@ -70,15 +70,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
     loginForm.addEventListener('submit', function(event) {
         event.preventDefault();
-    
+
         const identifier = document.getElementById('login-field-username').value; // Can be username or email
         const password = document.getElementById('login-field-password').value;
         const loginButton = document.getElementById('login-button');
         const originalButtonText = loginButton.innerHTML;
-    
+
         showSpinner(loginButton);
-    
-        fetch('/api/login', {
+
+        fetch('/api/login_redirect', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -87,47 +87,25 @@ document.addEventListener('DOMContentLoaded', function() {
         })
         .then(response => {
             if (!response.ok) {
-                throw new Error('Network response was not ok');
+                if (response.status === 302) {
+                    return response.json().then(data => {
+                        window.location.href = data.redirect;
+                    });
+                } else {
+                    throw new Error('Network response was not ok');
+                }
             }
             return response.json();
         })
         .then(data => {
             hideSpinner(loginButton, originalButtonText);
-    
+
             if (data.token) {
                 // Set token as a cookie
                 setCookie('token', data.token, 1); // Adjust expiry as needed (1 day in this case)
-    
-                // Fetch user information
-                fetch('/api/fetchuserinfo', {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type' : 'application/json',
-                        'Authorization': `Bearer ${data.token}`
-                    }
-                })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.json();
-                })
-                .then(userInfo => {
-                    console.log('User Info:', userInfo); // Log the fetched user information
-                    // Check if required fields are filled
-                    if (!userInfo.first_name || !userInfo.last_name || !userInfo.country) {
-                        // Redirect to onboarding process
-                        window.location.href = '/onboarding';
-                    } else {
-                        // Redirect to dashboard
-                        window.location.href = '/dashboard';
-                    }
-                })
-                .catch(error => {
-                    // Handle error fetching user info
-                    console.error('Error fetching user info:', error);
-                    displayPopup('Failed to fetch user info', 'text-danger');
-                });
+
+                // Redirect to homepage
+                window.location.href = '/homepage';
             } else {
                 // Login error (invalid credentials)
                 const errorMessage = data.error || 'Invalid credentials';
