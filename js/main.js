@@ -115,6 +115,7 @@ document.addEventListener('DOMContentLoaded', function() {
         .catch(error => {
             // Handle other login errors
             const errorMessage = error.message || 'Failed to login';
+            console.error('Login Error:', errorMessage); // Log the error to console
             displayPopup(errorMessage, 'text-danger');
             hideSpinner(loginButton, originalButtonText);
         });
