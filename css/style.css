@@ -88,10 +88,6 @@ a:hover {
     height: 0; /* Initially set height to 0 */
 }
 
-.error-popup {
-    display: none;
-}
-
 .fade-in {
     opacity: 0;
     transition: opacity 0.5s ease-in;

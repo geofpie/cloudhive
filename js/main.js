@@ -6,8 +6,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const spinnerWrapper = document.querySelector('.spinner-wrapper');
     const container = document.querySelector('.container-fluid');
     const registerMessage = document.getElementById('register-message');
-    const errorPopup = document.getElementById('error-popup');
-    const errorMessage = document.getElementById('error-message');
 
     loginLink.addEventListener('click', function(event) {
         event.preventDefault();
@@ -44,12 +42,7 @@ document.addEventListener('DOMContentLoaded', function() {
             },
             body: JSON.stringify({ username, email, password }),
         })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
+        .then(response => response.json())
         .then(data => {
             hideSpinner(registerButton, originalButtonText);
     
@@ -58,16 +51,20 @@ document.addEventListener('DOMContentLoaded', function() {
                 registerMessage.innerText = data.message;
                 registerMessage.classList.remove('text-danger');
                 registerMessage.classList.add('text-success');
+
             } else {
                 // Registration error (username or email exists)
-                const errorMessageText = data.error || 'Unknown Error';
-                displayError(errorMessageText);
+                const errorMessage = data.error || 'Unknown Error';
+                registerMessage.innerText = errorMessage;
+                registerMessage.classList.remove('text-success');
+                registerMessage.classList.add('text-danger');
             }
         })
         .catch(error => {
             // Handle other errors
-            const errorMessageText = error.message || 'Failed to register user';
-            displayError(errorMessageText);
+            registerMessage.innerText = error.message || 'Failed to register user';
+            registerMessage.classList.remove('text-success');
+            registerMessage.classList.add('text-danger');
             hideSpinner(registerButton, originalButtonText);
         });
     });
@@ -92,13 +89,4 @@ document.addEventListener('DOMContentLoaded', function() {
         button.innerHTML = originalText;
         button.disabled = false;
     }
-
-    function displayError(message) {
-        document.getElementById('error-message').innerText = message;
-        document.getElementById('error-popup').style.display = 'block';
-    }
-
-    document.getElementById('close-error-popup').addEventListener('click', function() {
-        errorPopup.style.display = 'none';
-    });
 });
