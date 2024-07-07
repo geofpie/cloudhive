@@ -90,29 +90,35 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function displayPopup(message, className) {
-        // Create popup container
-        const popupContainer = document.createElement('div');
-        popupContainer.className = 'ajax-popup';
-    
-        // Create popup content
+        // Create popup element
+        const popup = document.createElement('div');
+        popup.classList.add('ajax-popup');
+        
+        // Overlay background
+        const overlay = document.createElement('div');
+        overlay.classList.add('overlay');
+        popup.appendChild(overlay);
+        
+        // Popup content
         const popupContent = document.createElement('div');
-        popupContent.className = 'popup-content';
+        popupContent.classList.add('popup-content', className);
         popupContent.textContent = message;
     
-        // Create close button
+        // Close button
         const closeButton = document.createElement('button');
-        closeButton.className = 'close-button';
-        closeButton.innerHTML = '&times;'; // Close icon (X)
+        closeButton.classList.add('close-button');
+        closeButton.innerHTML = '&times;';
         closeButton.addEventListener('click', function() {
-            document.body.removeChild(popupContainer); // Remove popup on close
+            popup.remove();
         });
     
-        // Append content and button to popup container
+        // Append content and close button to popup
         popupContent.appendChild(closeButton);
-        popupContainer.appendChild(popupContent);
+        popup.appendChild(popupContent);
     
-        // Append popup container to body
-        document.body.appendChild(popupContainer);
-    }    
+        // Append popup to body
+        document.body.appendChild(popup);
+    }
+
     
 });
