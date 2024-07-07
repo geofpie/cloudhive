@@ -98,14 +98,42 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Set token as a cookie
                 setCookie('token', data.token, 1); // Adjust expiry as needed (1 day in this case)
     
-                // Redirect based on server response (handled by backend)
-                if (response.status === 302) {
-                    window.location.href = response.headers.get('Location');
-                    return;
-                }
-                
-                // Handle other cases (success scenario)
-                window.location.href = '/dashboard';
+                // Fetch user information
+                fetch('/api/fetchuserinfo', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${data.token}`
+                    }
+                })
+                .then(response => {
+                    if (response.status === 302) {
+                        // Handle redirect manually
+                        window.location.href = response.headers.get('Location'); // Redirect to the specified location
+                        return; // Exit fetch chain since we've redirected
+                    }
+                    if (!response.ok) {
+                        throw new Error(`Network response was not ok: ${response.status} ${response.statusText}`);
+                    }
+                    return response.json();
+                })
+                .then(userInfo => {
+                    console.log('User Info:', userInfo); // Log the fetched user information
+                    // Check if required fields are filled
+                    if (!userInfo.first_name || !userInfo.last_name || !userInfo.country) {
+                        // Redirect to onboarding process
+                        window.location.href = '/onboarding';
+                    } else {
+                        // Redirect to dashboard
+                        window.location.href = '/dashboard';
+                    }
+                })
+                .catch(error => {
+                    // Handle error fetching user info
+                    console.error('Error fetching user info:', error);
+                    displayPopup('Failed to fetch user info', 'text-danger');
+                });
+
             } else {
                 // Login error (invalid credentials)
                 const errorMessage = data.error || 'Invalid credentials';
@@ -115,10 +143,6 @@ document.addEventListener('DOMContentLoaded', function() {
         .catch(error => {
             // Handle other login errors
             const errorMessage = error.message || 'Failed to login';
-            console.error('Login Error:', errorMessage); // Log the error message to console
-            if (error.response) {
-                console.error('Response Status:', error.response.status); // Log the response status code
-            }
             displayPopup(errorMessage, 'text-danger');
             hideSpinner(loginButton, originalButtonText);
         });
