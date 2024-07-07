@@ -69,7 +69,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
                 // Redirect to onboarding page with token
                 console.log('Redirecting to onboarding');
-                window.location.href = '/onboarding';
+                window.location.href = '/onboarding.html';
 
                 // Immediately after redirecting to onboarding page
                 fetch('/api/userinfo', {
