@@ -37,13 +37,16 @@
             <div class="onboarding-form col-md-6">
                 <h1>We're so glad you're here.</h1>
                 <p>You are almost there! Complete your profile, and you're all set.</p>
-                <form id="onboard-form" class="onboard-form" method="post" action="api/login_redirect">
+                <form id="onboard-form" class="onboard-form" method="post" action="api/onboard_profile_update">
                     <div class="form-group">
                         <label for="profile-pic">Profile Picture</label>
                         <div id="profile-pic-preview" class="img-preview" style="background-image: url('assets/loginbg.jpg');">
                             <!-- Default image or placeholder content -->
                         </div>
-                        <input id="profile-pic" class="form-control" type="file" name="profile-pic" accept="image/*" required>
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="profile-pic" name="profile-pic" accept="image/*" required>
+                            <button class="custom-file-label" for="profile-pic"></label>
+                        </div>
                     </div>                    
                     <div class="form-group row">
                         <div class="col">
@@ -57,12 +60,13 @@
                         <label for="country">Country</label>
                         <select id="country" class="form-control" name="country" required>
                             <option value="" disabled selected>Select your country</option>
-                            <!-- Add your country options here -->
-                            <option value="US">United States</option>
-                            <option value="CA">Canada</option>
-                            <option value="GB">United Kingdom</option>
-                            <!-- Add more options as needed -->
-                        </select>
+                            <option value="🇸🇬">Singapore</option>
+                            <option value="🇲🇾">Malaysia</option>
+                            <option value="🇹🇭">Thailand</option>
+                            <option value="🇵🇭">Philippines</option>
+                            <option value="🇮🇩">Indonesia</option>
+                            <option value="🇻🇳">Vietnam</option>
+                        </select>                        
                     </div>
                     <div class="form-group">
                         <button class="btn btn-primary btn-block" id="ob-submit-button" type="submit">Continue <span class="spinner-grow" role="status" aria-hidden="true" style="display: none;"></span></button>
@@ -77,26 +81,27 @@
         </div>
     </div>
     <!-- Modal for Image Crop -->
-<div class="modal fade" id="cropModal" tabindex="-1" role="dialog" aria-labelledby="cropModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="cropModalLabel">Crop Your Profile Picture</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div>
-                    <img id="cropper-image" src="" alt="Image to crop">
+    <div class="modal fade" id="cropModal" tabindex="-1" role="dialog" aria-labelledby="cropModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="cropModalLabel">Crop Your Profile Picture</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                <button id="crop-submit-btn" type="button" class="btn btn-primary">Crop Image</button>
+                <div class="modal-body">
+                    <!-- Cropper.js container -->
+                    <div id="cropper-container">
+                        <img id="cropper-image" src="" alt="Image to crop">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button id="crop-submit-btn" type="button" class="btn btn-primary">Crop Image</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
 </body>
 </html>

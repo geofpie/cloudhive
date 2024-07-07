@@ -29,13 +29,13 @@ document.addEventListener('DOMContentLoaded', function() {
             image.src = e.target.result;
             // Initialize Cropper.js
             cropper = new Cropper(image, {
-                aspectRatio: 1, // Aspect ratio for square cropping
-                viewMode: 1, // Show cropped area in view
-                autoCropArea: 1, // Automatically set crop area
-                movable: false,
-                zoomable: false,
-                rotatable: false,
-                scalable: false,
+                aspectRatio: 1, // Set to 1 for square aspect ratio
+                viewMode: 1, // Set to 1 for preview mode, allowing user manipulation
+                autoCropArea: 0.8, // Set to 0.8 for initial crop area size (80% of the image)
+                movable: false, // Disable user movement of the crop box
+                zoomable: true, // Allow user to zoom the image
+                rotatable: false, // Disable image rotation
+                scalable: false, // Disable image scaling
                 ready: function() {
                     // This function is called when Cropper.js is ready
                 }
@@ -51,8 +51,8 @@ document.addEventListener('DOMContentLoaded', function() {
         if (cropper) {
             // Get cropped image data
             cropper.getCroppedCanvas({
-                width: 200, // Set desired width of cropped image
-                height: 200, // Set desired height of cropped image
+                width: 500, // Set desired width of cropped image
+                height: 500, // Set desired height of cropped image
             }).toBlob(function(blob) {
                 // Create a new FileReader
                 var reader = new FileReader();
