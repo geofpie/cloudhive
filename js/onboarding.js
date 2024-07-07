@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Function to fetch logged-in user information
     function fetchLoggedInUserInfo() {
+        console.log('Fetching logged-in user info...');
         fetch('/api/get_user_info', {
             method: 'GET',
             headers: {
