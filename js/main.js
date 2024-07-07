@@ -52,6 +52,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 registerMessage.classList.remove('text-danger');
                 registerMessage.classList.add('text-success');
 
+                // Setting cookie with token
+                document.cookie = `token=${token}; path=/;`;
+
                 // Redirect to onboarding page with token
                 console.log('Redirecting to onboarding');
                 window.location.href = '/onboarding.html';
