@@ -90,13 +90,34 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function displayPopup(message, className) {
+        // Create popup element
         const popup = document.createElement('div');
         popup.classList.add('ajax-popup', className);
         popup.textContent = message;
+    
+        // Position popup in the center of the screen
+        popup.style.position = 'fixed';
+        popup.style.top = '50%';
+        popup.style.left = '50%';
+        popup.style.transform = 'translate(-50%, -50%)';
+        popup.style.zIndex = '9999'; // Ensure it's on top of everything
+    
+        // Create close button
+        const closeButton = document.createElement('button');
+        closeButton.classList.add('close-button');
+        closeButton.innerHTML = '&times;'; // Close button symbol
+        closeButton.addEventListener('click', function() {
+            popup.remove(); // Remove popup on close button click
+        });
+        popup.appendChild(closeButton);
+    
+        // Append popup to body
         document.body.appendChild(popup);
-
+    
+        // Automatically remove popup after a timeout (adjust as needed)
         setTimeout(() => {
             popup.remove();
-        }, 3000); // Adjust the timeout as needed for how long you want the popup to display
+        }, 10000); // Adjust the timeout as needed for how long you want the popup to display
     }
+    
 });
