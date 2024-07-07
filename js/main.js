@@ -68,6 +68,50 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
+    loginForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const identifier = document.getElementById('login-field-username').value; // Can be username or email
+        const password = document.getElementById('login-field-password').value;
+        const loginButton = document.getElementById('login-button');
+        const originalButtonText = loginButton.innerHTML;
+
+        showSpinner(loginButton);
+
+        fetch('/api/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ identifier, password }),
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            hideSpinner(loginButton, originalButtonText);
+
+            if (data.token) {
+                // Login successful with token
+                displayPopup('Login Successful', 'text-success');
+                // Optionally, you can redirect or handle success here
+            } else {
+                // Login error (invalid credentials)
+                const errorMessage = data.error || 'Invalid credentials';
+                displayPopup(errorMessage, 'text-danger');
+            }
+        })
+        .catch(error => {
+            // Handle other errors
+            const errorMessage = error.message || 'Failed to login';
+            displayPopup(errorMessage, 'text-danger');
+            hideSpinner(loginButton, originalButtonText);
+        });
+    });
+
     function switchForm(formToShow, formToHide) {
         formToShow.classList.add('fade-in', 'visible');
         formToHide.classList.remove('visible', 'fade-in');
@@ -119,6 +163,4 @@ document.addEventListener('DOMContentLoaded', function() {
         // Append popup to body
         document.body.appendChild(popup);
     }
-
-    
 });
