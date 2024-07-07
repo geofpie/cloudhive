@@ -10,9 +10,36 @@ document.addEventListener('DOMContentLoaded', function() {
         document.querySelector('.container-fluid').classList.add('visible');
     }
 
+    // Function to fetch logged-in user information
+    function fetchLoggedInUserInfo() {
+        fetch('/api/get_user_info', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to fetch user information');
+            }
+            return response.json();
+        })
+        .then(data => {
+            // Update logged-in user fields
+            const loggedInUserName = document.getElementById('logged-in-user');
+            const loggedInUserEmail = document.getElementById('logged-in-user-email');
+            loggedInUserName.textContent = data.userInfo.username;
+            loggedInUserEmail.textContent = data.userInfo.email;
+        })
+        .catch(error => {
+            console.error('Error fetching user information:', error);
+        });
+    }
+
     // Event listener for window load event
     window.addEventListener('load', function() {
         showContent();
+        fetchLoggedInUserInfo(); // Fetch logged-in user info on page load
     });
 
     // Event listener for opening crop modal when profile pic input changes
