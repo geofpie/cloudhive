@@ -17,6 +17,7 @@ document.addEventListener('DOMContentLoaded', function() {
             headers: {
                 'Content-Type': 'application/json',
             },
+            credentials: 'same-origin' // Send cookies
         })
         .then(response => {
             if (!response.ok) {
@@ -30,6 +31,10 @@ document.addEventListener('DOMContentLoaded', function() {
             const loggedInUserEmail = document.getElementById('logged-in-user-email');
             loggedInUserName.textContent = data.userInfo.username;
             loggedInUserEmail.textContent = data.userInfo.email;
+
+            // Log user information to console
+            console.log('Logged-in User:', data.userInfo.username);
+            console.log('Logged-in User Email:', data.userInfo.email);
         })
         .catch(error => {
             console.error('Error fetching user information:', error);
