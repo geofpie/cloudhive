@@ -99,7 +99,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 setCookie('token', data.token, 1); // Adjust expiry as needed (1 day in this case)
     
                 // Fetch user information
-                fetch('/api/userinfo', {
+                fetch('/api/fetchuserinfo', {
                     headers: {
                         'Authorization': `Bearer ${data.token}`
                     }
