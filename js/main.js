@@ -95,14 +95,36 @@ document.addEventListener('DOMContentLoaded', function() {
             hideSpinner(loginButton, originalButtonText);
     
             if (data.token) {
-                // Login successful with token
-                displayPopup('Login Successful', 'text-success');
-                
                 // Set token as a cookie
                 setCookie('token', data.token, 1); // Adjust expiry as needed (1 day in this case)
     
-                // Optionally, you can redirect or handle success here
-                window.location.href = '/dashboard'; // Example redirect to dashboard
+                // Fetch user information
+                fetch('/api/userinfo', {
+                    headers: {
+                        'Authorization': `Bearer ${data.token}`
+                    }
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(userInfo => {
+                    // Check if required fields are filled
+                    if (!userInfo.first_name || !userInfo.last_name || !userInfo.country) {
+                        // Redirect to onboarding process
+                        window.location.href = '/onboarding';
+                    } else {
+                        // Redirect to dashboard
+                        window.location.href = '/dashboard';
+                    }
+                })
+                .catch(error => {
+                    // Handle error fetching user info
+                    console.error('Error fetching user info:', error);
+                    displayPopup('Failed to fetch user info', 'text-danger');
+                });
             } else {
                 // Login error (invalid credentials)
                 const errorMessage = data.error || 'Invalid credentials';
@@ -110,12 +132,13 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         })
         .catch(error => {
-            // Handle other errors
+            // Handle other login errors
             const errorMessage = error.message || 'Failed to login';
             displayPopup(errorMessage, 'text-danger');
             hideSpinner(loginButton, originalButtonText);
         });
     });
+    
     
     function setCookie(name, value, days) {
         const expires = new Date();
