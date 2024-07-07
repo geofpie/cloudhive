@@ -110,6 +110,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     if (!response.ok) {
                         throw new Error('Network response was not ok');
                     }
+                    console.log('SQL Query:', response.headers.get('X-SQL-Query'));
                     return response.json();
                 })
                 .then(userInfo => {
