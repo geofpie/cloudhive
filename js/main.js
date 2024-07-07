@@ -92,7 +92,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         window.location.href = data.redirect;
                     });
                 } else {
-                    throw new Error('Network response was not ok');
+                    throw new Error('A network error occurred! This could mean we were unable to connect to the servers, or something else happened. If the issue persists, please contact support.');
                 }
             }
             return response.json();

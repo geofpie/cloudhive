@@ -104,4 +104,21 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
     });
+
+    function resizeInput() {
+        this.style.width = (this.value.length + 1) + "ch";
+    }
+
+    document.querySelectorAll('.onboard-name-field').forEach(input => {
+        input.addEventListener('input', resizeInput);
+        input.style.width = (input.placeholder.length + 1) + "ch"; // Initial width based on placeholder
+    });
+
+    // Select the form element
+    const onboardingForm = document.querySelector('.onboarding-form');
+
+    // Add a class to trigger the animation after a short delay
+    setTimeout(function() {
+        onboardingForm.classList.add('show');
+    }, 100); // Adjust delay as needed
 });

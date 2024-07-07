@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <!-- cloudhive by Geoffrey Lee -->
     <title>cloudhive | Onboarding</title>
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css">
@@ -10,17 +9,14 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"></script>
     <!-- Cropper.js -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.css" integrity="sha512-UtLOu9C7NuThQhuXXrGwx9Jb/z9zPQJctuAgNUBK3Z6kkSYT9wJ+2+dh6klS+TDBCV9kNPBbAxbVD+vCcfGPaA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.js" integrity="sha512-JyCZjCOZoyeQZSd5+YEAcFgz2fowJ1F1hyJOXgtKu4llIa0KneLcidn5bwfutiehUTiOuK87A986BZJMko0eWQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.js"></script>
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap" rel="stylesheet">
-
     <!-- Font Awesome -->
     <script src="https://kit.fontawesome.com/80b07c2a17.js" crossorigin="anonymous"></script>
-    
     <!-- Stylesheet -->
     <link rel="stylesheet" href="css/style.css"> 
-
     <!-- Onboarding JS -->
     <script defer src="js/onboarding.js"></script>
 </head>
@@ -31,51 +27,59 @@
             <span class="sr-only">Loading...</span>
         </div>
     </div>
+    <div class="gradient"></div>
     <div class="container-fluid">
         <div class="onboarding-page row align-items-center">
             <div class="col"></div>
-            <div class="onboarding-form col-md-6">
-                <h1>We're so glad you're here.</h1>
-                <p>You are almost there! Complete your profile, and you're all set.</p>
-                <form id="onboard-form" class="onboard-form" method="post" action="api/onboard_profile_update">
-                    <div class="form-group">
-                        <label for="profile-pic">Profile Picture</label>
-                        <div id="profile-pic-preview" class="img-preview" style="background-image: url('assets/loginbg.jpg');">
-                            <!-- Default image or placeholder content -->
+            <div class="onboarding-form col-md-4 shadow-lg">
+                <h1 class="onboard-heading">👋 Hi! We're so glad <br>you're here.</h1>
+                <p class="onboard-subtitle">You are almost there! Complete your profile, and you're all set.</p>
+                <div class="ob-form-group align-items-center">
+                    <form id="onboard-form" class="onboard-form" method="post" action="api/onboard_profile_update">
+                        <div class="form-group">
+                            <label for="profile-pic">
+                            <div id="profile-pic-preview" class="img-preview" style="background-color: #e8e8e8;">
+                            </label>
+                            </div>
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" id="profile-pic" name="profile-pic" accept="image/*" required>
+                                <button class="custom-file-label" for="profile-pic"></button>
+                            </div>
+                        </div>                    
+                        <div class="form-group onboard-name-row row">
+                            <div class="col">
+                                <input id="first-name" class="form-control onboard-name-field" type="text" name="first-name" placeholder="First Name" maxlength="50" required>
+                            </div>
+                            <div class="col">
+                                <input id="last-name" class="form-control onboard-name-field" type="text" name="last-name" placeholder="Last Name" maxlength="50" required>
+                            </div>
                         </div>
-                        <div class="custom-file">
-                            <input type="file" class="custom-file-input" id="profile-pic" name="profile-pic" accept="image/*" required>
-                            <button class="custom-file-label" for="profile-pic"></label>
+                        <div class="form-group">
+                            <select id="country" class="form-control" name="country" required>
+                                <option value="" disabled selected>Select your country</option>
+                                <option value="🇸🇬">Singapore</option>
+                                <option value="🇲🇾">Malaysia</option>
+                                <option value="🇹🇭">Thailand</option>
+                                <option value="🇵🇭">Philippines</option>
+                                <option value="🇮🇩">Indonesia</option>
+                                <option value="🇻🇳">Vietnam</option>
+                            </select>                        
                         </div>
-                    </div>                    
-                    <div class="form-group row">
-                        <div class="col">
-                            <input id="first-name" class="form-control onboard-name-field" type="text" name="first-name" placeholder="First Name" maxlength="50" required>
+                        <div class="form-group">
+                            <button class="btn btn-primary btn-block" id="ob-submit-button" type="submit">Continue <span class="spinner-grow" role="status" aria-hidden="true" style="display: none;"></span></button>
                         </div>
-                        <div class="col">
-                            <input id="last-name" class="form-control onboard-name-field" type="text" name="last-name" placeholder="Last Name" maxlength="50" required>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="country">Country</label>
-                        <select id="country" class="form-control" name="country" required>
-                            <option value="" disabled selected>Select your country</option>
-                            <option value="🇸🇬">Singapore</option>
-                            <option value="🇲🇾">Malaysia</option>
-                            <option value="🇹🇭">Thailand</option>
-                            <option value="🇵🇭">Philippines</option>
-                            <option value="🇮🇩">Indonesia</option>
-                            <option value="🇻🇳">Vietnam</option>
-                        </select>                        
-                    </div>
-                    <div class="form-group">
-                        <button class="btn btn-primary btn-block" id="ob-submit-button" type="submit">Continue <span class="spinner-grow" role="status" aria-hidden="true" style="display: none;"></span></button>
-                    </div>
-                </form>                      
+                    </form>     
+                </div>                 
                 <hr>
-                <p class="logged-in-user-subtitle">Signed in As</p>
-                <p class="logged-in-user" id="logged-in-user"></p>
-                <p class="logged-in-user-email" id="logged-in-user-email"></p>
+                <div class="row align-items-center">
+                    <div class="col">
+                        <p class="logged-in-user" id="logged-in-user">geofpie</p>
+                        <p class="logged-in-user-email" id="logged-in-user-email">geoffreyleejh@gmail.com</p>
+                    </div>
+                    <div class="col ob-signout-row">
+                        <a class="ob-logout" href="#"><i class="fa fa-sign-out"></i>Sign Out</a>
+                    </div>
+                </div>
             </div>
             <div class="col"></div>
         </div>
@@ -91,7 +95,6 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <!-- Cropper.js container -->
                     <div id="cropper-container">
                         <img id="cropper-image" src="" alt="Image to crop">
                     </div>
