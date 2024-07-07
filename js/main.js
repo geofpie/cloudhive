@@ -5,7 +5,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const registerForm = document.getElementById('register-form');
     const spinnerWrapper = document.querySelector('.spinner-wrapper');
     const container = document.querySelector('.container-fluid');
-    const registerMessage = document.getElementById('register-message');
 
     loginLink.addEventListener('click', function(event) {
         event.preventDefault();
@@ -42,29 +41,29 @@ document.addEventListener('DOMContentLoaded', function() {
             },
             body: JSON.stringify({ username, email, password }),
         })
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
         .then(data => {
             hideSpinner(registerButton, originalButtonText);
     
             if (data.token) {
                 // Registration success with token
-                registerMessage.innerText = data.message;
-                registerMessage.classList.remove('text-danger');
-                registerMessage.classList.add('text-success');
-
+                displayPopup('Registration Successful', 'text-success');
+                // Optionally, you can redirect or handle success here
             } else {
                 // Registration error (username or email exists)
                 const errorMessage = data.error || 'Unknown Error';
-                registerMessage.innerText = errorMessage;
-                registerMessage.classList.remove('text-success');
-                registerMessage.classList.add('text-danger');
+                displayPopup(errorMessage, 'text-danger');
             }
         })
         .catch(error => {
             // Handle other errors
-            registerMessage.innerText = error.message || 'Failed to register user';
-            registerMessage.classList.remove('text-success');
-            registerMessage.classList.add('text-danger');
+            const errorMessage = error.message || 'Failed to register user';
+            displayPopup(errorMessage, 'text-danger');
             hideSpinner(registerButton, originalButtonText);
         });
     });
@@ -88,5 +87,16 @@ document.addEventListener('DOMContentLoaded', function() {
     function hideSpinner(button, originalText) {
         button.innerHTML = originalText;
         button.disabled = false;
+    }
+
+    function displayPopup(message, className) {
+        const popup = document.createElement('div');
+        popup.classList.add('ajax-popup', className);
+        popup.textContent = message;
+        document.body.appendChild(popup);
+
+        setTimeout(() => {
+            popup.remove();
+        }, 3000); // Adjust the timeout as needed for how long you want the popup to display
     }
 });
