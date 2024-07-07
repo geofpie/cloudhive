@@ -94,8 +94,8 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function displayError(message) {
-        errorMessage.innerText = message;
-        errorPopup.style.display = 'block';
+        document.getElementById('error-message').innerText = message;
+        document.getElementById('error-popup').style.display = 'block';
     }
 
     document.getElementById('close-error-popup').addEventListener('click', function() {
