@@ -64,6 +64,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 registerMessage.classList.add('text-success');
 
                 // Redirect to onboarding page
+                console.log('Redirecting to onboarding page...');
                 window.location.href = '/onboarding';
             } else {
                 // Registration error (username or email exists)
