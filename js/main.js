@@ -102,18 +102,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 fetch('/api/fetchuserinfo', {
                     method: 'GET',
                     headers: {
-                        'Content-Type': 'application/json',
+                        'Content-Type' : 'application/json',
                         'Authorization': `Bearer ${data.token}`
                     }
                 })
                 .then(response => {
-                    if (response.status === 302) {
-                        // Handle redirect manually
-                        window.location.href = response.headers.get('Location'); // Redirect to the specified location
-                        return; // Exit fetch chain since we've redirected
-                    }
                     if (!response.ok) {
-                        throw new Error(`Network response was not ok: ${response.status} ${response.statusText}`);
+                        throw new Error('Network response was not ok');
                     }
                     return response.json();
                 })
@@ -133,7 +128,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     console.error('Error fetching user info:', error);
                     displayPopup('Failed to fetch user info', 'text-danger');
                 });
-
             } else {
                 // Login error (invalid credentials)
                 const errorMessage = data.error || 'Invalid credentials';
