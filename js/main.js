@@ -71,6 +71,26 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.log('Redirecting to onboarding');
                 window.location.href = '/onboarding';
 
+                // Immediately after redirecting to onboarding page
+                fetch('/api/userinfo', {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`, // Send the JWT token in the Authorization header
+                        'Content-Type': 'application/json'
+                    },
+                })
+                .then(response => response.json())
+                .then(data => {
+                    // Update onboarding page with user information
+                    document.getElementById('username').innerText = data.username;
+                    document.getElementById('email').innerText = data.email;
+                })
+                .catch(error => {
+                    console.error('Error fetching user information:', error);
+                    // Handle error
+});
+
+
             } else {
                 // Registration error (username or email exists)
                 const errorMessage = data.error || 'Unknown Error';
