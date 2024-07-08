@@ -91,10 +91,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 // Log the blob for debugging
                 console.log('Cropped image blob created:', blob);
-
-                // Display the upload button
-                const uploadButton = document.getElementById('upload-btn');
-                uploadButton.style.display = 'block';
             });
         }
     });
