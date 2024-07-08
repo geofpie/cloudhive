@@ -60,6 +60,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // Set the image source to cropper and preview
             const image = document.getElementById('cropper-image');
             image.src = e.target.result;
+
             // Initialize Cropper.js
             cropper = new Cropper(image, {
                 aspectRatio: 1, // Set to 1 for square aspect ratio
@@ -70,7 +71,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 rotatable: false, // Disable image rotation
                 scalable: false, // Disable image scaling
                 ready: function() {
-                    // This function is called when Cropper.js is ready
                 }
             });
             // Show crop modal
@@ -101,55 +101,64 @@ document.addEventListener('DOMContentLoaded', function() {
     const onboardingForm = document.querySelector('.onboarding-form');
 
     // Event listener for form submission
-    onboardingForm.addEventListener('submit', function(e) {
-        e.preventDefault(); // Prevent default form submission
+onboardingForm.addEventListener('submit', function(e) {
+    e.preventDefault(); // Prevent default form submission
 
-        // Ensure the cropped image blob is available
-        if (window.croppedImageBlob) {
-            const formData = new FormData();
-            formData.append('profilePic', window.croppedImageBlob, 'profile-pic.jpg');
+    // Ensure the cropped image blob is available
+    if (window.croppedImageBlob) {
+        const formData = new FormData();
+        formData.append('profilePic', window.croppedImageBlob, 'profile-pic.jpg');
 
-            // Log the FormData entries
-            for (let [key, value] of formData.entries()) {
-                console.log(`FormData key: ${key}, value: ${value}`);
+        // Add first-name, last-name, and country to FormData
+        const firstName = document.getElementById('first-name').value;
+        const lastName = document.getElementById('last-name').value;
+        const country = document.getElementById('country').value;
+
+        formData.append('first-name', firstName);
+        formData.append('last-name', lastName);
+        formData.append('country', country);
+
+        // Log the FormData entries
+        for (let [key, value] of formData.entries()) {
+            console.log(`FormData key: ${key}, value: ${value}`);
+        }
+
+        // Show loading indicator (spinner) on submit button
+        const submitButton = document.getElementById('ob-submit-button');
+        const originalButtonText = submitButton.innerHTML;
+        showSpinner(submitButton);
+
+        // Send the file and additional data to the server using form's action attribute
+        fetch('/api/onboard_profile_update', {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'Accept': 'application/json',
+            },
+            credentials: 'same-origin' // Include cookies with request if needed
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Hide loading indicator (spinner)
+            hideSpinner(submitButton, originalButtonText);
+
+            if (data.error) {
+                console.error('Error uploading profile picture:', data.error);
+                return;
             }
 
-            // Show loading indicator (spinner) on submit button
-            const submitButton = document.getElementById('ob-submit-button');
-            const originalButtonText = submitButton.innerHTML;
-            showSpinner(submitButton);
-
-            // Send the file to the server using form's action attribute
-            fetch('/api/onboard_profile_update', {
-                method: 'POST',
-                body: formData,
-                headers: {
-                    'Accept': 'application/json',
-                },
-                credentials: 'same-origin' // Include cookies with request if needed
-            })
-            .then(response => response.json())
-            .then(data => {
-                // Hide loading indicator (spinner)
-                hideSpinner(submitButton, originalButtonText);
-
-                if (data.error) {
-                    console.error('Error uploading profile picture:', data.error);
-                    return;
-                }
-
-                console.log('Profile picture uploaded successfully:', data);
-                // Optionally handle success response
-            })
-            .catch(error => {
-                // Hide loading indicator (spinner)
-                hideSpinner(submitButton, originalButtonText);
-                console.error('Error:', error);
-            });
-        } else {
-            console.error('No cropped image blob available for upload.');
-        }
-    });
+            console.log('Profile picture uploaded successfully:', data);
+            // Optionally handle success response
+        })
+        .catch(error => {
+            // Hide loading indicator (spinner)
+            hideSpinner(submitButton, originalButtonText);
+            console.error('Error:', error);
+        });
+    } else {
+        console.error('No cropped image blob available for upload.');
+    }
+});
 
     function showSpinner(button) {
         button.innerHTML = '<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>';
