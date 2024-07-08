@@ -99,7 +99,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    document.getElementById('continue-btn').addEventListener('click', function() {
+    document.getElementById('ob-submit-btn').addEventListener('click', function() {
         // Ensure the cropped image blob is available
         if (window.croppedImageBlob) {
             const formData = new FormData();
