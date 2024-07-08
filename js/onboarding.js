@@ -114,6 +114,50 @@ document.addEventListener('DOMContentLoaded', function() {
         input.style.width = (input.placeholder.length + 1) + "ch"; // Initial width based on placeholder
     });
 
+    document.getElementById('crop-submit-btn').addEventListener('click', function() {
+        if (cropper) {
+            cropper.getCroppedCanvas({
+                width: 500, // Set desired width of cropped image
+                height: 500, // Set desired height of cropped image
+            }).toBlob(function(blob) {
+                // Create a FormData object to send the file
+                var formData = new FormData();
+                formData.append('profilePic', blob, 'profile-pic.jpg');
+    
+                // Send the file to the server
+                fetch('/api/onboard_profile_update', {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'Accept': 'application/json',
+                    },
+                    credentials: 'same-origin' // Include cookies with request
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        console.error('Error uploading profile picture:', data.error);
+                        return;
+                    }
+    
+                    console.log('Profile picture uploaded successfully:', data);
+    
+                    // Update profile pic preview
+                    const profilePicPreview = document.getElementById('profile-pic-preview');
+                    profilePicPreview.style.backgroundImage = `url(${data.profilePicUrl})`;
+                    profilePicPreview.style.backgroundSize = 'cover';
+                    profilePicPreview.style.backgroundPosition = 'center';
+                    // Close modal
+                    cropModal.hide();
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+            });
+        }
+    });
+    
+
     // Select the form element
     const onboardingForm = document.querySelector('.onboarding-form');
 
