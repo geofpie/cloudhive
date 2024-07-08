@@ -91,6 +91,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 // Log the blob for debugging
                 console.log('Cropped image blob created:', blob);
+
+                cropModal.hide();
             });
         }
     });
