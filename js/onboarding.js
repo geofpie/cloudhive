@@ -124,6 +124,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 var formData = new FormData();
                 formData.append('profilePic', blob, 'profile-pic.jpg');
     
+                // Log the FormData entries
+                for (let [key, value] of formData.entries()) {
+                    console.log(`FormData key: ${key}, value: ${value}`);
+                }
+    
                 // Send the file to the server
                 fetch('/api/onboard_profile_update', {
                     method: 'POST',
