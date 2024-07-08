@@ -105,7 +105,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 setCookie('token', data.token, 1); // Adjust expiry as needed (1 day in this case)
 
                 // Redirect to homepage
-                window.location.href = '/homepage';
+                window.location.href = '/hive';
             } else {
                 // Login error (invalid credentials)
                 const errorMessage = data.error || 'Invalid credentials';
