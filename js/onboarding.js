@@ -97,7 +97,13 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    document.getElementById('ob-submit-button').addEventListener('click', function() {
+    // Select the form element
+    const onboardingForm = document.querySelector('.onboarding-form');
+
+    // Event listener for form submission
+    onboardingForm.addEventListener('submit', function(e) {
+        e.preventDefault(); // Prevent default form submission
+
         // Ensure the cropped image blob is available
         if (window.croppedImageBlob) {
             const formData = new FormData();
@@ -108,34 +114,36 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.log(`FormData key: ${key}, value: ${value}`);
             }
 
-            // Send the file to the server
-            fetch('/api/onboard_profile_update', {
+            // Show loading indicator (spinner) on submit button
+            const submitButton = document.getElementById('ob-submit-button');
+            const originalButtonText = submitButton.innerHTML;
+            showSpinner(submitButton);
+
+            // Send the file to the server using form's action attribute
+            fetch(onboardingForm.action, {
                 method: 'POST',
                 body: formData,
                 headers: {
                     'Accept': 'application/json',
                 },
-                credentials: 'same-origin' // Include cookies with request
+                credentials: 'same-origin' // Include cookies with request if needed
             })
             .then(response => response.json())
             .then(data => {
+                // Hide loading indicator (spinner)
+                hideSpinner(submitButton, originalButtonText);
+
                 if (data.error) {
                     console.error('Error uploading profile picture:', data.error);
                     return;
                 }
 
                 console.log('Profile picture uploaded successfully:', data);
-
-                // Update profile pic preview
-                const profilePicPreview = document.getElementById('profile-pic-preview');
-                profilePicPreview.style.backgroundImage = `url(${data.profilePicUrl})`;
-                profilePicPreview.style.backgroundSize = 'cover';
-                profilePicPreview.style.backgroundPosition = 'center';
-                // Close modal or navigate to next step
-                // cropModal.hide(); // Uncomment if using modal
-                // navigateToNextStep(); // Implement if needed
+                // Optionally handle success response
             })
             .catch(error => {
+                // Hide loading indicator (spinner)
+                hideSpinner(submitButton, originalButtonText);
                 console.error('Error:', error);
             });
         } else {
@@ -143,8 +151,15 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Select the form element
-    const onboardingForm = document.querySelector('.onboarding-form');
+    function showSpinner(button) {
+        button.innerHTML = '<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>';
+        button.disabled = true;
+    }
+
+    function hideSpinner(button, originalText) {
+        button.innerHTML = originalText;
+        button.disabled = false;
+    }
 
     // Add a class to trigger the animation after a short delay
     setTimeout(function() {
