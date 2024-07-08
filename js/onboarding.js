@@ -108,10 +108,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.log(`FormData key: ${key}, value: ${value}`);
             }
 
-            // Show loading indicator
-            const loadingIndicator = document.getElementById('loading-indicator');
-            loadingIndicator.style.display = 'block';
-
             // Send the file to the server
             fetch('/api/onboard_profile_update', {
                 method: 'POST',
@@ -123,9 +119,6 @@ document.addEventListener('DOMContentLoaded', function() {
             })
             .then(response => response.json())
             .then(data => {
-                // Hide loading indicator
-                loadingIndicator.style.display = 'none';
-
                 if (data.error) {
                     console.error('Error uploading profile picture:', data.error);
                     return;
@@ -143,8 +136,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 // navigateToNextStep(); // Implement if needed
             })
             .catch(error => {
-                // Hide loading indicator
-                loadingIndicator.style.display = 'none';
                 console.error('Error:', error);
             });
         } else {
