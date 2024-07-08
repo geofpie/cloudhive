@@ -120,45 +120,71 @@ document.addEventListener('DOMContentLoaded', function() {
                 width: 500, // Set desired width of cropped image
                 height: 500, // Set desired height of cropped image
             }).toBlob(function(blob) {
-                // Create a FormData object to send the file
-                var formData = new FormData();
-                formData.append('profilePic', blob, 'profile-pic.jpg');
+                // Store the blob in a variable for later use
+                window.croppedImageBlob = blob;
     
-                // Log the FormData entries
-                for (let [key, value] of formData.entries()) {
-                    console.log(`FormData key: ${key}, value: ${value}`);
+                // Log the blob for debugging
+                console.log('Cropped image blob created:', blob);
+    
+                // Display the upload button
+                const uploadButton = document.getElementById('upload-btn');
+                uploadButton.style.display = 'block';
+            });
+        }
+    });
+
+    document.getElementById('continue-btn').addEventListener('click', function() {
+        // Ensure the cropped image blob is available
+        if (window.croppedImageBlob) {
+            const formData = new FormData();
+            formData.append('profilePic', window.croppedImageBlob, 'profile-pic.jpg');
+    
+            // Log the FormData entries
+            for (let [key, value] of formData.entries()) {
+                console.log(`FormData key: ${key}, value: ${value}`);
+            }
+    
+            // Show loading indicator
+            const loadingIndicator = document.getElementById('loading-indicator');
+            loadingIndicator.style.display = 'block';
+    
+            // Send the file to the server
+            fetch('/api/onboard_profile_update', {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'Accept': 'application/json',
+                },
+                credentials: 'same-origin' // Include cookies with request
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Hide loading indicator
+                loadingIndicator.style.display = 'none';
+    
+                if (data.error) {
+                    console.error('Error uploading profile picture:', data.error);
+                    return;
                 }
     
-                // Send the file to the server
-                fetch('/api/onboard_profile_update', {
-                    method: 'POST',
-                    body: formData,
-                    headers: {
-                        'Accept': 'application/json',
-                    },
-                    credentials: 'same-origin' // Include cookies with request
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.error) {
-                        console.error('Error uploading profile picture:', data.error);
-                        return;
-                    }
+                console.log('Profile picture uploaded successfully:', data);
     
-                    console.log('Profile picture uploaded successfully:', data);
-    
-                    // Update profile pic preview
-                    const profilePicPreview = document.getElementById('profile-pic-preview');
-                    profilePicPreview.style.backgroundImage = `url(${data.profilePicUrl})`;
-                    profilePicPreview.style.backgroundSize = 'cover';
-                    profilePicPreview.style.backgroundPosition = 'center';
-                    // Close modal
-                    cropModal.hide();
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
+                // Update profile pic preview
+                const profilePicPreview = document.getElementById('profile-pic-preview');
+                profilePicPreview.style.backgroundImage = `url(${data.profilePicUrl})`;
+                profilePicPreview.style.backgroundSize = 'cover';
+                profilePicPreview.style.backgroundPosition = 'center';
+                // Close modal or navigate to next step
+                // cropModal.hide(); // Uncomment if using modal
+                // navigateToNextStep(); // Implement if needed
+            })
+            .catch(error => {
+                // Hide loading indicator
+                loadingIndicator.style.display = 'none';
+                console.error('Error:', error);
             });
+        } else {
+            console.error('No cropped image blob available for upload.');
         }
     });
     
