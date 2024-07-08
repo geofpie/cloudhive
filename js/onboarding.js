@@ -120,7 +120,7 @@ document.addEventListener('DOMContentLoaded', function() {
             showSpinner(submitButton);
 
             // Send the file to the server using form's action attribute
-            fetch(onboardingForm.action, {
+            fetch('/api/onboard_profile_update', {
                 method: 'POST',
                 body: formData,
                 headers: {
