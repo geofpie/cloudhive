@@ -337,3 +337,71 @@ a:hover {
 .cropper-view-box {
     border-radius: 50%; /* Round the corners for a circular preview */
 }
+
+.navbar-profile-pic {
+    border-radius: 50%;
+    height: 40px;
+    width: 40px;
+}
+
+.hive-nav-btn {
+    padding-right: 12px;
+}
+
+.hive-greeting-row {
+    padding: 24px 0 0 18px;
+}
+
+.hive-greeting-msg {
+    font-size: 28px;
+}
+.hive-post-action-bar {
+    margin: 10px;
+    padding: 24px 0 18px 0;
+    border-radius: 12px;
+    background: white;
+    text-align: center;
+}
+
+.pab-form {
+    width: 100%;
+}
+
+.hive-postarea {
+    border-radius: 12px;
+    background-color: #f9f9f9;
+    border-color: #e9e9e9;
+    padding: 16px;
+    font-size: 16px;
+    color: #333333;
+    width: 100%;
+}
+
+.share-post-button {
+    width: 80%;
+    position: inline;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-radius: 16px;
+    margin-bottom: 6px;
+}
+
+.profile-header {
+    border-radius: 26px;
+    background-image: url('../assets/loginbg.jpg');
+    min-height: 35vh;
+    background-size: cover;
+    margin: 12px 12px 0 12px;
+    vertical-align: bottom;
+    padding: 24px;
+}
+
+.profile-user-stats {
+    padding: 24px;
+    text-align: center;
+}
+
+.profile-stat {
+    display: inline-block;
+    padding-right: 12px;
+}

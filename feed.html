@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{user}'s hive | cloudhive</title>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css">
+    <!-- jQuery, Popper.js, Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"></script>
+    <!-- Cropper.js -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.js"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/80b07c2a17.js" crossorigin="anonymous"></script>
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="css/style.css"> 
+    <!-- Feed JS -->
+    <script defer src="js/feed.js"></script>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">
+            <img src="../assets/logo-dark.svg" width="46" height="46" alt="Logo">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+      
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <form class="form-inline mx-auto">
+                <div class="input-group">
+                    <input class="form-control" type="search" placeholder="Search" aria-label="Search">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-success" type="submit">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item hive-nav-btn active">
+                    <a class="nav-link" href="#">Hive <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item hive-nav-btn">
+                    <a class="nav-link" href="#">Friends</a>
+                </li>
+                <li class="nav-ite hive-nav-btn">
+                    <a class="nav-link" href="#">Settings</a>
+                </li>
+                <li class="nav-ite hive-nav-btn">
+                    <a class="nav-link" id="hive-logged-in-user-name" href="#">{user}}</a>
+                </li>
+                <li class="nav-item hive-nav-btn">
+                    <img src="/Users/geoffreylee/Desktop/cloudhive/assets/default-profile.jpg" alt="Profile" class="navbar-profile-pic">
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="row">
+            <div class="col hive-greeting-row">
+                <h1 class="hive-greeting-msg" id="hive-greeting-msg">Hi {user}</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-5 hive-post-action-bar shadow-lg">
+                <form class="pab-form">
+                    <textarea class="hive-postarea" placeholder="Say something!"></textarea>
+                    <button class="hive-uploadpost">Post</button>
+                </form>
+            </div>
+            <div class="col"></div>
+        </div>
+    </div>
+</body>
+</html>

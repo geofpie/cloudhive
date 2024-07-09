@@ -102,7 +102,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             if (data.token) {
                 // Set token as a cookie
-                setCookie('token', data.token, 1); // Adjust expiry as needed (1 day in this case)
+                setCookie('token', data.token, 1);
 
                 // Redirect to homepage
                 window.location.href = '/hive';
