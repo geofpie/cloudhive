@@ -170,6 +170,25 @@ onboardingForm.addEventListener('submit', function(e) {
         button.disabled = false;
     }
 
+    // Function to handle logout
+    function handleLogout() {
+        // Clear JWT token (assuming it's stored in localStorage)
+        localStorage.removeItem('jwtToken');
+
+        // Redirect to login page
+        window.location.href = '/index.html'; // Adjust the URL as per your application's routing
+    }
+
+    // Event listener for logout link
+    const logoutLink = document.querySelector('.ob-logout');
+    if (logoutLink) {
+        logoutLink.addEventListener('click', function(e) {
+            e.preventDefault(); // Prevent default link behavior
+            handleLogout();
+        });
+    }
+
+
     // Add a class to trigger the animation after a short delay
     setTimeout(function() {
         onboardingForm.classList.add('show');
