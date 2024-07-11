@@ -22,25 +22,25 @@
 </head>
 <body>
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light sticky-top hive-navbar">
         <a class="navbar-brand" href="#">
-            <img src="../assets/logo-dark.svg" width="46" height="46" alt="Logo">
+            <img src="../assets/logo-dark.svg" width="46" height="46" alt="cloudhive">
         </a>
+        <form class="form-inline my-2 my-lg-0" action="#">
+            <div class="input-group">
+                <input class="form-control hive-searchbar" type="search" placeholder="Search" aria-label="Search">
+                <div class="input-group-append">
+                    <button class="btn hive-searchbar-btn" type="submit">
+                        <i class="fa fa-search hive-searchbar-btn-icon"></i>
+                    </button>
+                </div>
+            </div>
+        </form>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
       
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <form class="form-inline mx-auto">
-                <div class="input-group">
-                    <input class="form-control" type="search" placeholder="Search" aria-label="Search">
-                    <div class="input-group-append">
-                        <button class="btn btn-outline-success" type="submit">
-                            <i class="fas fa-search"></i>
-                        </button>
-                    </div>
-                </div>
-            </form>
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item hive-nav-btn active">
                     <a class="nav-link" href="#">Hive <span class="sr-only">(current)</span></a>
@@ -48,14 +48,14 @@
                 <li class="nav-item hive-nav-btn">
                     <a class="nav-link" href="#">Friends</a>
                 </li>
-                <li class="nav-ite hive-nav-btn">
+                <li class="nav-item hive-nav-btn">
                     <a class="nav-link" href="#">Settings</a>
                 </li>
-                <li class="nav-ite hive-nav-btn">
-                    <a class="nav-link" id="hive-logged-in-user-name" href="#">{user}}</a>
+                <li class="nav-item hive-nav-btn">
+                    <a class="nav-link" id="hive-logged-in-user-name" href="#">{user}</a>
                 </li>
                 <li class="nav-item hive-nav-btn">
-                    <img src="/Users/geoffreylee/Desktop/cloudhive/assets/default-profile.jpg" alt="Profile" class="navbar-profile-pic">
+                    <img src="../assets/default-profile.jpg" alt="Profile" class="navbar-profile-pic">
                 </li>
             </ul>
         </div>
@@ -65,32 +65,75 @@
         <div class="row align-items-center">
             <div class="col"></div>
             <div class="col-lg-8 profile-header shadow-lg">
-                <div class="profile-user-name">
+                <div class="profile-action-button">
                     <button class="profile-update">Update Profile</button>
-                    <h3 class="profile-user-name-elem">hello test</h3>
-                    <p class="profile-user-country" id="profile-user-country">Singapore</p>
+                </div>
+                <div class="profile-user-name alig">
+                    <img src="../assets/default-profile.jpg" alt="Profile" class="header-profile-pic">
+                    <h3 class="profile-user-name-elem">{user_name}</h3>
+                    <p class="profile-user-country" id="profile-user-country">{location}</p>
                 </div>
             </div>
             <div class="col"></div>
         </div>
         <div class="row profile-user-stats">
             <div class="col">
-                <p class="profile-stat profile-posts-count" id="profile-posts-count">10 posts</p>
-                <p class="profile-stat profile-user-follower-count" id="profile-user-follower-count">100 followers</p>
-                <p class="profile-stat profile-user-following-count" id="profile-user-following-count">99 following</p>
-                <hr>
+                <p class="profile-stat profile-posts-count" id="profile-posts-count"><strong>NaN</strong> posts</p>
+                <p class="profile-stat profile-user-follower-count" id="profile-user-follower-count"><strong>NaN</strong> followers</p>
+                <p class="profile-stat profile-user-following-count" id="profile-user-following-count"><strong>NaN</strong> following</p>
             </div>
         </div>
         <div class="row profile-user-post align-items-center">
             <div class="col"></div>
-            <div class="col-md-5 hive-post-action-bar shadow">
-                <img src="/Users/geoffreylee/Desktop/cloudhive/assets/default-profile.jpg" alt="Profile" class="navbar-profile-pic">
+            <div class="col-md-5 hive-post-action-bar shadow-sm">
+                <img src="../assets/default-profile.jpg" alt="Profile" class="navbar-profile-pic">
                 <button class="share-post-button">Say or share something</button>
-                <button class="fa-solid fa-pen" id="write-post">Write Post</button>
-                <button class="fa-solid fa-camera" id="write-post">Post Picture</button>
+                <button class="write-post-btn" id="write-post">
+                    <i class="fa fa-pen postbtn-icon"></i>Write Post
+                </button>
+                <button class="write-post-btn" id="write-post">
+                    <i class="fa fa-camera postbtn-icon"></i>Post Picture
+                </button>
             </div>
             <div class="col"></div>
         </div>
+        <div class="row hive-feed-area">
+            <div class="col-md-5 hive-post-element mx-auto shadow-sm">
+                <div class="row hive-post-user-details align-items-center">
+                    <div class="col">
+                        <img src="../assets/default-profile.jpg" alt="Profile" class="post-profile-pic">
+                    </div>
+                    <div class="col hive-user-details-text">
+                        <a href="" id="hive-post-user" class="hive-post-username">{UserName}</a>
+                        <a href="" id="hive-post-username" class="hive-post-user-sub">@username</a>
+                        <i class="fa fa-clock hive-post-time-icon"></i><p class="hive-post-time" id="hive-post-time">2h ago</p>
+                    </div>
+                </div>
+                <div class="row hive-post-content">
+                    <p class="hive-post-text" id="hive-post-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla pharetra eros nisi, non dignissim est tempor id. Nulla vulputate scelerisque metus sit amet congue. In congue.
+
+                    </p>
+                    <div class="hive-post-image" id="hive-post-image">
+                        <img class="hive-post-img-src" id="hive-post-img-src" src="/assets/loginbg.jpg">
+                    </div>
+                </div>
+                <div class="hive-social-stats">
+                    <p class="hive-stat-like" id="hive-stat-like"><strong>10</strong> likes</p>
+                    <hr>
+                    <button class="hive-stat-like-btn"><i class="fa fa-heart hive-stat-like-heart"></i>Like</button>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <p>cloudhive</p>
+                <p>version 1.0</p>
+            </div>
+        </div>
+    </div>
+</footer>
 </html>
