@@ -61,28 +61,50 @@
         </div>
     </nav>
     <!-- End Nav -->
-    <div class="container">
-        <div class="row align-items-center">
+     <div class="container-fluid">
+        <!-- <div class="row align-items-center">
             <div class="col"></div>
-            <div class="col-lg-8 profile-header shadow-lg">
+            <div class="col-lg-8 profile-header d-flex shadow-lg">
                 <div class="profile-action-button">
-                    <button class="profile-update">Update Profile</button>
+                    <button class="profile-update"><i class="fa fa-pen"></i></button>
                 </div>
                 <div class="profile-user-name alig">
                     <img src="../assets/default-profile.jpg" alt="Profile" class="header-profile-pic">
                     <h3 class="profile-user-name-elem">{user_name}</h3>
                     <p class="profile-user-country" id="profile-user-country">{location}</p>
                 </div>
+                <div class="profile-user-stats mt-auto align-bottom">
+                    <div class="col">
+                        <button class="profile-stat hive-follow-user"><i class="fa fa-user-plus"></i>Follow</button>
+                        <p class="profile-stat profile-posts-count" id="profile-posts-count"><strong>NaN</strong> posts</p>
+                        <p class="profile-stat profile-user-follower-count" id="profile-user-follower-count"><strong>NaN</strong> followers</p>
+                        <p class="profile-stat profile-user-following-count" id="profile-user-following-count"><strong>NaN</strong> following</p>
+                    </div>
+                </div>
             </div>
-            <div class="col"></div>
-        </div>
-        <div class="row profile-user-stats">
-            <div class="col">
-                <p class="profile-stat profile-posts-count" id="profile-posts-count"><strong>NaN</strong> posts</p>
-                <p class="profile-stat profile-user-follower-count" id="profile-user-follower-count"><strong>NaN</strong> followers</p>
-                <p class="profile-stat profile-user-following-count" id="profile-user-following-count"><strong>NaN</strong> following</p>
+            <div class="col"></div> 
+        </div> -->
+        <div class="row profile-fullwidth-header" style="background-color: black;">
+            <div class="col d-flex">
+                <div class="profile-action-button">
+                    <button class="profile-update"><i class="fa fa-pen"></i></button>
+                </div>
+                <div class="profile-user-name alig">
+                    <img src="../assets/default-profile.jpg" alt="Profile" class="header-profile-pic shadow">
+                    <h3 class="profile-user-name-elem">{user_name}</h3>
+                    <p class="profile-user-country" id="profile-user-country">{location}</p>
+                </div>
+                <div class="profile-user-stats mt-auto align-bottom">
+                    <div class="col">
+                        <p class="profile-stat profile-posts-count" id="profile-posts-count"><strong>NaN</strong> posts</p>
+                        <p class="profile-stat profile-user-follower-count" id="profile-user-follower-count"><strong>NaN</strong> followers</p>
+                        <p class="profile-stat profile-user-following-count" id="profile-user-following-count"><strong>NaN</strong> following</p>
+                        <button class="profile-stat hive-follow-user"><i class="fa fa-user-plus"></i>Follow</button>
+                    </div>
+                </div>
             </div>
         </div>
+
         <div class="row profile-user-post align-items-center">
             <div class="col"></div>
             <div class="col-md-5 hive-post-action-bar shadow-sm">
@@ -98,6 +120,7 @@
             <div class="col"></div>
         </div>
         <div class="row hive-feed-area">
+            <!-- Post Template -->
             <div class="col-md-5 hive-post-element mx-auto shadow-sm">
                 <div class="row hive-post-user-details align-items-center">
                     <div class="col">
@@ -123,6 +146,7 @@
                     <button class="hive-stat-like-btn"><i class="fa fa-heart hive-stat-like-heart"></i>Like</button>
                 </div>
             </div>
+            <!-- End Post Template -->
         </div>
     </div>
 </body>

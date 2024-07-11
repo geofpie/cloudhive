@@ -20,10 +20,10 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(data => {
             // Update logged-in user fields
             const hiveUserName = document.getElementById('hive-logged-in-user-name');
-            hiveUserName.textContent = data.userInfo.username;
+            hiveUserName.textContent = data.userInfo.first_name;
 
             // Log user information to console
-            console.log('Logged-in User:', data.userInfo.username);
+            console.log('Logged-in User:', data.userInfo.first_name);
             console.log('Logged-in User Email:', data.userInfo.email);
         })
         .catch(error => {
