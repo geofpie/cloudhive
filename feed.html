@@ -22,25 +22,25 @@
 </head>
 <body>
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light sticky-top hive-navbar">
         <a class="navbar-brand" href="#">
-            <img src="../assets/logo-dark.svg" width="46" height="46" alt="Logo">
+            <img src="../assets/logo-dark.svg" width="46" height="46" alt="cloudhive">
         </a>
+        <form class="form-inline my-2 my-lg-0" action="#">
+            <div class="input-group">
+                <input class="form-control hive-searchbar" type="search" placeholder="Search" aria-label="Search">
+                <div class="input-group-append">
+                    <button class="btn hive-searchbar-btn" type="submit">
+                        <i class="fa fa-search hive-searchbar-btn-icon"></i>
+                    </button>
+                </div>
+            </div>
+        </form>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
       
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <form class="form-inline mx-auto">
-                <div class="input-group">
-                    <input class="form-control" type="search" placeholder="Search" aria-label="Search">
-                    <div class="input-group-append">
-                        <button class="btn btn-outline-success" type="submit">
-                            <i class="fas fa-search"></i>
-                        </button>
-                    </div>
-                </div>
-            </form>
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item hive-nav-btn active">
                     <a class="nav-link" href="#">Hive <span class="sr-only">(current)</span></a>
@@ -48,18 +48,19 @@
                 <li class="nav-item hive-nav-btn">
                     <a class="nav-link" href="#">Friends</a>
                 </li>
-                <li class="nav-ite hive-nav-btn">
+                <li class="nav-item hive-nav-btn">
                     <a class="nav-link" href="#">Settings</a>
                 </li>
-                <li class="nav-ite hive-nav-btn">
-                    <a class="nav-link" id="hive-logged-in-user-name" href="#">{user}}</a>
+                <li class="nav-item hive-nav-btn">
+                    <a class="nav-link" id="hive-logged-in-user-name" href="#">{user}</a>
                 </li>
                 <li class="nav-item hive-nav-btn">
-                    <img src="/Users/geoffreylee/Desktop/cloudhive/assets/default-profile.jpg" alt="Profile" class="navbar-profile-pic">
+                    <img src="../assets/default-profile.jpg" alt="Profile" class="navbar-profile-pic">
                 </li>
             </ul>
         </div>
     </nav>
+    <!-- End Nav -->
     <div class="container">
         <div class="row profile-user-post align-items-center">
             <div class="col"></div>
