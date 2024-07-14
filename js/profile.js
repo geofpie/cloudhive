@@ -35,9 +35,6 @@ function fetchUserInfo() {
         }
         return response.json();
     })
-    .then(data => {
-        updateUserProfile(data.userInfo);
-    })
     .catch(error => {
         console.error('There was a problem with the fetch operation:', error);
     });
@@ -134,7 +131,7 @@ function submitPost(content, imageFile) {
     .then(data => {
         console.log('Post created successfully:', data);
         // Optionally, update the UI with the new post
-        writePostModal.hide();
+        writePostModal.modal('hide');
     })
     .catch(error => {
         console.error('Error creating post:', error);
