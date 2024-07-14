@@ -231,3 +231,16 @@ if ('IntersectionObserver' in window) {
         image.classList.remove('lazyload');
     });
 }
+
+// Function to extract username from URL
+function getUsernameFromURL() {
+    // Get the current path from the URL
+    const path = window.location.pathname;
+
+    // Split the path by '/' and get the username part
+    const pathParts = path.split('/');
+    const username = pathParts[1]; // Assuming the username is the first part after the initial '/'
+
+    return username;
+}
+
