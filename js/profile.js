@@ -92,11 +92,15 @@ cropImageBtn.addEventListener('click', () => {
    const canvas = cropper.getCroppedCanvas();
    if (canvas) {
        canvas.toBlob((blob) => {
-           // Replace the original file with the cropped blob
-           const croppedFile = new File([blob], profilePictureInput.files[0].name);
-           profilePictureInput.files[0] = croppedFile;
-           // Update preview with cropped image
-           profilePicturePreview.src = URL.createObjectURL(blob);
+           // Determine if the cropped image is for profile picture or header picture
+           if (cropperImage.id === 'profilePicture') {
+               profilePictureInput.files[0] = new File([blob], profilePictureInput.files[0].name);
+               profilePicturePreview.src = URL.createObjectURL(blob);
+           } else if (cropperImage.id === 'profileHeader') {
+               profileHeaderInput.files[0] = new File([blob], profileHeaderInput.files[0].name);
+               profileHeaderPreview.src = URL.createObjectURL(blob);
+           }
+
            // Close Cropper Modal
            $('#cropperModal').modal('hide');
        });
