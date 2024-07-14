@@ -14,12 +14,34 @@ const cropImageBtn = document.getElementById('cropImageBtn');
 
 document.addEventListener('DOMContentLoaded', (event) => {
     fetchUserInfo();
-    fetchUserInfoAndPopulateForm();
 });
 
 document.querySelector('.profile-stat.hive-user-action').addEventListener('click', () => {
    $('#editProfileModal').modal('show');
+   fetchUserInfoAndPopulateForm();
 });
+
+function fetchUserInfo() {
+    fetch('/api/get_user_info', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.getItem('token') // Assuming you're using JWT tokens stored in localStorage
+        }
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok ' + response.statusText);
+        }
+        return response.json();
+    })
+    .then(data => {
+        updateUserProfile(data.userInfo);
+    })
+    .catch(error => {
+        console.error('There was a problem with the fetch operation:', error);
+    });
+}
 
 // Function to fetch user info and populate form
 function fetchUserInfoAndPopulateForm() {
