@@ -154,7 +154,7 @@ const renderPosts = (posts) => {
 
 // Fetch posts initially when the page loads
 document.addEventListener('DOMContentLoaded', () => {
-    const currentUsername = getUsernameFromURL(); // Obtain the current username from URL
+    const currentUsername = getUsernameAndUidFromURL(); // Obtain the current username from URL
     fetchPosts(8, currentUsername); // Pass the currentUsername to fetchPosts
 });
 
@@ -192,8 +192,8 @@ if ('IntersectionObserver' in window) {
     });
 }
 
-// Function to extract username from URL
-function getUsernameFromURL() {
+// Function to extract username from URL and fetch user_id from RDS
+async function getUsernameAndUidFromURL() {
     // Get the current path from the URL
     const path = window.location.pathname;
 
@@ -202,5 +202,28 @@ function getUsernameFromURL() {
     const username = pathParts[1]; // Assuming the username is the first part after the initial '/'
 
     console.log('username:', username);
-    return username;
+
+    try {
+        // Fetch user_id based on username from RDS
+        const response = await fetch(`/api/get_user_id?username=${username}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to fetch user_id');
+        }
+
+        const data = await response.json();
+        const userId = data.userId; // Assuming the response structure from your API
+
+        console.log('user_id:', userId);
+        return { username, userId };
+    } catch (error) {
+        console.error('Error fetching user_id:', error);
+        return { username, userId: null }; // Handle error gracefully
+    }
 }
