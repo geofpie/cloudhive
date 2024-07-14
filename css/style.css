@@ -67,11 +67,6 @@ a:hover {
     height: 3rem;
 }
 
-.login-background {
-    height: 100vh;
-    background: blue;
-}
-
 .form-logo {
     display: block;
     margin: 0 auto 20px;
@@ -150,6 +145,7 @@ a:hover {
     height: 100vh;
     background-image: url('../assets/loginbg.jpg');
     background-size: cover;
+    padding: 22px;
 }
 
 .login-register-form {
