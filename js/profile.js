@@ -13,7 +13,6 @@ const cropperImage = document.getElementById('cropperImage');
 const cropImageBtn = document.getElementById('cropImageBtn');
 
 document.addEventListener('DOMContentLoaded', (event) => {
-    fetchUserInfoAndPopulateForm(); // Fetch user info on page load
     fetchPosts(); // Fetch posts on page load
 });
 
@@ -37,9 +36,6 @@ function fetchUserInfoAndPopulateForm() {
         return response.json();
     })
     .then(data => {
-        // Log the username fetched from the backend
-        console.log('Username fetched:', data.userInfo.username);
-
         // Populate form fields with user data
         document.getElementById('firstName').value = data.userInfo.first_name;
         document.getElementById('lastName').value = data.userInfo.last_name;
@@ -198,13 +194,15 @@ const renderPosts = (posts) => {
 
 // Fetch posts initially when the page loads
 document.addEventListener('DOMContentLoaded', () => {
-    fetchPosts(8); // Fetch posts without passing username initially
+    const currentUsername = getUsernameFromURL(); // Obtain the current username from URL
+    fetchPosts(8, currentUsername); // Pass the currentUsername to fetchPosts
 });
 
 // Infinite scroll to load more posts
 window.addEventListener('scroll', () => {
     if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
-        fetchPosts(8); // Adjust limit
+        const currentUsername = getUsernameFromURL(); // Obtain the current username from URL
+        fetchPosts(8, currentUsername); // Adjust limit and pass currentUsername
     }
 });
 
@@ -233,3 +231,17 @@ if ('IntersectionObserver' in window) {
         image.classList.remove('lazyload');
     });
 }
+
+// Function to extract username from URL
+function getUsernameFromURL() {
+    // Get the current path from the URL
+    const path = window.location.pathname;
+
+    // Split the path by '/' and get the username part
+    const pathParts = path.split('/');
+    const username = pathParts[1]; // Assuming the username is the first part after the initial '/'
+
+    console.log('username:', username);
+    return username;
+}
+
