@@ -30,8 +30,8 @@ function updateUserProfile(user) {
 }
 
 // Handle modal show
-$('#openComposePostModal').click(() => {
-    $('#composePostModal').modal('show');
+$('#write-post').click(() => {
+    $('#write-post').modal('show');
 });
 
 // Handle post submission
