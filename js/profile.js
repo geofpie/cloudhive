@@ -137,7 +137,7 @@ const fetchPosts = (limit = 8, username) => {
         body: JSON.stringify({
             limit: limit,
             lastEvaluatedKey: lastEvaluatedKey,
-            username: username  // Add username or userId here
+            username: username  // Pass the current user's username here
         })
     })
     .then(response => {
@@ -193,14 +193,20 @@ const renderPosts = (posts) => {
     });
 };
 
+// Fetch posts initially when the page loads
+document.addEventListener('DOMContentLoaded', () => {
+    const currentUsername = getUsernameFromURL(); // Implement this function to extract username from URL
+    fetchPosts(8, currentUsername);
+});
+
 // Infinite scroll to load more posts
 window.addEventListener('scroll', () => {
     if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
-        fetchPosts();
+        fetchPosts(8, currentUsername); // Adjust limit and pass currentUsername
     }
 });
 
-// Lazy loading for images
+// Lazy loading for images (if supported)
 if ('IntersectionObserver' in window) {
     const lazyImages = document.querySelectorAll('.lazyload');
     const imageObserver = new IntersectionObserver((entries, observer) => {
