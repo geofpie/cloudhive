@@ -137,7 +137,7 @@ const fetchPosts = (limit = 8, username) => {
         body: JSON.stringify({
             limit: limit,
             lastEvaluatedKey: lastEvaluatedKey,
-            username: username  // Pass the current user's username here
+            username: username  // Ensure username is correctly passed
         })
     })
     .then(response => {
@@ -239,9 +239,9 @@ function getUsernameFromURL() {
 
     // Split the path by '/' and get the username part
     const pathParts = path.split('/');
-    const username = pathParts[1]; // Assuming the username is the first part after the initial '/'
+    const currentUsername = pathParts[1]; // Assuming the username is the first part after the initial '/'
 
-    console.log('username:', username);
-    return username;
+    console.log('username:', currentUsername);
+    return currentUsername;
 }
 
