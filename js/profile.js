@@ -76,108 +76,68 @@ function fetchUserInfoAndPopulateForm() {
    });
 }
 
-function updateUserProfile(user) {
-    document.getElementById('hive-logged-in-user-name').innerText = user.first_name;
-    document.querySelector('.navbar-profile-pic').src = user.profile_picture_url;
-}
+document.addEventListener('DOMContentLoaded', (event) => {
+    const writePostButton = document.getElementById('write-post');
+    const writePostModal = new bootstrap.Modal(document.getElementById('writePostModal'));
+    const attachImageButton = document.getElementById('attachImageButton');
+    const postImageInput = document.getElementById('postImage');
+    const imagePreview = document.getElementById('imagePreview');
+    const submitPostButton = document.getElementById('submitPostButton');
 
-// Handle profile picture input change to update preview and open cropper modal
-profilePictureInput.addEventListener('change', () => {
-    const file = profilePictureInput.files[0];
-    if (file) {
-        profilePicturePreview.src = URL.createObjectURL(file);
-        $('#cropperModal').modal('show');
-        cropperImage.src = URL.createObjectURL(file);
-        initializeCropper();
-    } else {
-        // Handle case where no file is selected (optional)
-        profilePicturePreview.src = '../assets/default-profile.jpg'; // Set default preview image
+    writePostButton.addEventListener('click', () => {
+        writePostModal.show();
+    });
+
+    attachImageButton.addEventListener('click', () => {
+        postImageInput.click();
+    });
+
+    postImageInput.addEventListener('change', () => {
+        const file = postImageInput.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                imagePreview.src = e.target.result;
+                imagePreview.style.display = 'block';
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+
+    submitPostButton.addEventListener('click', () => {
+        const postContent = document.getElementById('postContent').value;
+        const postImage = postImageInput.files[0];
+        submitPost(postContent, postImage);
+    });
+});
+
+function submitPost(content, imageFile) {
+    const formData = new FormData();
+    formData.append('content', content);
+    if (imageFile) {
+        formData.append('postImage', imageFile);
     }
-});
 
-
-// Handle profile header input change to update preview and open cropper modal
-profileHeaderInput.addEventListener('change', () => {
-    const file = profileHeaderInput.files[0];
-    if (file) {
-        profileHeaderPreview.src = URL.createObjectURL(file);
-        $('#cropperModal').modal('show');
-        cropperImage.src = URL.createObjectURL(file);
-        initializeCropper();
-    } else {
-        // Handle case where no file is selected (optional)
-        profileHeaderPreview.src = '../assets/default-profile-header.jpg'; // Set default preview image
-    }
-});
-
-
-// Initialize Cropper.js
-function initializeCropper() {
-   cropper = new Cropper(cropperImage, {
-       aspectRatio: 1, // Adjust as needed for your image aspect ratio
-       viewMode: 1, // Restrict the cropped area to fit within the container
-   });
-}
-
-// Handle Cropper Modal Close
-$('#cropperModal').on('hidden.bs.modal', () => {
-   // Destroy cropper instance to free up memory
-   cropper.destroy();
-   cropper = null;
-});
-
-// Handle Crop Image Button Click
-cropImageBtn.addEventListener('click', () => {
-   const canvas = cropper.getCroppedCanvas();
-   if (canvas) {
-       canvas.toBlob((blob) => {
-           // Determine if the cropped image is for profile picture or header picture
-           if (cropperImage.id === 'profilePicture') {
-               profilePictureInput.files[0] = new File([blob], profilePictureInput.files[0].name);
-               profilePicturePreview.src = URL.createObjectURL(blob);
-           } else if (cropperImage.id === 'profileHeader') {
-               profileHeaderInput.files[0] = new File([blob], profileHeaderInput.files[0].name);
-               profileHeaderPreview.src = URL.createObjectURL(blob);
-           }
-
-           // Close Cropper Modal
-           $('#cropperModal').modal('hide');
-       });
-   }
-});
-
-// Handle Form Submission
-editProfileForm.addEventListener('submit', (event) => {
-    event.preventDefault();
-    
-    // Create FormData object
-    const formData = new FormData(editProfileForm);
-    
-    // Append profile picture and header picture files
-    formData.append('profilePic', profilePictureInput.files[0]);
-    formData.append('headerPic', profileHeaderInput.files[0]);
-    
-    fetch('/api/update_profile', {
+    fetch('/api/create_post', {
         method: 'POST',
         body: formData,
         headers: {
-            'Authorization': 'Bearer ' + localStorage.getItem('token') // Add authorization if needed
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
         }
     })
     .then(response => {
         if (!response.ok) {
-            throw new Error('Failed to update profile');
+            throw new Error('Failed to create post');
         }
         return response.json();
     })
     .then(data => {
-        console.log('Profile updated successfully:', data);
-        $('#editProfileModal').modal('hide'); // Hide modal after successful update
-        // Optionally update UI with new profile details
+        console.log('Post created successfully:', data);
+        // Optionally, update the UI with the new post
+        writePostModal.hide();
     })
     .catch(error => {
-        console.error('Error updating profile:', error);
+        console.error('Error creating post:', error);
         // Handle error or display message to user
     });
- });
- 
+}
