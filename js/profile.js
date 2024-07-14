@@ -50,6 +50,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
             formData.append('image', postImage);
         }
 
+        // Log the formData before sending the request
+        console.log('Data sent to backend:', formData);
+
         fetch('/api/posts', {
             method: 'POST',
             body: formData
