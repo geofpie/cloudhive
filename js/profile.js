@@ -109,29 +109,40 @@ cropImageBtn.addEventListener('click', () => {
 
 // Handle Form Submission
 editProfileForm.addEventListener('submit', (event) => {
-   event.preventDefault();
-   const formData = new FormData(editProfileForm);
-
-   fetch('/api/update_profile', {
-       method: 'POST',
-       body: formData,
-       headers: {
-           'Authorization': 'Bearer ' + localStorage.getItem('token') // Add authorization if needed
-       }
-   })
-   .then(response => {
-       if (!response.ok) {
-           throw new Error('Failed to update profile');
-       }
-       return response.json();
-   })
-   .then(data => {
-       console.log('Profile updated successfully:', data);
-       $('#editProfileModal').modal('hide'); // Hide modal after successful update
-       // Optionally update UI with new profile details
-   })
-   .catch(error => {
-       console.error('Error updating profile:', error);
-       // Handle error or display message to user
-   });
+    event.preventDefault();
+    
+    // Create FormData object
+    const formData = new FormData();
+    
+    // Append profile picture and header picture files
+    formData.append('profilePic', profilePictureInput.files[0]);
+    formData.append('headerPic', profileHeaderInput.files[0]);
+    
+    // Append other form data fields
+    formData.append('first-name', document.getElementById('firstName').value);
+    formData.append('last-name', document.getElementById('lastName').value);
+    formData.append('country', document.getElementById('country').value);
+    
+    fetch('/api/update_profile', {
+        method: 'POST',
+        body: formData,
+        headers: {
+            'Authorization': 'Bearer ' + localStorage.getItem('token') // Add authorization if needed
+        }
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Failed to update profile');
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log('Profile updated successfully:', data);
+        $('#editProfileModal').modal('hide'); // Hide modal after successful update
+        // Optionally update UI with new profile details
+    })
+    .catch(error => {
+        console.error('Error updating profile:', error);
+        // Handle error or display message to user
+    });
 });
