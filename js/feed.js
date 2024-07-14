@@ -27,5 +27,5 @@ function fetchUserInfo() {
 function updateUserProfile(user) {
     document.getElementById('hive-logged-in-user-name').innerText = user.first_name;
     document.querySelector('.navbar-profile-pic').src = user.profile_picture_url;
-    document.getElementById('.hive-logged-in-user-name').src = '/' + user.username;
+    document.getElementById('.hive-logged-in-user-name').href = '/' + user.username;
 }
