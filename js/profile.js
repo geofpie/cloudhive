@@ -50,27 +50,40 @@ function fetchUserInfoAndPopulateForm() {
    });
 }
 
+function updateUserProfile(user) {
+    document.getElementById('hive-logged-in-user-name').innerText = user.first_name;
+    document.querySelector('.navbar-profile-pic').src = user.profile_picture_url;
+}
+
 // Handle profile picture input change to update preview and open cropper modal
 profilePictureInput.addEventListener('change', () => {
-   const file = profilePictureInput.files[0];
-   if (file) {
-       profilePicturePreview.src = URL.createObjectURL(file);
-       $('#cropperModal').modal('show');
-       cropperImage.src = URL.createObjectURL(file);
-       initializeCropper();
-   }
+    const file = profilePictureInput.files[0];
+    if (file) {
+        profilePicturePreview.src = URL.createObjectURL(file);
+        $('#cropperModal').modal('show');
+        cropperImage.src = URL.createObjectURL(file);
+        initializeCropper();
+    } else {
+        // Handle case where no file is selected (optional)
+        profilePicturePreview.src = '../assets/default-profile.jpg'; // Set default preview image
+    }
 });
+
 
 // Handle profile header input change to update preview and open cropper modal
 profileHeaderInput.addEventListener('change', () => {
-   const file = profileHeaderInput.files[0];
-   if (file) {
-       profileHeaderPreview.src = URL.createObjectURL(file);
-       $('#cropperModal').modal('show');
-       cropperImage.src = URL.createObjectURL(file);
-       initializeCropper();
-   }
+    const file = profileHeaderInput.files[0];
+    if (file) {
+        profileHeaderPreview.src = URL.createObjectURL(file);
+        $('#cropperModal').modal('show');
+        cropperImage.src = URL.createObjectURL(file);
+        initializeCropper();
+    } else {
+        // Handle case where no file is selected (optional)
+        profileHeaderPreview.src = '../assets/default-profile-header.jpg'; // Set default preview image
+    }
 });
+
 
 // Initialize Cropper.js
 function initializeCropper() {
