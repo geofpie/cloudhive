@@ -241,6 +241,7 @@ function getUsernameFromURL() {
     const pathParts = path.split('/');
     const username = pathParts[1]; // Assuming the username is the first part after the initial '/'
 
+    console.log('username:', username);
     return username;
 }
 
