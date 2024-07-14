@@ -600,7 +600,7 @@ a:hover {
     padding: 24px 12px 24px 12px;
 }
 
-.hive-follow-user {
+.hive-user-action {
     position: inline-block;
     padding: 6px 10px 6px 10px;
     border-radius: 12px;
@@ -608,7 +608,7 @@ a:hover {
 }
 
 @media screen and (min-width: 960px) {
-    .hive-follow-user {
+    .hive-user-action {
         position: absolute;
         right: 0;
         margin-right: 22px;
