@@ -34,8 +34,8 @@ function fetchUserInfoAndPopulateForm() {
    })
    .then(data => {
        // Populate form fields with user data
-       document.getElementById('firstName').value = data.userInfo.firstName;
-       document.getElementById('lastName').value = data.userInfo.lastName;
+       document.getElementById('firstName').value = data.userInfo.first_name;
+       document.getElementById('lastName').value = data.userInfo.last_name;
        document.getElementById('username').value = data.userInfo.username;
        document.getElementById('email').value = data.userInfo.email;
 
