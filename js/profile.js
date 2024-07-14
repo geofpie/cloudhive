@@ -112,16 +112,11 @@ editProfileForm.addEventListener('submit', (event) => {
     event.preventDefault();
     
     // Create FormData object
-    const formData = new FormData();
+    const formData = new FormData(editProfileForm);
     
     // Append profile picture and header picture files
     formData.append('profilePic', profilePictureInput.files[0]);
     formData.append('headerPic', profileHeaderInput.files[0]);
-    
-    // Append other form data fields
-    formData.append('first-name', document.getElementById('firstName').value);
-    formData.append('last-name', document.getElementById('lastName').value);
-    formData.append('country', document.getElementById('country').value);
     
     fetch('/api/update_profile', {
         method: 'POST',
@@ -145,4 +140,5 @@ editProfileForm.addEventListener('submit', (event) => {
         console.error('Error updating profile:', error);
         // Handle error or display message to user
     });
-});
+ });
+ 
