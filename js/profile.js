@@ -157,12 +157,15 @@ const fetchPosts = (limit = 8, username) => {
 };
 
 const renderPosts = (posts) => {
+    if (!Array.isArray(posts)) {
+        console.error('Posts data is not an array:', posts);
+        return;
+    }
+
     if (!postFeed) {
         console.error('Error: postFeed element is null or undefined');
         return;
     }
-
-    postFeed.innerHTML = ''; // Clear existing posts
 
     posts.forEach(post => {
         const postElement = document.createElement('div');
@@ -188,7 +191,7 @@ const renderPosts = (posts) => {
                 <button class="hive-stat-like-btn"><i class="fa fa-heart hive-stat-like-heart"></i>Like</button>
             </div>
         `;
-        // Append postElement to postFeed
+        // Append postElement to postFeed if it exists
         postFeed.appendChild(postElement);
     });
 };
