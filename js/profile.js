@@ -12,6 +12,10 @@ const cropperModal = document.getElementById('cropperModal');
 const cropperImage = document.getElementById('cropperImage');
 const cropImageBtn = document.getElementById('cropImageBtn');
 
+document.addEventListener('DOMContentLoaded', (event) => {
+    fetchUserInfo();
+});
+
 document.querySelector('.profile-stat.hive-user-action').addEventListener('click', () => {
    fetchUserInfoAndPopulateForm();
    $('#editProfileModal').modal('show');

@@ -101,7 +101,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const onboardingForm = document.querySelector('.onboarding-form');
 
     // Event listener for form submission
-onboardingForm.addEventListener('submit', function(e) {
+    onboardingForm.addEventListener('submit', function(e) {
     e.preventDefault(); // Prevent default form submission
 
     // Ensure the cropped image blob is available
@@ -169,25 +169,6 @@ onboardingForm.addEventListener('submit', function(e) {
         button.innerHTML = originalText;
         button.disabled = false;
     }
-
-    // Function to handle logout
-    function handleLogout() {
-        // Clear JWT token (assuming it's stored in localStorage)
-        localStorage.removeItem('jwtToken');
-
-        // Redirect to login page
-        window.location.href = '/index.html'; // Adjust the URL as per your application's routing
-    }
-
-    // Event listener for logout link
-    const logoutLink = document.querySelector('.ob-logout');
-    if (logoutLink) {
-        logoutLink.addEventListener('click', function(e) {
-            e.preventDefault(); // Prevent default link behavior
-            handleLogout();
-        });
-    }
-
 
     // Add a class to trigger the animation after a short delay
     setTimeout(function() {
