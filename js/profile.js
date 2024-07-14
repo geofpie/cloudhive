@@ -13,10 +13,6 @@ const cropperImage = document.getElementById('cropperImage');
 const cropImageBtn = document.getElementById('cropImageBtn');
 
 document.addEventListener('DOMContentLoaded', (event) => {
-    fetchPosts(); // Fetch posts on page load
-});
-
-document.addEventListener('DOMContentLoaded', (event) => {
     const writePostButton = document.getElementById('write-post');
     const writePostModal = new bootstrap.Modal(document.getElementById('writePostModal'));
     const attachImageButton = document.getElementById('attachImageButton');
