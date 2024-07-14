@@ -16,42 +16,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
     fetchPosts(); // Fetch posts on page load
 });
 
-document.querySelector('.profile-stat.hive-user-action').addEventListener('click', () => {
-    $('#editProfileModal').modal('show');
-    fetchUserInfoAndPopulateForm();
-});
-
-function fetchUserInfoAndPopulateForm() {
-    fetch('/api/get_user_info', {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + localStorage.getItem('token')
-        }
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-    })
-    .then(data => {
-        // Populate form fields with user data
-        document.getElementById('firstName').value = data.userInfo.first_name;
-        document.getElementById('lastName').value = data.userInfo.last_name;
-        document.getElementById('username').value = data.userInfo.username;
-        document.getElementById('email').value = data.userInfo.email;
-
-        // Set profile picture and profile header previews
-        profilePicturePreview.src = data.userInfo.profile_picture_url || '../assets/default-profile.jpg';
-        profileHeaderPreview.src = data.userInfo.profile_header_url || '../assets/default-profile-header.jpg';
-    })
-    .catch(error => {
-        console.error('Error fetching user info:', error);
-        // Handle error or display message to user
-    });
-}
-
 document.addEventListener('DOMContentLoaded', (event) => {
     const writePostButton = document.getElementById('write-post');
     const writePostModal = new bootstrap.Modal(document.getElementById('writePostModal'));
@@ -244,4 +208,3 @@ function getUsernameFromURL() {
     console.log('username:', username);
     return username;
 }
-
