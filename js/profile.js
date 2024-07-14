@@ -29,40 +29,45 @@ function updateUserProfile(user) {
     document.querySelector('.navbar-profile-pic').src = user.profile_picture_url;
 }
 
-// Handle modal show
-$('#write-post').click(() => {
-    $('#write-post').modal('show');
-});
+// Additional functionality for posting
+document.addEventListener('DOMContentLoaded', (event) => {
+    const openComposePostModalBtn = document.getElementById('write-post');
+    const composePostModal = document.getElementById('composePostModal');
+    const submitPostBtn = document.getElementById('submitPost');
 
-// Handle post submission
-$('#submitPost').click(() => {
-    const content = $('#postContent').val();
-    const imageFile = $('#postImage')[0].files[0];
+    openComposePostModalBtn.addEventListener('click', () => {
+        $(composePostModal).modal('show'); // Using jQuery to show Bootstrap modal
+    });
 
-    const formData = new FormData();
-    formData.append('userId', '<%= user.userId %>'); // Assuming user is authenticated
-    formData.append('content', content);
-    if (imageFile) {
-        formData.append('image', imageFile);
-    }
+    submitPostBtn.addEventListener('click', () => {
+        const postContent = document.getElementById('postContent').value;
+        const postImage = document.getElementById('postImage').files[0];
 
-    fetch('/api/posts', {
-        method: 'POST',
-        body: formData
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Failed to create post');
+        const formData = new FormData();
+        formData.append('userId', '<%= user.userId %>'); // Assuming user is authenticated
+        formData.append('content', postContent);
+        if (postImage) {
+            formData.append('image', postImage);
         }
-        return response.json();
-    })
-    .then(data => {
-        console.log('Post created successfully:', data);
-        $('#composePostModal').modal('hide');
-        // Optionally reload posts or update UI
-    })
-    .catch(error => {
-        console.error('Error creating post:', error);
-        // Handle error or display message to user
+
+        fetch('/api/posts', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to create post');
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Post created successfully:', data);
+            $(composePostModal).modal('hide'); // Hide modal after successful post
+            // Optionally reload posts or update UI
+        })
+        .catch(error => {
+            console.error('Error creating post:', error);
+            // Handle error or display message to user
+        });
     });
 });
