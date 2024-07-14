@@ -159,8 +159,12 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 lastEvaluatedKey: lastEvaluatedKey
             })
         })
-        .then(response => response.json())
+        .then(response => {
+            console.log('Fetch posts response status:', response.status);
+            return response.json();
+        })
         .then(data => {
+            console.log('Posts data:', data);
             lastEvaluatedKey = data.LastEvaluatedKey;
             renderPosts(data.Items);
             loading = false;
