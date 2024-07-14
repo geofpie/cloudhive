@@ -176,6 +176,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
     };
 
     const renderPosts = (posts) => {
+        if (!postFeed) {
+            console.error('Error: postFeed element is null or undefined');
+            return;
+        }
+    
         posts.forEach(post => {
             const postElement = document.createElement('div');
             postElement.classList.add('col-md-5', 'hive-post-element', 'mx-auto', 'shadow-sm');
@@ -200,9 +205,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
                     <button class="hive-stat-like-btn"><i class="fa fa-heart hive-stat-like-heart"></i>Like</button>
                 </div>
             `;
+            // Append postElement to postFeed if it exists
             postFeed.appendChild(postElement);
         });
     };
+    
 
     // Initial fetch of posts
     fetchPosts();
