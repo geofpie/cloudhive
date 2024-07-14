@@ -195,13 +195,14 @@ const renderPosts = (posts) => {
 
 // Fetch posts initially when the page loads
 document.addEventListener('DOMContentLoaded', () => {
-    const currentUsername = getUsernameFromURL(); // Implement this function to extract username from URL
-    fetchPosts(8, currentUsername);
+    const currentUsername = getUsernameFromURL(); // Obtain the current username from URL
+    fetchPosts(8, currentUsername); // Pass the currentUsername to fetchPosts
 });
 
 // Infinite scroll to load more posts
 window.addEventListener('scroll', () => {
     if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
+        const currentUsername = getUsernameFromURL(); // Obtain the current username from URL
         fetchPosts(8, currentUsername); // Adjust limit and pass currentUsername
     }
 });
@@ -239,9 +240,9 @@ function getUsernameFromURL() {
 
     // Split the path by '/' and get the username part
     const pathParts = path.split('/');
-    const currentUsername = pathParts[1]; // Assuming the username is the first part after the initial '/'
+    const username = pathParts[1]; // Assuming the username is the first part after the initial '/'
 
-    console.log('username:', currentUsername);
-    return currentUsername;
+    console.log('username:', username);
+    return username;
 }
 
