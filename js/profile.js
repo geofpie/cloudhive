@@ -37,6 +37,9 @@ function fetchUserInfoAndPopulateForm() {
         return response.json();
     })
     .then(data => {
+        // Log the username fetched from the backend
+        console.log('Username fetched:', data.userInfo.username);
+
         // Populate form fields with user data
         document.getElementById('firstName').value = data.userInfo.first_name;
         document.getElementById('lastName').value = data.userInfo.last_name;
