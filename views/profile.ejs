@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>{user} | cloudhive</title>
+    <title><%= user.username %> | cloudhive</title>
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css">
     <!-- jQuery, Popper.js, Bootstrap JS -->
@@ -62,37 +62,15 @@
     </nav>
     <!-- End Nav -->
      <div class="container-fluid">
-        <!-- <div class="row align-items-center">
-            <div class="col"></div>
-            <div class="col-lg-8 profile-header d-flex shadow-lg">
-                <div class="profile-action-button">
-                    <button class="profile-update"><i class="fa fa-pen"></i></button>
-                </div>
-                <div class="profile-user-name alig">
-                    <img src="../assets/default-profile.jpg" alt="Profile" class="header-profile-pic">
-                    <h3 class="profile-user-name-elem">{user_name}</h3>
-                    <p class="profile-user-country" id="profile-user-country">{location}</p>
-                </div>
-                <div class="profile-user-stats mt-auto align-bottom">
-                    <div class="col">
-                        <button class="profile-stat hive-follow-user"><i class="fa fa-user-plus"></i>Follow</button>
-                        <p class="profile-stat profile-posts-count" id="profile-posts-count"><strong>NaN</strong> posts</p>
-                        <p class="profile-stat profile-user-follower-count" id="profile-user-follower-count"><strong>NaN</strong> followers</p>
-                        <p class="profile-stat profile-user-following-count" id="profile-user-following-count"><strong>NaN</strong> following</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col"></div> 
-        </div> -->
         <div class="row profile-fullwidth-header" style="background-color: black;">
             <div class="col d-flex">
                 <div class="profile-action-button">
                     <button class="profile-update"><i class="fa fa-pen"></i></button>
                 </div>
                 <div class="profile-user-name alig">
-                    <img src="../assets/default-profile.jpg" alt="Profile" class="header-profile-pic shadow">
-                    <h3 class="profile-user-name-elem">{user_name}</h3>
-                    <p class="profile-user-country" id="profile-user-country">{location}</p>
+                    <img src="<%= user.profile_picture_url || '../assets/default-profile.jpg' %>" alt="Profile" class="header-profile-pic shadow">
+                    <h3 class="profile-user-name-elem"><%= user.username %></h3>
+                    <p class="profile-user-country" id="profile-user-country"><%= user.country %></p>
                 </div>
                 <div class="profile-user-stats mt-auto align-bottom">
                     <div class="col">
