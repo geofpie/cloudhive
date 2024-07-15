@@ -205,6 +205,7 @@ function getUsernameFromURL() {
     return username;
 }
 
+// Function to send follow request
 function sendFollowRequest(username) {
     fetch(`/api/follow/${username}`)
         .then(response => {
@@ -214,7 +215,11 @@ function sendFollowRequest(username) {
             return response.text();
         })
         .then(data => {
-            alert(data); // Show success or error message
+            if (data.includes('already pending')) {
+                alert('You have already sent a follow request.');
+            } else {
+                alert(data); // Show success message
+            }
         })
         .catch(error => {
             console.error('Error:', error);
