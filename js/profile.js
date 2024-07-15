@@ -204,3 +204,20 @@ function getUsernameFromURL() {
     console.log('username:', username);
     return username;
 }
+
+function sendFollowRequest(username) {
+    fetch(`/api/follow/${username}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.text();
+        })
+        .then(data => {
+            alert(data); // Show success or error message
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error sending follow request');
+        });
+}
