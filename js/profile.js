@@ -271,10 +271,10 @@ function acceptFollowRequest(username) {
     .then(response => response.text())
     .then(data => {
         alert(data);
-        // Optionally, remove the request from the list or update the UI
+        // Remove the request from the list or update the UI to show it as accepted
         const listItem = document.querySelector(`li[data-username="${username}"]`);
         if (listItem) {
-            listItem.remove();
+            listItem.remove(); // Remove the list item from the UI
         }
     })
     .catch(error => console.error('Error:', error));
@@ -291,10 +291,10 @@ function denyFollowRequest(username) {
     .then(response => response.text())
     .then(data => {
         alert(data);
-        // Optionally, remove the request from the list or update the UI
+        // Remove the request from the list
         const listItem = document.querySelector(`li[data-username="${username}"]`);
         if (listItem) {
-            listItem.remove();
+            listItem.remove(); // Remove the list item from the UI
         }
     })
     .catch(error => console.error('Error:', error));
