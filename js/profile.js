@@ -215,7 +215,7 @@ function sendFollowRequest(username) {
             return response.text();
         })
         .then(data => {
-            if (data.includes('already pending')) {
+            if (data.includes('already pending/')) {
                 alert('You have already sent a follow request.');
             } else {
                 alert(data); // Show success message
@@ -225,4 +225,44 @@ function sendFollowRequest(username) {
             console.error('Error:', error);
             alert('Error sending follow request');
         });
+}
+
+document.getElementById('notifications-link').addEventListener('click', function() {
+    fetch('/api/follow-requests')
+        .then(response => response.json())
+        .then(data => {
+            const followRequestsList = document.getElementById('follow-requests-list');
+            followRequestsList.innerHTML = ''; // Clear the list
+
+            data.forEach(request => {
+                const listItem = document.createElement('li');
+                listItem.className = 'list-group-item d-flex justify-content-between align-items-center';
+
+                const profilePicUrl = request.profilepic_key ? `https://cloudhive-userdata.s3.amazonaws.com/${request.profilepic_key}` : '../assets/default-profile.jpg';
+                listItem.innerHTML = `
+                    <img src="${profilePicUrl}" alt="Profile Picture" class="rounded-circle" width="40" height="40">
+                    <div>
+                        <strong>${request.first_name} ${request.last_name}</strong>
+                        <p>@${request.username}</p>
+                    </div>
+                    <div>
+                        <button class="btn btn-success btn-sm mr-2" onclick="acceptFollowRequest('${request.username}')">Accept</button>
+                        <button class="btn btn-danger btn-sm" onclick="denyFollowRequest('${request.username}')">Deny</button>
+                    </div>
+                `;
+
+                followRequestsList.appendChild(listItem);
+            });
+
+            $('#notificationsModal').modal('show'); // Show the modal
+        })
+        .catch(error => console.error('Error fetching follow requests:', error));
+});
+
+function acceptFollowRequest(username) {
+    // Implement accept follow request logic here
+}
+
+function denyFollowRequest(username) {
+    // Implement deny follow request logic here
 }
