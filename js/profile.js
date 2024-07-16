@@ -238,7 +238,8 @@ document.getElementById('notifications-link').addEventListener('click', function
                 const listItem = document.createElement('li');
                 listItem.className = 'list-group-item d-flex justify-content-between align-items-center';
 
-                const profilePicUrl = request.profilepic_key ? `https://cloudhive-userdata.s3.amazonaws.com/${request.profilepic_key}` : '../assets/default-profile.jpg';
+                const profilePicUrl = request.profile_picture_url || '../assets/default-profile.jpg';
+
                 listItem.innerHTML = `
                     <img src="${profilePicUrl}" alt="Profile Picture" class="rounded-circle" width="40" height="40">
                     <div>
@@ -258,6 +259,14 @@ document.getElementById('notifications-link').addEventListener('click', function
         })
         .catch(error => console.error('Error fetching follow requests:', error));
 });
+
+function acceptFollowRequest(username) {
+    // Implement accept follow request logic here
+}
+
+function denyFollowRequest(username) {
+    // Implement deny follow request logic here
+}
 
 function acceptFollowRequest(username) {
     // Implement accept follow request logic here
