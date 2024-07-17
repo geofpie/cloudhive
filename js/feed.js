@@ -36,7 +36,7 @@ function updateUserProfile(user) {
 
 document.addEventListener('DOMContentLoaded', function() {
     let lastPostTimestamp = null;
-    const postsContainer = document.getElementById('news-feed-container');
+    const postsContainer = document.getElementById('newsfeed-posts-container');
     const loadMoreButton = document.getElementById('load-more');
     let isFetching = false;
 
@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (isFetching) return;
         isFetching = true;
 
-        let url = `/api/news-feed`;
+        let url = `/api/newsfeed`;
         if (lastPostTimestamp) {
             url += `?lastPostTimestamp=${lastPostTimestamp}`;
         }
