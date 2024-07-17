@@ -35,27 +35,37 @@ function updateUserProfile(user) {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-    let lastPostId = null;
-    const postsContainer = document.getElementById('newsfeed-posts-container');
+    let lastPostTimestamp = null;
+    const postsContainer = document.getElementById('news-feed-container');
     const loadMoreButton = document.getElementById('load-more');
+    let isFetching = false;
 
     function fetchPosts() {
-        let url = '/api/newsfeed';
-        if (lastPostId) {
-            url += `?lastPostId=${lastPostId}`;
+        if (isFetching) return;
+        isFetching = true;
+
+        let url = `/api/news-feed`;
+        if (lastPostTimestamp) {
+            url += `?lastPostTimestamp=${lastPostTimestamp}`;
         }
 
-        console.log('Fetching posts with URL:', url); // Log the URL
+        console.log('Fetching posts from URL:', url);
 
-        fetch(url, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${localStorage.getItem('token')}` // Assuming you're using a token for auth
-            }
-        })
-            .then(response => response.json())
+        fetch(url)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
             .then(data => {
+                console.log('Fetched posts data:', data);
+
+                if (!data.Items) {
+                    console.error('No items in fetched data');
+                    return;
+                }
+
                 if (data.Items.length > 0) {
                     data.Items.forEach(post => {
                         const postElement = document.createElement('div');
@@ -87,11 +97,10 @@ document.addEventListener('DOMContentLoaded', function() {
                         postsContainer.appendChild(postElement);
                     });
 
-                    // Update lastPostId for next fetch
-                    lastPostId = data.LastEvaluatedKey ? data.LastEvaluatedKey : null;
-                    console.log('Updated lastPostId:', lastPostId); // Log updated lastPostId
+                    // Update lastPostTimestamp for next fetch
+                    lastPostTimestamp = data.LastEvaluatedKey;
 
-                    if (lastPostId) {
+                    if (lastPostTimestamp) {
                         loadMoreButton.style.display = 'block';
                     } else {
                         loadMoreButton.style.display = 'none';
@@ -100,7 +109,10 @@ document.addEventListener('DOMContentLoaded', function() {
                     loadMoreButton.style.display = 'none';
                 }
             })
-            .catch(error => console.error('Error fetching posts:', error));
+            .catch(error => console.error('Error fetching posts:', error))
+            .finally(() => {
+                isFetching = false;
+            });
     }
 
     loadMoreButton.addEventListener('click', fetchPosts);
@@ -110,10 +122,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Infinite scroll
     window.addEventListener('scroll', () => {
-        if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
-            if (lastPostId) {
-                fetchPosts();
-            }
+        if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 100 && !isFetching && lastPostTimestamp) {
+            fetchPosts();
         }
     });
 });
