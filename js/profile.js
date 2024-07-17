@@ -244,11 +244,20 @@ document.addEventListener('DOMContentLoaded', function() {
         })
             .then(response => {
                 console.log('Response status:', response.status); // Log response status
+                if (response.status === 403) {
+                    // User is not following the profile user
+                    postsContainer.innerHTML = `
+                        <div class="col-md-3 user-not-followed shadow mx-auto">
+                            <i class="fa fa-user-plus followperson-icon"></i>
+                            <h3 class="user-followed-header">Follow ${username} to view their posts, and get connected.</h3>
+                        </div>
+                    `;
+                    loadMoreButton.style.display = 'none';
+                    return;
+                }
                 return response.json();
             })
             .then(data => {
-                console.log('Response data:', data); // Log response data
-
                 if (data.Items.length > 0) {
                     data.Items.forEach(post => {
                         const postElement = document.createElement('div');
