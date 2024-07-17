@@ -233,9 +233,22 @@ document.addEventListener('DOMContentLoaded', function() {
             url += `?lastPostId=${lastPostId}`;
         }
 
-        fetch(url)
-            .then(response => response.json())
+        console.log('Fetching posts with URL:', url); // Log the URL
+
+        fetch(url, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('token')}` // Assuming you're using a token for auth
+            }
+        })
+            .then(response => {
+                console.log('Response status:', response.status); // Log response status
+                return response.json();
+            })
             .then(data => {
+                console.log('Response data:', data); // Log response data
+
                 if (data.Items.length > 0) {
                     data.Items.forEach(post => {
                         const postElement = document.createElement('div');
@@ -269,6 +282,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
                     // Update lastPostId for next fetch
                     lastPostId = data.LastEvaluatedKey ? data.LastEvaluatedKey.postId : null;
+                    console.log('Updated lastPostId:', lastPostId); // Log updated lastPostId
 
                     if (lastPostId) {
                         loadMoreButton.style.display = 'block';
