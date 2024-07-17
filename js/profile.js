@@ -79,119 +79,6 @@ function submitPost(content, imageFile) {
     });
 }
 
-const postFeed = document.getElementById('hive-feed-area');
-let lastEvaluatedKey = null;
-let loading = false;
-
-const fetchPosts = (limit = 8, username) => {
-    if (loading) return;
-    loading = true;
-
-    fetch('/api/get_posts', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + localStorage.getItem('token')
-        },
-        body: JSON.stringify({
-            limit: limit,
-            lastEvaluatedKey: lastEvaluatedKey,
-            username: username  // Ensure username is correctly passed
-        })
-    })
-    .then(response => {
-        console.log('Fetch posts response status:', response.status);
-        return response.json();
-    })
-    .then(data => {
-        console.log('Posts data:', data);
-        lastEvaluatedKey = data.LastEvaluatedKey;
-        renderPosts(data.Items);
-        loading = false;
-    })
-    .catch(error => {
-        console.error('Error fetching posts:', error);
-        loading = false;
-    });
-};
-
-const renderPosts = (posts) => {
-    if (!postFeed) {
-        console.error('Error: postFeed element is null or undefined');
-        return;
-    }
-
-    postFeed.innerHTML = ''; // Clear existing posts
-
-    posts.forEach(post => {
-        const postElement = document.createElement('div');
-        postElement.classList.add('col-md-5', 'hive-post-element', 'mx-auto', 'shadow-sm');
-        postElement.innerHTML = `
-            <div class="row hive-post-user-details align-items-center">
-                <div class="col">
-                    <img src="${post.userProfilePicture || '../assets/default-profile.jpg'}" alt="Profile" class="post-profile-pic">
-                </div>
-                <div class="col hive-user-details-text">
-                    <a href="/${post.username}" class="hive-post-username">${post.username}</a>
-                    <a href="/${post.username}" class="hive-post-user-sub">@${post.username}</a>
-                    <i class="fa fa-clock hive-post-time-icon"></i><p class="hive-post-time">${new Date(post.createdAt).toLocaleString()}</p>
-                </div>
-            </div>
-            <div class="row hive-post-content">
-                <p class="hive-post-text">${post.content}</p>
-                ${post.imageUrl ? `<div class="hive-post-image"><img class="hive-post-img-src lazyload" data-src="${post.imageUrl}" src="placeholder.jpg" alt="Post Image"></div>` : ''}
-            </div>
-            <div class="hive-social-stats">
-                <p class="hive-stat-like"><strong>${post.likes || 0}</strong> likes</p>
-                <hr>
-                <button class="hive-stat-like-btn"><i class="fa fa-heart hive-stat-like-heart"></i>Like</button>
-            </div>
-        `;
-        // Append postElement to postFeed
-        postFeed.appendChild(postElement);
-    });
-};
-
-// Fetch posts initially when the page loads
-document.addEventListener('DOMContentLoaded', () => {
-    const currentUsername = getUsernameFromURL(); // Obtain the current username from URL
-    fetchPosts(8, currentUsername); // Pass the currentUsername to fetchPosts
-});
-
-// Infinite scroll to load more posts
-window.addEventListener('scroll', () => {
-    if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
-        const currentUsername = getUsernameFromURL(); // Obtain the current username from URL
-        fetchPosts(8, currentUsername); // Adjust limit and pass currentUsername
-    }
-});
-
-// Lazy loading for images (if supported)
-if ('IntersectionObserver' in window) {
-    const lazyImages = document.querySelectorAll('.lazyload');
-    const imageObserver = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const image = entry.target;
-                image.src = image.dataset.src;
-                image.classList.remove('lazyload');
-                imageObserver.unobserve(image);
-            }
-        });
-    });
-
-    lazyImages.forEach(image => {
-        imageObserver.observe(image);
-    });
-} else {
-    // Fallback for browsers without IntersectionObserver support
-    const lazyImages = document.querySelectorAll('.lazyload');
-    lazyImages.forEach(image => {
-        image.src = image.dataset.src;
-        image.classList.remove('lazyload');
-    });
-}
-
 // Function to extract username from URL
 function getUsernameFromURL() {
     // Get the current path from the URL
@@ -334,4 +221,78 @@ document.getElementById('notifications-link').addEventListener('click', function
         .catch(error => console.error('Error fetching follow requests:', error));
 });
 
+document.addEventListener('DOMContentLoaded', function() {
+    let lastPostId = null;
+    const username = '<%= user.username %>'; // Pass the username dynamically
+    const postsContainer = document.getElementById('profile-posts-container');
+    const loadMoreButton = document.getElementById('load-more');
 
+    function fetchPosts() {
+        let url = `/api/user/${username}/posts`;
+        if (lastPostId) {
+            url += `?lastPostId=${lastPostId}`;
+        }
+
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                if (data.Items.length > 0) {
+                    data.Items.forEach(post => {
+                        const postElement = document.createElement('div');
+                        postElement.className = 'hive-post';
+
+                        const postTemplate = `
+                            <div class="row hive-post-user-details align-items-center">
+                                <div class="col">
+                                    <img src="${post.userProfilePicture || '../assets/default-profile.jpg'}" alt="Profile" class="post-profile-pic">
+                                </div>
+                                <div class="col hive-user-details-text">
+                                    <a href="/${post.username}" class="hive-post-username">${post.username}</a>
+                                    <a href="/${post.username}" class="hive-post-user-sub">@${post.username}</a>
+                                    <i class="fa fa-clock hive-post-time-icon"></i><p class="hive-post-time">${new Date(post.timestamp).toLocaleString()}</p>
+                                </div>
+                            </div>
+                            <div class="row hive-post-content">
+                                <p class="hive-post-text">${post.content}</p>
+                                ${post.imageUrl ? `<div class="hive-post-image"><img class="hive-post-img-src lazyload" data-src="${post.imageUrl}" src="placeholder.jpg" alt="Post Image"></div>` : ''}
+                            </div>
+                            <div class="hive-social-stats">
+                                <p class="hive-stat-like"><strong>${post.likes || 0}</strong> likes</p>
+                                <hr>
+                                <button class="hive-stat-like-btn"><i class="fa fa-heart hive-stat-like-heart"></i>Like</button>
+                            </div>
+                        `;
+
+                        postElement.innerHTML = postTemplate;
+                        postsContainer.appendChild(postElement);
+                    });
+
+                    // Update lastPostId for next fetch
+                    lastPostId = data.LastEvaluatedKey ? data.LastEvaluatedKey.postId : null;
+
+                    if (lastPostId) {
+                        loadMoreButton.style.display = 'block';
+                    } else {
+                        loadMoreButton.style.display = 'none';
+                    }
+                } else {
+                    loadMoreButton.style.display = 'none';
+                }
+            })
+            .catch(error => console.error('Error fetching posts:', error));
+    }
+
+    loadMoreButton.addEventListener('click', fetchPosts);
+
+    // Initial fetch
+    fetchPosts();
+
+    // Infinite scroll
+    window.addEventListener('scroll', () => {
+        if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
+            if (lastPostId) {
+                fetchPosts();
+            }
+        }
+    });
+});
