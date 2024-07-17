@@ -36,7 +36,7 @@ function updateUserProfile(user) {
 
 document.addEventListener('DOMContentLoaded', function() {
     let lastPostTimestamp = null;
-    const postsContainer = document.getElementById('newsfeed-posts-container');
+    const postsContainer = document.getElementById('news-feed-container');
     const loadMoreButton = document.getElementById('load-more');
     let isFetching = false;
 
@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (isFetching) return;
         isFetching = true;
 
-        let url = `/api/newsfeed`;
+        let url = `/api/news-feed`;
         if (lastPostTimestamp) {
             url += `?lastPostTimestamp=${lastPostTimestamp}`;
         }
@@ -68,6 +68,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 if (data.Items.length > 0) {
                     data.Items.forEach(post => {
+                        console.log('Post data:', post);
                         const postElement = document.createElement('div');
                         postElement.className = 'hive-post';
 
