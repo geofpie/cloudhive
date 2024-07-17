@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (isFetching) return;
         isFetching = true;
 
-        let url = `/api/news-feed`;
+        let url = `/api/newsfeed`;
         if (lastPostTimestamp) {
             url += `?lastPostTimestamp=${lastPostTimestamp}`;
         }
