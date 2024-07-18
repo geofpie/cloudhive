@@ -626,14 +626,19 @@ a:hover {
 }
 
 .hive-post-image {
+    position: relative;
     width: 100%;
+    padding-top: 75%; /* 3:4 aspect ratio (height / width = 75%) */
+    overflow: hidden;
+    border-radius: 16px;
 }
 
 .hive-post-img-src {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
-    height: auto;
-    max-height: 350px; /* Limit the height to 350px */
-    max-width: calc(350px * (3 / 4)); /* Limit the width based on aspect ratio */
+    height: 100%;
     object-fit: cover;
     border-radius: 16px;
 }
