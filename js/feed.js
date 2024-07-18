@@ -73,6 +73,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         postElement.className = 'hive-post';
 
                         const postTemplate = `
+                        <div class="col-md-4 hive-post-element shadow mx-auto">
                             <div class="row hive-post-user-details align-items-center">
                                 <div class="col">
                                     <img src="${post.userProfilePicture || '../assets/default-profile.jpg'}" alt="Profile" class="post-profile-pic">
@@ -92,6 +93,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                 <hr>
                                 <button class="hive-stat-like-btn"><i class="fa fa-heart hive-stat-like-heart"></i>Like</button>
                             </div>
+                        </div>
                         `;
 
                         postElement.innerHTML = postTemplate;
