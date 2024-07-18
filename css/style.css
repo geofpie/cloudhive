@@ -630,7 +630,9 @@ a:hover {
 
 .hive-post-img-src {
     width: 100%;
-    height: 350px;
+    height: auto;
+    max-height: 350px; /* Limit the height to 350px */
+    max-width: calc(350px * (3 / 4)); /* Limit the width based on aspect ratio */
     object-fit: cover;
     border-radius: 16px;
 }
