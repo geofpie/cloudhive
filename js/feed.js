@@ -34,6 +34,8 @@ function updateUserProfile(user) {
     document.querySelector('.navbar-profile-pic').src = user.profile_picture_url;
 }
 
+dayjs.extend(dayjs_plugin_relativeTime);
+
 document.addEventListener('DOMContentLoaded', function() {
     let lastPostTimestamp = null;
     const postsContainer = document.getElementById('newsfeed-posts-container');
@@ -81,7 +83,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                 <div class="col hive-user-details-text">
                                     <a href="/${post.username}" class="hive-post-username">${post.username}</a>
                                     <a href="/${post.username}" class="hive-post-user-sub">@${post.username}</a>
-                                    <i class="fa fa-clock hive-post-time-icon"></i><p class="hive-post-time">${new Date(post.timestamp).toLocaleString()}</p>
+                                    <i class="fa fa-clock hive-post-time-icon"></i><p class="hive-post-time">${dayjs(post.timestamp).fromNow()}</p>
                                 </div>
                             </div>
                             <div class="row hive-post-content">
