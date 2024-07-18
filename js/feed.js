@@ -85,7 +85,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             </div>
                             <div class="row hive-post-content">
                                 <p class="hive-post-text">${post.content}</p>
-                                ${post.imageUrl ? `<div class="hive-post-image"><img class="hive-post-img-src lazyload" data-src="${post.imageUrl}" src="placeholder.jpg" alt="Post Image"></div>` : ''}
+                                ${post.imageUrl ? `<div class="hive-post-image"><img class="hive-post-img-src" data-src="${post.imageUrl}" src="${post.imageUrl}" alt="Post Image"></div>` : ''}
                             </div>
                             <div class="hive-social-stats">
                                 <p class="hive-stat-like"><strong>${post.likes || 0}</strong> likes</p>
