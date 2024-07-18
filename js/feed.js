@@ -73,7 +73,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         postElement.className = 'hive-post';
 
                         const postTemplate = `
-                        <div class="col-md-5 hive-post-element shadow mx-auto">
+                        <div class="col-md-5 hive-post-element mx-auto">
                             <div class="row hive-post-user-details align-items-center">
                                 <div class="col">
                                     <img src="${post.userProfilePicture || '../assets/default-profile.jpg'}" alt="Profile" class="post-profile-pic">
@@ -86,7 +86,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             </div>
                             <div class="row hive-post-content">
                                 <p class="hive-post-text">${post.content}</p>
-                                ${post.imageUrl ? `<div class="hive-post-image"><img class="hive-post-img-src" data-src="${post.imageUrl}" src="${post.imageUrl}" alt="Post Image"></div>` : ''}
+                                ${post.imageUrl ? `<div class="hive-post-image shadow-sm"><img class="hive-post-img-src" data-src="${post.imageUrl}" src="${post.imageUrl}" alt="Post Image"></div>` : ''}
                             </div>
                             <div class="hive-social-stats">
                                 <p class="hive-stat-like"><strong>${post.likes || 0}</strong> likes</p>
