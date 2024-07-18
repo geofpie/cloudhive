@@ -24,8 +24,8 @@
     <script src="https://cdn.jsdelivr.net/npm/dayjs/plugin/relativeTime.js"></script>
 </head>
 <body>
-     <!-- Navbar -->
-     <nav class="navbar navbar-expand-lg navbar-light sticky-top hive-navbar">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light sticky-top hive-navbar">
         <a class="navbar-brand" href="#">
             <img src="../assets/logo-dark.svg" width="46" height="46" alt="cloudhive">
         </a>
@@ -45,7 +45,7 @@
       
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item hive-nav-btn">
+                <li class="nav-item hive-nav-btn active">
                     <a class="nav-link" href="/hive">Hive <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item hive-nav-btn">
@@ -59,16 +59,9 @@
                         <a class="nav-link" href="#" id="notifications-link"><i class="fa fa-bell"></i></a>
                     </li>
                 </ul>
-                <% if (loggedInUser.username === user.username) { %>
-                <li class="nav-item hive-nav-btn active">
+                <li class="nav-item hive-nav-btn">
                     <a class="nav-link" id="hive-logged-in-user-name" href="#">{user}</a>
                 </li>
-                
-                <% } else { %>
-                    <li class="nav-item hive-nav-btn">
-                        <a class="nav-link" id="hive-logged-in-user-name" href="#">{user}</a>
-                    </li>
-                 <% } %>
                 <li class="nav-item hive-nav-btn">
                     <img src="../assets/default-profile.jpg" alt="Profile" class="navbar-profile-pic">
                 </li>
