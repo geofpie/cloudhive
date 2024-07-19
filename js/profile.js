@@ -30,12 +30,14 @@ document.addEventListener('DOMContentLoaded', (event) => {
     submitPostButton.addEventListener('click', async () => {
         const postContent = document.getElementById('postContent').value;
         const postImage = postImageInput.files[0];
+        console.log('Submit button clicked'); // Log when the submit button is clicked
         const resizedImage = postImage ? await resizeImage(postImage) : null;
         submitPost(postContent, resizedImage);
     });
 });
 
 async function resizeImage(file) {
+    console.log('resizeImage function called'); // Log when resizeImage is called
     const pica = new Pica();
     const img = document.createElement('img');
     img.src = URL.createObjectURL(file);
@@ -57,6 +59,7 @@ async function resizeImage(file) {
 }
 
 function submitPost(content, imageFile) {
+    console.log('submitPost function called'); // Log when submitPost is called
     const formData = new FormData();
     formData.append('content', content);
     if (imageFile) {
