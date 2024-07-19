@@ -52,8 +52,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
             reader.readAsDataURL(resizedFile);
 
             // Update the file input to use the resized file
-            postImageInput.files = new DataTransfer().files;
-            postImageInput.files[0] = resizedFile;
+            // Workaround for updating file input value
+            const dataTransfer = new DataTransfer();
+            dataTransfer.items.add(resizedFile);
+            postImageInput.files = dataTransfer.files;
         }
     });
 
@@ -123,8 +125,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
             formData.append('postImage', imageFile);
         }
 
-        console.log('Submitting post with content:', content);
-        console.log('Submitting post with image file:', imageFile);
+        console.log('Submitting FormData:', formData);
+        console.log('Image File in FormData:', formData.get('postImage'));
 
         fetch('/api/create_post', {
             method: 'POST',
