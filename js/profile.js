@@ -18,6 +18,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         const file = postImageInput.files[0];
         if (file) {
             const resizedFile = await resizeImage(file);
+            console.log('Original file size:', file.size); // Log the original file size
             console.log('Resized file size:', resizedFile.size); // Log the resized file size
 
             const reader = new FileReader();
@@ -37,22 +38,28 @@ document.addEventListener('DOMContentLoaded', (event) => {
 });
 
 async function resizeImage(file) {
-    const pica = new Pica();
-
     const img = document.createElement('img');
     img.src = URL.createObjectURL(file);
 
-    await img.decode();
+    // Ensure image is loaded before processing
+    await new Promise((resolve) => {
+        img.onload = resolve;
+    });
 
     const canvas = document.createElement('canvas');
-    const MAX_WIDTH = 800;
+    const ctx = canvas.getContext('2d');
+    const MAX_WIDTH = 800; // Desired width
     const scaleFactor = MAX_WIDTH / img.width;
+
     canvas.width = MAX_WIDTH;
     canvas.height = img.height * scaleFactor;
 
-    const resizedCanvas = await pica.resize(img, canvas);
+    // Draw image to canvas
+    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+    // Compress the image and get it as a Blob
     return new Promise((resolve) => {
-        resizedCanvas.toBlob((blob) => {
+        canvas.toBlob((blob) => {
             resolve(new File([blob], file.name, { type: file.type }));
         }, file.type, 0.8); // Adjust the quality as needed (0.8 for 80% quality)
     });
@@ -81,7 +88,7 @@ function submitPost(content, imageFile) {
     .then(data => {
         console.log('Post created successfully:', data);
         writePostModal.hide();
-        fetchPosts();
+        fetchPosts(); // Fetch posts after new post creation
     })
     .catch(error => {
         console.error('Error creating post:', error);
