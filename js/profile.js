@@ -65,12 +65,12 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     function showSpinner() {
         uploadSpinner.classList.remove('hidden');
-        document.querySelector('.custom-modal-content').classList.add('disabled'); // Disable form
+        document.querySelector('.post-modal-content').classList.add('disabled'); // Disable form
     }
 
     function hideSpinner() {
         uploadSpinner.classList.add('hidden');
-        document.querySelector('.custom-modal-content').classList.remove('disabled'); // Enable form
+        document.querySelector('.post-modal-content').classList.remove('disabled'); // Enable form
     }
 
     async function resizeImage(file) {
