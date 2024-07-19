@@ -2,13 +2,18 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const writePostButton = document.getElementById('write-post');
     const sharePostButton = document.getElementById('share-post');
     const picPostButton = document.getElementById('pic-post');
-    const customModal = document.getElementById('postModal');
+    const customModal = document.getElementById('customModal');
     const closeModalButtons = document.querySelectorAll('#closeModal, #closeModalFooter');
     const attachImageButton = document.getElementById('attachImageButton');
     const postImageInput = document.getElementById('postImage');
     const imagePreview = document.getElementById('imagePreview');
     const submitPostButton = document.getElementById('submitPostButton');
-    const uploadIndicator = document.getElementById('uploadIndicator');
+    const uploadIndicator = document.getElementById('uploadIndicator'); // Ensure this is correctly defined
+
+    if (!uploadIndicator) {
+        console.error('Upload indicator element not found');
+        return;
+    }
 
     function showModal() {
         customModal.classList.remove('hidden');
@@ -64,13 +69,21 @@ document.addEventListener('DOMContentLoaded', (event) => {
     });
 
     function showUploadIndicator() {
-        uploadIndicator.classList.remove('hidden');
-        document.querySelector('.post-modal-content').classList.add('disabled'); // Disable form
+        if (uploadIndicator) {
+            uploadIndicator.classList.remove('hidden');
+            document.querySelector('.post-modal-content').classList.add('disabled'); // Disable form
+        } else {
+            console.error('Upload indicator element not found');
+        }
     }
 
     function hideUploadIndicator() {
-        uploadIndicator.classList.add('hidden');
-        document.querySelector('.post-modal-content').classList.remove('disabled'); // Enable form
+        if (uploadIndicator) {
+            uploadIndicator.classList.add('hidden');
+            document.querySelector('.post-modal-content').classList.remove('disabled'); // Enable form
+        } else {
+            console.error('Upload indicator element not found');
+        }
     }
 
     async function resizeImage(file) {
@@ -110,6 +123,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
             formData.append('postImage', imageFile);
         }
 
+        console.log('Submitting post with content:', content);
+        console.log('Submitting post with image file:', imageFile);
+
         fetch('/api/create_post', {
             method: 'POST',
             body: formData,
@@ -131,7 +147,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         })
         .catch(error => {
             console.error('Error creating post:', error);
-            hideSpinner(); // Hide spinner if there's an error
+            hideUploadIndicator(); // Hide spinner if there's an error
         });
     }
 });
