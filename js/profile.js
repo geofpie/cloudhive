@@ -1,5 +1,7 @@
 document.addEventListener('DOMContentLoaded', (event) => {
     const writePostButton = document.getElementById('write-post');
+    const sharePostButton = document.getElementById('share-post');
+    const picPostButton = document.getElementById('pic-post');
     const writePostModal = new bootstrap.Modal(document.getElementById('writePostModal'));
     const attachImageButton = document.getElementById('attachImageButton');
     const postImageInput = document.getElementById('postImage');
@@ -9,6 +11,15 @@ document.addEventListener('DOMContentLoaded', (event) => {
     writePostButton.addEventListener('click', () => {
         writePostModal.show();
     });
+
+    sharePostButton.addEventListener('click', () => {
+        writePostModal.show();
+    });
+
+    picPostButton.addEventListener('click', () => {
+        writePostModal.show();
+    });
+
 
     attachImageButton.addEventListener('click', () => {
         postImageInput.click();

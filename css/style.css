@@ -628,7 +628,7 @@ a:hover {
 .hive-post-image {
     position: relative;
     width: 100%;
-    padding-top: 100%; /* 3:4 aspect ratio (height / width = 75%) */
+    padding-top: 100%;
     overflow: hidden;
     border-radius: 16px;
 }
