@@ -27,6 +27,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 imagePreview.style.display = 'block';
             };
             reader.readAsDataURL(resizedFile);
+
+            // Update the file input to use the resized file
+            postImageInput.files[0] = resizedFile;
         }
     });
 
@@ -87,11 +90,13 @@ function submitPost(content, imageFile) {
     })
     .then(data => {
         console.log('Post created successfully:', data);
-        writePostModal.hide();
+        // Optionally, update the UI with the new post
+        writePostModal.modal('hide');
         fetchPosts(); // Fetch posts after new post creation
     })
     .catch(error => {
         console.error('Error creating post:', error);
+        // Handle error or display message to user
     });
 }
 
