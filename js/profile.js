@@ -56,21 +56,21 @@ document.addEventListener('DOMContentLoaded', (event) => {
         const postContent = document.getElementById('postContent').value;
         const postImage = postImageInput.files[0];
         if (postContent.trim() || postImage) {
-            showSpinner(); // Show spinner during upload
+            showUploadIndicator(); // Show spinner during upload
             submitPost(postContent, postImage);
         } else {
             alert('Please enter content or attach an image.');
         }
     });
 
-    function showSpinner() {
-        uploadSpinner.classList.remove('hidden');
-        document.querySelector('.post-modal-content').classList.add('disabled'); // Disable form
+    function showUploadIndicator() {
+        uploadIndicator.classList.remove('hidden');
+        document.querySelector('.custom-modal-content').classList.add('disabled'); // Disable form
     }
 
-    function hideSpinner() {
-        uploadSpinner.classList.add('hidden');
-        document.querySelector('.post-modal-content').classList.remove('disabled'); // Enable form
+    function hideUploadIndicator() {
+        uploadIndicator.classList.add('hidden');
+        document.querySelector('.custom-modal-content').classList.remove('disabled'); // Enable form
     }
 
     async function resizeImage(file) {
@@ -125,7 +125,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         })
         .then(data => {
             console.log('Post created successfully:', data);
-            hideSpinner(); // Hide spinner after upload
+            hideUploadIndicator(); // Hide spinner after upload
             hideModal(); // Hide modal after successful post
             fetchPosts(); // Fetch posts after new post creation
         })
