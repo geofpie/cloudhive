@@ -71,35 +71,50 @@ async function resizeImage(file) {
 }
 
 function submitPost(content, imageFile) {
-    const formData = new FormData();
-    formData.append('content', content);
-    if (imageFile) {
-        formData.append('postImage', imageFile);
-    }
+    // Create an image element to draw and compress
+    const img = new Image();
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
 
-    fetch('/api/create_post', {
-        method: 'POST',
-        body: formData,
-        headers: {
-            'Authorization': 'Bearer ' + localStorage.getItem('token')
-        }
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Failed to create post');
-        }
-        return response.json();
-    })
-    .then(data => {
-        console.log('Post created successfully:', data);
-        // Optionally, update the UI with the new post
-        writePostModal.modal('hide');
-        fetchPosts(); // Fetch posts after new post creation
-    })
-    .catch(error => {
-        console.error('Error creating post:', error);
-        // Handle error or display message to user
-    });
+    img.onload = () => {
+        // Set canvas dimensions to image dimensions
+        canvas.width = img.width;
+        canvas.height = img.height;
+
+        // Draw the image on the canvas
+        ctx.drawImage(img, 0, 0);
+
+        // Compress the image
+        canvas.toBlob((blob) => {
+            console.log(`Compressed Image Size: ${blob.size} bytes`);
+            const formData = new FormData();
+            formData.append('content', content);
+            formData.append('postImage', blob, imageFile.name);
+
+            fetch('/api/create_post', {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem('token')
+                }
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to create post');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Post created successfully:', data);
+                writePostModal.modal('hide');
+                fetchPosts();
+            })
+            .catch(error => {
+                console.error('Error creating post:', error);
+            });
+        }, 'image/jpeg', 0.7); // Adjust quality as needed
+    };
+    img.src = URL.createObjectURL(imageFile);
 }
 
 // Function to extract username from URL
