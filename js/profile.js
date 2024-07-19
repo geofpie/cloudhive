@@ -2,24 +2,31 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const writePostButton = document.getElementById('write-post');
     const sharePostButton = document.getElementById('share-post');
     const picPostButton = document.getElementById('pic-post');
-    const writePostModal = new bootstrap.Modal(document.getElementById('writePostModal'));
+    const customModal = document.getElementById('postModal');
+    const closeModalButtons = document.querySelectorAll('#closeModal, #closeModalFooter');
     const attachImageButton = document.getElementById('attachImageButton');
     const postImageInput = document.getElementById('postImage');
     const imagePreview = document.getElementById('imagePreview');
     const submitPostButton = document.getElementById('submitPostButton');
+    const uploadSpinner = document.getElementById('uploadSpinner');
 
-    writePostButton.addEventListener('click', () => {
-        writePostModal.show();
+    function showModal() {
+        customModal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden'; // Prevent background scroll
+    }
+
+    function hideModal() {
+        customModal.classList.add('hidden');
+        document.body.style.overflow = ''; // Restore background scroll
+    }
+
+    writePostButton.addEventListener('click', showModal);
+    sharePostButton.addEventListener('click', showModal);
+    picPostButton.addEventListener('click', showModal);
+
+    closeModalButtons.forEach(button => {
+        button.addEventListener('click', hideModal);
     });
-
-    sharePostButton.addEventListener('click', () => {
-        writePostModal.show();
-    });
-
-    picPostButton.addEventListener('click', () => {
-        writePostModal.show();
-    });
-
 
     attachImageButton.addEventListener('click', () => {
         postImageInput.click();
@@ -40,6 +47,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
             reader.readAsDataURL(resizedFile);
 
             // Update the file input to use the resized file
+            postImageInput.files = new DataTransfer().files;
             postImageInput.files[0] = resizedFile;
         }
     });
@@ -47,86 +55,86 @@ document.addEventListener('DOMContentLoaded', (event) => {
     submitPostButton.addEventListener('click', () => {
         const postContent = document.getElementById('postContent').value;
         const postImage = postImageInput.files[0];
-        submitPost(postContent, postImage);
+        if (postContent.trim() || postImage) {
+            showSpinner(); // Show spinner during upload
+            submitPost(postContent, postImage);
+        } else {
+            alert('Please enter content or attach an image.');
+        }
     });
+
+    function showSpinner() {
+        uploadSpinner.classList.remove('hidden');
+        document.querySelector('.custom-modal-content').classList.add('disabled'); // Disable form
+    }
+
+    function hideSpinner() {
+        uploadSpinner.classList.add('hidden');
+        document.querySelector('.custom-modal-content').classList.remove('disabled'); // Enable form
+    }
+
+    async function resizeImage(file) {
+        const img = document.createElement('img');
+        img.src = URL.createObjectURL(file);
+
+        // Ensure image is loaded before processing
+        await new Promise((resolve) => {
+            img.onload = resolve;
+        });
+
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        const MAX_WIDTH = 800; // Desired width
+        const scaleFactor = MAX_WIDTH / img.width;
+
+        canvas.width = MAX_WIDTH;
+        canvas.height = img.height * scaleFactor;
+
+        // Draw image to canvas
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+        // Compress the image and get it as a Blob
+        return new Promise((resolve) => {
+            canvas.toBlob((blob) => {
+                console.log('Original file size:', file.size); // Log original file size
+                console.log('Compressed file size:', blob.size); // Log compressed file size
+                resolve(new File([blob], file.name, { type: file.type }));
+            }, 'image/jpeg', 0.6); // Adjust quality (0.6 for 60% quality)
+        });
+    }
+
+    function submitPost(content, imageFile) {
+        const formData = new FormData();
+        formData.append('content', content);
+        if (imageFile) {
+            formData.append('postImage', imageFile);
+        }
+
+        fetch('/api/create_post', {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            }
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to create post');
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Post created successfully:', data);
+            hideSpinner(); // Hide spinner after upload
+            hideModal(); // Hide modal after successful post
+            fetchPosts(); // Fetch posts after new post creation
+        })
+        .catch(error => {
+            console.error('Error creating post:', error);
+            hideSpinner(); // Hide spinner if there's an error
+        });
+    }
 });
-
-async function resizeImage(file) {
-    const img = document.createElement('img');
-    img.src = URL.createObjectURL(file);
-
-    // Ensure image is loaded before processing
-    await new Promise((resolve) => {
-        img.onload = resolve;
-    });
-
-    const canvas = document.createElement('canvas');
-    const ctx = canvas.getContext('2d');
-    const MAX_WIDTH = 800; // Desired width
-    const scaleFactor = MAX_WIDTH / img.width;
-
-    canvas.width = MAX_WIDTH;
-    canvas.height = img.height * scaleFactor;
-
-    // Draw image to canvas
-    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-
-    // Compress the image and get it as a Blob
-    return new Promise((resolve) => {
-        canvas.toBlob((blob) => {
-            console.log('Original file size:', file.size); // Log original file size
-            console.log('Compressed file size:', blob.size); // Log compressed file size
-            resolve(new File([blob], file.name, { type: file.type }));
-        }, 'image/jpeg', 0.6); // Adjust quality (0.6 for 60% quality)
-    });
-}
-
-function submitPost(content, imageFile) {
-    // Create an image element to draw and compress
-    const img = new Image();
-    const canvas = document.createElement('canvas');
-    const ctx = canvas.getContext('2d');
-
-    img.onload = () => {
-        // Set canvas dimensions to image dimensions
-        canvas.width = img.width;
-        canvas.height = img.height;
-
-        // Draw the image on the canvas
-        ctx.drawImage(img, 0, 0);
-
-        // Compress the image
-        canvas.toBlob((blob) => {
-            console.log(`Compressed Image Size: ${blob.size} bytes`);
-            const formData = new FormData();
-            formData.append('content', content);
-            formData.append('postImage', blob, imageFile.name);
-
-            fetch('/api/create_post', {
-                method: 'POST',
-                body: formData,
-                headers: {
-                    'Authorization': 'Bearer ' + localStorage.getItem('token')
-                }
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Failed to create post');
-                }
-                return response.json();
-            })
-            .then(data => {
-                console.log('Post created successfully:', data);
-                writePostModal.modal('hide');
-                fetchPosts();
-            })
-            .catch(error => {
-                console.error('Error creating post:', error);
-            });
-        }, 'image/jpeg', 0.7); // Adjust quality as needed
-    };
-    img.src = URL.createObjectURL(imageFile);
-}
 
 // Function to extract username from URL
 function getUsernameFromURL() {
