@@ -1,17 +1,3 @@
-// Cropper.js Setup
-let cropper;
-
-// Open Edit Profile Modal and Populate Fields
-const editProfileModal = document.getElementById('editProfileModal');
-const editProfileForm = document.getElementById('editProfileForm');
-const profilePictureInput = document.getElementById('profilePicture');
-const profileHeaderInput = document.getElementById('profileHeader');
-const profilePicturePreview = document.getElementById('profilePicturePreview');
-const profileHeaderPreview = document.getElementById('profileHeaderPreview');
-const cropperModal = document.getElementById('cropperModal');
-const cropperImage = document.getElementById('cropperImage');
-const cropImageBtn = document.getElementById('cropImageBtn');
-
 document.addEventListener('DOMContentLoaded', (event) => {
     const writePostButton = document.getElementById('write-post');
     const writePostModal = new bootstrap.Modal(document.getElementById('writePostModal'));
@@ -19,6 +5,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const postImageInput = document.getElementById('postImage');
     const imagePreview = document.getElementById('imagePreview');
     const submitPostButton = document.getElementById('submitPostButton');
+    const pica = window.pica();
 
     writePostButton.addEventListener('click', () => {
         writePostModal.show();
@@ -43,41 +30,75 @@ document.addEventListener('DOMContentLoaded', (event) => {
     submitPostButton.addEventListener('click', () => {
         const postContent = document.getElementById('postContent').value;
         const postImage = postImageInput.files[0];
-        submitPost(postContent, postImage);
+        if (postImage) {
+            compressImage(postImage).then(compressedImage => {
+                submitPost(postContent, compressedImage);
+            });
+        } else {
+            submitPost(postContent, null);
+        }
     });
-});
 
-function submitPost(content, imageFile) {
-    const formData = new FormData();
-    formData.append('content', content);
-    if (imageFile) {
-        formData.append('postImage', imageFile);
+    function compressImage(imageFile) {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const img = new Image();
+                img.src = e.target.result;
+                img.onload = () => {
+                    const canvas = document.createElement('canvas');
+                    const ctx = canvas.getContext('2d');
+
+                    const maxWidth = 800; // Set the maximum width for the compressed image
+                    const scale = maxWidth / img.width;
+                    canvas.width = maxWidth;
+                    canvas.height = img.height * scale;
+
+                    pica.resize(img, canvas, {
+                        quality: 3,
+                        alpha: true
+                    }).then(result => pica.toBlob(result, 'image/jpeg', 0.80)) // Adjust the quality as needed
+                    .then(blob => {
+                        resolve(new File([blob], imageFile.name, { type: 'image/jpeg' }));
+                    }).catch(err => reject(err));
+                };
+            };
+            reader.readAsDataURL(imageFile);
+        });
     }
 
-    fetch('/api/create_post', {
-        method: 'POST',
-        body: formData,
-        headers: {
-            'Authorization': 'Bearer ' + localStorage.getItem('token')
+    function submitPost(content, imageFile) {
+        const formData = new FormData();
+        formData.append('content', content);
+        if (imageFile) {
+            formData.append('postImage', imageFile);
         }
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Failed to create post');
-        }
-        return response.json();
-    })
-    .then(data => {
-        console.log('Post created successfully:', data);
-        // Optionally, update the UI with the new post
-        writePostModal.modal('hide');
-        fetchPosts(); // Fetch posts after new post creation
-    })
-    .catch(error => {
-        console.error('Error creating post:', error);
-        // Handle error or display message to user
-    });
-}
+
+        fetch('/api/create_post', {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            }
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to create post');
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Post created successfully:', data);
+            // Optionally, update the UI with the new post
+            writePostModal.hide();
+            fetchPosts(); // Fetch posts after new post creation
+        })
+        .catch(error => {
+            console.error('Error creating post:', error);
+            // Handle error or display message to user
+        });
+    }
+});
 
 // Function to extract username from URL
 function getUsernameFromURL() {
