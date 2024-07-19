@@ -63,8 +63,10 @@ async function resizeImage(file) {
     // Compress the image and get it as a Blob
     return new Promise((resolve) => {
         canvas.toBlob((blob) => {
+            console.log('Original file size:', file.size); // Log original file size
+            console.log('Compressed file size:', blob.size); // Log compressed file size
             resolve(new File([blob], file.name, { type: file.type }));
-        }, file.type, 0.8); // Adjust the quality as needed (0.8 for 80% quality)
+        }, 'image/jpeg', 0.6); // Adjust quality (0.6 for 60% quality)
     });
 }
 
