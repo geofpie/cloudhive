@@ -1,4 +1,160 @@
 document.addEventListener('DOMContentLoaded', (event) => {
+    const writePostButton = document.getElementById('write-post');
+    const sharePostButton = document.getElementById('share-post');
+    const picPostButton = document.getElementById('pic-post');
+    const customModal = document.getElementById('postModal');
+    const closeModalButtons = document.querySelectorAll('#closeModal, #closeModalFooter');
+    const attachImageButton = document.getElementById('attachImageButton');
+    const postImageInput = document.getElementById('postImage');
+    const imagePreview = document.getElementById('imagePreview');
+    const submitPostButton = document.getElementById('submitPostButton');
+    const uploadIndicator = document.getElementById('uploadIndicator'); // Ensure this is correctly defined
+
+    if (!uploadIndicator) {
+        console.error('Upload indicator element not found');
+        return;
+    }
+
+    function showModal() {
+        customModal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden'; // Prevent background scroll
+    }
+
+    function hideModal() {
+        customModal.classList.add('hidden');
+        document.body.style.overflow = ''; // Restore background scroll
+    }
+
+    writePostButton.addEventListener('click', showModal);
+    sharePostButton.addEventListener('click', showModal);
+    picPostButton.addEventListener('click', showModal);
+
+    closeModalButtons.forEach(button => {
+        button.addEventListener('click', hideModal);
+    });
+
+    attachImageButton.addEventListener('click', () => {
+        postImageInput.click();
+    });
+
+    postImageInput.addEventListener('change', async () => {
+        const file = postImageInput.files[0];
+        if (file) {
+            const resizedFile = await resizeImage(file);
+            console.log('Original file size:', file.size); // Log the original file size
+            console.log('Resized file size:', resizedFile.size); // Log the resized file size
+
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                imagePreview.src = e.target.result;
+                imagePreview.style.display = 'block';
+            };
+            reader.readAsDataURL(resizedFile);
+
+            // Update the file input to use the resized file
+            // Workaround for updating file input value
+            const dataTransfer = new DataTransfer();
+            dataTransfer.items.add(resizedFile);
+            postImageInput.files = dataTransfer.files;
+        }
+    });
+
+    submitPostButton.addEventListener('click', () => {
+        const postContent = document.getElementById('postContent').value;
+        const postImage = postImageInput.files[0];
+        if (postContent.trim() || postImage) {
+            showUploadIndicator(); // Show spinner during upload
+            submitPost(postContent, postImage);
+        } else {
+            alert('Please enter content or attach an image.');
+        }
+    });
+
+    function showUploadIndicator() {
+        if (uploadIndicator) {
+            uploadIndicator.classList.remove('hidden');
+            document.querySelector('.post-modal-content').classList.add('disabled'); // Disable form
+        } else {
+            console.error('Upload indicator element not found');
+        }
+    }
+
+    function hideUploadIndicator() {
+        if (uploadIndicator) {
+            uploadIndicator.classList.add('hidden');
+            document.querySelector('.post-modal-content').classList.remove('disabled'); // Enable form
+        } else {
+            console.error('Upload indicator element not found');
+        }
+    }
+
+    async function resizeImage(file) {
+        const img = document.createElement('img');
+        img.src = URL.createObjectURL(file);
+
+        // Ensure image is loaded before processing
+        await new Promise((resolve) => {
+            img.onload = resolve;
+        });
+
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        const MAX_WIDTH = 800; // Desired width
+        const scaleFactor = MAX_WIDTH / img.width;
+
+        canvas.width = MAX_WIDTH;
+        canvas.height = img.height * scaleFactor;
+
+        // Draw image to canvas
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+        // Compress the image and get it as a Blob
+        return new Promise((resolve) => {
+            canvas.toBlob((blob) => {
+                console.log('Original file size:', file.size); // Log original file size
+                console.log('Compressed file size:', blob.size); // Log compressed file size
+                resolve(new File([blob], file.name, { type: file.type }));
+            }, 'image/jpeg', 0.6); // Adjust quality (0.6 for 60% quality)
+        });
+    }
+
+    function submitPost(content, imageFile) {
+        const formData = new FormData();
+        formData.append('content', content);
+        if (imageFile) {
+            formData.append('postImage', imageFile);
+        }
+
+        console.log('Submitting FormData:', formData);
+        console.log('Image File in FormData:', formData.get('postImage'));
+
+        fetch('/api/create_post', {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            }
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to create post');
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Post created successfully:', data);
+            hideUploadIndicator(); // Hide spinner after upload
+            hideModal(); // Hide modal after successful post
+            fetchPosts(); // Fetch posts after new post creation
+        })
+        .catch(error => {
+            console.error('Error creating post:', error);
+            hideUploadIndicator(); // Hide spinner if there's an error
+        });
+    }
+});
+
+document.addEventListener('DOMContentLoaded', (event) => {
     fetchUserInfo();
 });
 
