@@ -14,56 +14,55 @@ document.addEventListener('DOMContentLoaded', (event) => {
         postImageInput.click();
     });
 
-    postImageInput.addEventListener('change', () => {
+    postImageInput.addEventListener('change', async () => {
         const file = postImageInput.files[0];
         if (file) {
-            console.log(`Original file size: ${file.size / 1024} KB`); // Log original file size
+            const resizedFile = await resizeImage(file);
+            console.log('Resized file size:', resizedFile.size); // Log the resized file size
+
             const reader = new FileReader();
             reader.onload = (e) => {
                 imagePreview.src = e.target.result;
                 imagePreview.style.display = 'block';
             };
-            reader.readAsDataURL(file);
+            reader.readAsDataURL(resizedFile);
         }
     });
 
-    submitPostButton.addEventListener('click', async () => {
+    submitPostButton.addEventListener('click', () => {
         const postContent = document.getElementById('postContent').value;
         const postImage = postImageInput.files[0];
-        console.log('Submit button clicked'); // Log when the submit button is clicked
-        const resizedImage = postImage ? await resizeImage(postImage) : null;
-        submitPost(postContent, resizedImage);
+        submitPost(postContent, postImage);
     });
 });
 
 async function resizeImage(file) {
-    console.log('resizeImage function called'); // Log when resizeImage is called
     const pica = new Pica();
+
     const img = document.createElement('img');
     img.src = URL.createObjectURL(file);
 
     await img.decode();
 
     const canvas = document.createElement('canvas');
-    canvas.width = 800; // Set the desired width
-    canvas.height = img.height * (canvas.width / img.width); // Maintain aspect ratio
+    const MAX_WIDTH = 800;
+    const scaleFactor = MAX_WIDTH / img.width;
+    canvas.width = MAX_WIDTH;
+    canvas.height = img.height * scaleFactor;
 
-    await pica.resize(img, canvas);
-
+    const resizedCanvas = await pica.resize(img, canvas);
     return new Promise((resolve) => {
-        canvas.toBlob((blob) => {
-            console.log(`Resized file size: ${blob.size / 1024} KB`); // Log resized file size
-            resolve(blob);
-        }, 'image/jpeg', 0.8); // Adjust quality here (0.8 is 80% quality)
+        resizedCanvas.toBlob((blob) => {
+            resolve(new File([blob], file.name, { type: file.type }));
+        }, file.type, 0.8); // Adjust the quality as needed (0.8 for 80% quality)
     });
 }
 
 function submitPost(content, imageFile) {
-    console.log('submitPost function called'); // Log when submitPost is called
     const formData = new FormData();
     formData.append('content', content);
     if (imageFile) {
-        formData.append('postImage', imageFile, 'resized-image.jpg');
+        formData.append('postImage', imageFile);
     }
 
     fetch('/api/create_post', {
@@ -81,13 +80,11 @@ function submitPost(content, imageFile) {
     })
     .then(data => {
         console.log('Post created successfully:', data);
-        // Optionally, update the UI with the new post
         writePostModal.hide();
-        fetchPosts(); // Fetch posts after new post creation
+        fetchPosts();
     })
     .catch(error => {
         console.error('Error creating post:', error);
-        // Handle error or display message to user
     });
 }
 
