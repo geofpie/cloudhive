@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const postImageInput = document.getElementById('postImage');
     const imagePreview = document.getElementById('imagePreview');
     const submitPostButton = document.getElementById('submitPostButton');
-    const uploadSpinner = document.getElementById('uploadSpinner');
+    const uploadIndicator = document.getElementById('uploadIndicator');
 
     function showModal() {
         customModal.classList.remove('hidden');
