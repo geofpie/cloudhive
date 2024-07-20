@@ -649,6 +649,10 @@ a:hover {
     -webkit-backdrop-filter: blur(10px);
 }
 
+.hive-stat-like {
+    padding-top: 8px;
+}
+
 .hive-stat-like-btn {
     padding: 6px 12px 6px 12px;
     border-radius: 12px;
@@ -733,4 +737,35 @@ a:hover {
 
 .hidden {
     display: none;
+}
+
+/* Skeleton loader styles */
+.skeleton-loader {
+    background-color: #e0e0e0;
+    border-radius: 4px;
+    margin: 10px 0;
+}
+
+.skeleton-loader-text {
+    height: 20px;
+    width: 80%;
+    margin: 10px 0;
+}
+
+.skeleton-loader-image {
+    height: 200px;
+    width: 100%;
+    margin: 10px 0;
+}
+
+.skeleton-loader-content {
+    height: 60px;
+    width: 100%;
+    margin: 10px 0;
+}
+
+.skeleton-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }

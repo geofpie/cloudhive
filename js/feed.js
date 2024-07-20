@@ -198,9 +198,30 @@ document.addEventListener('DOMContentLoaded', function() {
     const loadMoreButton = document.getElementById('load-more');
     let isFetching = false;
 
+    function showSkeletonLoader() {
+        for (let i = 0; i < 3; i++) { // Adjust the number of skeleton loaders as needed
+            const skeletonElement = document.createElement('div');
+            skeletonElement.className = 'hive-post skeleton-container';
+            skeletonElement.innerHTML = `
+                <div class="skeleton-loader skeleton-loader-text"></div>
+                <div class="skeleton-loader skeleton-loader-text"></div>
+                <div class="skeleton-loader skeleton-loader-image"></div>
+                <div class="skeleton-loader skeleton-loader-content"></div>
+            `;
+            postsContainer.appendChild(skeletonElement);
+        }
+    }
+
+    function removeSkeletonLoader() {
+        const skeletons = document.querySelectorAll('.skeleton-container');
+        skeletons.forEach(skeleton => skeleton.remove());
+    }
+
     function fetchPosts() {
         if (isFetching) return;
         isFetching = true;
+
+        showSkeletonLoader();
 
         let url = `/api/newsfeed`;
         if (lastPostTimestamp) {
@@ -223,6 +244,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     console.error('No items in fetched data');
                     return;
                 }
+
+                removeSkeletonLoader();
 
                 if (data.Items.length > 0) {
                     data.Items.forEach(post => {
