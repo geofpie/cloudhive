@@ -201,12 +201,22 @@ document.addEventListener('DOMContentLoaded', function() {
     function showSkeletonLoader() {
         for (let i = 0; i < 3; i++) { // Adjust the number of skeleton loaders as needed
             const skeletonElement = document.createElement('div');
-            skeletonElement.className = 'hive-post skeleton-container';
+            skeletonElement.className = 'hive-post-element hive-post-skeleton mx-auto';
             skeletonElement.innerHTML = `
-                <div class="skeleton-loader skeleton-loader-text"></div>
-                <div class="skeleton-loader skeleton-loader-text"></div>
-                <div class="skeleton-loader skeleton-loader-image"></div>
-                <div class="skeleton-loader skeleton-loader-content"></div>
+                <div class="row hive-post-user-details hive-post-details-skeleton align-items-center">
+                    <div class="col hive-pfp-skeleton"></div>
+                    <div class="col hive-user-details-text">
+                    <div class="hive-user-acc-deets"
+                    </div>
+                </div>
+                    <div class="row hive-post-content hive-post-content-skeleton">
+                    <div class="hive-post-image-skelly shadow"></div>
+                    </div>
+                <div class="hive-social-stats">
+                     <div class="hive-stat-skelly"></div>
+                    <hr class="divider-skelly">
+                    <div class="hive-like-btn-skeleton"></div>
+                 </div>
             `;
             postsContainer.appendChild(skeletonElement);
         }
