@@ -792,7 +792,7 @@ a:hover {
 }
 
 .attach-image-btn {
-    height: 28px;
+    padding: 12px;
     border-radius: 12px;
     color: #333333;
     background-color: #e9e9e9;
