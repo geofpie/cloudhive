@@ -803,3 +803,7 @@ a:hover {
     width: 100%;
     border-radius: 16px;
 }
+
+.post-modal-header {
+    font-size: 22px;
+}
