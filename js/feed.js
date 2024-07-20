@@ -296,7 +296,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                     <img src="${post.userProfilePicture || '../assets/default-profile.jpg'}" alt="Profile" class="post-profile-pic">
                                 </div>
                                 <div class="col hive-user-details-text">
-                                    <a href="/${post.username}" class="hive-post-username">${post.firstName} ${post.username}</a>
+                                    <a href="/${post.username}" class="hive-post-username">${post.firstName}</a>
                                     <a href="/${post.username}" class="hive-post-user-sub">@${post.username}</a>
                                     <i class="fa fa-clock hive-post-time-icon"></i><p class="hive-post-time">${dayjs(post.timestamp).fromNow()}</p>
                                 </div>
