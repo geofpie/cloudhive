@@ -217,6 +217,34 @@ document.addEventListener('DOMContentLoaded', function() {
         skeletons.forEach(skeleton => skeleton.remove());
     }
 
+    function handleImageLoad() {
+        const images = postsContainer.querySelectorAll('.hive-post-img-src');
+        let loadedImagesCount = 0;
+
+        images.forEach(image => {
+            if (image.complete) {
+                loadedImagesCount++;
+            } else {
+                image.addEventListener('load', () => {
+                    loadedImagesCount++;
+                    if (loadedImagesCount === images.length) {
+                        removeSkeletonLoader();
+                    }
+                });
+                image.addEventListener('error', () => {
+                    loadedImagesCount++;
+                    if (loadedImagesCount === images.length) {
+                        removeSkeletonLoader();
+                    }
+                });
+            }
+        });
+
+        if (loadedImagesCount === images.length) {
+            removeSkeletonLoader();
+        }
+    }
+
     function fetchPosts() {
         if (isFetching) return;
         isFetching = true;
@@ -244,8 +272,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     console.error('No items in fetched data');
                     return;
                 }
-
-                removeSkeletonLoader();
 
                 if (data.Items.length > 0) {
                     data.Items.forEach(post => {
@@ -284,6 +310,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     // Update lastPostTimestamp for next fetch
                     lastPostTimestamp = data.LastEvaluatedKey;
 
+                    handleImageLoad();
+
                     if (lastPostTimestamp) {
                         loadMoreButton.style.display = 'block';
                     } else {
@@ -293,7 +321,10 @@ document.addEventListener('DOMContentLoaded', function() {
                     loadMoreButton.style.display = 'none';
                 }
             })
-            .catch(error => console.error('Error fetching posts:', error))
+            .catch(error => {
+                console.error('Error fetching posts:', error);
+                removeSkeletonLoader(); // Remove skeleton loader on error
+            })
             .finally(() => {
                 isFetching = false;
             });
