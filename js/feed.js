@@ -179,10 +179,10 @@ document.addEventListener('DOMContentLoaded', function() {
         if (imageFile) {
             formData.append('postImage', imageFile);
         }
-    
+
         console.log('Submitting FormData:', formData);
         console.log('Image File in FormData:', formData.get('postImage'));
-    
+
         fetch('/api/create_post', {
             method: 'POST',
             body: formData,
@@ -201,14 +201,14 @@ document.addEventListener('DOMContentLoaded', function() {
             hideUploadIndicator(); // Hide spinner after upload
             hideModal(); // Hide modal after successful post
             // clearCurrentView(); // Clear current view
-            fetchPosts(true); // Fetch posts with reset to ensure latest posts are loaded
+            fetchPosts(); // Fetch posts after new post creation
         })
         .catch(error => {
             console.error('Error creating post:', error);
             hideUploadIndicator(); // Hide spinner if there's an error
         });
     }
-    
+
     function showSkeletonLoader() {
         for (let i = 0; i < 3; i++) { // Adjust the number of skeleton loaders as needed
             const skeletonElement = document.createElement('div');
@@ -269,14 +269,14 @@ document.addEventListener('DOMContentLoaded', function() {
     // Store post IDs that have already been fetched
     const fetchedPostIds = new Set();
 
-    function fetchPosts(reset = false) {
+    function fetchPosts() {
         if (isFetching) return;
         isFetching = true;
     
         showSkeletonLoader();
     
         let url = `/api/newsfeed`;
-        if (lastPostId && !reset) {
+        if (lastPostId) {
             url += `?lastPostId=${lastPostId}`;
         }
     
@@ -297,12 +297,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     return;
                 }
     
-                // Clear `fetchedPostIds` and existing posts if reset is true
-                if (reset) {
-                    document.getElementById('newsfeed-posts-container').innerHTML = '';
-                    fetchedPostIds.clear(); // Clear the set of fetched post IDs
-                }
-    
                 const newPosts = data.Items.filter(post => !fetchedPostIds.has(post.postId));
     
                 if (newPosts.length > 0) {
@@ -310,10 +304,11 @@ document.addEventListener('DOMContentLoaded', function() {
                         fetchedPostIds.add(post.postId); // Add to set of fetched post IDs
     
                         // Determine if the post is liked by the current user
-                        const isLiked = post.isLiked;
+                        const isLiked = post.isLiked; // Ensure `isLiked` is provided by the backend
     
                         // Update button appearance based on the `isLiked` status
-                        const likeButtonIcon = isLiked ? 'assets/liked.svg' : 'assets/unliked.svg';
+                        const likeButtonIcon = isLiked ? '../assets/liked.svg' : '../assets/unliked.svg';
+                        const likeButtonText = isLiked ? 'Liked' : 'Like';
                         const likeButtonClass = isLiked ? 'liked' : '';
     
                         const postElement = document.createElement('div');
@@ -323,7 +318,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         <div class="col-md-4 hive-post-element mx-auto" data-post-id="${post.postId}">
                             <div class="row hive-post-user-details align-items-center">
                                 <div class="hive-post-pfp">
-                                    <img src="${post.userProfilePicture || 'assets/default-profile.jpg'}" alt="Profile" class="post-profile-pic">
+                                    <img src="${post.userProfilePicture || '../assets/default-profile.jpg'}" alt="Profile" class="post-profile-pic">
                                 </div>
                                 <div class="col hive-user-details-text">
                                     <a href="/${post.username}" class="hive-post-username">${post.firstName}</a>
@@ -341,7 +336,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                 <p class="hive-stat-like"><strong>${post.likes || 0}</strong> likes</p>
                                 <hr>
                                 <button class="hive-stat-like-btn ${likeButtonClass}" data-post-id="${post.postId}">
-                                    <img id="like-btn-hive" src="${likeButtonIcon}" alt="Like Icon" style="width: 22px; height: 22px; vertical-align: middle;">
+                                    <img id="like-btn-hive" src="${likeButtonIcon}" alt="${likeButtonText}" style="width: 22px; height: 22px; vertical-align: middle;">
                                 </button>
                             </div>
                         </div>
@@ -377,7 +372,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 isFetching = false;
                 removeSkeletonLoader();
             });
-    }
+    }    
     
     // Handle like button click
     function handleLikeButtonClick(event) {
