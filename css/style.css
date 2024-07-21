@@ -850,7 +850,7 @@ a:hover {
     border: none;
 }
 
-@media (max-width: 960px) {
+@media screen and (max-width: 960px) {
     .hive-searchbar-group {
         width: 100%; /* Adjust width as needed */
     }
