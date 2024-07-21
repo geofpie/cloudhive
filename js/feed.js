@@ -392,6 +392,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Update the like count and button state in the DOM
                 updateLikeCount(postId, data.likes);
                 updateLikeButton(postId, data.isLiked);
+                console.log(isLiked);
             })
             .catch(error => {
                 console.error('Error liking/unliking post:', error);
