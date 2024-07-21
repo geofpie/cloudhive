@@ -298,6 +298,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 const newPosts = data.Items.filter(post => !fetchedPostIds.has(post.postId));
 
+                // Sort posts by timestamp in descending order (newest first)
+                newPosts.sort((a, b) => new Date(b.postTimestamp) - new Date(a.postTimestamp));
+
                 if (newPosts.length > 0) {
                     newPosts.forEach(post => {
                         fetchedPostIds.add(post.postId); // Add to set of fetched post IDs
@@ -342,7 +345,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         `;
 
                         postElement.innerHTML = postTemplate;
-                        document.getElementById('newsfeed-posts-container').appendChild(postElement);
+                        document.getElementById('newsfeed-posts-container').prepend(postElement); // Add new posts to the top
                     });
 
                     // Update lastPostId for next fetch
