@@ -312,7 +312,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         postElement.className = 'hive-post';
 
                         const postTemplate = `
-                         <div class="col-md-4 hive-post-element mx-auto" data-post-id="${post.postId}">
+                        <div class="col-md-4 hive-post-element mx-auto" data-post-id="${post.postId}">
                             <div class="row hive-post-user-details align-items-center">
                                 <div class="hive-post-pfp">
                                     <img src="${post.userProfilePicture || '../assets/default-profile.jpg'}" alt="Profile" class="post-profile-pic">
@@ -332,7 +332,9 @@ document.addEventListener('DOMContentLoaded', function() {
                             <div class="hive-social-stats">
                                 <p class="hive-stat-like"><strong>${post.likes || 0}</strong> likes</p>
                                 <hr>
-                                <button class="hive-stat-like-btn" data-post-id="${post.postId}"></button>
+                                <button class="hive-stat-like-btn ${likeButtonClass}" data-post-id="${post.postId}">
+                                    <img id="like-btn-hive" src="${likeButtonIcon}" alt="${likeButtonText}" style="width: 22px; height: 22px; vertical-align: middle;">
+                                </button>
                             </div>
                         </div>
                         `;
@@ -365,76 +367,82 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Handle like button click
-    function handleLikeButtonClick(event) {
-        const postId = event.currentTarget.getAttribute('data-post-id');
-        const likeButton = event.currentTarget;
+function handleLikeButtonClick(event) {
+    const postId = event.currentTarget.getAttribute('data-post-id');
+    const likeButton = event.currentTarget;
 
-        console.log(`Like button clicked for post ID: ${postId}`);
+    console.log(`Like button clicked for post ID: ${postId}`);
 
-        // Perform like/unlike action
-        fetch(`/api/like/${postId}`, { method: 'POST' })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Failed to like/unlike post');
-                }
-                return response.json(); // Parse JSON response
-            })
-            .then(data => {
-                console.log('Response data:', data);
-                // Update the like count and button state in the DOM
-                updateLikeCount(postId, data.likes);
-                updateLikeButton(postId, data.isLiked);
-            })
-            .catch(error => {
-                console.error('Error liking/unliking post:', error);
-            });
-    }
+    // Perform like/unlike action
+    fetch(`/api/like/${postId}`, { method: 'POST' })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to like/unlike post');
+            }
+            return response.json(); // Parse JSON response
+        })
+        .then(data => {
+            console.log('Response data:', data);
+            // Update the like count and button state in the DOM
+            updateLikeCount(postId, data.likes);
+            updateLikeButton(postId, data.isLiked);
+        })
+        .catch(error => {
+            console.error('Error liking/unliking post:', error);
+        });
+}
 
-   // Handle like button click
-    function handleLikeButtonClick(event) {
-        const postId = event.currentTarget.getAttribute('data-post-id');
-        const likeButton = event.currentTarget;
-        
-        // Perform like/unlike action
-        fetch(`/api/like/${postId}`, { method: 'POST' })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Failed to like/unlike post');
-                }
-                return response.json(); // Parse JSON response
-            })
-            .then(data => {
-                console.log(data.message);
-                // Update the like count in the DOM
-                updateLikeCount(postId, data.likes);
-                
-                // Update the button's appearance
-                updateLikeButton(likeButton, data.liked);
-            })
-            .catch(error => {
-                console.error('Error liking/unliking post:', error);
-            });
-    }
-    // Update like count in the DOM
-    function updateLikeCount(postId, likeCount) {
-        const postElement = document.querySelector(`div[data-post-id="${postId}"]`);
-        if (postElement) {
-            const likeCountElement = postElement.querySelector('.hive-stat-like strong');
-            if (likeCountElement) {
-                console.log(`Updating like count for post ID ${postId}. New count: ${likeCount}`);
-                likeCountElement.textContent = likeCount || 0;
+// Update the like button's state (icon)
+function updateLikeButton(postId, isLiked) {
+    const postElement = document.querySelector(`div[data-post-id="${postId}"]`);
+    if (postElement) {
+        const likeButton = postElement.querySelector('.hive-stat-like-btn');
+        if (likeButton) {
+            const likeIcon = likeButton.querySelector('#like-btn-hive'); // Select the img tag for the icon
+            
+            // Update the button's icon based on `isLiked` state
+            if (likeIcon) {
+                console.log(`Updating like button icon for post ID ${postId}. Is liked: ${isLiked}`);
+                likeIcon.src = isLiked ? '../assets/liked.svg' : '../assets/unliked.svg';
+            }
+            
+            // Update the button's class based on `isLiked` state
+            if (isLiked) {
+                likeButton.classList.add('liked');
+                console.log(`Added 'liked' class to button for post ID ${postId}`);
             } else {
-                console.warn(`Like count element not found for post ID ${postId}`);
+                likeButton.classList.remove('liked');
+                console.log(`Removed 'liked' class from button for post ID ${postId}`);
             }
         } else {
-            console.warn(`Post element not found for post ID ${postId}`);
+            console.warn(`Like button not found for post ID ${postId}`);
         }
+    } else {
+        console.warn(`Post element not found for post ID ${postId}`);
     }
+}
 
-    /// Add event listener to all like buttons
-    document.querySelectorAll('.hive-stat-like-btn').forEach(button => {
-        button.addEventListener('click', handleLikeButtonClick);
-    });
+// Update like count in the DOM
+function updateLikeCount(postId, likeCount) {
+    const postElement = document.querySelector(`div[data-post-id="${postId}"]`);
+    if (postElement) {
+        const likeCountElement = postElement.querySelector('.hive-stat-like strong');
+        if (likeCountElement) {
+            console.log(`Updating like count for post ID ${postId}. New count: ${likeCount}`);
+            likeCountElement.textContent = likeCount || 0;
+        } else {
+            console.warn(`Like count element not found for post ID ${postId}`);
+        }
+    } else {
+        console.warn(`Post element not found for post ID ${postId}`);
+    }
+}
+
+// Add event listener to all like buttons
+document.querySelectorAll('.hive-stat-like-btn').forEach(button => {
+    button.addEventListener('click', handleLikeButtonClick);
+    console.log('Added event listener to button with data-post-id:', button.getAttribute('data-post-id'));
+});
 
     loadMoreButton.addEventListener('click', fetchPosts);
 
