@@ -829,3 +829,9 @@ a:hover {
 .newsfeed-posts-container {
     width: 100%;
 }
+
+.share-post-area {
+    border-radius: 22px;
+    border: none; 
+    background-color: #e9e9e9;
+}

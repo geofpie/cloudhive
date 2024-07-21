@@ -163,12 +163,12 @@ function fetchUserInfo() {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + localStorage.getItem('token') // Assuming you're using JWT tokens stored in localStorage
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
         }
     })
     .then(response => {
         if (response.status === 401) {
-            // Redirect to homepage if user is unauthorized
+            // Redirect to homepage if user is unauthorised
             window.location.href = '/';
             return; // Stop further processing
         }
