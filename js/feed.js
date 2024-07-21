@@ -459,3 +459,35 @@ document.getElementById('notifications-link').addEventListener('click', function
         })
         .catch(error => console.error('Error fetching follow requests:', error));
 });
+
+document.addEventListener('DOMContentLoaded', function() {
+    const postsContainer = document.getElementById('newsfeed-posts-container');
+
+    postsContainer.addEventListener('click', function(event) {
+        if (event.target.classList.contains('hive-stat-like-btn')) {
+            const postElement = event.target.closest('.hive-post-element');
+            const postId = postElement.dataset.postId;
+            const userId = 'currentUserId'; // Replace with the actual logged-in user ID
+
+            fetch('/api/like', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ postId, userId })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    const likesElement = postElement.querySelector('.hive-stat-like strong');
+                    likesElement.textContent = data.likes;
+                } else {
+                    console.error('Error liking post:', data.error);
+                }
+            })
+            .catch(error => {
+                console.error('Error liking post:', error);
+            });
+        }
+    });
+});
