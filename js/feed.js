@@ -201,7 +201,7 @@ document.addEventListener('DOMContentLoaded', function() {
             hideUploadIndicator(); // Hide spinner after upload
             hideModal(); // Hide modal after successful post
             // clearCurrentView(); // Clear current view
-            fetchPosts(); // Fetch posts after new post creation
+            fetchPosts(true); // Fetch posts after new post creation
         })
         .catch(error => {
             console.error('Error creating post:', error);
