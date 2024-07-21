@@ -786,6 +786,7 @@ a:hover {
 .upload-img-preview { 
     width: 100px; 
     height: 100px; 
+    margin-bottom: 12px;
     border-radius: 12px; 
     object-fit: cover; 
     transition: 0.2s;
@@ -806,4 +807,17 @@ a:hover {
 
 .post-modal-title {
     font-size: 22px;
+}
+
+.nav-icons {
+    width: 32px;
+    height: 32px;
+}
+
+.profile-user-post { 
+    width: 100%;
+}
+
+.hive-logged-in-user-name {
+    margin-top: 6px;
 }
