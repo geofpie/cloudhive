@@ -275,13 +275,6 @@ document.addEventListener('DOMContentLoaded', function() {
     
         showSkeletonLoader();
     
-        // Reset the fetchedPostIds and lastPostId if reset is true
-        if (reset) {
-            document.getElementById('newsfeed-posts-container').innerHTML = ''; // Clear existing posts
-            fetchedPostIds.clear(); // Clear the set of fetched post IDs
-            lastPostId = null; // Reset lastPostId for full fetch
-        }
-    
         let url = `/api/newsfeed`;
         if (lastPostId && !reset) {
             url += `?lastPostId=${lastPostId}`;
@@ -302,6 +295,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (!data.Items) {
                     console.error('No items in fetched data');
                     return;
+                }
+    
+                // Clear `fetchedPostIds` and existing posts if reset is true
+                if (reset) {
+                    document.getElementById('newsfeed-posts-container').innerHTML = '';
+                    fetchedPostIds.clear(); // Clear the set of fetched post IDs
                 }
     
                 const newPosts = data.Items.filter(post => !fetchedPostIds.has(post.postId));
