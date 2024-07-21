@@ -61,7 +61,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const submitPostButton = document.getElementById('submitPostButton');
     const uploadIndicator = document.getElementById('uploadIndicator'); // Ensure this is correctly defined
     let isFetching = false;
-    let lastPostId = null; // Initialize or update as needed
+    let lastTimestamp = null;
     const fetchedPostIds = new Set();
 
     fetchUserInfo();
@@ -434,7 +434,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function clearFeed() {
         document.getElementById('newsfeed-posts-container').innerHTML = '';
-        lastPostId = null;
+        lastTimestamp = null;
         fetchedPostIds.clear(); // Optionally clear fetched post IDs
     }
     
