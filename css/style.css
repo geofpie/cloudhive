@@ -845,3 +845,13 @@ a:hover {
     padding: 12px;
 }
 
+.navbar-hamburger {
+    border: none;
+}
+
+@media screen and (max-width: 960px;) {
+    .nav-link {
+        display: inline-block!important;
+        padding-right: 12px;
+    }
+}
