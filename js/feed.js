@@ -200,7 +200,6 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log('Post created successfully:', data);
             hideUploadIndicator(); // Hide spinner after upload
             hideModal(); // Hide modal after successful post
-            clearCurrentView(); // Clear current view
             fetchPosts(); // Fetch posts after new post creation
         })
         .catch(error => {
@@ -272,16 +271,16 @@ document.addEventListener('DOMContentLoaded', function() {
     function fetchPosts() {
         if (isFetching) return;
         isFetching = true;
-    
+
         showSkeletonLoader();
-    
+
         let url = `/api/newsfeed`;
         if (lastPostId) {
             url += `?lastPostId=${lastPostId}`;
         }
-    
+
         console.log('Fetching posts from URL:', url);
-    
+
         fetch(url)
             .then(response => {
                 if (!response.ok) {
@@ -291,29 +290,29 @@ document.addEventListener('DOMContentLoaded', function() {
             })
             .then(data => {
                 console.log('Fetched posts data:', data);
-    
+
                 if (!data.Items) {
                     console.error('No items in fetched data');
                     return;
                 }
-    
+
                 const newPosts = data.Items.filter(post => !fetchedPostIds.has(post.postId));
-    
+
                 if (newPosts.length > 0) {
                     newPosts.forEach(post => {
                         fetchedPostIds.add(post.postId); // Add to set of fetched post IDs
-    
+
                         // Determine if the post is liked by the current user
                         const isLiked = post.isLiked; // Ensure `isLiked` is provided by the backend
-    
+
                         // Update button appearance based on the `isLiked` status
                         const likeButtonIcon = isLiked ? '../assets/liked.svg' : '../assets/unliked.svg';
                         const likeButtonText = isLiked ? 'Liked' : 'Like';
                         const likeButtonClass = isLiked ? 'liked' : '';
-    
+
                         const postElement = document.createElement('div');
                         postElement.className = 'hive-post';
-    
+
                         const postTemplate = `
                         <div class="col-md-4 hive-post-element mx-auto" data-post-id="${post.postId}">
                             <div class="row hive-post-user-details align-items-center">
@@ -341,16 +340,16 @@ document.addEventListener('DOMContentLoaded', function() {
                             </div>
                         </div>
                         `;
-    
+
                         postElement.innerHTML = postTemplate;
                         document.getElementById('newsfeed-posts-container').appendChild(postElement);
                     });
-    
+
                     // Update lastPostId for next fetch
                     lastPostId = data.LastEvaluatedKey;
-    
+
                     handleImageLoad();
-    
+
                     if (lastPostId) {
                         loadMoreButton.style.display = 'block';
                     } else {
@@ -359,7 +358,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 } else {
                     loadMoreButton.style.display = 'none';
                 }
-    
+
                 // Add event listeners to the like buttons
                 document.querySelectorAll('.hive-stat-like-btn').forEach(button => {
                     button.addEventListener('click', handleLikeButtonClick);
@@ -372,7 +371,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 isFetching = false;
                 removeSkeletonLoader();
             });
-    }    
+    }
     
     // Handle like button click
     function handleLikeButtonClick(event) {
@@ -443,12 +442,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initial fetch
     fetchPosts();
 });
-
-function clearCurrentView() {
-   // document.getElementById('newsfeed-posts-container').innerHTML = '';
-    lastPostId = null;
-    LastEvaluatedKey = null;
-}
 
 document.getElementById('notifications-link').addEventListener('click', function() {
     fetch('/api/follow-requests')
