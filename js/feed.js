@@ -48,7 +48,7 @@ function updateUserProfile(user) {
 dayjs.extend(dayjs_plugin_relativeTime);
 
 document.addEventListener('DOMContentLoaded', function() {
-    let lastPostTimestamp = null;
+    let lastPostId = null;
     const postsContainer = document.getElementById('newsfeed-posts-container');
     const loadMoreButton = document.getElementById('load-more');
     let isFetching = false;
