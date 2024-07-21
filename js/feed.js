@@ -1,4 +1,65 @@
 document.addEventListener('DOMContentLoaded', (event) => {
+    
+});
+
+document.addEventListener('DOMContentLoaded', (event) => {
+    fetchUserInfo();
+});
+
+function fetchUserInfo() {
+    fetch('/api/get_user_info', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
+        }
+    })
+    .then(response => {
+        if (response.status === 401) {
+            // Redirect to homepage if user is unauthorised
+            window.location.href = '/';
+            return; // Stop further processing
+        }
+        
+        if (!response.ok) {
+            throw new Error('Network response was not ok ' + response.statusText);
+        }
+        
+        return response.json();
+    })
+    .then(data => {
+        if (data.redirect) {
+            // Handle any additional redirect instructions from the server
+            window.location.href = data.redirect;
+        } else {
+            updateUserProfile(data.userInfo);
+        }
+    })
+    .catch(error => {
+        console.error('There was a problem with the fetch operation:', error);
+        // Optionally redirect to homepage on catch error
+        window.location.href = '/';
+    });
+}
+
+function updateUserProfile(user) {
+    const loggedInUserName = document.getElementById('hive-logged-in-user-name');
+    const username = user.username;
+
+    loggedInUserName.innerText = user.first_name;
+    loggedInUserName.href = `/${username}`; 
+
+    document.querySelector('.navbar-profile-pic').src = user.profile_picture_url;
+    document.querySelector('.postbar-profile-pic').src = user.profile_picture_url;
+}
+
+dayjs.extend(dayjs_plugin_relativeTime);
+
+document.addEventListener('DOMContentLoaded', function() {
+    let lastPostTimestamp = null;
+    const postsContainer = document.getElementById('newsfeed-posts-container');
+    const loadMoreButton = document.getElementById('load-more');
+    let isFetching = false;
     const writePostButton = document.getElementById('write-post');
     const sharePostButton = document.getElementById('share-post');
     const picPostButton = document.getElementById('pic-post');
@@ -155,66 +216,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
             hideUploadIndicator(); // Hide spinner if there's an error
         });
     }
-});
-
-document.addEventListener('DOMContentLoaded', (event) => {
-    fetchUserInfo();
-});
-
-function fetchUserInfo() {
-    fetch('/api/get_user_info', {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + localStorage.getItem('token')
-        }
-    })
-    .then(response => {
-        if (response.status === 401) {
-            // Redirect to homepage if user is unauthorised
-            window.location.href = '/';
-            return; // Stop further processing
-        }
-        
-        if (!response.ok) {
-            throw new Error('Network response was not ok ' + response.statusText);
-        }
-        
-        return response.json();
-    })
-    .then(data => {
-        if (data.redirect) {
-            // Handle any additional redirect instructions from the server
-            window.location.href = data.redirect;
-        } else {
-            updateUserProfile(data.userInfo);
-        }
-    })
-    .catch(error => {
-        console.error('There was a problem with the fetch operation:', error);
-        // Optionally redirect to homepage on catch error
-        window.location.href = '/';
-    });
-}
-
-function updateUserProfile(user) {
-    const loggedInUserName = document.getElementById('hive-logged-in-user-name');
-    const username = user.username;
-
-    loggedInUserName.innerText = user.first_name;
-    loggedInUserName.href = `/${username}`; 
-
-    document.querySelector('.navbar-profile-pic').src = user.profile_picture_url;
-    document.querySelector('.postbar-profile-pic').src = user.profile_picture_url;
-}
-
-dayjs.extend(dayjs_plugin_relativeTime);
-
-document.addEventListener('DOMContentLoaded', function() {
-    let lastPostTimestamp = null;
-    const postsContainer = document.getElementById('newsfeed-posts-container');
-    const loadMoreButton = document.getElementById('load-more');
-    let isFetching = false;
 
     function showSkeletonLoader() {
         for (let i = 0; i < 3; i++) { // Adjust the number of skeleton loaders as needed
@@ -273,6 +274,91 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+    function fetchPosts() {
+        if (isFetching) return;
+        isFetching = true;
+    
+        showSkeletonLoader();
+    
+        let url = `/api/newsfeed`;
+        if (lastPostTimestamp) {
+            url += `?lastPostTimestamp=${lastPostTimestamp}`;
+        }
+    
+        console.log('Fetching posts from URL:', url);
+    
+        fetch(url)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Fetched posts data:', data);
+    
+                if (!data.Items) {
+                    console.error('No items in fetched data');
+                    return;
+                }
+    
+                if (data.Items.length > 0) {
+                    data.Items.forEach(post => {
+                        console.log('Post data:', post);
+                        const postElement = document.createElement('div');
+                        postElement.className = 'hive-post';
+    
+                        const postTemplate = `
+                        <div class="col-md-4 hive-post-element mx-auto" data-post-id="${post.postId}">
+                            <div class="row hive-post-user-details align-items-center">
+                                <div class="col">
+                                    <img src="${post.userProfilePicture || '../assets/default-profile.jpg'}" alt="Profile" class="post-profile-pic">
+                                </div>
+                                <div class="col hive-user-details-text">
+                                    <a href="/${post.username}" class="hive-post-username">${post.firstName}</a>
+                                    <a href="/${post.username}" class="hive-post-user-sub">@${post.username}</a>
+                                    <i class="fa fa-clock hive-post-time-icon"></i><p class="hive-post-time">${dayjs(post.postTimestamp).fromNow()}</p>
+                                </div>
+                            </div>
+                            <div class="row hive-post-content">
+                                <p class="hive-post-text">${post.content}</p>
+                                ${post.imageUrl ? `<div class="hive-post-image shadow"><img class="hive-post-img-src" data-src="${post.imageUrl}" src="${post.imageUrl}" alt="Post Image"></div>` : ''}
+                            </div>
+                            <div class="hive-social-stats">
+                                <p class="hive-stat-like"><strong>${post.likes || 0}</strong> likes</p>
+                                <hr>
+                                <button class="hive-stat-like-btn"><i class="fa fa-heart hive-stat-like-heart"></i>Like</button>
+                            </div>
+                        </div>
+                        `;
+    
+                        postElement.innerHTML = postTemplate;
+                        (document.getElementById('newsfeed-posts-container')).appendChild(postElement);
+                    });
+    
+                    // Update lastPostTimestamp for next fetch
+                    lastPostTimestamp = data.LastEvaluatedKey;
+    
+                    handleImageLoad();
+    
+                    if (lastPostTimestamp) {
+                        loadMoreButton.style.display = 'block';
+                    } else {
+                        loadMoreButton.style.display = 'none';
+                    }
+                } else {
+                    loadMoreButton.style.display = 'none';
+                }
+            })
+            .catch(error => {
+                console.error('Failed to fetch posts:', error);
+            })
+            .finally(() => {
+                isFetching = false;
+                removeSkeletonLoader();
+            });
+    }
+
     loadMoreButton.addEventListener('click', fetchPosts);
 
     // Initial fetch
@@ -281,93 +367,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function clearCurrentView() {
     document.getElementById('newsfeed-posts-container').innerHTML = '';
-}
-
-function fetchPosts() {
-    let isFetching = false; 
-    
-    if (isFetching) return;
-    isFetching = true;
-
-    showSkeletonLoader();
-
-    let url = `/api/newsfeed`;
-    if (lastPostTimestamp) {
-        url += `?lastPostTimestamp=${lastPostTimestamp}`;
-    }
-
-    console.log('Fetching posts from URL:', url);
-
-    fetch(url)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then(data => {
-            console.log('Fetched posts data:', data);
-
-            if (!data.Items) {
-                console.error('No items in fetched data');
-                return;
-            }
-
-            if (data.Items.length > 0) {
-                data.Items.forEach(post => {
-                    console.log('Post data:', post);
-                    const postElement = document.createElement('div');
-                    postElement.className = 'hive-post';
-
-                    const postTemplate = `
-                    <div class="col-md-4 hive-post-element mx-auto" data-post-id="${post.postId}">
-                        <div class="row hive-post-user-details align-items-center">
-                            <div class="col">
-                                <img src="${post.userProfilePicture || '../assets/default-profile.jpg'}" alt="Profile" class="post-profile-pic">
-                            </div>
-                            <div class="col hive-user-details-text">
-                                <a href="/${post.username}" class="hive-post-username">${post.firstName}</a>
-                                <a href="/${post.username}" class="hive-post-user-sub">@${post.username}</a>
-                                <i class="fa fa-clock hive-post-time-icon"></i><p class="hive-post-time">${dayjs(post.postTimestamp).fromNow()}</p>
-                            </div>
-                        </div>
-                        <div class="row hive-post-content">
-                            <p class="hive-post-text">${post.content}</p>
-                            ${post.imageUrl ? `<div class="hive-post-image shadow"><img class="hive-post-img-src" data-src="${post.imageUrl}" src="${post.imageUrl}" alt="Post Image"></div>` : ''}
-                        </div>
-                        <div class="hive-social-stats">
-                            <p class="hive-stat-like"><strong>${post.likes || 0}</strong> likes</p>
-                            <hr>
-                            <button class="hive-stat-like-btn"><i class="fa fa-heart hive-stat-like-heart"></i>Like</button>
-                        </div>
-                    </div>
-                    `;
-
-                    postElement.innerHTML = postTemplate;
-                    (document.getElementById('newsfeed-posts-container')).appendChild(postElement);
-                });
-
-                // Update lastPostTimestamp for next fetch
-                lastPostTimestamp = data.LastEvaluatedKey;
-
-                handleImageLoad();
-
-                if (lastPostTimestamp) {
-                    loadMoreButton.style.display = 'block';
-                } else {
-                    loadMoreButton.style.display = 'none';
-                }
-            } else {
-                loadMoreButton.style.display = 'none';
-            }
-        })
-        .catch(error => {
-            console.error('Failed to fetch posts:', error);
-        })
-        .finally(() => {
-            isFetching = false;
-            removeSkeletonLoader();
-        });
 }
 
 document.getElementById('notifications-link').addEventListener('click', function() {
