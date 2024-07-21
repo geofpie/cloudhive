@@ -346,6 +346,12 @@ a:hover {
     width: 40px;
 }
 
+.postbar-profile-pic {
+    border-radius: 50%;
+    height: 40px;
+    width: 40px;
+}
+
 .post-profile-pic {
     border-radius: 50%;
     height: 44px;
