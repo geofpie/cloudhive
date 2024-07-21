@@ -426,11 +426,10 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    document.addEventListener('click', (event) => {
-        const likeButton = event.target.closest('.hive-stat-like-btn');
-        if (likeButton) {
-            handleLikeButtonClick(event);
-        }
+    document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('.hive-stat-like-btn').forEach(button => {
+            button.addEventListener('click', handleLikeButtonClick);
+        });
     });
     
     loadMoreButton.addEventListener('click', fetchPosts);
