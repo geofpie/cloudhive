@@ -391,65 +391,47 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
    // Handle like button click
-   function handleLikeButtonClick(event) {
-    const postId = event.currentTarget.getAttribute('data-post-id');
-    const likeButton = event.currentTarget;
-
-    // Perform like/unlike action
-    fetch(`/api/like/${postId}`, { method: 'POST' })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Failed to like/unlike post');
-            }
-            return response.json(); // Parse JSON response
-        })
-        .then(data => {
-            console.log(data.message);
-            // Update the like count and button state in the DOM
-            updateLikeCount(postId, data.likes);
-            updateLikeButton(postId, data.isLiked);
-        })
-        .catch(error => {
-            console.error('Error liking/unliking post:', error);
-        });
-}
-
-// Handle like button click
-function handleLikeButtonClick(event) {
-    const postId = event.currentTarget.getAttribute('data-post-id');
-    const likeButton = event.currentTarget;
-
-    // Perform like/unlike action
-    fetch(`/api/like/${postId}`, { method: 'POST' })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Failed to like/unlike post');
-            }
-            return response.json(); // Parse JSON response
-        })
-        .then(data => {
-            console.log(data.message);
-            // Update the like count and button state in the DOM
-            updateLikeCount(postId, data.likes);
-            updateLikeButton(postId, data.isLiked);
-        })
-        .catch(error => {
-            console.error('Error liking/unliking post:', error);
-        });
-}
-
+    function handleLikeButtonClick(event) {
+        const postId = event.currentTarget.getAttribute('data-post-id');
+        const likeButton = event.currentTarget;
+        
+        // Perform like/unlike action
+        fetch(`/api/like/${postId}`, { method: 'POST' })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to like/unlike post');
+                }
+                return response.json(); // Parse JSON response
+            })
+            .then(data => {
+                console.log(data.message);
+                // Update the like count in the DOM
+                updateLikeCount(postId, data.likes);
+                
+                // Update the button's appearance
+                updateLikeButton(likeButton, data.liked);
+            })
+            .catch(error => {
+                console.error('Error liking/unliking post:', error);
+            });
+    }
     // Update like count in the DOM
     function updateLikeCount(postId, likeCount) {
         const postElement = document.querySelector(`div[data-post-id="${postId}"]`);
         if (postElement) {
             const likeCountElement = postElement.querySelector('.hive-stat-like strong');
             if (likeCountElement) {
+                console.log(`Updating like count for post ID ${postId}. New count: ${likeCount}`);
                 likeCountElement.textContent = likeCount || 0;
+            } else {
+                console.warn(`Like count element not found for post ID ${postId}`);
             }
+        } else {
+            console.warn(`Post element not found for post ID ${postId}`);
         }
     }
 
-   // Add event listener to all like buttons
+    /// Add event listener to all like buttons
     document.querySelectorAll('.hive-stat-like-btn').forEach(button => {
         button.addEventListener('click', handleLikeButtonClick);
     });
