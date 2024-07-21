@@ -333,7 +333,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                 <p class="hive-stat-like"><strong>${post.likes || 0}</strong> likes</p>
                                 <hr>
                                 <button class="hive-stat-like-btn ${likeButtonClass}" data-post-id="${post.postId}">
-                                    <img id="like-btn-hive-${postId}" src="${likeButtonIcon}" alt="${likeButtonText}" style="width: 22px; height: 22px; vertical-align: middle;">
+                                    <img id="like-btn-hive" src="${likeButtonIcon}" alt="${likeButtonText}" style="width: 22px; height: 22px; vertical-align: middle;">
                                 </button>
                             </div>
                         </div>
@@ -404,10 +404,10 @@ document.addEventListener('DOMContentLoaded', function() {
             })
             .then(data => {
                 console.log('Post like/unlike successful:', data);
-                const likeButtonIcon = document.getElementById(`${postId}`);
+                const likeButtonIcon = document.getElementById(`like-btn-hive`);
                 const likeButtonIconSrc = data.message === 'Like added' ? '../assets/liked.svg' : '../assets/unliked.svg';
                 likeButtonIcon.src = likeButtonIconSrc;
-
+f
                 // Update like count
                 const likeCountElement = document.querySelector('.hive-stat-like strong');
                 if (likeCountElement) {
