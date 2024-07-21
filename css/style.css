@@ -854,27 +854,14 @@ a:hover {
     .hive-searchbar {
         width: 300px; /* Adjust width as needed */
     }
-}
-
-/* Flex utilities to handle spacing between nav items */
-.navbar-nav .nav-item {
-    flex: 1; /* Ensures each item takes equal space */
-    text-align: center; /* Centers text/icon in each nav-item */
+    .navbar-nav .nav-item {
+        flex: 1; /* Ensures each item takes equal space */
+        text-align: center; /* Centers text/icon in each nav-item */
+    }
 }
 
 .navbar-nav .nav-link {
     display: flex;
     justify-content: center;
     align-items: center;
-}
-
-.navbar-nav .nav-icons {
-    max-width: 24px; /* Adjust icon size as needed */
-}
-
-/* Optional: Custom styling for profile picture */
-.navbar-profile-pic {
-    width: 36px; /* Adjust size as needed */
-    height: 36px; /* Adjust size as needed */
-    border-radius: 50%;
 }
