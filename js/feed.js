@@ -371,6 +371,8 @@ document.addEventListener('DOMContentLoaded', function() {
         const postId = event.currentTarget.getAttribute('data-post-id');
         const likeButton = event.currentTarget;
 
+        console.log(`Like button clicked for post ID: ${postId}`);
+
         // Perform like/unlike action
         fetch(`/api/like/${postId}`, { method: 'POST' })
             .then(response => {
@@ -380,7 +382,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 return response.json(); // Parse JSON response
             })
             .then(data => {
-                console.log(data.message);
+                console.log('Response data:', data);
                 // Update the like count and button state in the DOM
                 updateLikeCount(postId, data.likes);
                 updateLikeButton(postId, data.isLiked);
@@ -400,19 +402,25 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 // Update the button's icon based on `isLiked` state
                 if (likeIcon) {
+                    console.log(`Updating like button icon for post ID ${postId}. Is liked: ${isLiked}`);
                     likeIcon.src = isLiked ? '../assets/liked.svg' : '../assets/unliked.svg';
                 }
                 
                 // Update the button's class based on `isLiked` state
                 if (isLiked) {
                     likeButton.classList.add('liked');
+                    console.log(`Added 'liked' class to button for post ID ${postId}`);
                 } else {
                     likeButton.classList.remove('liked');
+                    console.log(`Removed 'liked' class from button for post ID ${postId}`);
                 }
+            } else {
+                console.warn(`Like button not found for post ID ${postId}`);
             }
+        } else {
+            console.warn(`Post element not found for post ID ${postId}`);
         }
     }
-
 
     // Update like count in the DOM
     function updateLikeCount(postId, likeCount) {
@@ -420,16 +428,22 @@ document.addEventListener('DOMContentLoaded', function() {
         if (postElement) {
             const likeCountElement = postElement.querySelector('.hive-stat-like strong');
             if (likeCountElement) {
+                console.log(`Updating like count for post ID ${postId}. New count: ${likeCount}`);
                 likeCountElement.textContent = likeCount || 0;
+            } else {
+                console.warn(`Like count element not found for post ID ${postId}`);
             }
+        } else {
+            console.warn(`Post element not found for post ID ${postId}`);
         }
     }
 
     // Add event listener to all like buttons
     document.querySelectorAll('.hive-stat-like-btn').forEach(button => {
         button.addEventListener('click', handleLikeButtonClick);
+        console.log('Added event listener to button with data-post-id:', button.getAttribute('data-post-id'));
     });
-    
+
     loadMoreButton.addEventListener('click', fetchPosts);
 
     // Initial fetch
