@@ -161,7 +161,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
 
                 console.log('Profile picture uploaded successfully:', data);
-                // Optionally handle success response
+                //redirect to homepage
+                window.location.href = '/hive';
             })
             .catch(error => {
                 // Hide loading indicator (spinner)
