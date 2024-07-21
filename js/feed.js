@@ -313,7 +313,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                 <div class="col hive-user-details-text">
                                     <a href="/${post.username}" class="hive-post-username">${post.firstName}</a>
                                     <a href="/${post.username}" class="hive-post-user-sub">@${post.username}</a>
-                                    <i class="fa fa-clock hive-post-time-icon"></i><p class="hive-post-time">${dayjs(post.timestamp).fromNow()}</p>
+                                    <i class="fa fa-clock hive-post-time-icon"></i><p class="hive-post-time">${dayjs(post.postTimestamp).fromNow()}</p>
                                 </div>
                             </div>
                             <div class="row hive-post-content">
