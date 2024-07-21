@@ -348,17 +348,17 @@ document.addEventListener('DOMContentLoaded', function() {
                     console.log('Updated lastTimestamp:', lastTimestamp);
     
                     isFetching = false;
-                    hideSkeletonLoader();
+                    removeSkeletonLoader();
                 } else {
                     // No new posts, or all posts have been fetched
                     isFetching = false;
-                    hideSkeletonLoader();
+                    removeSkeletonLoader();
                 }
             })
             .catch(error => {
                 console.error('Error fetching posts:', error);
                 isFetching = false;
-                hideSkeletonLoader();
+                removeSkeletonLoader();
             });
     }
     
@@ -434,7 +434,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function clearFeed() {
         document.getElementById('newsfeed-posts-container').innerHTML = '';
-        lastTimestamp = null;
+        lastPostId = null;
         fetchedPostIds.clear(); // Optionally clear fetched post IDs
     }
     
