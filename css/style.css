@@ -313,6 +313,8 @@ a:hover {
     width: 200px;
     height: 200px;
     border-radius: 100%;
+    background-size: cover;
+    background-position: center;
 }
 
 /* Ensure Cropper.js container fills the modal body */
@@ -820,12 +822,4 @@ a:hover {
 
 .hive-logged-in-user-name {
     margin-top: 6px;
-}
-
-#profile-pic-preview {
-    width: 200px; /* Adjust as needed */
-    height: 200px; /* Adjust as needed */
-    background-size: cover;
-    background-position: center;
-    background-color: #e8e8e8;
 }
