@@ -851,7 +851,7 @@ a:hover {
 }
 
 @media (max-width: 960px) {
-    .hive-searchbar {
+    .hive-searchbar-group {
         width: 100%; /* Adjust width as needed */
     }
     .navbar-nav .nav-item {
