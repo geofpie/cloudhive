@@ -299,6 +299,12 @@ document.addEventListener('DOMContentLoaded', function() {
     
                 const newPosts = data.Items.filter(post => !fetchedPostIds.has(post.postId));
     
+                if (newPosts.length > 0) {
+                    // Only clear the viewport if reset is true
+                    if (reset) {
+                        fetchedPostIds.clear(); // Clear fetchedPostIds to handle new fetches correctly
+                    }
+    
                     newPosts.forEach(post => {
                         fetchedPostIds.add(post.postId); // Add to set of fetched post IDs
     
@@ -370,7 +376,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 isFetching = false;
                 removeSkeletonLoader();
             });
-    }
+    }    
     
     // Handle like button click
     function handleLikeButtonClick(event) {
