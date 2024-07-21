@@ -404,14 +404,17 @@ document.addEventListener('DOMContentLoaded', function() {
             })
             .then(data => {
                 console.log('Post like/unlike successful:', data);
-                const likeButtonIcon = document.getElementById(`like-btn-hive`);
+
+                // Correctly target the like button icon and like count for the specific post
+                const postElement = document.querySelector(`.hive-post-element[data-post-id="${postId}"]`);
+                const likeButtonIcon = postElement.querySelector(`#like-btn-hive`);
                 const likeButtonIconSrc = data.message === 'Like added' ? '../assets/liked.svg' : '../assets/unliked.svg';
                 likeButtonIcon.src = likeButtonIconSrc;
-f
+
                 // Update like count
-                const likeCountElement = document.querySelector('.hive-stat-like strong');
+                const likeCountElement = postElement.querySelector('.hive-stat-like strong');
                 if (likeCountElement) {
-                    likeCountElement.textContent = `${data.likes}` || 0;
+                    likeCountElement.textContent = data.likes || 0;
                 }
             })
             .catch(error => {
