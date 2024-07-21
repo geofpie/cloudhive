@@ -850,9 +850,9 @@ a:hover {
     border: none;
 }
 
-@media (min-width: 992px) {
+@media (max-width: 960px) {
     .hive-searchbar {
-        width: 300px; /* Adjust width as needed */
+        width: 100%; /* Adjust width as needed */
     }
     .navbar-nav .nav-item {
         flex: 1; /* Ensures each item takes equal space */
