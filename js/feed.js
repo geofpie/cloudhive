@@ -299,13 +299,6 @@ document.addEventListener('DOMContentLoaded', function() {
     
                 const newPosts = data.Items.filter(post => !fetchedPostIds.has(post.postId));
     
-                if (newPosts.length > 0) {
-                    if (reset) {
-                        // Clear existing posts if reset is true
-                        document.getElementById('newsfeed-posts-container').innerHTML = '';
-                        fetchedPostIds.clear();
-                    }
-    
                     newPosts.forEach(post => {
                         fetchedPostIds.add(post.postId); // Add to set of fetched post IDs
     
