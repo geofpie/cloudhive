@@ -370,8 +370,9 @@ document.addEventListener('DOMContentLoaded', function() {
     function handleLikeButtonClick(event) {
         const postId = event.currentTarget.getAttribute('data-post-id');
         const likeButton = event.currentTarget;
-
-        // Perform like/unlike action
+    
+        console.log('Post ID:', postId);
+    
         fetch(`/api/like/${postId}`, { method: 'POST' })
             .then(response => {
                 if (!response.ok) {
@@ -380,8 +381,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 return response.json(); // Parse JSON response
             })
             .then(data => {
-                console.log(data.message);
-                // Update the like count and button state in the DOM
+                console.log('Response Data:', data);
                 updateLikeCount(postId, data.likes);
                 updateLikeButton(postId, data.isLiked);
             })
@@ -389,6 +389,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.error('Error liking/unliking post:', error);
             });
     }
+    
 
     // Update the like button's state (icon)
     function updateLikeButton(postId, isLiked) {
