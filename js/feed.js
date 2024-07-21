@@ -441,6 +441,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Initial fetch
     fetchPosts();
+
+    function clearFeed() {
+        document.getElementById('newsfeed-posts-container').innerHTML = '';
+        lastPostId = null;
+        fetchedPostIds.clear(); // Optionally clear fetched post IDs
+    }
+    
+    function refreshFeed() {
+        clearFeed();
+        fetchPosts();
+    }
 });
 
 document.getElementById('notifications-link').addEventListener('click', function() {
@@ -514,17 +525,6 @@ function denyFollowRequest(username) {
         }
     })
     .catch(error => console.error('Error:', error));
-}
-
-function clearFeed() {
-    document.getElementById('newsfeed-posts-container').innerHTML = '';
-    lastPostId = null;
-    fetchedPostIds.clear(); // Optionally clear fetched post IDs
-}
-
-function refreshFeed() {
-    clearFeed();
-    fetchPosts();
 }
 
 document.getElementById('notifications-link').addEventListener('click', function() {
