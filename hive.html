@@ -24,7 +24,7 @@
     <script src="https://cdn.jsdelivr.net/npm/dayjs/plugin/relativeTime.js"></script>
 </head>
 <body>
-   <!-- Navbar -->
+    <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light sticky-top hive-navbar">
         <a class="navbar-brand" href="#">
             <img src="../assets/logo-dark.svg" width="46" height="46" alt="cloudhive">
@@ -32,10 +32,9 @@
         <button class="navbar-toggler navbar-hamburger" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-
+      
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <!-- Search Bar -->
-            <form class="form-inline my-2 my-lg-0 d-none d-lg-flex mx-auto" action="#">
+            <form class="form-inline my-2 my-lg-0" action="#">
                 <div class="input-group">
                     <input class="form-control hive-searchbar" type="search" placeholder="Search" aria-label="Search">
                     <div class="input-group-append">
@@ -45,20 +44,18 @@
                     </div>
                 </div>
             </form>
-            
-            <!-- Navbar Links -->
-            <ul class="navbar-nav ml-auto w-100 d-flex justify-content-between">
-                <li class="nav-item hive-nav-btn">
-                    <a class="nav-link" href="/hive"><img src="assets/homeicon.svg" class="nav-icons" alt="Home"></a>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item hive-nav-btn active">
+                    <a class="nav-link" href="/hive"><img src="assets/homeicon.svg" class="nav-icons"></a>
                 </li>
                 <li class="nav-item hive-nav-btn">
-                    <a class="nav-link" href="#"><img src="assets/friends.svg" class="nav-icons" alt="Friends"></a>
+                    <a class="nav-link" href="#"><img src="assets/friends.svg" class="nav-icons"></a>
                 </li>
                 <li class="nav-item hive-nav-btn">
-                    <a class="nav-link" href="#"><img src="assets/settings.svg" class="nav-icons" alt="Settings"></a>
+                    <a class="nav-link" href="#"><img src="assets/settings.svg" class="nav-icons"></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#" id="notifications-link"><img src="assets/notifications.svg" class="nav-icons" alt="Notifications"></a>
+                        <a class="nav-link" href="#" id="notifications-link"><img src="assets/notifications.svg" class="nav-icons"></a>
                 </li>
                 <li class="nav-item hive-nav-btn">
                     <a class="nav-link hive-logged-in-user-name" id="hive-logged-in-user-name" href="#">{user}</a>
