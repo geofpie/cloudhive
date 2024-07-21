@@ -294,12 +294,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     return;
                 }
     
-                // Clear existing posts before appending new ones
-                const postsContainer = document.getElementById('newsfeed-posts-container');
-                if (lastPostId) {
-                    postsContainer.innerHTML = '';
-                }
-    
                 if (data.Items.length > 0) {
                     data.Items.forEach(post => {
                         console.log('Post data:', post);
@@ -331,7 +325,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         `;
     
                         postElement.innerHTML = postTemplate;
-                        postsContainer.appendChild(postElement);
+                        (document.getElementById('newsfeed-posts-container')).appendChild(postElement);
                     });
     
                     // Update lastPostId for next fetch
