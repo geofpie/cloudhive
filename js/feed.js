@@ -381,6 +381,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.log(data.message);
                 // Update the like count in the DOM
                 updateLikeCount(postId, data.likes);
+                likeButton.classList.toggle('liked');
+                likeButton.textContent = likeButton.classList.contains('liked') ? 'Liked' : 'Like';
             })
             .catch(error => {
                 console.error('Error liking/unliking post:', error);
