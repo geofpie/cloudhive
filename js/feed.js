@@ -375,36 +375,29 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (!response.ok) {
                     throw new Error('Failed to like/unlike post');
                 }
-                return response.text();
+                return response.json(); // Parse JSON response
             })
-            .then(message => {
-                console.log(message);
+            .then(data => {
+                console.log(data.message);
                 // Update the like count in the DOM
-                updateLikeCount(postId);
+                updateLikeCount(postId, data.likes);
             })
             .catch(error => {
                 console.error('Error liking/unliking post:', error);
             });
     }
-    
+
     // Update like count in the DOM
-    function updateLikeCount(postId) {
-        // Fetch updated post details
-        fetch(`/api/post/${postId}`)
-            .then(response => response.json())
-            .then(post => {
-                const postElement = document.querySelector(`div[data-post-id="${postId}"]`);
-                if (postElement) {
-                    const likeCountElement = postElement.querySelector('.hive-stat-like strong');
-                    if (likeCountElement) {
-                        likeCountElement.textContent = post.likes || 0;
-                    }
-                }
-            })
-            .catch(error => {
-                console.error('Error fetching post details:', error);
-            });
+    function updateLikeCount(postId, likeCount) {
+        const postElement = document.querySelector(`div[data-post-id="${postId}"]`);
+        if (postElement) {
+            const likeCountElement = postElement.querySelector('.hive-stat-like strong');
+            if (likeCountElement) {
+                likeCountElement.textContent = likeCount || 0;
+            }
+        }
     }
+
 
     // Add event listener to all like buttons
     document.querySelectorAll('.hive-stat-like-btn').forEach(button => {
