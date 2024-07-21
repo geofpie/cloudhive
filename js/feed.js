@@ -303,6 +303,14 @@ document.addEventListener('DOMContentLoaded', function() {
                     newPosts.forEach(post => {
                         fetchedPostIds.add(post.postId); // Add to set of fetched post IDs
     
+                        // Determine if the post is liked by the current user
+                        const isLiked = post.isLiked; // Ensure `isLiked` is provided by the backend
+    
+                        // Update button appearance based on the `isLiked` status
+                        const likeButtonIcon = isLiked ? 'assets/liked.svg' : 'assets/unliked.svg';
+                        const likeButtonText = isLiked ? 'Liked' : 'Like';
+                        const likeButtonClass = isLiked ? 'liked' : '';
+    
                         const postElement = document.createElement('div');
                         postElement.className = 'hive-post';
     
@@ -327,7 +335,9 @@ document.addEventListener('DOMContentLoaded', function() {
                             <div class="hive-social-stats">
                                 <p class="hive-stat-like"><strong>${post.likes || 0}</strong> likes</p>
                                 <hr>
-                                <button class="hive-stat-like-btn" data-post-id="${post.postId}"><i class="fa fa-heart hive-stat-like-heart"></i>Like</button>
+                                <button class="hive-stat-like-btn ${likeButtonClass}" data-post-id="${post.postId}">
+                                    <img src="${likeButtonIcon}" alt="${likeButtonText}" style="width: 14px; height: 14px; vertical-align: middle;"> ${likeButtonText}
+                                </button>
                             </div>
                         </div>
                         `;
@@ -362,7 +372,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 isFetching = false;
                 removeSkeletonLoader();
             });
-    }
+    }    
     
     // Handle like button click
     function handleLikeButtonClick(event) {
@@ -397,7 +407,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
     }
-
 
     // Add event listener to all like buttons
     document.querySelectorAll('.hive-stat-like-btn').forEach(button => {
