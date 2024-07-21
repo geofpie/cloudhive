@@ -1,11 +1,3 @@
-document.addEventListener('DOMContentLoaded', (event) => {
-    
-});
-
-document.addEventListener('DOMContentLoaded', (event) => {
-    fetchUserInfo();
-});
-
 function fetchUserInfo() {
     fetch('/api/get_user_info', {
         method: 'GET',
@@ -22,7 +14,7 @@ function fetchUserInfo() {
         }
         
         if (!response.ok) {
-            throw new Error('Network response was not ok ' + response.statusText);
+            throw new Error('Generic error ' + response.statusText);
         }
         
         return response.json();
@@ -281,8 +273,8 @@ document.addEventListener('DOMContentLoaded', function() {
         showSkeletonLoader();
     
         let url = `/api/newsfeed`;
-        if (lastPostTimestamp) {
-            url += `?lastPostTimestamp=${lastPostTimestamp}`;
+        if (lastPostId) {
+            url += `?lastPostId=${lastPostId}`;
         }
     
         console.log('Fetching posts from URL:', url);
@@ -290,7 +282,7 @@ document.addEventListener('DOMContentLoaded', function() {
         fetch(url)
             .then(response => {
                 if (!response.ok) {
-                    throw new Error('Network response was not ok');
+                    throw new Error('Generic error');
                 }
                 return response.json();
             })
@@ -300,6 +292,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (!data.Items) {
                     console.error('No items in fetched data');
                     return;
+                }
+    
+                // Clear existing posts before appending new ones
+                const postsContainer = document.getElementById('newsfeed-posts-container');
+                if (lastPostId) {
+                    postsContainer.innerHTML = '';
                 }
     
                 if (data.Items.length > 0) {
@@ -333,15 +331,15 @@ document.addEventListener('DOMContentLoaded', function() {
                         `;
     
                         postElement.innerHTML = postTemplate;
-                        (document.getElementById('newsfeed-posts-container')).appendChild(postElement);
+                        postsContainer.appendChild(postElement);
                     });
     
-                    // Update lastPostTimestamp for next fetch
-                    lastPostTimestamp = data.LastEvaluatedKey;
+                    // Update lastPostId for next fetch
+                    lastPostId = data.LastEvaluatedKey;
     
                     handleImageLoad();
     
-                    if (lastPostTimestamp) {
+                    if (lastPostId) {
                         loadMoreButton.style.display = 'block';
                     } else {
                         loadMoreButton.style.display = 'none';
@@ -357,7 +355,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 isFetching = false;
                 removeSkeletonLoader();
             });
-    }
+    }    
 
     loadMoreButton.addEventListener('click', fetchPosts);
 
