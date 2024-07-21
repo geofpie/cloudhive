@@ -266,19 +266,22 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+    // Store post IDs that have already been fetched
+    const fetchedPostIds = new Set();
+
     function fetchPosts() {
         if (isFetching) return;
         isFetching = true;
-    
+
         showSkeletonLoader();
-    
+
         let url = `/api/newsfeed`;
-        if (lastPostId) { // Use lastPostId as the pagination key
+        if (lastPostId) {
             url += `?lastPostId=${lastPostId}`;
         }
-    
+
         console.log('Fetching posts from URL:', url);
-    
+
         fetch(url)
             .then(response => {
                 if (!response.ok) {
@@ -288,18 +291,21 @@ document.addEventListener('DOMContentLoaded', function() {
             })
             .then(data => {
                 console.log('Fetched posts data:', data);
-    
+
                 if (!data.Items) {
                     console.error('No items in fetched data');
                     return;
                 }
-    
-                if (data.Items.length > 0) {
-                    data.Items.forEach(post => {
-                        console.log('Post data:', post);
+
+                const newPosts = data.Items.filter(post => !fetchedPostIds.has(post.postId));
+
+                if (newPosts.length > 0) {
+                    newPosts.forEach(post => {
+                        fetchedPostIds.add(post.postId); // Add to set of fetched post IDs
+
                         const postElement = document.createElement('div');
                         postElement.className = 'hive-post';
-    
+
                         const postTemplate = `
                         <div class="col-md-4 hive-post-element mx-auto" data-post-id="${post.postId}">
                             <div class="row hive-post-user-details align-items-center">
@@ -323,16 +329,16 @@ document.addEventListener('DOMContentLoaded', function() {
                             </div>
                         </div>
                         `;
-    
+
                         postElement.innerHTML = postTemplate;
                         (document.getElementById('newsfeed-posts-container')).appendChild(postElement);
                     });
-    
+
                     // Update lastPostId for next fetch
                     lastPostId = data.LastEvaluatedKey;
-    
+
                     handleImageLoad();
-    
+
                     if (lastPostId) {
                         loadMoreButton.style.display = 'block';
                     } else {
@@ -350,7 +356,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 removeSkeletonLoader();
             });
     }
-        
+
     loadMoreButton.addEventListener('click', fetchPosts);
 
     // Initial fetch
