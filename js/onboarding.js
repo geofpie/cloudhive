@@ -92,19 +92,23 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('crop-submit-btn').addEventListener('click', function() {
         if (cropper) {
             cropper.getCroppedCanvas({
-                width: 500, // Set desired width of cropped image
-                height: 500, // Set desired height of cropped image
+                width: 500, // Desired width
+                height: 500, // Desired height
             }).toBlob(function(blob) {
                 // Store the blob in a variable for later use
                 window.croppedImageBlob = blob;
-
-                // Log the blob for debugging
-                console.log('Cropped image blob created:', blob);
-
+    
+                // Create a URL for the cropped image
+                const croppedImageUrl = URL.createObjectURL(blob);
+    
+                // Update the background image of the preview div
+                document.getElementById('profile-pic-preview').style.backgroundImage = `url(${croppedImageUrl})`;
+    
+                // Hide crop modal
                 cropModal.hide();
             });
         }
-    });
+    });    
 
     // Select the form element
     const onboardingForm = document.querySelector('.onboarding-form');
