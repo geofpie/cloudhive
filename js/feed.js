@@ -410,7 +410,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (likeIcon) {
                     likeIcon.src = isLiked ? 'assets/liked.svg' : 'assets/unliked.svg';
                 }
-                likeButton.textContent = isLiked ? 'Liked' : 'Like';
+                if (likeText) {
+                    likeButton.textContent = isLiked ? 'Liked' : 'Like';
+                }
             }
         }
     }
