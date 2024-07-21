@@ -405,7 +405,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.error('Error fetching post details:', error);
             });
     }
-    
+
+    // Add event listener to all like buttons
+    document.querySelectorAll('.hive-stat-like-btn').forEach(button => {
+        button.addEventListener('click', handleLikeButtonClick);
+    });
 
     loadMoreButton.addEventListener('click', fetchPosts);
 
