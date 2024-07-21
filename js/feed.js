@@ -8,16 +8,20 @@ function fetchUserInfo() {
     })
     .then(response => {
         if (response.status === 401) {
+            // Redirect to homepage if user is unauthorised
             window.location.href = '/';
-            return;
+            return; // Stop further processing
         }
+        
         if (!response.ok) {
             throw new Error('Generic error ' + response.statusText);
         }
+        
         return response.json();
     })
     .then(data => {
         if (data.redirect) {
+            // Handle any additional redirect instructions from the server
             window.location.href = data.redirect;
         } else {
             updateUserProfile(data.userInfo);
@@ -25,6 +29,7 @@ function fetchUserInfo() {
     })
     .catch(error => {
         console.error('There was a problem with the fetch operation:', error);
+        // Optionally redirect to homepage on catch error
         window.location.href = '/';
     });
 }
@@ -32,6 +37,7 @@ function fetchUserInfo() {
 function updateUserProfile(user) {
     const loggedInUserName = document.getElementById('hive-logged-in-user-name');
     const username = user.username;
+
     loggedInUserName.innerText = user.first_name;
     loggedInUserName.href = `/${username}`; 
 
@@ -67,12 +73,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function showModal() {
         customModal.classList.remove('hidden');
-        document.body.style.overflow = 'hidden';
+        document.body.style.overflow = 'hidden'; // Prevent background scroll
     }
 
     function hideModal() {
         customModal.classList.add('hidden');
-        document.body.style.overflow = '';
+        document.body.style.overflow = ''; // Restore background scroll
     }
 
     writePostButton.addEventListener('click', showModal);
@@ -91,8 +97,8 @@ document.addEventListener('DOMContentLoaded', function() {
         const file = postImageInput.files[0];
         if (file) {
             const resizedFile = await resizeImage(file);
-            console.log('Original file size:', file.size);
-            console.log('Resized file size:', resizedFile.size);
+            console.log('Original file size:', file.size); // Log the original file size
+            console.log('Resized file size:', resizedFile.size); // Log the resized file size
 
             const reader = new FileReader();
             reader.onload = (e) => {
@@ -101,6 +107,8 @@ document.addEventListener('DOMContentLoaded', function() {
             };
             reader.readAsDataURL(resizedFile);
 
+            // Update the file input to use the resized file
+            // Workaround for updating file input value
             const dataTransfer = new DataTransfer();
             dataTransfer.items.add(resizedFile);
             postImageInput.files = dataTransfer.files;
@@ -111,7 +119,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const postContent = document.getElementById('postContent').value;
         const postImage = postImageInput.files[0];
         if (postContent.trim() || postImage) {
-            showUploadIndicator();
+            showUploadIndicator(); // Show spinner during upload
             submitPost(postContent, postImage);
         } else {
             alert('Please enter content or attach an image.');
@@ -121,7 +129,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function showUploadIndicator() {
         if (uploadIndicator) {
             uploadIndicator.classList.remove('hidden');
-            document.querySelector('.post-modal-content').classList.add('disabled');
+            document.querySelector('.post-modal-content').classList.add('disabled'); // Disable form
         } else {
             console.error('Upload indicator element not found');
         }
@@ -130,7 +138,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function hideUploadIndicator() {
         if (uploadIndicator) {
             uploadIndicator.classList.add('hidden');
-            document.querySelector('.post-modal-content').classList.remove('disabled');
+            document.querySelector('.post-modal-content').classList.remove('disabled'); // Enable form
         } else {
             console.error('Upload indicator element not found');
         }
@@ -140,26 +148,29 @@ document.addEventListener('DOMContentLoaded', function() {
         const img = document.createElement('img');
         img.src = URL.createObjectURL(file);
 
+        // Ensure image is loaded before processing
         await new Promise((resolve) => {
             img.onload = resolve;
         });
 
         const canvas = document.createElement('canvas');
         const ctx = canvas.getContext('2d');
-        const MAX_WIDTH = 800;
+        const MAX_WIDTH = 800; // Desired width
         const scaleFactor = MAX_WIDTH / img.width;
 
         canvas.width = MAX_WIDTH;
         canvas.height = img.height * scaleFactor;
 
+        // Draw image to canvas
         ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
 
+        // Compress the image and get it as a Blob
         return new Promise((resolve) => {
             canvas.toBlob((blob) => {
-                console.log('Original file size:', file.size);
-                console.log('Compressed file size:', blob.size);
+                console.log('Original file size:', file.size); // Log original file size
+                console.log('Compressed file size:', blob.size); // Log compressed file size
                 resolve(new File([blob], file.name, { type: file.type }));
-            }, 'image/jpeg', 0.6);
+            }, 'image/jpeg', 0.6); // Adjust quality (0.6 for 60% quality)
         });
     }
 
@@ -188,18 +199,18 @@ document.addEventListener('DOMContentLoaded', function() {
         })
         .then(data => {
             console.log('Post created successfully:', data);
-            hideUploadIndicator();
-            hideModal();
-            refreshFeed();
+            hideUploadIndicator(); // Hide spinner after upload
+            hideModal(); // Hide modal after successful post
+            refreshFeed(); // Clear current feed and fetch new posts
         })
         .catch(error => {
             console.error('Error creating post:', error);
-            hideUploadIndicator();
+            hideUploadIndicator(); // Hide spinner if there's an error
         });
     }
 
     function showSkeletonLoader() {
-        for (let i = 0; i < 3; i++) {
+        for (let i = 0; i < 3; i++) { // Adjust the number of skeleton loaders as needed
             const skeletonElement = document.createElement('div');
             skeletonElement.className = 'col-md-4 hive-post-element hive-post-skeleton mx-auto';
             skeletonElement.innerHTML = `
@@ -263,7 +274,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         let url = '/api/newsfeed';
         if (lastTimestamp) {
-            url += `?lastTimestamp=${encodeURIComponent(lastTimestamp)}`;
+            url += `?lastTimestamp=${encodeURIComponent(lastTimestamp)}`; // Encode URI component for safety
         }
 
         console.log('Fetching posts from URL:', url);
@@ -278,95 +289,281 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(data => {
                 console.log('Fetched posts data:', data);
 
-                if (!data.posts || data.posts.length === 0) {
-                    loadMoreButton.style.display = 'none';
-                } else {
-                    lastTimestamp = data.posts[data.posts.length - 1].timestamp;
+                if (!data.Items) {
+                    console.error('No items in fetched data');
+                    return;
+                }
 
-                    data.posts.forEach(post => {
-                        if (!fetchedPostIds.has(post.id)) {
-                            fetchedPostIds.add(post.id);
-                            appendPostToFeed(post);
-                        }
+                const newPosts = data.Items.filter(post => !fetchedPostIds.has(post.postId));
+
+                if (newPosts.length > 0) {
+                    newPosts.forEach(post => {
+                        fetchedPostIds.add(post.postId); // Add to set of fetched post IDs
+
+                        // Determine if the post is liked by the current user
+                        const isLiked = post.isLiked; // Ensure `isLiked` is provided by the backend
+
+                        // Update button appearance based on the `isLiked` status
+                        const likeButtonIcon = isLiked ? '../assets/liked.svg' : '../assets/unliked.svg';
+                        const likeButtonText = isLiked ? 'Liked' : 'Like';
+                        const likeButtonClass = isLiked ? 'liked' : '';
+
+                        const postElement = document.createElement('div');
+                        postElement.className = 'hive-post';
+
+                        const postTemplate = `
+                        <div class="col-md-4 hive-post-element mx-auto" data-post-id="${post.postId}">
+                            <div class="row hive-post-user-details align-items-center">
+                                <div class="hive-post-pfp">
+                                    <img src="${post.userProfilePicture || '../assets/default-profile.jpg'}" alt="Profile" class="post-profile-pic">
+                                </div>
+                                <div class="col hive-user-details-text">
+                                    <a href="/${post.username}" class="hive-post-username">${post.firstName}</a>
+                                    <a href="/${post.username}" class="hive-post-user-sub">@${post.username}</a>
+                                </div>
+                                <div class="col hive-user-details-time">
+                                    <i class="fa fa-clock hive-post-time-icon"></i><p class="hive-post-time">${dayjs(post.postTimestamp).fromNow()}</p>
+                                </div>
+                            </div>
+                            <div class="row hive-post-content">
+                                <p class="hive-post-text">${post.content}</p>
+                                ${post.imageUrl ? `<div class="hive-post-image shadow"><img class="hive-post-img-src" data-src="${post.imageUrl}" src="${post.imageUrl}" alt="Post Image"></div>` : ''}
+                            </div>
+                            <div class="hive-social-stats">
+                                <p class="hive-stat-like"><strong>${post.likes || 0}</strong> likes</p>
+                                <hr>
+                                <button class="hive-stat-like-btn ${likeButtonClass}" data-post-id="${post.postId}">
+                                    <img id="like-btn-hive" src="${likeButtonIcon}" alt="${likeButtonText}" style="width: 22px; height: 22px; vertical-align: middle;">
+                                </button>
+                            </div>
+                        </div>
+                        `;
+
+                        postElement.innerHTML = postTemplate;
+                        document.getElementById('newsfeed-posts-container').appendChild(postElement);
                     });
 
-                    handleImageLoad();
+                    // Update lastTimestamp for the next fetch
+                    lastTimestamp = data.LastEvaluatedKey || null;
+                    console.log('Updated lastTimestamp:', lastTimestamp);
+
+                    // Show/hide load more button based on availability of more posts
+                    loadMoreButton.style.display = lastTimestamp ? 'block' : 'none';
+                } else {
+                    // No new posts, or all posts have been fetched
+                    loadMoreButton.style.display = 'none';
                 }
+
+                handleImageLoad(); // Ensure this function is defined and properly handles image loading
+
+                isFetching = false;
+                removeSkeletonLoader();
             })
             .catch(error => {
                 console.error('Error fetching posts:', error);
-            })
-            .finally(() => {
                 isFetching = false;
+                removeSkeletonLoader();
             });
     }
 
-    function appendPostToFeed(post) {
-        const postElement = document.createElement('div');
-        postElement.className = 'col-md-4 hive-post-element mx-auto';
-        postElement.innerHTML = `
-            <div class="row hive-post-user-details align-items-center">
-                <div class="col hive-pfp">
-                    <img src="${post.user_profile_picture}" alt="Profile Picture" class="hive-post-user-pfp">
-                </div>
-                <div class="col hive-user-details-text">
-                    <div class="hive-user-name">${post.username}</div>
-                    <div class="hive-post-timestamp">${dayjs(post.timestamp).fromNow()}</div>
-                </div>
-            </div>
-            <div class="row hive-post-content">
-                <img src="${post.image_url}" alt="Post Image" class="hive-post-img-src">
-            </div>
-            <div class="hive-social-stats">
-                <button class="hive-like-button" data-post-id="${post.id}">Like</button>
-                <div class="hive-like-count">${post.like_count} Likes</div>
-                <hr class="divider">
-            </div>
-        `;
-        postsContainer.appendChild(postElement);
-    }
-
+    // Handle like button click
     function handleLikeButtonClick(event) {
-        if (!event.target.classList.contains('hive-like-button')) return;
+        const postId = event.currentTarget.getAttribute('data-post-id');
+        const likeButton = event.currentTarget;
 
-        const postId = event.target.dataset.postId;
-        console.log('Like button clicked for post ID:', postId);
+        console.log(`Like button clicked for post ID: ${postId}`);
 
-        fetch(`/api/like_post/${postId}`, {
-            method: 'POST',
-            headers: {
-                'Authorization': 'Bearer ' + localStorage.getItem('token')
+        // Perform like/unlike action
+        fetch(`/api/like/${postId}`, { method: 'POST' })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to like/unlike post');
+                }
+                return response.json(); // Parse JSON response
+            })
+            .then(data => {
+                console.log('Response data:', data);
+                // Update the like count and button state in the DOM
+                updateLikeCount(postId, data.likes);
+                updateLikeButton(postId, data.isLiked);
+            })
+            .catch(error => {
+                console.error('Error liking/unliking post:', error);
+            });
+    }
+
+    // Update the like button's state (icon)
+    function updateLikeButton(postId, isLiked) {
+        const postElement = document.querySelector(`div[data-post-id="${postId}"]`);
+        if (postElement) {
+            const likeButton = postElement.querySelector('.hive-stat-like-btn');
+            if (likeButton) {
+                const likeIcon = likeButton.querySelector('#like-btn-hive'); // Select the img tag for the icon
+                
+                // Update the button's icon based on `isLiked` state
+                if (likeIcon) {
+                    console.log(`Updating like button icon for post ID ${postId}. Is liked: ${isLiked}`);
+                    likeIcon.src = isLiked ? '../assets/liked.svg' : '../assets/unliked.svg';
+                }
+                
+                // Update the button's class based on `isLiked` state
+                if (isLiked) {
+                    likeButton.classList.add('liked');
+                    console.log(`Added 'liked' class to button for post ID ${postId}`);
+                } else {
+                    likeButton.classList.remove('liked');
+                    console.log(`Removed 'liked' class from button for post ID ${postId}`);
+                }
+            } else {
+                console.warn(`Like button not found for post ID ${postId}`);
             }
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Failed to like post');
-            }
-            return response.json();
-        })
-        .then(data => {
-            console.log('Post liked successfully:', data);
-            event.target.textContent = 'Liked';
-            const likeCountElement = event.target.nextElementSibling;
+        } else {
+            console.warn(`Post element not found for post ID ${postId}`);
+        }
+    }
+
+    // Update like count in the DOM
+    function updateLikeCount(postId, likeCount) {
+        const postElement = document.querySelector(`div[data-post-id="${postId}"]`);
+        if (postElement) {
+            const likeCountElement = postElement.querySelector('.hive-stat-like strong');
             if (likeCountElement) {
-                likeCountElement.textContent = `${data.newLikeCount} Likes`;
+                console.log(`Updating like count for post ID ${postId}. New count: ${likeCount}`);
+                likeCountElement.textContent = likeCount || 0;
+            } else {
+                console.warn(`Like count element not found for post ID ${postId}`);
             }
-        })
-        .catch(error => {
-            console.error('Error liking post:', error);
-        });
+        } else {
+            console.warn(`Post element not found for post ID ${postId}`);
+        }
     }
 
-    function refreshFeed() {
-        postsContainer.innerHTML = '';
-        lastTimestamp = null;
-        fetchedPostIds.clear();
-        fetchPosts();
-    }
+    // Add event listener to all like buttons
+    document.querySelectorAll('.hive-stat-like-btn').forEach(button => {
+        console.log('Button found with data-post-id:', button.getAttribute('data-post-id'));
+        button.addEventListener('click', handleLikeButtonClick);
+    });    
 
     loadMoreButton.addEventListener('click', fetchPosts);
 
-    postsContainer.addEventListener('click', handleLikeButtonClick);
-
+    // Initial fetch
     fetchPosts();
+
+    function clearFeed() {
+        document.getElementById('newsfeed-posts-container').innerHTML = '';
+        lastPostId = null;
+        fetchedPostIds.clear(); // Optionally clear fetched post IDs
+    }
+    
+    function refreshFeed() {
+        clearFeed();
+        fetchPosts();
+    }
+});
+
+document.getElementById('notifications-link').addEventListener('click', function() {
+    fetch('/api/follow-requests')
+        .then(response => response.json())
+        .then(data => {
+            const followRequestsList = document.getElementById('follow-requests-list');
+            followRequestsList.innerHTML = ''; // Clear the list
+
+            data.forEach(request => {
+                const listItem = document.createElement('li');
+                listItem.className = 'list-group-item d-flex justify-content-between align-items-center';
+
+                const profilePicUrl = request.profile_picture_url || '../assets/default-profile.jpg';
+
+                listItem.innerHTML = `
+                    <img src="${profilePicUrl}" alt="Profile Picture" class="rounded-circle" width="40" height="40">
+                    <div>
+                        <strong>${request.first_name} ${request.last_name}</strong>
+                        <p>@${request.username}</p>
+                    </div>
+                    <div>
+                        <button class="btn btn-success btn-sm mr-2" onclick="acceptFollowRequest('${request.username}')">Accept</button>
+                        <button class="btn btn-danger btn-sm" onclick="denyFollowRequest('${request.username}')">Deny</button>
+                    </div>
+                `;
+
+                followRequestsList.appendChild(listItem);
+            });
+
+            $('#notificationsModal').modal('show'); // Show the modal
+        })
+        .catch(error => console.error('Error fetching follow requests:', error));
+});
+
+function acceptFollowRequest(username) {
+    fetch('/api/follow-requests/accept', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ username })
+    })
+    .then(response => response.text())
+    .then(data => {
+        alert(data);
+        // Remove the request from the list or update the UI to show it as accepted
+        const listItem = document.querySelector(`li[data-username="${username}"]`);
+        if (listItem) {
+            listItem.remove(); // Remove the list item from the UI
+        }
+    })
+    .catch(error => console.error('Error:', error));
+}
+
+function denyFollowRequest(username) {
+    fetch('/api/follow-requests/deny', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ username })
+    })
+    .then(response => response.text())
+    .then(data => {
+        alert(data);
+        // Remove the request from the list
+        const listItem = document.querySelector(`li[data-username="${username}"]`);
+        if (listItem) {
+            listItem.remove(); // Remove the list item from the UI
+        }
+    })
+    .catch(error => console.error('Error:', error));
+}
+
+document.getElementById('notifications-link').addEventListener('click', function() {
+    fetch('/api/follow-requests')
+        .then(response => response.json())
+        .then(data => {
+            const followRequestsList = document.getElementById('follow-requests-list');
+            followRequestsList.innerHTML = ''; // Clear the list
+
+            data.forEach(request => {
+                const listItem = document.createElement('li');
+                listItem.className = 'list-group-item d-flex justify-content-between align-items-center';
+                listItem.setAttribute('data-username', request.username);
+
+                const profilePicUrl = request.profile_picture_url || '../assets/default-profile.jpg';
+
+                listItem.innerHTML = `
+                    <img src="${profilePicUrl}" alt="Profile Picture" class="rounded-circle" width="40" height="40">
+                    <div>
+                        <strong>${request.first_name} ${request.last_name}</strong>
+                        <p>@${request.username}</p>
+                    </div>
+                    <div>
+                        <button class="btn btn-success btn-sm mr-2" onclick="acceptFollowRequest('${request.username}')">Accept</button>
+                        <button class="btn btn-danger btn-sm" onclick="denyFollowRequest('${request.username}')">Deny</button>
+                    </div>
+                `;
+
+                followRequestsList.appendChild(listItem);
+            });
+
+            $('#notificationsModal').modal('show'); // Show the modal
+        })
+        .catch(error => console.error('Error fetching follow requests:', error));
 });
