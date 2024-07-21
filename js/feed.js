@@ -406,11 +406,11 @@ document.addEventListener('DOMContentLoaded', function() {
         if (isLiked) {
             button.classList.add('liked'); // Add the 'liked' class
             button.textContent = 'Liked'; // Change the button text
-            button.innerHTML = `<img src="assets/like.svg" alt="Liked" style="width: 10px; height: 10px; vertical-align: middle;"> Liked`; // Add liked icon
+            button.innerHTML = `<img src="assets/liked.svg" alt="Liked" style="width: 10px; height: 10px; vertical-align: middle;"> Liked`; // Add liked icon
         } else {
             button.classList.remove('liked'); // Remove the 'liked' class
             button.textContent = 'Like'; // Change the button text back
-            button.innerHTML = `<img src="assets/unlike.svg" alt="Like" style="width: 10px; height: 10px; vertical-align: middle;"> Like`; // Add unliked icon
+            button.innerHTML = `<img src="assets/unliked.svg" alt="Like" style="width: 10px; height: 10px; vertical-align: middle;"> Like`; // Add unliked icon
         }
     }
 
