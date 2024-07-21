@@ -381,8 +381,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.log(data.message);
                 // Update the like count in the DOM
                 updateLikeCount(postId, data.likes);
-                likeButton.classList.toggle('liked');
-                likeButton.textContent = likeButton.classList.contains('liked') ? 'Liked' : 'Like';
+                
+                // Update the button's appearance
+                updateLikeButton(likeButton, data.liked);
             })
             .catch(error => {
                 console.error('Error liking/unliking post:', error);
@@ -400,6 +401,18 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+    // Update the button's appearance and text with icons
+    function updateLikeButton(button, isLiked) {
+        if (isLiked) {
+            button.classList.add('liked'); // Add the 'liked' class
+            button.textContent = 'Liked'; // Change the button text
+            button.innerHTML = `<img src="assets/like.svg" alt="Liked" style="width: 10px; height: 10px; vertical-align: middle;"> Liked`; // Add liked icon
+        } else {
+            button.classList.remove('liked'); // Remove the 'liked' class
+            button.textContent = 'Like'; // Change the button text back
+            button.innerHTML = `<img src="assets/unlike.svg" alt="Like" style="width: 10px; height: 10px; vertical-align: middle;"> Like`; // Add unliked icon
+        }
+    }
 
     // Add event listener to all like buttons
     document.querySelectorAll('.hive-stat-like-btn').forEach(button => {
