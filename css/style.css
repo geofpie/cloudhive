@@ -869,3 +869,7 @@ a:hover {
 .hive-post-pfp {
     margin-left: 6px;
 }
+
+.hive-user-details-time {
+    text-align: right;
+}
