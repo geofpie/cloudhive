@@ -364,15 +364,19 @@ document.addEventListener('DOMContentLoaded', function() {
                 isFetching = false;
                 removeSkeletonLoader();
             });
+
+            // Add event listeners to the like buttons
+            document.querySelectorAll('.hive-stat-like-btn').forEach(button => {
+                button.addEventListener('click', handleLikeButtonClick);
+            });
     }
        
     // Handle like button click
     function handleLikeButtonClick(event) {
-        const likeButton = event.currentTarget;
         const postId = event.currentTarget.getAttribute('data-post-id');
-    
-        console.log('Like button clicked for Post ID:', postId);
-    
+        const likeButton = event.currentTarget;
+
+        // Perform like/unlike action
         fetch(`/api/like/${postId}`, { method: 'POST' })
             .then(response => {
                 if (!response.ok) {
@@ -381,15 +385,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 return response.json(); // Parse JSON response
             })
             .then(data => {
-                console.log('Response Data:', data);
+                console.log(data.message);
+                // Update the like count and button state in the DOM
                 updateLikeCount(postId, data.likes);
                 updateLikeButton(postId, data.isLiked);
             })
             .catch(error => {
                 console.error('Error liking/unliking post:', error);
             });
-        }
-    
+    }
 
     // Update the like button's state (icon)
     function updateLikeButton(postId, isLiked) {
@@ -425,12 +429,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
     }
-
-    document.addEventListener('DOMContentLoaded', () => {
-        document.querySelectorAll('.hive-stat-like-btn').forEach(button => {
-            button.addEventListener('click', handleLikeButtonClick);
-        });
-    });
     
     loadMoreButton.addEventListener('click', fetchPosts);
 
