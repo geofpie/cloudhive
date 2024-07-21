@@ -167,16 +167,30 @@ function fetchUserInfo() {
         }
     })
     .then(response => {
+        if (response.status === 401) {
+            // Redirect to homepage if user is unauthorized
+            window.location.href = '/';
+            return; // Stop further processing
+        }
+        
         if (!response.ok) {
             throw new Error('Network response was not ok ' + response.statusText);
         }
+        
         return response.json();
     })
     .then(data => {
-        updateUserProfile(data.userInfo);
+        if (data.redirect) {
+            // Handle any additional redirect instructions from the server
+            window.location.href = data.redirect;
+        } else {
+            updateUserProfile(data.userInfo);
+        }
     })
     .catch(error => {
         console.error('There was a problem with the fetch operation:', error);
+        // Optionally redirect to homepage on catch error
+        window.location.href = '/';
     });
 }
 
