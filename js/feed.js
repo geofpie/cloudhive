@@ -269,16 +269,16 @@ document.addEventListener('DOMContentLoaded', function() {
     function fetchPosts() {
         if (isFetching) return;
         isFetching = true;
-
+    
         showSkeletonLoader();
-
+    
         let url = '/api/newsfeed';
-        if (lastPostId) {
-            url += `?lastPostId=${encodeURIComponent(lastPostId)}`; // Encode URI component for safety
+        if (lastTimestamp) {
+            url += `?lastTimestamp=${encodeURIComponent(lastTimestamp)}`; // Encode URI component for safety
         }
-
+    
         console.log('Fetching posts from URL:', url);
-
+    
         fetch(url)
             .then(response => {
                 if (!response.ok) {
@@ -288,29 +288,29 @@ document.addEventListener('DOMContentLoaded', function() {
             })
             .then(data => {
                 console.log('Fetched posts data:', data);
-
+    
                 if (!data.Items) {
                     console.error('No items in fetched data');
                     return;
                 }
-
+    
                 const newPosts = data.Items.filter(post => !fetchedPostIds.has(post.postId));
-
+    
                 if (newPosts.length > 0) {
                     newPosts.forEach(post => {
                         fetchedPostIds.add(post.postId); // Add to set of fetched post IDs
-
+    
                         // Determine if the post is liked by the current user
                         const isLiked = post.isLiked; // Ensure `isLiked` is provided by the backend
-
+    
                         // Update button appearance based on the `isLiked` status
                         const likeButtonIcon = isLiked ? '../assets/liked.svg' : '../assets/unliked.svg';
                         const likeButtonText = isLiked ? 'Liked' : 'Like';
                         const likeButtonClass = isLiked ? 'liked' : '';
-
+    
                         const postElement = document.createElement('div');
                         postElement.className = 'hive-post';
-
+    
                         const postTemplate = `
                         <div class="col-md-4 hive-post-element mx-auto" data-post-id="${post.postId}">
                             <div class="row hive-post-user-details align-items-center">
@@ -338,38 +338,30 @@ document.addEventListener('DOMContentLoaded', function() {
                             </div>
                         </div>
                         `;
-
+    
                         postElement.innerHTML = postTemplate;
                         document.getElementById('newsfeed-posts-container').appendChild(postElement);
                     });
-
-                    // Update lastPostId for next fetch
-                    lastPostId = data.LastEvaluatedKey || null;
-
-                    handleImageLoad(); // Ensure this function is defined and properly handles image loading
-
-                    if (lastPostId) {
-                        loadMoreButton.style.display = 'block';
-                    } else {
-                        loadMoreButton.style.display = 'none';
-                    }
+    
+                    // Update lastTimestamp for next fetch
+                    lastTimestamp = data.LastEvaluatedKey;
+                    console.log('Updated lastTimestamp:', lastTimestamp);
+    
+                    isFetching = false;
+                    hideSkeletonLoader();
                 } else {
-                    loadMoreButton.style.display = 'none';
+                    // No new posts, or all posts have been fetched
+                    isFetching = false;
+                    hideSkeletonLoader();
                 }
-
-                // Add event listeners to the like buttons
-                document.querySelectorAll('.hive-stat-like-btn').forEach(button => {
-                    button.addEventListener('click', handleLikeButtonClick);
-                });
             })
             .catch(error => {
-                console.error('Failed to fetch posts:', error);
-            })
-            .finally(() => {
+                console.error('Error fetching posts:', error);
                 isFetching = false;
-                removeSkeletonLoader();
+                hideSkeletonLoader();
             });
     }
+    
     
     // Handle like button click
     function handleLikeButtonClick(event) {
