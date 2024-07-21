@@ -373,7 +373,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function clearFeed() {
         document.getElementById('newsfeed-posts-container').innerHTML = '';
-        lastPostId = null;
+        lastTimestamp = null;
         fetchedPostIds.clear(); // Optionally clear fetched post IDs
     }
     
