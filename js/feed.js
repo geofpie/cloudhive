@@ -371,7 +371,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const postId = event.currentTarget.getAttribute('data-post-id');
         const likeButton = event.currentTarget;
     
-        console.log('Post ID:', postId);
+        console.log('Like button clicked for Post ID:', postId);
     
         fetch(`/api/like/${postId}`, { method: 'POST' })
             .then(response => {
@@ -388,7 +388,7 @@ document.addEventListener('DOMContentLoaded', function() {
             .catch(error => {
                 console.error('Error liking/unliking post:', error);
             });
-    }
+        }
     
 
     // Update the like button's state (icon)
@@ -426,11 +426,13 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Add event listener to all like buttons
-    document.querySelectorAll('.hive-stat-like-btn').forEach(button => {
-        button.addEventListener('click', handleLikeButtonClick);
+    document.addEventListener('click', (event) => {
+        const likeButton = event.target.closest('.hive-stat-like-btn');
+        if (likeButton) {
+            handleLikeButtonClick(event);
+        }
     });
-
+    
     loadMoreButton.addEventListener('click', fetchPosts);
 
     // Initial fetch
