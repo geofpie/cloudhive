@@ -200,7 +200,7 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log('Post created successfully:', data);
             hideUploadIndicator(); // Hide spinner after upload
             hideModal(); // Hide modal after successful post
-            clearCurrentView(); // Clear current view
+            // clearCurrentView(); // Clear current view
             fetchPosts(true); // Fetch posts with reset to ensure latest posts are loaded
         })
         .catch(error => {
