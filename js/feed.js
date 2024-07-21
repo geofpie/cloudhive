@@ -273,7 +273,7 @@ document.addEventListener('DOMContentLoaded', function() {
         showSkeletonLoader();
     
         let url = `/api/newsfeed`;
-        if (lastPostId) {
+        if (lastPostId) { // Use lastPostId as the pagination key
             url += `?lastPostId=${lastPostId}`;
         }
     
@@ -349,8 +349,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 isFetching = false;
                 removeSkeletonLoader();
             });
-    }    
-
+    }
+        
     loadMoreButton.addEventListener('click', fetchPosts);
 
     // Initial fetch
