@@ -207,8 +207,8 @@ document.addEventListener('DOMContentLoaded', function() {
             console.error('Error creating post:', error);
             hideUploadIndicator(); // Hide spinner if there's an error
         });
-    }    
-
+    }
+    
     function showSkeletonLoader() {
         for (let i = 0; i < 3; i++) { // Adjust the number of skeleton loaders as needed
             const skeletonElement = document.createElement('div');
@@ -297,13 +297,13 @@ document.addEventListener('DOMContentLoaded', function() {
                     return;
                 }
     
-                const newPosts = data.Items.filter(post => !fetchedPostIds.has(post.postId));
+                const newPosts = reset ? data.Items : data.Items.filter(post => !fetchedPostIds.has(post.postId));
     
                 if (newPosts.length > 0) {
                     if (reset) {
                         // Clear existing posts if reset is true
                         document.getElementById('newsfeed-posts-container').innerHTML = '';
-                        fetchedPostIds.clear();
+                        fetchedPostIds.clear(); // Clear the set of fetched post IDs
                     }
     
                     newPosts.forEach(post => {
@@ -377,7 +377,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 isFetching = false;
                 removeSkeletonLoader();
             });
-    }
+    }    
     
     // Handle like button click
     function handleLikeButtonClick(event) {
