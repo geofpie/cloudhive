@@ -440,9 +440,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Add event listener to all like buttons
     document.querySelectorAll('.hive-stat-like-btn').forEach(button => {
+        console.log('Button found with data-post-id:', button.getAttribute('data-post-id'));
         button.addEventListener('click', handleLikeButtonClick);
-        console.log('Added event listener to button with data-post-id:', button.getAttribute('data-post-id'));
-    });
+    });    
 
     loadMoreButton.addEventListener('click', fetchPosts);
 
