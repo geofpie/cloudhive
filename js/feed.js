@@ -408,7 +408,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 // Update the button's icon based on `isLiked` state
                 if (likeIcon) {
-                    likeIcon.src = isLiked ? 'assets/liked.svg' : 'assets/unliked.svg';
+                    likeIcon.src = isLiked ? '../assets/liked.svg' : '../assets/unliked.svg';
                 }
                 
                 // Update the button's class based on `isLiked` state
