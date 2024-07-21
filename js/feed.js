@@ -336,7 +336,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                 <p class="hive-stat-like"><strong>${post.likes || 0}</strong> likes</p>
                                 <hr>
                                 <button class="hive-stat-like-btn ${likeButtonClass}" data-post-id="${post.postId}">
-                                    <img id="like-btn-hive" src="${likeButtonIcon}" alt="${likeButtonText}" style="width: 14px; height: 14px; vertical-align: middle;"><span id="like-button-text">${likeButtonText}</span>
+                                    <img id="like-btn-hive" src="${likeButtonIcon}" alt="${likeButtonText}" style="width: 22px; height: 22px; vertical-align: middle;">
                                 </button>
                             </div>
                         </div>
@@ -398,25 +398,29 @@ document.addEventListener('DOMContentLoaded', function() {
             });
     }
 
-    // Update the like button's state (icon and text)
+    // Update the like button's state (icon)
     function updateLikeButton(postId, isLiked) {
         const postElement = document.querySelector(`div[data-post-id="${postId}"]`);
         if (postElement) {
-            const likeButton = postElement.querySelector('#like-button-text');
+            const likeButton = postElement.querySelector('.hive-stat-like-btn');
             if (likeButton) {
-                const likeIcon = likeButton.querySelector('#like-btn-hive'); // Update selector based on your HTML structure
-
-                // Update the button's appearance based on `isLiked` state
+                const likeIcon = likeButton.querySelector('#like-btn-hive'); // Select the img tag for the icon
+                
+                // Update the button's icon based on `isLiked` state
                 if (likeIcon) {
                     likeIcon.src = isLiked ? 'assets/liked.svg' : 'assets/unliked.svg';
                 }
-                if (likeText) {
-                    likeButton.textContent = isLiked ? 'Liked' : 'Like';
-                    console.log(isLiked);
+                
+                // Update the button's class based on `isLiked` state
+                if (isLiked) {
+                    likeButton.classList.add('liked');
+                } else {
+                    likeButton.classList.remove('liked');
                 }
             }
         }
     }
+
 
     // Update like count in the DOM
     function updateLikeCount(postId, likeCount) {
