@@ -336,7 +336,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                 <p class="hive-stat-like"><strong>${post.likes || 0}</strong> likes</p>
                                 <hr>
                                 <button class="hive-stat-like-btn ${likeButtonClass}" data-post-id="${post.postId}">
-                                    <img id="like-btn-hive" src="${likeButtonIcon}" alt="${likeButtonText}" style="width: 22px; height: 22px; vertical-align: middle;">
+                                    <img id="like-btn-hive" src="${likeButtonIcon}" alt="${likeButtonText}" style="width: 14px; height: 14px; vertical-align: middle;"><span id="like-button-text">${likeButtonText}</span>
                                 </button>
                             </div>
                         </div>
@@ -402,13 +402,17 @@ document.addEventListener('DOMContentLoaded', function() {
     function updateLikeButton(postId, isLiked) {
         const postElement = document.querySelector(`div[data-post-id="${postId}"]`);
         if (postElement) {
-            const likeButton = postElement.querySelector('.hive-stat-like-btn');
+            const likeButton = postElement.querySelector('#like-button-text');
             if (likeButton) {
                 const likeIcon = likeButton.querySelector('#like-btn-hive'); // Update selector based on your HTML structure
 
                 // Update the button's appearance based on `isLiked` state
                 if (likeIcon) {
                     likeIcon.src = isLiked ? 'assets/liked.svg' : 'assets/unliked.svg';
+                }
+                if (likeText) {
+                    likeButton.textContent = isLiked ? 'Liked' : 'Like';
+                    console.log(isLiked);
                 }
             }
         }
