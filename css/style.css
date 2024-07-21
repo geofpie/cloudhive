@@ -359,6 +359,7 @@ a:hover {
 }
 
 .hive-nav-btn {
+    display: inline-block;
     padding-right: 12px;
 }
 
