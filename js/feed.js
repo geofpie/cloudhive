@@ -464,9 +464,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const postsContainer = document.getElementById('newsfeed-posts-container');
 
     postsContainer.addEventListener('click', function(event) {
-        if (event.target.classList.contains('hive-stat-like-btn')) {
+        if (event.target.closest('.hive-stat-like-btn')) {
             const postElement = event.target.closest('.hive-post-element');
-            const postId = postElement.dataset.postId;
+            const postId = postElement.getAttribute('data-post-id');
             const userId = 'currentUserId'; // Replace with the actual logged-in user ID
 
             fetch('/api/like', {
@@ -481,7 +481,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (data.success) {
                     const likesElement = postElement.querySelector('.hive-stat-like strong');
                     likesElement.textContent = data.likes;
-                    console.log('liked successfully')
                 } else {
                     console.error('Error liking post:', data.error);
                 }
