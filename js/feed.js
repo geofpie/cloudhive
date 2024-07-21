@@ -301,15 +301,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
                 if (newPosts.length > 0) {
                     newPosts.forEach(post => {
-                        fetchedPostIds.add(post.postId); // Add to set of fetched post IDs
-    
-                        // Determine if the post is liked by the current user
-                        const isLiked = post.isLiked; // Ensure `isLiked` is provided by the backend
-    
-                        // Update button appearance based on the `isLiked` status
-                        const likeButtonIcon = isLiked ? '../assets/liked.svg' : '../assets/unliked.svg';
-                        const likeButtonText = isLiked ? 'Liked' : 'Like';
-                        const likeButtonClass = isLiked ? 'liked' : '';
+                        fetchedPostIds.add(post.postId);
     
                         const postElement = document.createElement('div');
                         postElement.className = 'hive-post';
@@ -335,8 +327,8 @@ document.addEventListener('DOMContentLoaded', function() {
                             <div class="hive-social-stats">
                                 <p class="hive-stat-like"><strong>${post.likes || 0}</strong> likes</p>
                                 <hr>
-                                <button class="hive-stat-like-btn ${likeButtonClass}" data-post-id="${post.postId}">
-                                    <img id="like-btn-hive" src="${likeButtonIcon}" alt="${likeButtonText}" style="width: 22px; height: 22px; vertical-align: middle;">
+                                <button class="hive-stat-like-btn" data-post-id="${post.postId}">
+                                    <img id="like-btn-hive" src="${post.isLiked ? 'assets/liked.svg' : 'assets/unliked.svg'}" alt="Like Icon">
                                 </button>
                             </div>
                         </div>
@@ -346,7 +338,6 @@ document.addEventListener('DOMContentLoaded', function() {
                         document.getElementById('newsfeed-posts-container').appendChild(postElement);
                     });
     
-                    // Update lastPostId for next fetch
                     lastPostId = data.LastEvaluatedKey;
     
                     handleImageLoad();
@@ -392,7 +383,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Update the like count and button state in the DOM
                 updateLikeCount(postId, data.likes);
                 updateLikeButton(postId, data.isLiked);
-                console.log(isLiked);
             })
             .catch(error => {
                 console.error('Error liking/unliking post:', error);
