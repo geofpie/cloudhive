@@ -52,8 +52,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
             if (data.token) {
                 // Registration success with token
-                displayPopup('Registration Successful', 'text-success');
-                // Optionally, you can redirect or handle success here
+                displayPopup('Registration was successful! Please check your email and confirm your email address.', 'text-success');
             } else {
                 // Registration error (username or email exists)
                 const errorMessage = data.error || 'Unknown Error';

@@ -216,7 +216,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function showSkeletonLoader() {
         for (let i = 0; i < 3; i++) { // Adjust the number of skeleton loaders as needed
             const skeletonElement = document.createElement('div');
-            skeletonElement.className = 'col-md-5 hive-post-element hive-post-skeleton mx-auto';
+            skeletonElement.className = 'col-md-4 hive-post-element hive-post-skeleton mx-auto';
             skeletonElement.innerHTML = `
                 <div class="row hive-post-user-details hive-post-details-skeleton align-items-center">
                     <div class="col hive-pfp-skeleton"></div>
