@@ -489,3 +489,41 @@ document.getElementById('notifications-link').addEventListener('click', function
         })
         .catch(error => console.error('Error fetching follow requests:', error));
 });
+
+// Event delegation to handle clicks on dynamically added like buttons
+postsContainer.addEventListener('click', function(event) {
+    if (event.target.closest('.hive-stat-like-btn')) {
+        const likeButton = event.target.closest('.hive-stat-like-btn');
+        const postId = likeButton.dataset.postId;
+
+        console.log('Like button clicked for post ID:', postId);
+
+        fetch(`/api/like/${postId}`, {
+            method: 'POST',
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            }
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to like/unlike post');
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Post like/unlike successful:', data);
+            const likeButtonIcon = document.getElementById(`like-btn-hive-${postId}`);
+            const likeButtonIconSrc = data.message === 'Like added' ? '../assets/liked.svg' : '../assets/unliked.svg';
+            likeButtonIcon.src = likeButtonIconSrc;
+
+            // Update like count
+            const likeCountElement = likeButton.nextElementSibling;
+            if (likeCountElement) {
+                likeCountElement.textContent = `${data.likes} Likes`;
+            }
+        })
+        .catch(error => {
+            console.error('Error liking/unliking post:', error);
+        });
+    }
+});
