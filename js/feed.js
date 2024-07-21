@@ -328,7 +328,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                 <p class="hive-stat-like"><strong>${post.likes || 0}</strong> likes</p>
                                 <hr>
                                 <button class="hive-stat-like-btn" data-post-id="${post.postId}">
-                                    <img id="like-btn-hive" src="${post.isLiked ? 'assets/liked.svg' : 'assets/unliked.svg'}" alt="Like Icon">
+                                    <img id="like-btn-hive" src="${post.isLiked ? '/assets/liked.svg' : '/assets/unliked.svg'}" alt="Like Icon">
                                 </button>
                             </div>
                         </div>
