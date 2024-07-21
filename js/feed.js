@@ -405,15 +405,12 @@ document.addEventListener('DOMContentLoaded', function() {
             const likeButton = postElement.querySelector('.hive-stat-like-btn');
             if (likeButton) {
                 const likeIcon = likeButton.querySelector('#like-btn-hive'); // Update selector based on your HTML structure
-                const likeText = likeButton.querySelector('span'); // Assuming there's a <span> for text
 
                 // Update the button's appearance based on `isLiked` state
                 if (likeIcon) {
                     likeIcon.src = isLiked ? 'assets/liked.svg' : 'assets/unliked.svg';
                 }
-                if (likeText) {
-                    likeText.textContent = isLiked ? 'Liked' : 'Like';
-                }
+                likeButton.textContent = isLiked ? 'Liked' : 'Like';
             }
         }
     }
