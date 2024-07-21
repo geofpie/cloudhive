@@ -481,6 +481,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (data.success) {
                     const likesElement = postElement.querySelector('.hive-stat-like strong');
                     likesElement.textContent = data.likes;
+                    console.log('liked successfully')
                 } else {
                     console.error('Error liking post:', data.error);
                 }
