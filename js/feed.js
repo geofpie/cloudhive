@@ -200,7 +200,7 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log('Post created successfully:', data);
             hideUploadIndicator(); // Hide spinner after upload
             hideModal(); // Hide modal after successful post
-            // clearCurrentView(); // Clear current view
+            //clearCurrentView(); // Clear current view
             fetchPosts(true); // Fetch posts with reset to ensure latest posts are loaded
         })
         .catch(error => {
@@ -275,11 +275,10 @@ document.addEventListener('DOMContentLoaded', function() {
     
         showSkeletonLoader();
     
-        // Reset the fetchedPostIds and lastPostId if reset is true
+        // If reset is true, clear fetchedPostIds and reset lastPostId
         if (reset) {
-            document.getElementById('newsfeed-posts-container').innerHTML = ''; // Clear existing posts
             fetchedPostIds.clear(); // Clear the set of fetched post IDs
-            lastPostId = null; // Reset lastPostId for full fetch
+            lastPostId = null; // Reset lastPostId for a full fetch
         }
     
         let url = `/api/newsfeed`;
@@ -379,7 +378,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 isFetching = false;
                 removeSkeletonLoader();
             });
-    }
+    }    
     
     // Handle like button click
     function handleLikeButtonClick(event) {
