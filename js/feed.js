@@ -169,6 +169,7 @@ function fetchUserInfo() {
     .then(response => {
         if (!response.ok) {
             throw new Error('Network response was not ok ' + response.statusText);
+            window.location.href = '/';
         }
         return response.json();
     })
@@ -188,6 +189,7 @@ function updateUserProfile(user) {
     loggedInUserName.href = `/${username}`; 
 
     document.querySelector('.navbar-profile-pic').src = user.profile_picture_url;
+    document.querySelector('.postbar-profile-pic').src = user.profile_picture_url;
 }
 
 dayjs.extend(dayjs_plugin_relativeTime);
