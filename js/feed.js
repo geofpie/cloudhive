@@ -368,8 +368,8 @@ document.addEventListener('DOMContentLoaded', function() {
        
     // Handle like button click
     function handleLikeButtonClick(event) {
-        const postId = event.currentTarget.getAttribute('data-post-id');
         const likeButton = event.currentTarget;
+        const postId = event.currentTarget.getAttribute('data-post-id');
     
         console.log('Like button clicked for Post ID:', postId);
     
