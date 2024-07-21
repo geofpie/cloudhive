@@ -364,19 +364,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 isFetching = false;
                 removeSkeletonLoader();
             });
-
-            document.querySelectorAll('.hive-stat-like-btn').forEach(button => {
-                button.addEventListener('click', handleLikeButtonClick);
-            });
-            
     }
-       
+
     // Handle like button click
     function handleLikeButtonClick(event) {
-        console.log('Current target:', event.currentTarget); // Debugging line
         const postId = event.currentTarget.getAttribute('data-post-id');
         const likeButton = event.currentTarget;
-    
+
         // Perform like/unlike action
         fetch(`/api/like/${postId}`, { method: 'POST' })
             .then(response => {
@@ -430,6 +424,11 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
     }
+
+    // Add event listener to all like buttons
+    document.querySelectorAll('.hive-stat-like-btn').forEach(button => {
+        button.addEventListener('click', handleLikeButtonClick);
+    });
     
     loadMoreButton.addEventListener('click', fetchPosts);
 
