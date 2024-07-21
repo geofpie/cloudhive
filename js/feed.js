@@ -272,16 +272,16 @@ document.addEventListener('DOMContentLoaded', function() {
     function fetchPosts() {
         if (isFetching) return;
         isFetching = true;
-
+    
         showSkeletonLoader();
-
+    
         let url = `/api/newsfeed`;
         if (lastPostId) {
             url += `?lastPostId=${lastPostId}`;
         }
-
+    
         console.log('Fetching posts from URL:', url);
-
+    
         fetch(url)
             .then(response => {
                 if (!response.ok) {
@@ -291,21 +291,21 @@ document.addEventListener('DOMContentLoaded', function() {
             })
             .then(data => {
                 console.log('Fetched posts data:', data);
-
+    
                 if (!data.Items) {
                     console.error('No items in fetched data');
                     return;
                 }
-
+    
                 const newPosts = data.Items.filter(post => !fetchedPostIds.has(post.postId));
-
+    
                 if (newPosts.length > 0) {
                     newPosts.forEach(post => {
                         fetchedPostIds.add(post.postId); // Add to set of fetched post IDs
-
+    
                         const postElement = document.createElement('div');
                         postElement.className = 'hive-post';
-
+    
                         const postTemplate = `
                         <div class="col-md-4 hive-post-element mx-auto" data-post-id="${post.postId}">
                             <div class="row hive-post-user-details align-items-center">
@@ -327,20 +327,20 @@ document.addEventListener('DOMContentLoaded', function() {
                             <div class="hive-social-stats">
                                 <p class="hive-stat-like"><strong>${post.likes || 0}</strong> likes</p>
                                 <hr>
-                                <button class="hive-stat-like-btn"><i class="fa fa-heart hive-stat-like-heart"></i>Like</button>
+                                <button class="hive-stat-like-btn" data-post-id="${post.postId}"><i class="fa fa-heart hive-stat-like-heart"></i>Like</button>
                             </div>
                         </div>
                         `;
-
+    
                         postElement.innerHTML = postTemplate;
-                        (document.getElementById('newsfeed-posts-container')).appendChild(postElement);
+                        document.getElementById('newsfeed-posts-container').appendChild(postElement);
                     });
-
+    
                     // Update lastPostId for next fetch
                     lastPostId = data.LastEvaluatedKey;
-
+    
                     handleImageLoad();
-
+    
                     if (lastPostId) {
                         loadMoreButton.style.display = 'block';
                     } else {
@@ -349,6 +349,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 } else {
                     loadMoreButton.style.display = 'none';
                 }
+    
+                // Add event listeners to the like buttons
+                document.querySelectorAll('.hive-stat-like-btn').forEach(button => {
+                    button.addEventListener('click', handleLikeButtonClick);
+                });
             })
             .catch(error => {
                 console.error('Failed to fetch posts:', error);
@@ -358,6 +363,49 @@ document.addEventListener('DOMContentLoaded', function() {
                 removeSkeletonLoader();
             });
     }
+    
+    // Handle like button click
+    function handleLikeButtonClick(event) {
+        const postId = event.currentTarget.getAttribute('data-post-id');
+        const likeButton = event.currentTarget;
+        
+        // Perform like/unlike action
+        fetch(`/api/like/${postId}`, { method: 'POST' })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to like/unlike post');
+                }
+                return response.text();
+            })
+            .then(message => {
+                console.log(message);
+                // Update the like count in the DOM
+                updateLikeCount(postId);
+            })
+            .catch(error => {
+                console.error('Error liking/unliking post:', error);
+            });
+    }
+    
+    // Update like count in the DOM
+    function updateLikeCount(postId) {
+        // Fetch updated post details
+        fetch(`/api/post/${postId}`)
+            .then(response => response.json())
+            .then(post => {
+                const postElement = document.querySelector(`div[data-post-id="${postId}"]`);
+                if (postElement) {
+                    const likeCountElement = postElement.querySelector('.hive-stat-like strong');
+                    if (likeCountElement) {
+                        likeCountElement.textContent = post.likes || 0;
+                    }
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching post details:', error);
+            });
+    }
+    
 
     loadMoreButton.addEventListener('click', fetchPosts);
 
