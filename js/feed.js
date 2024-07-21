@@ -297,15 +297,15 @@ document.addEventListener('DOMContentLoaded', function() {
                     return;
                 }
     
-                const newPosts = reset ? data.Items : data.Items.filter(post => !fetchedPostIds.has(post.postId));
+                // Clear `fetchedPostIds` and existing posts if reset is true
+                if (reset) {
+                    document.getElementById('newsfeed-posts-container').innerHTML = '';
+                    fetchedPostIds.clear(); // Clear the set of fetched post IDs
+                }
+    
+                const newPosts = data.Items.filter(post => !fetchedPostIds.has(post.postId));
     
                 if (newPosts.length > 0) {
-                    if (reset) {
-                        // Clear existing posts if reset is true
-                        document.getElementById('newsfeed-posts-container').innerHTML = '';
-                        fetchedPostIds.clear(); // Clear the set of fetched post IDs
-                    }
-    
                     newPosts.forEach(post => {
                         fetchedPostIds.add(post.postId); // Add to set of fetched post IDs
     
@@ -377,7 +377,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 isFetching = false;
                 removeSkeletonLoader();
             });
-    }    
+    }
     
     // Handle like button click
     function handleLikeButtonClick(event) {
