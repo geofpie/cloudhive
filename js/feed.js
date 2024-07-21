@@ -10,6 +10,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const submitPostButton = document.getElementById('submitPostButton');
     const uploadIndicator = document.getElementById('uploadIndicator'); // Ensure this is correctly defined
 
+    fetchUserInfo();
+
     if (!uploadIndicator) {
         console.error('Upload indicator element not found');
         return;
@@ -145,6 +147,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
             console.log('Post created successfully:', data);
             hideUploadIndicator(); // Hide spinner after upload
             hideModal(); // Hide modal after successful post
+            clearCurrentView(); // Clear current view
             fetchPosts(); // Fetch posts after new post creation
         })
         .catch(error => {
@@ -270,96 +273,100 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    function fetchPosts() {
-        if (isFetching) return;
-        isFetching = true;
-
-        showSkeletonLoader();
-
-        let url = `/api/newsfeed`;
-        if (lastPostTimestamp) {
-            url += `?lastPostTimestamp=${lastPostTimestamp}`;
-        }
-
-        console.log('Fetching posts from URL:', url);
-
-        fetch(url)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => {
-                console.log('Fetched posts data:', data);
-
-                if (!data.Items) {
-                    console.error('No items in fetched data');
-                    return;
-                }
-
-                if (data.Items.length > 0) {
-                    data.Items.forEach(post => {
-                        console.log('Post data:', post);
-                        const postElement = document.createElement('div');
-                        postElement.className = 'hive-post';
-
-                        const postTemplate = `
-                        <div class="col-md-4 hive-post-element mx-auto" data-post-id="${post.postId}">
-                            <div class="row hive-post-user-details align-items-center">
-                                <div class="col">
-                                    <img src="${post.userProfilePicture || '../assets/default-profile.jpg'}" alt="Profile" class="post-profile-pic">
-                                </div>
-                                <div class="col hive-user-details-text">
-                                    <a href="/${post.username}" class="hive-post-username">${post.firstName}</a>
-                                    <a href="/${post.username}" class="hive-post-user-sub">@${post.username}</a>
-                                    <i class="fa fa-clock hive-post-time-icon"></i><p class="hive-post-time">${dayjs(post.postTimestamp).fromNow()}</p>
-                                </div>
-                            </div>
-                            <div class="row hive-post-content">
-                                <p class="hive-post-text">${post.content}</p>
-                                ${post.imageUrl ? `<div class="hive-post-image shadow"><img class="hive-post-img-src" data-src="${post.imageUrl}" src="${post.imageUrl}" alt="Post Image"></div>` : ''}
-                            </div>
-                            <div class="hive-social-stats">
-                                <p class="hive-stat-like"><strong>${post.likes || 0}</strong> likes</p>
-                                <hr>
-                                <button class="hive-stat-like-btn"><i class="fa fa-heart hive-stat-like-heart"></i>Like</button>
-                            </div>
-                        </div>
-                        `;
-
-                        postElement.innerHTML = postTemplate;
-                        postsContainer.appendChild(postElement);
-                    });
-
-                    // Update lastPostTimestamp for next fetch
-                    lastPostTimestamp = data.LastEvaluatedKey;
-
-                    handleImageLoad();
-
-                    if (lastPostTimestamp) {
-                        loadMoreButton.style.display = 'block';
-                    } else {
-                        loadMoreButton.style.display = 'none';
-                    }
-                } else {
-                    loadMoreButton.style.display = 'none';
-                }
-            })
-            .catch(error => {
-                console.error('Failed to fetch posts:', error);
-            })
-            .finally(() => {
-                isFetching = false;
-                removeSkeletonLoader();
-            });
-    }
-
     loadMoreButton.addEventListener('click', fetchPosts);
 
     // Initial fetch
     fetchPosts();
 });
+
+function clearCurrentView() {
+    document.getElementById('newsfeed-posts-container').innerHTML = '';
+}
+
+function fetchPosts() {
+    if (isFetching) return;
+    isFetching = true;
+
+    showSkeletonLoader();
+
+    let url = `/api/newsfeed`;
+    if (lastPostTimestamp) {
+        url += `?lastPostTimestamp=${lastPostTimestamp}`;
+    }
+
+    console.log('Fetching posts from URL:', url);
+
+    fetch(url)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Fetched posts data:', data);
+
+            if (!data.Items) {
+                console.error('No items in fetched data');
+                return;
+            }
+
+            if (data.Items.length > 0) {
+                data.Items.forEach(post => {
+                    console.log('Post data:', post);
+                    const postElement = document.createElement('div');
+                    postElement.className = 'hive-post';
+
+                    const postTemplate = `
+                    <div class="col-md-4 hive-post-element mx-auto" data-post-id="${post.postId}">
+                        <div class="row hive-post-user-details align-items-center">
+                            <div class="col">
+                                <img src="${post.userProfilePicture || '../assets/default-profile.jpg'}" alt="Profile" class="post-profile-pic">
+                            </div>
+                            <div class="col hive-user-details-text">
+                                <a href="/${post.username}" class="hive-post-username">${post.firstName}</a>
+                                <a href="/${post.username}" class="hive-post-user-sub">@${post.username}</a>
+                                <i class="fa fa-clock hive-post-time-icon"></i><p class="hive-post-time">${dayjs(post.postTimestamp).fromNow()}</p>
+                            </div>
+                        </div>
+                        <div class="row hive-post-content">
+                            <p class="hive-post-text">${post.content}</p>
+                            ${post.imageUrl ? `<div class="hive-post-image shadow"><img class="hive-post-img-src" data-src="${post.imageUrl}" src="${post.imageUrl}" alt="Post Image"></div>` : ''}
+                        </div>
+                        <div class="hive-social-stats">
+                            <p class="hive-stat-like"><strong>${post.likes || 0}</strong> likes</p>
+                            <hr>
+                            <button class="hive-stat-like-btn"><i class="fa fa-heart hive-stat-like-heart"></i>Like</button>
+                        </div>
+                    </div>
+                    `;
+
+                    postElement.innerHTML = postTemplate;
+                    (document.getElementById('newsfeed-posts-container')).appendChild(postElement);
+                });
+
+                // Update lastPostTimestamp for next fetch
+                lastPostTimestamp = data.LastEvaluatedKey;
+
+                handleImageLoad();
+
+                if (lastPostTimestamp) {
+                    loadMoreButton.style.display = 'block';
+                } else {
+                    loadMoreButton.style.display = 'none';
+                }
+            } else {
+                loadMoreButton.style.display = 'none';
+            }
+        })
+        .catch(error => {
+            console.error('Failed to fetch posts:', error);
+        })
+        .finally(() => {
+            isFetching = false;
+            removeSkeletonLoader();
+        });
+}
 
 document.getElementById('notifications-link').addEventListener('click', function() {
     fetch('/api/follow-requests')
