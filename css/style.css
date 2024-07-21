@@ -873,15 +873,3 @@ a:hover {
 .hive-user-details-time {
     text-align: right;
 }
-
-.hive-stat-like-btn.liked img {
-    content: url('assets/like.svg');
-}
-
-.hive-stat-like-btn:not(.liked) img {
-    content: url('assets/unliked.svg');
-}
-
-.hive-stat-like-btn.liked {
-    color: #ff0000; /* Example: Change color when liked */
-}

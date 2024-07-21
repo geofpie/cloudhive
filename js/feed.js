@@ -307,7 +307,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         const isLiked = post.isLiked; // Ensure `isLiked` is provided by the backend
     
                         // Update button appearance based on the `isLiked` status
-                        const likeButtonIcon = isLiked ? 'assets/liked.svg' : 'assets/unliked.svg';
+                        const likeButtonIcon = isLiked ? '../assets/liked.svg' : '../assets/unliked.svg';
                         const likeButtonText = isLiked ? 'Liked' : 'Like';
                         const likeButtonClass = isLiked ? 'liked' : '';
     
