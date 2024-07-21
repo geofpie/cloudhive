@@ -445,7 +445,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function clearCurrentView() {
-    document.getElementById('newsfeed-posts-container').innerHTML = '';
+   // document.getElementById('newsfeed-posts-container').innerHTML = '';
     lastPostId = null;
     LastEvaluatedKey = null;
 }
