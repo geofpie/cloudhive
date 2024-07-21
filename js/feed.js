@@ -446,6 +446,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function clearCurrentView() {
     document.getElementById('newsfeed-posts-container').innerHTML = '';
+    lastPostId = null;
 }
 
 document.getElementById('notifications-link').addEventListener('click', function() {
