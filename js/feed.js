@@ -284,6 +284,8 @@ function clearCurrentView() {
 }
 
 function fetchPosts() {
+    let isFetching = false; 
+    
     if (isFetching) return;
     isFetching = true;
 
