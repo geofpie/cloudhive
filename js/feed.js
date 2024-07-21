@@ -312,6 +312,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         // Update button appearance based on the `isLiked` status
                         const likeButtonIcon = isLiked ? 'assets/like.svg' : 'assets/unliked.svg';
                         const likeButtonText = isLiked ? 'Liked' : 'Like';
+                        const likeButtonClass = isLiked ? 'liked' : '';
     
                         const postTemplate = `
                         <div class="col-md-4 hive-post-element mx-auto" data-post-id="${post.postId}">
@@ -334,7 +335,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             <div class="hive-social-stats">
                                 <p class="hive-stat-like"><strong>${post.likes || 0}</strong> likes</p>
                                 <hr>
-                                <button class="hive-stat-like-btn" data-post-id="${post.postId}">
+                                <button class="hive-stat-like-btn ${likeButtonClass}" data-post-id="${post.postId}">
                                     <img src="${likeButtonIcon}" alt="${likeButtonText}" style="width: 10px; height: 10px; vertical-align: middle;"> ${likeButtonText}
                                 </button>
                             </div>
