@@ -865,3 +865,7 @@ a:hover {
     justify-content: center;
     align-items: center;
 }
+
+.hive-post-pfp {
+    margin-left: 6px;
+}

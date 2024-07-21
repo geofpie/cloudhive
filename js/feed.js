@@ -309,7 +309,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         const postTemplate = `
                         <div class="col-md-4 hive-post-element mx-auto" data-post-id="${post.postId}">
                             <div class="row hive-post-user-details align-items-center">
-                                <div class="col">
+                                <div class="hive-post-pfp">
                                     <img src="${post.userProfilePicture || '../assets/default-profile.jpg'}" alt="Profile" class="post-profile-pic">
                                 </div>
                                 <div class="col hive-user-details-text">
