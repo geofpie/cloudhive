@@ -336,7 +336,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                 <p class="hive-stat-like"><strong>${post.likes || 0}</strong> likes</p>
                                 <hr>
                                 <button class="hive-stat-like-btn ${likeButtonClass}" data-post-id="${post.postId}">
-                                    <img src="${likeButtonIcon}" alt="${likeButtonText}" style="width: 14px; height: 14px; vertical-align: middle;"> ${likeButtonText}
+                                    <img id="like-btn-hive" src="${likeButtonIcon}" alt="${likeButtonText}" style="width: 14px; height: 14px; vertical-align: middle;"> ${likeButtonText}
                                 </button>
                             </div>
                         </div>
@@ -404,18 +404,15 @@ document.addEventListener('DOMContentLoaded', function() {
         if (postElement) {
             const likeButton = postElement.querySelector('.hive-stat-like-btn');
             if (likeButton) {
-                const likeIcon = likeButton.querySelector('i');
-                const likeText = likeButton.querySelector('span');
+                const likeIcon = likeButton.querySelector('#like-btn-hive'); // Update selector based on your HTML structure
+                const likeText = likeButton.querySelector('span'); // Assuming there's a <span> for text
 
                 // Update the button's appearance based on `isLiked` state
-                if (isLiked) {
-                    likeButton.classList.add('liked');
-                    likeIcon.style.backgroundImage = 'url(assets/liked.svg)';
-                    likeText.textContent = 'Liked';
-                } else {
-                    likeButton.classList.remove('liked');
-                    likeIcon.style.backgroundImage = 'url(assets/unliked.svg)';
-                    likeText.textContent = 'Like';
+                if (likeIcon) {
+                    likeIcon.src = isLiked ? 'assets/liked.svg' : 'assets/unliked.svg';
+                }
+                if (likeText) {
+                    likeText.textContent = isLiked ? 'Liked' : 'Like';
                 }
             }
         }
