@@ -179,10 +179,10 @@ document.addEventListener('DOMContentLoaded', function() {
         if (imageFile) {
             formData.append('postImage', imageFile);
         }
-
+    
         console.log('Submitting FormData:', formData);
         console.log('Image File in FormData:', formData.get('postImage'));
-
+    
         fetch('/api/create_post', {
             method: 'POST',
             body: formData,
@@ -201,14 +201,14 @@ document.addEventListener('DOMContentLoaded', function() {
             hideUploadIndicator(); // Hide spinner after upload
             hideModal(); // Hide modal after successful post
             // clearCurrentView(); // Clear current view
-            fetchPosts(true); // Fetch posts after new post creation
+            fetchPosts(true); // Fetch posts with reset to ensure latest posts are loaded
         })
         .catch(error => {
             console.error('Error creating post:', error);
             hideUploadIndicator(); // Hide spinner if there's an error
         });
     }
-
+    
     function showSkeletonLoader() {
         for (let i = 0; i < 3; i++) { // Adjust the number of skeleton loaders as needed
             const skeletonElement = document.createElement('div');
@@ -275,10 +275,11 @@ document.addEventListener('DOMContentLoaded', function() {
     
         showSkeletonLoader();
     
-        // If reset is true, clear fetchedPostIds and reset lastPostId
+        // Reset the fetchedPostIds and lastPostId if reset is true
         if (reset) {
+            document.getElementById('newsfeed-posts-container').innerHTML = ''; // Clear existing posts
             fetchedPostIds.clear(); // Clear the set of fetched post IDs
-            lastPostId = null; // Reset lastPostId for a full fetch
+            lastPostId = null; // Reset lastPostId for full fetch
         }
     
         let url = `/api/newsfeed`;
@@ -303,7 +304,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     return;
                 }
     
-                // Deduplicate posts by checking fetchedPostIds
                 const newPosts = data.Items.filter(post => !fetchedPostIds.has(post.postId));
     
                 if (newPosts.length > 0) {
@@ -378,7 +378,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 isFetching = false;
                 removeSkeletonLoader();
             });
-    }    
+    }
     
     // Handle like button click
     function handleLikeButtonClick(event) {
