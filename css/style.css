@@ -823,3 +823,7 @@ a:hover {
 .hive-logged-in-user-name {
     margin-top: 6px;
 }
+
+.newsfeed-posts-container {
+    width: 100%;
+}
