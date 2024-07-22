@@ -873,3 +873,14 @@ a:hover {
 .hive-user-details-time {
     text-align: right;
 }
+
+/* Initial hidden state */
+.image-hidden {
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out; /* Adjust duration as needed */
+}
+
+/* Fully visible state */
+.image-visible {
+    opacity: 1;
+}

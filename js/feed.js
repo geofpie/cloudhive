@@ -530,3 +530,25 @@ document.getElementById('notifications-link').addEventListener('click', function
         })
         .catch(error => console.error('Error fetching follow requests:', error));
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+    const images = document.querySelectorAll('img');
+
+    images.forEach(image => {
+        // Add the initial hidden class
+        image.classList.add('image-hidden');
+
+        // Add an event listener for the load event
+        image.addEventListener('load', () => {
+            // When the image is fully loaded, switch classes
+            image.classList.remove('image-hidden');
+            image.classList.add('image-visible');
+        });
+
+        // For cached images (if the image is already loaded)
+        if (image.complete) {
+            image.classList.remove('image-hidden');
+            image.classList.add('image-visible');
+        }
+    });
+});
