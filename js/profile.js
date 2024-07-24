@@ -375,15 +375,17 @@ document.addEventListener('DOMContentLoaded', function() {
                         postElement.className = 'hive-post';
 
                         const postTemplate = `
-                        <div class="col-md-5 hive-post-element mx-auto">
+                        <div class="col-md-4 hive-post-element mx-auto" data-post-id="${post.postId}">
                             <div class="row hive-post-user-details align-items-center">
-                                <div class="col">
+                                <div class="hive-post-pfp">
                                     <img src="${post.userProfilePicture || '../assets/default-profile.jpg'}" alt="Profile" class="post-profile-pic">
                                 </div>
                                 <div class="col hive-user-details-text">
-                                    <a href="/${post.username}" class="hive-post-username">${post.firstName} ${post.username}</a>
+                                    <a href="/${post.username}" class="hive-post-username">${post.firstName}</a>
                                     <a href="/${post.username}" class="hive-post-user-sub">@${post.username}</a>
-                                    <i class="fa fa-clock hive-post-time-icon"></i><p class="hive-post-time">${dayjs(post.timestamp).fromNow()}</p>
+                                </div>
+                                <div class="col hive-user-details-time">
+                                    <i class="fa fa-clock hive-post-time-icon"></i><p class="hive-post-time">${dayjs(post.postTimestamp).fromNow()}</p>
                                 </div>
                             </div>
                             <div class="row hive-post-content">
@@ -393,7 +395,9 @@ document.addEventListener('DOMContentLoaded', function() {
                             <div class="hive-social-stats">
                                 <p class="hive-stat-like"><strong>${post.likes || 0}</strong> likes</p>
                                 <hr>
-                                <button class="hive-stat-like-btn"><i class="fa fa-heart hive-stat-like-heart"></i>Like</button>
+                                <button class="hive-stat-like-btn ${likeButtonClass}" data-post-id="${post.postId}">
+                                    <img id="like-btn-hive" src="${likeButtonIcon}" alt="${likeButtonText}" style="width: 22px; height: 22px; vertical-align: middle;">
+                                </button>
                             </div>
                         </div>
                         `;
@@ -426,9 +430,9 @@ document.addEventListener('DOMContentLoaded', function() {
     fetchPosts();
 
     // Infinite scroll
-    window.addEventListener('scroll', () => {
+   /* window.addEventListener('scroll', () => {
         if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 100 && !isFetching && lastPostTimestamp) {
             fetchPosts();
         }
-    });
+    }); */
 });
