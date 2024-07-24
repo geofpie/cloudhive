@@ -558,6 +558,19 @@ document.addEventListener('DOMContentLoaded', function() {
 document.getElementById('profilePicInput').addEventListener('change', handleProfilePicChange);
 document.getElementById('headerPicInput').addEventListener('change', handleHeaderPicChange);
 document.getElementById('submitEditProfileButton').addEventListener('click', submitEditProfile);
+const editProfileButton = document.querySelector('.profile-stat.hive-user-action');
+const editProfileModal = document.getElementById('editProfileModal');
+const closeModalButton = document.getElementById('closeModal');
+
+// Show the modal
+editProfileButton.addEventListener('click', () => {
+    editProfileModal.classList.remove('hidden');
+});
+
+// Close the modal
+closeModalButton.addEventListener('click', () => {
+    editProfileModal.classList.add('hidden');
+});
 
 let profilePicCropper, headerPicCropper;
 
