@@ -332,6 +332,63 @@ function updateUserProfile(user) {
     document.querySelector('.navbar-profile-pic').src = user.profile_picture_url;
 }
 
+function showSkeletonLoader() {
+    for (let i = 0; i < 3; i++) { // Adjust the number of skeleton loaders as needed
+        const skeletonElement = document.createElement('div');
+        skeletonElement.className = 'col-md-4 hive-post-element hive-post-skeleton mx-auto';
+        skeletonElement.innerHTML = `
+            <div class="row hive-post-user-details hive-post-details-skeleton align-items-center">
+                <div class="col hive-pfp-skeleton"></div>
+                <div class="col hive-user-details-text">
+                    <div class="hive-user-acc-deets"></div>
+                </div>
+            </div>
+            <div class="row hive-post-content hive-post-content-skeleton">
+                <div class="hive-post-image-skelly shadow"></div>
+            </div>
+            <div class="hive-social-stats">
+                <div class="hive-stat-skelly"></div>
+                <hr class="divider-skelly">
+                <div class="hive-like-btn-skeleton"></div>
+            </div>
+        `;
+        postsContainer.appendChild(skeletonElement);
+    }
+}
+
+function removeSkeletonLoader() {
+    const skeletons = document.querySelectorAll('.hive-post-skeleton');
+    skeletons.forEach(skeleton => skeleton.remove());
+}
+
+function handleImageLoad() {
+    const images = postsContainer.querySelectorAll('.hive-post-img-src');
+    let loadedImagesCount = 0;
+
+    images.forEach(image => {
+        if (image.complete) {
+            loadedImagesCount++;
+        } else {
+            image.addEventListener('load', () => {
+                loadedImagesCount++;
+                if (loadedImagesCount === images.length) {
+                    removeSkeletonLoader();
+                }
+            });
+            image.addEventListener('error', () => {
+                loadedImagesCount++;
+                if (loadedImagesCount === images.length) {
+                    removeSkeletonLoader();
+                }
+            });
+        }
+    });
+
+    if (loadedImagesCount === images.length) {
+        removeSkeletonLoader();
+    }
+}
+
 dayjs.extend(dayjs_plugin_relativeTime);
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -339,7 +396,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const postsContainer = document.getElementById('hive-feed-area');
     const loadMoreButton = document.getElementById('load-more');
     let isFetching = false;
-    
     const username = window.location.pathname.split('/').pop(); // Get the username from the URL
 
     function fetchPosts() {
@@ -371,6 +427,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (data.Items.length > 0) {
                     data.Items.forEach(post => {
                         console.log('Post data:', post);
+
+                        // Determine if the post is liked by the current user
+                        const isLiked = post.isLiked; // Ensure `isLiked` is provided by the backend
+
+                        // Update button appearance based on the `isLiked` status
+                        const likeButtonIcon = isLiked ? '../assets/liked.svg' : '../assets/unliked.svg';
+                        const likeButtonText = isLiked ? 'Liked' : 'Like';
+                        const likeButtonClass = isLiked ? 'liked' : '';
+
                         const postElement = document.createElement('div');
                         postElement.className = 'hive-post';
 
@@ -423,6 +488,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 isFetching = false;
             });
     }
+
 
     loadMoreButton.addEventListener('click', fetchPosts);
 
