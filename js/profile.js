@@ -555,26 +555,3 @@ document.addEventListener('DOMContentLoaded', function() {
     }); */
     
 });
-
-document.addEventListener('DOMContentLoaded', () => {
-    const editProfileButton = document.getElementById('edit-profile');
-    const editProfileModal = document.getElementById('editProfileModal');
-    const closeEditProfileModalButton = document.getElementById('closeEditProfileModal');
-
-    // Open the modal
-    editProfileButton.addEventListener('click', () => {
-        editProfileModal.classList.remove('hidden');
-    });
-
-    // Close the modal
-    closeEditProfileModalButton.addEventListener('click', () => {
-        editProfileModal.classList.add('hidden');
-    });
-
-    // Optionally close the modal when clicking outside of it
-    window.addEventListener('click', (event) => {
-        if (event.target === editProfileModal) {
-            editProfileModal.classList.add('hidden');
-        }
-    });
-});
