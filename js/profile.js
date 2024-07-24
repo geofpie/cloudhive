@@ -556,50 +556,25 @@ document.addEventListener('DOMContentLoaded', function() {
     
 });
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', () => {
+    const editProfileButton = document.getElementById('edit-profile');
     const editProfileModal = document.getElementById('editProfileModal');
-    const openEditProfileModalButton = document.getElementById('edit-profile');
-    const closeModalButton = document.getElementById('closeModal');
-    const profilePicInput = document.getElementById('profilePicInput');
-    const headerPicInput = document.getElementById('headerPicInput');
-    const profilePicPreview = document.getElementById('profilePicPreview');
-    const headerPicPreview = document.getElementById('headerPicPreview');
-    const submitEditProfileButton = document.getElementById('submitEditProfileButton');
+    const closeEditProfileModalButton = document.getElementById('closeEditProfileModal');
 
-    openEditProfileModalButton.addEventListener('click', function() {
+    // Open the modal
+    editProfileButton.addEventListener('click', () => {
         editProfileModal.classList.remove('hidden');
     });
 
-    closeModalButton.addEventListener('click', function() {
+    // Close the modal
+    closeEditProfileModalButton.addEventListener('click', () => {
         editProfileModal.classList.add('hidden');
     });
 
-    profilePicInput.addEventListener('change', function() {
-        const file = profilePicInput.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                profilePicPreview.src = e.target.result;
-                profilePicPreview.style.display = 'block';
-            }
-            reader.readAsDataURL(file);
+    // Optionally close the modal when clicking outside of it
+    window.addEventListener('click', (event) => {
+        if (event.target === editProfileModal) {
+            editProfileModal.classList.add('hidden');
         }
-    });
-
-    headerPicInput.addEventListener('change', function() {
-        const file = headerPicInput.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                headerPicPreview.src = e.target.result;
-                headerPicPreview.style.display = 'block';
-            }
-            reader.readAsDataURL(file);
-        }
-    });
-
-    submitEditProfileButton.addEventListener('click', function() {
-        const formData = new FormData(document.getElementById('editProfileForm'));
-        // Add your form submission logic here (e.g., using fetch API to send data to server)
     });
 });
