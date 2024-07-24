@@ -556,25 +556,29 @@ document.addEventListener('DOMContentLoaded', function() {
     
 });
 
-document.addEventListener('DOMContentLoaded', (event) => {
-    const writePostButton = document.getElementById('edit-profile');
-    const customModal = document.getElementById('editProfileModal');
-    const closeModalButtons = document.getElementById('closeEditProfileModal');
-    
-    function showModal() {
-        customModal.classList.remove('hidden');
-        document.body.style.overflow = 'hidden'; // Prevent background scroll
-    }
+// Open the modal
+document.getElementById('edit-profile').addEventListener('click', function() {
+    document.getElementById('editProfileModal').classList.remove('hidden');
+});
 
-    function hideModal() {
-        customModal.classList.add('hidden');
-        document.body.style.overflow = ''; // Restore background scroll
-    }
+// Close the modal
+document.getElementById('closeEditProfileModal').addEventListener('click', function() {
+    document.getElementById('editProfileModal').classList.add('hidden');
+});
 
-    writePostButton.addEventListener('click', showModal);
-    closeModalButtons.forEach(button => {
-        button.addEventListener('click', hideModal);
-    });
+// Preview profile picture
+document.getElementById('profilePicInput').addEventListener('change', function(event) {
+    const file = event.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            document.getElementById('profilePicPreview').src = e.target.result;
+            document.getElementById('profilePicPreview').style.display = 'block';
+        }
+        reader.readAsDataURL(file);
+    } else {
+        document.getElementById('profilePicPreview').style.display = 'none';
+    }
 });
 
 document.getElementById('profilePicInput').addEventListener('change', handleProfilePicChange);
