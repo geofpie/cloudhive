@@ -553,19 +553,27 @@ document.addEventListener('DOMContentLoaded', function() {
             fetchPosts();
         }
     }); */
+    
+});
 
-    const editProfileButton = document.querySelector('.profile-stat.hive-user-action');
-    const editProfileModal = document.getElementById('editProfileModal');
-    const closeModalButton = document.getElementById('closeModal');
+document.addEventListener('DOMContentLoaded', (event) => {
+    const writePostButton = document.getElementById('write-post');
+    const customModal = document.getElementById('postModal');
+    const closeModalButtons = document.querySelectorAll('#closeModal');
+    
+    function showModal() {
+        customModal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden'; // Prevent background scroll
+    }
 
-    // Show the modal
-    editProfileButton.addEventListener('click', () => {
-        editProfileModal.classList.remove('hidden');
-    });
+    function hideModal() {
+        customModal.classList.add('hidden');
+        document.body.style.overflow = ''; // Restore background scroll
+    }
 
-    // Close the modal
-    closeModalButton.addEventListener('click', () => {
-        editProfileModal.classList.add('hidden');
+    writePostButton.addEventListener('click', showModal);
+    closeModalButtons.forEach(button => {
+        button.addEventListener('click', hideModal);
     });
 });
 
