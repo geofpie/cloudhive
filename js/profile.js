@@ -554,3 +554,102 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }); */
 });
+
+document.getElementById('profilePicInput').addEventListener('change', handleProfilePicChange);
+document.getElementById('headerPicInput').addEventListener('change', handleHeaderPicChange);
+document.getElementById('submitEditProfileButton').addEventListener('click', submitEditProfile);
+
+let profilePicCropper, headerPicCropper;
+
+function handleProfilePicChange(event) {
+    const file = event.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const image = new Image();
+            image.src = e.target.result;
+            image.onload = function() {
+                document.getElementById('profilePicPreview').src = image.src;
+                document.getElementById('profilePicPreview').style.display = 'block';
+                initializeCropper(image, 'profilePic');
+            };
+        };
+        reader.readAsDataURL(file);
+    }
+}
+
+function handleHeaderPicChange(event) {
+    const file = event.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const image = new Image();
+            image.src = e.target.result;
+            image.onload = function() {
+                document.getElementById('headerPicPreview').src = image.src;
+                document.getElementById('headerPicPreview').style.display = 'block';
+                initializeCropper(image, 'headerPic');
+            };
+        };
+        reader.readAsDataURL(file);
+    }
+}
+
+function initializeCropper(image, type) {
+    const cropperContainer = document.createElement('div');
+    document.body.appendChild(cropperContainer);
+    const cropper = new Cropper(image, {
+        aspectRatio: 1,
+        viewMode: 1,
+        autoCropArea: 1,
+        ready: function () {
+            cropperContainer.style.display = 'none';
+        }
+    });
+
+    if (type === 'profilePic') {
+        profilePicCropper = cropper;
+    } else {
+        headerPicCropper = cropper;
+    }
+}
+
+function submitEditProfile() {
+    const formData = new FormData();
+    formData.append('firstName', document.getElementById('firstName').value);
+    formData.append('lastName', document.getElementById('lastName').value);
+    formData.append('username', document.getElementById('username').value);
+    formData.append('email', document.getElementById('email').value);
+
+    if (profilePicCropper) {
+        profilePicCropper.getCroppedCanvas().toBlob(function(blob) {
+            formData.append('profilePic', blob, 'profile-pic.png');
+            uploadProfileData(formData);
+        });
+    } else {
+        uploadProfileData(formData);
+    }
+
+    if (headerPicCropper) {
+        headerPicCropper.getCroppedCanvas().toBlob(function(blob) {
+            formData.append('headerPic', blob, 'header-pic.png');
+            uploadProfileData(formData);
+        });
+    } else {
+        uploadProfileData(formData);
+    }
+}
+
+function uploadProfileData(formData) {
+    fetch('/api/user/updateProfile', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Profile updated:', data);
+        document.getElementById('editProfileModal').classList.add('hidden');
+        // Optionally reload the profile page or update the UI
+    })
+    .catch(error => console.error('Error updating profile:', error));
+}
