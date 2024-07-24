@@ -495,6 +495,58 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initial fetch
     fetchPosts();
 
+    function clearFeed() {
+        document.getElementById('newsfeed-posts-container').innerHTML = '';
+        lastTimestamp = null;
+        fetchedPostIds.clear(); // Optionally clear fetched post IDs
+    }
+    
+    function refreshFeed() {
+        clearFeed();
+        fetchPosts();
+    }
+
+    // Event delegation to handle clicks on dynamically added like buttons
+    postsContainer.addEventListener('click', function(event) {
+        if (event.target.closest('.hive-stat-like-btn')) {
+            const likeButton = event.target.closest('.hive-stat-like-btn');
+            const postId = likeButton.dataset.postId;
+
+            console.log('Like button clicked for post ID:', postId);
+
+            fetch(`/api/like/${postId}`, {
+                method: 'POST',
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem('token')
+                }
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to like/unlike post');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Post like/unlike successful:', data);
+
+                // Correctly target the like button icon and like count for the specific post
+                const postElement = document.querySelector(`.hive-post-element[data-post-id="${postId}"]`);
+                const likeButtonIcon = postElement.querySelector(`#like-btn-hive`);
+                const likeButtonIconSrc = data.message === 'Like added' ? '../assets/liked.svg' : '../assets/unliked.svg';
+                likeButtonIcon.src = likeButtonIconSrc;
+
+                // Update like count
+                const likeCountElement = postElement.querySelector('.hive-stat-like strong');
+                if (likeCountElement) {
+                    likeCountElement.textContent = data.likes || 0;
+                }
+            })
+            .catch(error => {
+                console.error('Error liking/unliking post:', error);
+            });
+        }
+    });
+
     // Infinite scroll
    /* window.addEventListener('scroll', () => {
         if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 100 && !isFetching && lastPostTimestamp) {
