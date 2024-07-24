@@ -346,7 +346,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (isFetching) return;
         isFetching = true;
 
-        let url = `/api/profilefeed/${username}`;
+        let url = `/api/user/${username}/posts`;
         if (lastPostTimestamp) {
             url += `?lastPostTimestamp=${lastPostTimestamp}`;
         }
