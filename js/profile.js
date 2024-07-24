@@ -558,7 +558,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 document.addEventListener('DOMContentLoaded', function() {
     const editProfileModal = document.getElementById('editProfileModal');
-    const openEditProfileModalButton = document.getElementById('openEditProfileModal');
+    const openEditProfileModalButton = document.getElementById('edit-profile');
     const closeModalButton = document.getElementById('closeModal');
     const profilePicInput = document.getElementById('profilePicInput');
     const headerPicInput = document.getElementById('headerPicInput');
