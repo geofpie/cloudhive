@@ -557,9 +557,9 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 document.addEventListener('DOMContentLoaded', (event) => {
-    const writePostButton = document.getElementById('write-post');
-    const customModal = document.getElementById('postModal');
-    const closeModalButtons = document.querySelectorAll('#closeModal');
+    const writePostButton = document.getElementById('edit-profile');
+    const customModal = document.getElementById('editProfileModal');
+    const closeModalButtons = document.getElementById('closeEditProfileModal');
     
     function showModal() {
         customModal.classList.remove('hidden');
