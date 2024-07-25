@@ -608,83 +608,60 @@ document.getElementById('edit-profile').addEventListener('click', function () {
         });
 });
 
-let cropper; // Define cropper globally to manage its instance
-
-document.addEventListener('DOMContentLoaded', function() {
-    const profilePicInput = document.getElementById('profilePicInput');
-    const cropperModal = document.getElementById('cropperModal');
-    const cropImageButton = document.getElementById('cropImageButton');
-    const closeCropperModal = document.getElementById('closeCropperModal');
-    const cropperImage = document.getElementById('cropperImage');
-
-    // Event listener for opening crop modal when profile pic input changes
-    profilePicInput.addEventListener('change', function(e) {
-        const files = e.target.files;
-        if (files.length === 0) {
-            return;
-        }
-
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            // Destroy previous Cropper instance if it exists
-            if (cropper) {
-                cropper.destroy();
+// Function to compress image using HTML5 Canvas
+function compressImage(file, maxWidth, maxHeight, quality, callback) {
+    const img = document.createElement('img');
+    const reader = new FileReader();
+    
+    reader.onload = function(e) {
+        img.src = e.target.result;
+    };
+    
+    img.onload = function() {
+        let canvas = document.createElement('canvas');
+        let ctx = canvas.getContext('2d');
+        
+        // Calculate new dimensions
+        let width = img.width;
+        let height = img.height;
+        if (width > maxWidth || height > maxHeight) {
+            if (width / height > maxWidth / maxHeight) {
+                height = Math.round(maxWidth * height / width);
+                width = maxWidth;
+            } else {
+                width = Math.round(maxHeight * width / height);
+                height = maxHeight;
             }
-
-            // Set the image source for cropping
-            cropperImage.src = e.target.result;
-
-            // Wait until the image is loaded
-            cropperImage.onload = function() {
-                // Initialize Cropper.js
-                cropper = new Cropper(cropperImage, {
-                    aspectRatio: 1, // Set to 1 for square aspect ratio
-                    viewMode: 1, // Set to 1 for preview mode
-                    autoCropArea: 0.8, // Initial crop area size (80% of the image)
-                    movable: false, // Disable user movement of the crop box
-                    zoomable: true, // Allow user to zoom the image
-                    rotatable: false, // Disable image rotation
-                    scalable: false, // Disable image scaling
-                    ready: function() {
-                        console.log('Cropper.js initialized.');
-                    }
-                });
-
-                // Show crop modal
-                cropperModal.classList.remove('hidden');
-            };
-
-            console.log('Image source set for cropping:', e.target.result);
-        };
-        reader.readAsDataURL(files[0]);
-    });
-
-    // Event listener for cropping the image
-    cropImageButton.addEventListener('click', function() {
-        if (!cropper) return;
-
-        // Get the cropped canvas
-        const canvas = cropper.getCroppedCanvas({
-            width: 400, // Desired width of the cropped image
-            height: 400 // Desired height of the cropped image
-        });
-
-        // Convert canvas to Blob
-        canvas.toBlob(function(blob) {
-            // Handle the cropped and compressed image blob here
-            console.log('Cropped image blob:', blob);
-            // Example: Update preview image or upload to S3
-        }, 'image/jpeg');
-
-        // Hide crop modal
-        cropperModal.classList.add('hidden');
-    });
-
-    // Event listener for closing the crop modal
-    closeCropperModal.addEventListener('click', function() {
-        if (cropper) {
-            cropper.destroy();
         }
-        cropperModal.classList.add('hidden');
-    });
+        
+        canvas.width = width;
+        canvas.height = height;
+        
+        // Draw the image to the canvas
+        ctx.drawImage(img, 0, 0, width, height);
+        
+        // Convert canvas to blob
+        canvas.toBlob(function(blob) {
+            callback(blob);
+        }, 'image/jpeg', quality);
+    };
+    
+    reader.readAsDataURL(file);
+}
+
+// Handle header picture input change
+document.getElementById('headerPicInput').addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    if (file) {
+        // Update the preview image
+        const headerPicPreview = document.getElementById('headerPicPreview');
+        headerPicPreview.style.display = 'block';
+
+        // Compress image and update preview
+        compressImage(file, 1200, 800, 0.8, function(blob) {
+            const url = URL.createObjectURL(blob);
+            headerPicPreview.src = url;
+            console.log('Header image preview updated and compressed.');
+        });
+    }
 });

@@ -910,18 +910,6 @@ a:hover {
     background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
 }
 
-.cropper-modal {
-    display: none; /* Hidden by default */
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    z-index: 1001; /* Ensure it's on top of the overlay */
-}
-
 .edit-profile-modal-content {
     background-color: #fefefe;
     margin: 15% auto; /* 15% from the top and centered */
@@ -1011,7 +999,7 @@ a:hover {
     margin: 0 auto;
 }
 
-.edit-profile-modal-header, .cropper-modal-header {
+.edit-profile-modal-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -1019,25 +1007,6 @@ a:hover {
     border-bottom: 1px solid #ddd;
 }
 
-.edit-profile-modal-body, .cropper-modal-body {
+.edit-profile-modal-body {
     padding: 20px;
-}
-
-.cropper-modal-body img {
-    max-width: 100%;
-    max-height: 400px;
-    display: block;
-    margin: 0 auto;
-}
-
-/* Overlay for the cropper modal */
-#modalOverlay {
-    display: none; /* Hidden by default */
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5); /* Dark overlay */
-    z-index: 1000; /* Ensure it's on top */
 }
