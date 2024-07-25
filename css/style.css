@@ -998,3 +998,22 @@ a:hover {
     display: block;
     margin: 0 auto;
 }
+
+.edit-profile-modal-header, .cropper-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.edit-profile-modal-body, .cropper-modal-body {
+    padding: 20px;
+}
+
+.cropper-modal-body img {
+    max-width: 100%;
+    max-height: 400px;
+    display: block;
+    margin: 0 auto;
+}
