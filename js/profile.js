@@ -608,14 +608,18 @@ document.getElementById('edit-profile').addEventListener('click', function () {
         });
 });
 
+let cropper; // Define cropper variable globally
+
 document.getElementById('profilePicInput').addEventListener('change', function (event) {
     const file = event.target.files[0];
     if (file) {
         const reader = new FileReader();
         reader.onload = function (e) {
+            console.log('Profile picture selected:', e.target.result); // Log the image data URL
             document.getElementById('cropperImage').src = e.target.result;
             document.getElementById('cropperModal').classList.remove('hidden');
-            initializeCropper();
+            document.getElementById('modalOverlay').classList.remove('hidden');
+            initializeCropper(); // Initialize the cropper after showing the modal
         };
         reader.readAsDataURL(file);
     }
@@ -626,6 +630,7 @@ document.getElementById('headerPicInput').addEventListener('change', function (e
     if (file) {
         const reader = new FileReader();
         reader.onload = function (e) {
+            console.log('Header picture selected:', e.target.result); // Log the image data URL
             document.getElementById('headerPicPreview').src = e.target.result;
             document.getElementById('headerPicPreview').style.display = 'block';
             compressImage(e.target.result, 'headerPic');
@@ -635,15 +640,19 @@ document.getElementById('headerPicInput').addEventListener('change', function (e
 });
 
 document.getElementById('cropImageButton').addEventListener('click', function () {
-    const canvas = cropper.getCroppedCanvas();
-    canvas.toBlob(function (blob) {
-        const url = URL.createObjectURL(blob);
-        document.getElementById('profilePicPreview').src = url;
-        document.getElementById('profilePicPreview').style.display = 'block';
-        document.getElementById('cropperModal').classList.add('hidden');
-        document.getElementById('modalOverlay').classList.add('hidden');
-        compressImage(url, 'profilePic');
-    });
+    if (cropper) {
+        const canvas = cropper.getCroppedCanvas();
+        canvas.toBlob(function (blob) {
+            const url = URL.createObjectURL(blob);
+            document.getElementById('profilePicPreview').src = url;
+            document.getElementById('profilePicPreview').style.display = 'block';
+            document.getElementById('cropperModal').classList.add('hidden');
+            document.getElementById('modalOverlay').classList.add('hidden');
+            compressImage(url, 'profilePic');
+        });
+    } else {
+        console.error('Cropper is not initialized.');
+    }
 });
 
 document.getElementById('closeCropperModal').addEventListener('click', function () {
@@ -653,9 +662,19 @@ document.getElementById('closeCropperModal').addEventListener('click', function 
 
 function initializeCropper() {
     const image = document.getElementById('cropperImage');
+    console.log('Initializing CropperJS'); // Log the cropper initialization attempt
+    if (cropper) {
+        cropper.destroy(); // Destroy existing cropper instance if any
+    }
     cropper = new Cropper(image, {
         aspectRatio: 1,
         viewMode: 1,
+        ready: function () {
+            console.log('CropperJS initialized successfully'); // Log success
+        },
+        error: function (error) {
+            console.error('Error initializing CropperJS:', error); // Log errors
+        }
     });
 }
 
