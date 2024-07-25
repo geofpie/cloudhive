@@ -592,7 +592,6 @@ document.getElementById('edit-profile').addEventListener('click', function () {
                 document.getElementById('firstName').value = data.userInfo.first_name;
                 document.getElementById('lastName').value = data.userInfo.last_name;
                 document.getElementById('username').value = data.userInfo.username;
-                document.getElementById('email').value = data.userInfo.email;
                 if (data.userInfo.profile_picture_url) {
                     document.getElementById('profilePicPreview').src = data.userInfo.profile_picture_url;
                     document.getElementById('profilePicPreview').style.display = 'block';
