@@ -145,7 +145,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
             console.log('Post created successfully:', data);
             hideUploadIndicator(); // Hide spinner after upload
             hideModal(); // Hide modal after successful post
-            fetchPosts(); // Fetch posts after new post creation
+            refreshFeed();
         })
         .catch(error => {
             console.error('Error creating post:', error);
