@@ -962,3 +962,7 @@ a:hover {
     border: 2px solid white;
     object-fit: cover;
 }
+
+.edit-profile-pp-button {
+    margin-bottom: 22px;
+}
