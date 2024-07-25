@@ -991,6 +991,6 @@ a:hover {
     padding-top: 32px;
 }
 
-.header-selector-btn {
-    z-index: 5;
+.header-img-btn {
+    z-index: 20;
 }
