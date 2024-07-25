@@ -615,7 +615,6 @@ document.getElementById('profilePicInput').addEventListener('change', function (
         reader.onload = function (e) {
             document.getElementById('cropperImage').src = e.target.result;
             document.getElementById('cropperModal').classList.remove('hidden');
-            document.getElementById('modalOverlay').classList.remove('hidden');
             initializeCropper();
         };
         reader.readAsDataURL(file);
