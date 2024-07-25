@@ -648,29 +648,18 @@ document.getElementById('submitEditProfileButton').addEventListener('click', asy
         formData.append('headerPic', compressedBlob, headerImageFile.name);
     }
 
+    // Send form data to backend (e.g., to update user profile)
     fetch('/api/update_profile', {
         method: 'POST',
-        body: formData,
-        headers: {
-            'Accept': 'application/json'
-        }
+        body: formData
     })
     .then(response => response.json())
     .then(data => {
-        if (data.message === 'Profile updated successfully') {
-            // Close the modal
-            document.getElementById('editProfileModal').classList.add('hidden');
-            // Reload the page
-            // location.reload();
-        } else {
-            // Handle any error messages from the server
-            console.error('Error updating profile:', data.error);
-            alert('Failed to update profile. Please try again.');
-        }
+        console.log('Profile updated successfully:', data);
+        document.getElementById('editProfileModal').classList.add('hidden');
     })
     .catch(error => {
-        console.error('Error:', error);
-        alert('An unexpected error occurred. Please try again.');
+        console.error('Error updating profile:', error);
     });
 });
 
