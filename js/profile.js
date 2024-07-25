@@ -618,7 +618,6 @@ document.getElementById('profilePicInput').addEventListener('change', function (
             console.log('Profile picture selected:', e.target.result); // Log the image data URL
             document.getElementById('cropperImage').src = e.target.result;
             document.getElementById('cropperModal').classList.remove('hidden');
-            document.getElementById('modalOverlay').classList.remove('hidden');
             initializeCropper(); // Initialize the cropper after showing the modal
         };
         reader.readAsDataURL(file);
