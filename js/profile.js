@@ -608,60 +608,97 @@ document.getElementById('edit-profile').addEventListener('click', function () {
         });
 });
 
-// Function to compress image using HTML5 Canvas
-function compressImage(file, maxWidth, maxHeight, quality, callback) {
-    const img = document.createElement('img');
-    const reader = new FileReader();
-    
-    reader.onload = function(e) {
-        img.src = e.target.result;
-    };
-    
-    img.onload = function() {
-        let canvas = document.createElement('canvas');
-        let ctx = canvas.getContext('2d');
-        
-        // Calculate new dimensions
-        let width = img.width;
-        let height = img.height;
-        if (width > maxWidth || height > maxHeight) {
-            if (width / height > maxWidth / maxHeight) {
-                height = Math.round(maxWidth * height / width);
-                width = maxWidth;
-            } else {
-                width = Math.round(maxHeight * width / height);
-                height = maxHeight;
-            }
-        }
-        
-        canvas.width = width;
-        canvas.height = height;
-        
-        // Draw the image to the canvas
-        ctx.drawImage(img, 0, 0, width, height);
-        
-        // Convert canvas to blob
-        canvas.toBlob(function(blob) {
-            callback(blob);
-        }, 'image/jpeg', quality);
-    };
-    
-    reader.readAsDataURL(file);
-}
+// Initialize variables
+let headerImageFile = null;
 
-// Handle header picture input change
+// Listen for header image file selection
 document.getElementById('headerPicInput').addEventListener('change', function(e) {
-    const file = e.target.files[0];
-    if (file) {
-        // Update the preview image
-        const headerPicPreview = document.getElementById('headerPicPreview');
-        headerPicPreview.style.display = 'block';
+    var files = e.target.files;
+    if (files.length > 0) {
+        headerImageFile = files[0];
 
-        // Compress image and update preview
-        compressImage(file, 1200, 800, 0.8, function(blob) {
-            const url = URL.createObjectURL(blob);
-            headerPicPreview.src = url;
-            console.log('Header image preview updated and compressed.');
-        });
+        // Update preview
+        var reader = new FileReader();
+        reader.onload = function(event) {
+            var headerPicPreview = document.getElementById('headerPicPreview');
+            headerPicPreview.src = event.target.result;
+            headerPicPreview.style.display = 'block'; // Show the preview
+        };
+        reader.readAsDataURL(headerImageFile);
     }
 });
+
+// Listen for form submit
+document.getElementById('submitEditProfileButton').addEventListener('click', async function() {
+    // Gather form data
+    const firstName = document.getElementById('firstName').value;
+    const lastName = document.getElementById('lastName').value;
+    const username = document.getElementById('username').value;
+
+    // Prepare data for upload
+    const formData = new FormData();
+    formData.append('firstName', firstName);
+    formData.append('lastName', lastName);
+    formData.append('username', username);
+
+    // Handle header image upload if exists
+    if (headerImageFile) {
+        // Convert image to blob and append to formData
+        const compressedBlob = await compressImage(headerImageFile);
+        formData.append('headerPic', compressedBlob, headerImageFile.name);
+    }
+
+    // Send form data to backend (e.g., to update user profile)
+    fetch('/api/update_profile', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Profile updated successfully:', data);
+    })
+    .catch(error => {
+        console.error('Error updating profile:', error);
+    });
+});
+
+// Function to compress image using HTML5 canvas
+function compressImage(file) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = function(event) {
+            const img = new Image();
+            img.onload = function() {
+                // Create canvas element
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+                
+                // Set canvas dimensions
+                const maxWidth = 800; // Set maximum width for the image
+                const maxHeight = 600; // Set maximum height for the image
+                let width = img.width;
+                let height = img.height;
+
+                if (width > maxWidth) {
+                    height *= maxWidth / width;
+                    width = maxWidth;
+                }
+                if (height > maxHeight) {
+                    width *= maxHeight / height;
+                    height = maxHeight;
+                }
+                
+                canvas.width = width;
+                canvas.height = height;
+                ctx.drawImage(img, 0, 0, width, height);
+                
+                // Convert canvas to blob
+                canvas.toBlob(function(blob) {
+                    resolve(blob);
+                }, 'image/jpeg', 0.8); // Adjust quality (0.8) as needed
+            };
+            img.src = event.target.result;
+        };
+        reader.readAsDataURL(file);
+    });
+}
