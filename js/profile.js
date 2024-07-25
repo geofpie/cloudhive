@@ -615,7 +615,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const cropperModal = document.getElementById('cropperModal');
     const cropImageButton = document.getElementById('cropImageButton');
     const closeCropperModal = document.getElementById('closeCropperModal');
-    const cropperImage = document.getElementById('cropper-image');
+    const cropperImage = document.getElementById('cropperImage');
 
     // Event listener for opening crop modal when profile pic input changes
     profilePicInput.addEventListener('change', function(e) {
