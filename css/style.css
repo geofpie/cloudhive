@@ -897,7 +897,7 @@ a:hover {
 }
 
 /* Modal styles */
-.edit-profile-modal, .cropper-modal {
+.edit-profile-modal {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
     z-index: 1050; /* Sit on top */
@@ -908,6 +908,18 @@ a:hover {
     overflow: auto; /* Enable scroll if needed */
     background-color: rgb(0,0,0); /* Fallback color */
     background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+.cropper-modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    z-index: 1001; /* Ensure it's on top of the overlay */
 }
 
 .edit-profile-modal-content {
