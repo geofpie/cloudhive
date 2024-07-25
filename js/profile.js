@@ -583,3 +583,28 @@ window.onclick = function(event) {
         modal.style.display = 'none';
     }
 }
+
+document.getElementById('edit-profile').addEventListener('click', function () {
+    fetch('/api/get_user_info')
+        .then(response => response.json())
+        .then(data => {
+            if (data.userInfo) {
+                document.getElementById('firstName').value = data.userInfo.first_name;
+                document.getElementById('lastName').value = data.userInfo.last_name;
+                document.getElementById('username').value = data.userInfo.username;
+                document.getElementById('email').value = data.userInfo.email;
+                if (data.userInfo.profile_picture_url) {
+                    document.getElementById('profilePicPreview').src = data.userInfo.profile_picture_url;
+                    document.getElementById('profilePicPreview').style.display = 'block';
+                }
+                // Show the modal
+                $('#editProfileModal').modal('show');
+            } else {
+                alert('Failed to load user information.');
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching user information:', error);
+            alert('Failed to load user information.');
+        });
+});
