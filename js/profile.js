@@ -607,3 +607,92 @@ document.getElementById('edit-profile').addEventListener('click', function () {
             alert('Failed to load user information.');
         });
 });
+
+document.getElementById('profilePicInput').addEventListener('change', function (event) {
+    const file = event.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            document.getElementById('cropperImage').src = e.target.result;
+            document.getElementById('cropperModal').classList.remove('hidden');
+            document.getElementById('modalOverlay').classList.remove('hidden');
+            initializeCropper();
+        };
+        reader.readAsDataURL(file);
+    }
+});
+
+document.getElementById('headerPicInput').addEventListener('change', function (event) {
+    const file = event.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            document.getElementById('headerPicPreview').src = e.target.result;
+            document.getElementById('headerPicPreview').style.display = 'block';
+            compressImage(e.target.result, 'headerPic');
+        };
+        reader.readAsDataURL(file);
+    }
+});
+
+document.getElementById('cropImageButton').addEventListener('click', function () {
+    const canvas = cropper.getCroppedCanvas();
+    canvas.toBlob(function (blob) {
+        const url = URL.createObjectURL(blob);
+        document.getElementById('profilePicPreview').src = url;
+        document.getElementById('profilePicPreview').style.display = 'block';
+        document.getElementById('cropperModal').classList.add('hidden');
+        document.getElementById('modalOverlay').classList.add('hidden');
+        compressImage(url, 'profilePic');
+    });
+});
+
+document.getElementById('closeCropperModal').addEventListener('click', function () {
+    document.getElementById('cropperModal').classList.add('hidden');
+    document.getElementById('modalOverlay').classList.add('hidden');
+});
+
+function initializeCropper() {
+    const image = document.getElementById('cropperImage');
+    cropper = new Cropper(image, {
+        aspectRatio: 1,
+        viewMode: 1,
+    });
+}
+
+function compressImage(imageUrl, type) {
+    const img = new Image();
+    img.src = imageUrl;
+    img.onload = function () {
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        const maxWidth = 500; // Set the max width or height for compression
+        const maxHeight = 500;
+        let width = img.width;
+        let height = img.height;
+
+        if (width > height) {
+            if (width > maxWidth) {
+                height = Math.round((height *= maxWidth / width));
+                width = maxWidth;
+            }
+        } else {
+            if (height > maxHeight) {
+                width = Math.round((width *= maxHeight / height));
+                height = maxHeight;
+            }
+        }
+
+        canvas.width = width;
+        canvas.height = height;
+        ctx.drawImage(img, 0, 0, width, height);
+
+        canvas.toBlob(function (blob) {
+            if (type === 'profilePic') {
+                profilePicBlob = blob;
+            } else if (type === 'headerPic') {
+                headerPicBlob = blob;
+            }
+        }, 'image/jpeg', 0.7); // Adjust the quality (0.7) as needed
+    };
+}
