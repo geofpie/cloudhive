@@ -31,10 +31,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
         document.body.style.overflow = ''; // Restore background scroll
     }
 
-    writePostButton.addEventListener('click', showModal);
-    sharePostButton.addEventListener('click', showModal);
-    picPostButton.addEventListener('click', showModal);
-
     closeModalButtons.forEach(button => {
         button.addEventListener('click', hideModal);
     });
@@ -314,6 +310,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
             fetchPosts();
         }
     }); */
+
+    writePostButton.addEventListener('click', showModal);
+    sharePostButton.addEventListener('click', showModal);
+    picPostButton.addEventListener('click', showModal);
     
 });
 
