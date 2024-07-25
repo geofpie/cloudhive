@@ -984,3 +984,7 @@ a:hover {
     top: 0;
     right: 20;
 }
+
+.profile-group-pre {
+    padding-top: 32px;
+}
