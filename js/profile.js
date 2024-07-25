@@ -256,7 +256,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     fetchPosts();
 
     function clearFeed() {
-        document.getElementById('newsfeed-posts-container').innerHTML = '';
+        document.getElementById('hive-feed-area').innerHTML = '';
         lastTimestamp = null;
         fetchedPostIds.clear(); // Optionally clear fetched post IDs
     }
