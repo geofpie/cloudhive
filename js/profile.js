@@ -9,6 +9,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const imagePreview = document.getElementById('imagePreview');
     const submitPostButton = document.getElementById('submitPostButton');
     const uploadIndicator = document.getElementById('uploadIndicator'); // Ensure this is correctly defined
+    let lastPostTimestamp = null;
+    const postsContainer = document.getElementById('hive-feed-area');
+    const loadMoreButton = document.getElementById('load-more');
+    let isFetching = false;
+    const username = window.location.pathname.split('/').pop(); // Get the username from the URL
 
     if (!uploadIndicator) {
         console.error('Upload indicator element not found');
@@ -152,6 +157,163 @@ document.addEventListener('DOMContentLoaded', (event) => {
             hideUploadIndicator(); // Hide spinner if there's an error
         });
     }
+    
+    function fetchPosts() {
+        if (isFetching) return;
+        isFetching = true;
+
+        let url = `/api/user/${username}/posts`;
+        if (lastPostTimestamp) {
+            url += `?lastPostTimestamp=${lastPostTimestamp}`;
+        }
+
+        console.log('Fetching posts from URL:', url);
+
+        fetch(url)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Fetched posts data:', data);
+
+                if (!data.Items) {
+                    console.error('No items in fetched data');
+                    return;
+                }
+
+                if (data.Items.length > 0) {
+                    data.Items.forEach(post => {
+                        console.log('Post data:', post);
+
+                        // Determine if the post is liked by the current user
+                        const isLiked = post.isLiked; // Ensure `isLiked` is provided by the backend
+
+                        // Update button appearance based on the `isLiked` status
+                        const likeButtonIcon = isLiked ? '../assets/liked.svg' : '../assets/unliked.svg';
+                        const likeButtonText = isLiked ? 'Liked' : 'Like';
+                        const likeButtonClass = isLiked ? 'liked' : '';
+
+                        const postElement = document.createElement('div');
+                        postElement.className = 'hive-post';
+
+                        const postTemplate = `
+                        <div class="col-md-4 hive-post-element mx-auto" data-post-id="${post.postId}">
+                            <div class="row hive-post-user-details align-items-center">
+                                <div class="hive-post-pfp">
+                                    <img src="${post.userProfilePicture || '../assets/default-profile.jpg'}" alt="Profile" class="post-profile-pic">
+                                </div>
+                                <div class="col hive-user-details-text">
+                                    <a href="/${post.username}" class="hive-post-username">${post.firstName}</a>
+                                    <a href="/${post.username}" class="hive-post-user-sub">@${post.username}</a>
+                                </div>
+                                <div class="col hive-user-details-time">
+                                    <i class="fa fa-clock hive-post-time-icon"></i><p class="hive-post-time">${dayjs(post.postTimestamp).fromNow()}</p>
+                                </div>
+                            </div>
+                            <div class="row hive-post-content">
+                                <p class="hive-post-text">${post.content}</p>
+                                ${post.imageUrl ? `<div class="hive-post-image shadow"><img class="hive-post-img-src" data-src="${post.imageUrl}" src="${post.imageUrl}" alt="Post Image"></div>` : ''}
+                            </div>
+                            <div class="hive-social-stats">
+                                <p class="hive-stat-like"><strong>${post.likes || 0}</strong> likes</p>
+                                <hr>
+                                <button class="hive-stat-like-btn ${likeButtonClass}" data-post-id="${post.postId}">
+                                    <img id="like-btn-hive" src="${likeButtonIcon}" alt="${likeButtonText}" style="width: 22px; height: 22px; vertical-align: middle;">
+                                </button>
+                            </div>
+                        </div>
+                        `;
+
+                        postElement.innerHTML = postTemplate;
+                        postsContainer.appendChild(postElement);
+                    });
+
+                    // Update lastPostTimestamp for next fetch
+                    lastPostTimestamp = data.LastEvaluatedKey;
+
+                    if (lastPostTimestamp) {
+                        loadMoreButton.style.display = 'block';
+                    } else {
+                        loadMoreButton.style.display = 'none';
+                    }
+                } else {
+                    loadMoreButton.style.display = 'none';
+                }
+            })
+            .catch(error => console.error('Error fetching posts:', error))
+            .finally(() => {
+                isFetching = false;
+            });
+    }
+
+
+    loadMoreButton.addEventListener('click', fetchPosts);
+
+    // Initial fetch
+    fetchPosts();
+
+    function clearFeed() {
+        document.getElementById('newsfeed-posts-container').innerHTML = '';
+        lastTimestamp = null;
+        fetchedPostIds.clear(); // Optionally clear fetched post IDs
+    }
+    
+    function refreshFeed() {
+        clearFeed();
+        fetchPosts();
+    }
+
+    // Event delegation to handle clicks on dynamically added like buttons
+    postsContainer.addEventListener('click', function(event) {
+        if (event.target.closest('.hive-stat-like-btn')) {
+            const likeButton = event.target.closest('.hive-stat-like-btn');
+            const postId = likeButton.dataset.postId;
+
+            console.log('Like button clicked for post ID:', postId);
+
+            fetch(`/api/like/${postId}`, {
+                method: 'POST',
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem('token')
+                }
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to like/unlike post');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Post like/unlike successful:', data);
+
+                // Correctly target the like button icon and like count for the specific post
+                const postElement = document.querySelector(`.hive-post-element[data-post-id="${postId}"]`);
+                const likeButtonIcon = postElement.querySelector(`#like-btn-hive`);
+                const likeButtonIconSrc = data.message === 'Like added' ? '../assets/liked.svg' : '../assets/unliked.svg';
+                likeButtonIcon.src = likeButtonIconSrc;
+
+                // Update like count
+                const likeCountElement = postElement.querySelector('.hive-stat-like strong');
+                if (likeCountElement) {
+                    likeCountElement.textContent = data.likes || 0;
+                }
+            })
+            .catch(error => {
+                console.error('Error liking/unliking post:', error);
+            });
+        }
+    });
+
+    // Infinite scroll
+   /* window.addEventListener('scroll', () => {
+        if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 100 && !isFetching && lastPostTimestamp) {
+            fetchPosts();
+        }
+    }); */
+    
 });
 
 // Function to extract username from URL
@@ -392,166 +554,5 @@ function handleImageLoad() {
 dayjs.extend(dayjs_plugin_relativeTime);
 
 document.addEventListener('DOMContentLoaded', function() {
-    let lastPostTimestamp = null;
-    const postsContainer = document.getElementById('hive-feed-area');
-    const loadMoreButton = document.getElementById('load-more');
-    let isFetching = false;
-    const username = window.location.pathname.split('/').pop(); // Get the username from the URL
-
-    function fetchPosts() {
-        if (isFetching) return;
-        isFetching = true;
-
-        let url = `/api/user/${username}/posts`;
-        if (lastPostTimestamp) {
-            url += `?lastPostTimestamp=${lastPostTimestamp}`;
-        }
-
-        console.log('Fetching posts from URL:', url);
-
-        fetch(url)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => {
-                console.log('Fetched posts data:', data);
-
-                if (!data.Items) {
-                    console.error('No items in fetched data');
-                    return;
-                }
-
-                if (data.Items.length > 0) {
-                    data.Items.forEach(post => {
-                        console.log('Post data:', post);
-
-                        // Determine if the post is liked by the current user
-                        const isLiked = post.isLiked; // Ensure `isLiked` is provided by the backend
-
-                        // Update button appearance based on the `isLiked` status
-                        const likeButtonIcon = isLiked ? '../assets/liked.svg' : '../assets/unliked.svg';
-                        const likeButtonText = isLiked ? 'Liked' : 'Like';
-                        const likeButtonClass = isLiked ? 'liked' : '';
-
-                        const postElement = document.createElement('div');
-                        postElement.className = 'hive-post';
-
-                        const postTemplate = `
-                        <div class="col-md-4 hive-post-element mx-auto" data-post-id="${post.postId}">
-                            <div class="row hive-post-user-details align-items-center">
-                                <div class="hive-post-pfp">
-                                    <img src="${post.userProfilePicture || '../assets/default-profile.jpg'}" alt="Profile" class="post-profile-pic">
-                                </div>
-                                <div class="col hive-user-details-text">
-                                    <a href="/${post.username}" class="hive-post-username">${post.firstName}</a>
-                                    <a href="/${post.username}" class="hive-post-user-sub">@${post.username}</a>
-                                </div>
-                                <div class="col hive-user-details-time">
-                                    <i class="fa fa-clock hive-post-time-icon"></i><p class="hive-post-time">${dayjs(post.postTimestamp).fromNow()}</p>
-                                </div>
-                            </div>
-                            <div class="row hive-post-content">
-                                <p class="hive-post-text">${post.content}</p>
-                                ${post.imageUrl ? `<div class="hive-post-image shadow"><img class="hive-post-img-src" data-src="${post.imageUrl}" src="${post.imageUrl}" alt="Post Image"></div>` : ''}
-                            </div>
-                            <div class="hive-social-stats">
-                                <p class="hive-stat-like"><strong>${post.likes || 0}</strong> likes</p>
-                                <hr>
-                                <button class="hive-stat-like-btn ${likeButtonClass}" data-post-id="${post.postId}">
-                                    <img id="like-btn-hive" src="${likeButtonIcon}" alt="${likeButtonText}" style="width: 22px; height: 22px; vertical-align: middle;">
-                                </button>
-                            </div>
-                        </div>
-                        `;
-
-                        postElement.innerHTML = postTemplate;
-                        postsContainer.appendChild(postElement);
-                    });
-
-                    // Update lastPostTimestamp for next fetch
-                    lastPostTimestamp = data.LastEvaluatedKey;
-
-                    if (lastPostTimestamp) {
-                        loadMoreButton.style.display = 'block';
-                    } else {
-                        loadMoreButton.style.display = 'none';
-                    }
-                } else {
-                    loadMoreButton.style.display = 'none';
-                }
-            })
-            .catch(error => console.error('Error fetching posts:', error))
-            .finally(() => {
-                isFetching = false;
-            });
-    }
-
-
-    loadMoreButton.addEventListener('click', fetchPosts);
-
-    // Initial fetch
-    fetchPosts();
-
-    function clearFeed() {
-        document.getElementById('newsfeed-posts-container').innerHTML = '';
-        lastTimestamp = null;
-        fetchedPostIds.clear(); // Optionally clear fetched post IDs
-    }
-    
-    function refreshFeed() {
-        clearFeed();
-        fetchPosts();
-    }
-
-    // Event delegation to handle clicks on dynamically added like buttons
-    postsContainer.addEventListener('click', function(event) {
-        if (event.target.closest('.hive-stat-like-btn')) {
-            const likeButton = event.target.closest('.hive-stat-like-btn');
-            const postId = likeButton.dataset.postId;
-
-            console.log('Like button clicked for post ID:', postId);
-
-            fetch(`/api/like/${postId}`, {
-                method: 'POST',
-                headers: {
-                    'Authorization': 'Bearer ' + localStorage.getItem('token')
-                }
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Failed to like/unlike post');
-                }
-                return response.json();
-            })
-            .then(data => {
-                console.log('Post like/unlike successful:', data);
-
-                // Correctly target the like button icon and like count for the specific post
-                const postElement = document.querySelector(`.hive-post-element[data-post-id="${postId}"]`);
-                const likeButtonIcon = postElement.querySelector(`#like-btn-hive`);
-                const likeButtonIconSrc = data.message === 'Like added' ? '../assets/liked.svg' : '../assets/unliked.svg';
-                likeButtonIcon.src = likeButtonIconSrc;
-
-                // Update like count
-                const likeCountElement = postElement.querySelector('.hive-stat-like strong');
-                if (likeCountElement) {
-                    likeCountElement.textContent = data.likes || 0;
-                }
-            })
-            .catch(error => {
-                console.error('Error liking/unliking post:', error);
-            });
-        }
-    });
-
-    // Infinite scroll
-   /* window.addEventListener('scroll', () => {
-        if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 100 && !isFetching && lastPostTimestamp) {
-            fetchPosts();
-        }
-    }); */
-    
+   
 });
