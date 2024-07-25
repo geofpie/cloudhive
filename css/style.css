@@ -975,7 +975,7 @@ a:hover {
 }
 
 .edit-profile-pp-button {
-    margin-bottom: 22px;
+    margin-top: 12px;
     visibility: hidden;
 }
 
@@ -985,4 +985,9 @@ a:hover {
 
 .header-img-selector-sect {
     width: 100%;
+}
+
+.select-img-btn {
+    width: 100%;
+    padding: 8px 0 8px 0;
 }
