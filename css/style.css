@@ -928,3 +928,10 @@ a:hover {
     text-decoration: none;
     cursor: pointer;
 }
+
+.edit-profile-img-preview {
+    width: 200px;
+    height: 200px;
+    background-size: cover;
+    border-radius: 100%;
+}
