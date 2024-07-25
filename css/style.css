@@ -976,6 +976,7 @@ a:hover {
 
 .edit-profile-pp-button {
     margin-bottom: 22px;
+    visibility: hidden;
 }
 
 .header-selector-button {
@@ -983,8 +984,13 @@ a:hover {
     position: absolute;
     top: 0;
     right: 20;
+    visibility: hidden;
 }
 
 .profile-group-pre {
     padding-top: 32px;
+}
+
+.header-selector-btn {
+    z-index: 5;
 }
