@@ -977,3 +977,10 @@ a:hover {
 .edit-profile-pp-button {
     margin-bottom: 22px;
 }
+
+.header-selector-button {
+    z-index: 5;
+    position: absolute;
+    top: 0;
+    right: 20;
+}
