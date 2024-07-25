@@ -661,7 +661,7 @@ document.getElementById('submitEditProfileButton').addEventListener('click', asy
             // Close the modal
             document.getElementById('editProfileModal').classList.add('hidden');
             // Reload the page
-            location.reload();
+            // location.reload();
         } else {
             // Handle any error messages from the server
             console.error('Error updating profile:', data.error);
