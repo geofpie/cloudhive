@@ -35,13 +35,13 @@ p {
 
 a {
     text-decoration: none;
-    color: #0b7fab;
+    color: #ff87ab;
     transition: 0.2s;
     -webkit-transition: 0.2s;
 }
 
 a:hover { 
-    color: #085777;
+    color: #ff5d8f;
     text-decoration: none;
 }
 
@@ -215,15 +215,15 @@ a:hover {
 }
 
 .login-form-textfield:hover {
-    border-color: #0b7fab;
+    border-color: #ff87ab;
 }
 
 .login-form-textfield:active {
-    border-color: #085777;
+    border-color: #ff5d8f;
 }
 
 .login-form-button { 
-    background-color: #0b7fab;
+    background-color: #ff87ab;
     color: white; 
     box-shadow: none;
     border-radius: 8px;
@@ -235,7 +235,7 @@ a:hover {
 }
 
 .login-form-button:hover {
-    background-color: #085777;
+    background-color: #ff87ab;
 }
 
 .login-already-class { 
