@@ -1009,3 +1009,13 @@ a:hover {
 .edit-profile-modal-body {
     padding: 20px;
 }
+
+.result.card {
+    border-radius: 12px; 
+}
+
+.hive-btn { 
+    padding: 12px;
+    border-radius: 8px;
+    width: 100%;
+}
