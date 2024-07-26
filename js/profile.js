@@ -663,8 +663,8 @@ document.getElementById('submitEditProfileButton').addEventListener('click', asy
     });
 });
 
-// Function to compress image using HTML5 canvas
-function compressImage(file) {
+// Function to compress image using HTML5 canvas with target quality
+function compressImage(file, targetQuality = 0.8) {
     return new Promise((resolve, reject) => {
         const reader = new FileReader();
         reader.onload = function(event) {
@@ -674,29 +674,15 @@ function compressImage(file) {
                 const canvas = document.createElement('canvas');
                 const ctx = canvas.getContext('2d');
                 
-                // Set canvas dimensions
-                const maxWidth = 1200; // Set maximum width for the image
-                const maxHeight = 800; // Set maximum height for the image
-                let width = img.width;
-                let height = img.height;
-
-                if (width > maxWidth) {
-                    height *= maxWidth / width;
-                    width = maxWidth;
-                }
-                if (height > maxHeight) {
-                    width *= maxHeight / height;
-                    height = maxHeight;
-                }
+                // Set canvas dimensions to the image dimensions
+                canvas.width = img.width;
+                canvas.height = img.height;
+                ctx.drawImage(img, 0, 0, img.width, img.height);
                 
-                canvas.width = width;
-                canvas.height = height;
-                ctx.drawImage(img, 0, 0, width, height);
-                
-                // Convert canvas to blob
+                // Convert canvas to blob with target quality
                 canvas.toBlob(function(blob) {
                     resolve(blob);
-                }, 'image/jpeg', 0.8); // Adjust quality (0.8) as needed
+                }, 'image/jpeg', targetQuality); // Set quality parameter
             };
             img.src = event.target.result;
         };
