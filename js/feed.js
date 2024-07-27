@@ -575,22 +575,33 @@ document.addEventListener('DOMContentLoaded', function() {
             return Promise.resolve();
         }
 
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
             images.forEach(img => {
-                img.addEventListener('load', () => {
+                if (img.complete) {
                     loadedImagesCount++;
-                    if (loadedImagesCount === images.length) {
-                        resolve();
-                    }
-                });
-                img.addEventListener('error', () => {
-                    // Consider image as loaded in case of error
-                    loadedImagesCount++;
-                    if (loadedImagesCount === images.length) {
-                        resolve();
-                    }
-                });
+                } else {
+                    img.addEventListener('load', () => {
+                        loadedImagesCount++;
+                        if (loadedImagesCount === images.length) {
+                            resolve();
+                        }
+                    });
+                    img.addEventListener('error', () => {
+                        // Consider image as loaded in case of error
+                        loadedImagesCount++;
+                        if (loadedImagesCount === images.length) {
+                            resolve();
+                        }
+                    });
+                }
             });
+
+            // Fallback if images don't fire load or error events
+            setTimeout(() => {
+                if (loadedImagesCount < images.length) {
+                    resolve();
+                }
+            }, 3000); // Timeout after 3 seconds
         });
     };
 
