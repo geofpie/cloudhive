@@ -289,7 +289,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                         `;
 
                         postElement.innerHTML = postTemplate;
-                        document.getElementById('newsfeed-posts-container').appendChild(postElement);
+                        document.getElementById('hive-feed-area').appendChild(postElement);
                     });
 
                     // Update lastTimestamp for the next fetch
