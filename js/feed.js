@@ -380,6 +380,13 @@ document.addEventListener('DOMContentLoaded', function() {
         fetchPosts();
     }
 
+    // Infinite scroll
+    window.addEventListener('scroll', () => {
+        if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 100 && !isFetching && lastTimestamp) {
+            fetchPosts();
+        }
+    });
+
    // Event delegation to handle clicks on dynamically added like buttons
     postsContainer.addEventListener('click', function(event) {
         if (event.target.closest('.hive-stat-like-btn')) {
