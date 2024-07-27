@@ -553,7 +553,21 @@ document.addEventListener('DOMContentLoaded', (event) => {
 });
 
 function fetchUserInfo() {
-    updateUserProfile(data.userInfo);
+    fetch('/api/get_user_info', {
+        method: 'GET',
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok ' + response.statusText);
+        }
+        return response.json();
+    })
+    .then(data => {
+        updateUserProfile(data.userInfo);
+    })
+    .catch(error => {
+        console.error('There was a problem with the fetch operation:', error);
+    });
 }
 
 function updateUserProfile(user) {
