@@ -61,13 +61,9 @@ function fetchUserInfo() {
         document.getElementById('user-username').innerText = `@${data.username}`;
         document.getElementById('user-email').innerText = data.email;
         document.querySelector('.user-info-card img').src = data.profile_picture_url;
-        const loggedInUserName = document.getElementById('hive-logged-in-user-name');
-        const username = user.username;
-    
-        loggedInUserName.innerText = user.first_name;
-        loggedInUserName.href = `/${username}`; 
-    
-        document.querySelector('.navbar-profile-pic').src = user.profile_picture_url;
+        document.getElementById('hive-logged-in-user-name').innerText = `${data.first_name}`;
+        document.getElementById('hive-logged-in-user-name').href = `/${data.username}`;
+        document.querySelector('.navbar-profile-pic').src =`${data.profile_picture_url}`;
     })
     .catch(error => console.error('Error fetching user info:', error));
 }
