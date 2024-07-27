@@ -51,10 +51,6 @@ document.addEventListener('DOMContentLoaded', function() {
 function fetchUserInfo() {
     fetch('/api/get_user_info', {
         method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + document.cookie.getItem('token')
-        }
     })
     .then(response => response.json())
     .then(data => {
