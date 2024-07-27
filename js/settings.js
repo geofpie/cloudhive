@@ -21,37 +21,42 @@ document.addEventListener('DOMContentLoaded', function() {
             },
             body: JSON.stringify({ currentPassword, newPassword, confirmNewPassword })
         })
-        .then(response => response.json()) // Assuming the server responds with JSON
+        .then(response => response.json())
         .then(data => {
             if (data.error) {
                 alert(data.error);
             } else {
                 alert(data.message || 'Password changed successfully');
+                window.location.reload();
             }
         })
         .catch(error => console.error('Error changing password:', error));
     });
-    
+
     document.getElementById('changeEmailForm').addEventListener('submit', function(event) {
         event.preventDefault();
+        
         const newEmail = document.getElementById('newEmail').value;
-
-        fetch('/api/change-email', {
+    
+        fetch('/api/change_email', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + localStorage.getItem('token')
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify({ newEmail })
         })
-        .then(response => response.text())
+        .then(response => response.json())
         .then(data => {
-            alert(data);
+            if (data.error) {
+                alert(data.error);
+            } else {
+                alert(data.message || 'Email changed successfully');
+                window.location.reload(); // Reload the page on successful update
+            }
         })
         .catch(error => console.error('Error changing email:', error));
     });
-});
-
+    
 function fetchUserInfo() {
     fetch('/api/get_user_info', {
         method: 'GET',
