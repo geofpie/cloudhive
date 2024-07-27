@@ -607,7 +607,7 @@ a:hover {
 }
 
 .hive-searchbar-btn:hover {
-    background: rgba(100, 53, 67, 0.7);
+    background: rgba(255, 135, 171, 0.7);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
 }
