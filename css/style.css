@@ -674,7 +674,7 @@ a:hover {
     position: relative;
     width: 100%;
     /* Aspect ratio 3:2 */
-    aspect-ratio: 3 / 2;
+    aspect-ratio: 4 / 3;
     overflow: hidden;
     border-radius: 16px;
 }
