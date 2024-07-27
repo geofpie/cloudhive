@@ -332,6 +332,13 @@ document.addEventListener('DOMContentLoaded', (event) => {
         fetchPosts();
     }
 
+    // Infinite scroll
+   window.addEventListener('scroll', () => {
+    if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 100 && !isFetching && lastTimestamp) {
+        fetchPosts();
+    }
+});
+
     // Event delegation to handle clicks on dynamically added like buttons
     postsContainer.addEventListener('click', function(event) {
         if (event.target.closest('.hive-stat-like-btn')) {
@@ -378,13 +385,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
             .catch(error => {
                 console.error('Error liking/unliking post:', error);
             });
-        }
-    });
-
-    // Infinite scroll
-   window.addEventListener('scroll', () => {
-        if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 100 && !isFetching && lastTimestamp) {
-            fetchPosts();
         }
     });
 
