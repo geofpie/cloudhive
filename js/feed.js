@@ -453,8 +453,8 @@ document.getElementById('notifications-link').addEventListener('click', function
                             <p>@${request.username}</p>
                         </div>
                         <div class="follow-actions">
-                            <button class="follow-btn-action accept shadow" onclick="acceptFollowRequest('${request.username}')"><img src="assets/accept.svg" width="28" height="28"></button>
-                            <button class="follow-btn-action deny shadow" onclick="denyFollowRequest('${request.username}')"><img src="assets/deny.svg" width="28" height="28"></button>
+                            <button class="follow-btn-action accept" onclick="acceptFollowRequest('${request.username}')"><img src="assets/accept.svg" width="28" height="28"></button>
+                            <button class="follow-btn-action deny" onclick="denyFollowRequest('${request.username}')"><img src="assets/deny.svg" width="28" height="28"></button>
                         </div>
                     </div>
                 `;
