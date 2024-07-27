@@ -53,13 +53,13 @@ document.addEventListener('DOMContentLoaded', function() {
     const writePostButton = document.getElementById('write-post');
     const sharePostButton = document.getElementById('share-post');
     const picPostButton = document.getElementById('pic-post');
-    const customModal = document.getElementById('postModal');
+    const postModal = document.getElementById('postModal');
     const closeModalButtons = document.querySelectorAll('#closeModal, #closeModalFooter');
     const attachImageButton = document.getElementById('attachImageButton');
     const postImageInput = document.getElementById('postImage');
     const imagePreview = document.getElementById('imagePreview');
     const submitPostButton = document.getElementById('submitPostButton');
-    const uploadIndicator = document.getElementById('uploadIndicator'); // Ensure this is correctly defined
+    const uploadIndicator = document.getElementById('uploadIndicator');
     let isFetching = false;
     let lastTimestamp = null;
     const fetchedPostIds = new Set();
@@ -72,13 +72,19 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function showModal() {
-        customModal.classList.remove('hidden');
-        document.body.style.overflow = 'hidden'; // Prevent background scroll
+        postModal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
     }
 
     function hideModal() {
-        customModal.classList.add('hidden');
-        document.body.style.overflow = ''; // Restore background scroll
+        postModal.classList.add('hidden');
+        document.body.style.overflow = '';
+    }
+
+    window.onclick = function(event) {
+        if (event.target == postModal) {
+            postModal.classList.add('hidden');
+        }
     }
 
     writePostButton.addEventListener('click', showModal);
@@ -535,20 +541,13 @@ document.addEventListener('DOMContentLoaded', () => {
             image.classList.add('image-visible');
         }
     });
+
+    const notificationsModal = document.getElementById('notificationsModal');
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+        if (event.target == notificationsModal) {
+            notificationsModal.style.display = 'none';
+        }
+    }
 });
 
-const notificationsModal = document.getElementById('notificationsModal');
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-    if (event.target == notificationsModal) {
-        notificationsModal.style.display = 'none';
-    }
-}
-
-const postModal = document.getElementById('postModal');
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-    if (event.target == postModal) {
-        postModal.style.display = 'none';
-    }
-}

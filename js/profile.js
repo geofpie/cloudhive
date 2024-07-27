@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const writePostButton = document.getElementById('write-post');
     const sharePostButton = document.getElementById('share-post');
     const picPostButton = document.getElementById('pic-post');
-    const customModal = document.getElementById('postModal');
+    const postModal = document.getElementById('postModal');
     const closeModalButtons = document.querySelectorAll('#closeModal, #closeModalFooter');
     const attachImageButton = document.getElementById('attachImageButton');
     const postImageInput = document.getElementById('postImage');
@@ -24,18 +24,24 @@ document.addEventListener('DOMContentLoaded', (event) => {
     }
 
     function showModal() {
-        customModal.classList.remove('hidden');
-        document.body.style.overflow = 'hidden'; // Prevent background scroll
+        postModal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
     }
 
     function hideModal() {
-        customModal.classList.add('hidden');
-        document.body.style.overflow = ''; // Restore background scroll
+        postModal.classList.add('hidden');
+        document.body.style.overflow = '';
     }
 
     closeModalButtons.forEach(button => {
         button.addEventListener('click', hideModal);
     });
+
+    window.onclick = function(event) {
+        if (event.target == postModal) {
+            postModal.classList.add('hidden');
+        }
+    }
 
     attachImageButton.addEventListener('click', () => {
         postImageInput.click();
@@ -784,13 +790,5 @@ const notificationsModal = document.getElementById('notificationsModal');
 window.onclick = function(event) {
     if (event.target == notificationsModal) {
         notificationsModal.style.display = 'none';
-    }
-}
-
-const postModal = document.getElementById('postModal');
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-    if (event.target == postModal) {
-        postModal.style.display = 'none';
     }
 }
