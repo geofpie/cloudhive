@@ -15,7 +15,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
     let isFetching = false;
     const username = window.location.pathname.split('/').pop(); // Get the username from the URL
     const fetchedPostIds = new Set();
-    let lastTimestamp = null;
 
     adjustTextColorBasedOnImage('.profile-fullwidth-header img');
 
@@ -157,73 +156,14 @@ document.addEventListener('DOMContentLoaded', (event) => {
             hideUploadIndicator(); // Hide spinner if there's an error
         });
     }
-
-    function showSkeletonLoader() {
-        for (let i = 0; i < 3; i++) { // Adjust the number of skeleton loaders as needed
-            const skeletonElement = document.createElement('div');
-            skeletonElement.className = 'col-md-4 hive-post-element hive-post-skeleton mx-auto';
-            skeletonElement.innerHTML = `
-                <div class="row hive-post-user-details hive-post-details-skeleton align-items-center">
-                    <div class="col hive-pfp-skeleton"></div>
-                    <div class="col hive-user-details-text">
-                        <div class="hive-user-acc-deets"></div>
-                    </div>
-                </div>
-                <div class="row hive-post-content hive-post-content-skeleton">
-                    <div class="hive-post-image-skelly shadow"></div>
-                </div>
-                <div class="hive-social-stats">
-                    <div class="hive-stat-skelly"></div>
-                    <hr class="divider-skelly">
-                    <div class="hive-like-btn-skeleton"></div>
-                </div>
-            `;
-            postsContainer.appendChild(skeletonElement);
-        }
-    }
-    
-    function removeSkeletonLoader() {
-        const skeletons = document.querySelectorAll('.hive-post-skeleton');
-        skeletons.forEach(skeleton => skeleton.remove());
-    }
-    
-    function handleImageLoad() {
-        const images = postsContainer.querySelectorAll('.hive-post-img-src');
-        let loadedImagesCount = 0;
-    
-        images.forEach(image => {
-            if (image.complete) {
-                loadedImagesCount++;
-            } else {
-                image.addEventListener('load', () => {
-                    loadedImagesCount++;
-                    if (loadedImagesCount === images.length) {
-                        removeSkeletonLoader();
-                    }
-                });
-                image.addEventListener('error', () => {
-                    loadedImagesCount++;
-                    if (loadedImagesCount === images.length) {
-                        removeSkeletonLoader();
-                    }
-                });
-            }
-        });
-    
-        if (loadedImagesCount === images.length) {
-            removeSkeletonLoader();
-        }
-    }
     
     function fetchPosts() {
         if (isFetching) return;
         isFetching = true;
 
-        showSkeletonLoader();
-
-        let url = '/api/newsfeed';
-        if (lastTimestamp) {
-            url += `?lastTimestamp=${encodeURIComponent(lastTimestamp)}`; // Encode URI component for safety
+        let url = `/api/user/${username}/posts`;
+        if (lastPostTimestamp) {
+            url += `?lastPostTimestamp=${lastPostTimestamp}`;
         }
 
         console.log('Fetching posts from URL:', url);
@@ -231,7 +171,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         fetch(url)
             .then(response => {
                 if (!response.ok) {
-                    throw new Error('Failed to fetch posts');
+                    throw new Error('Network response was not ok');
                 }
                 return response.json();
             })
@@ -243,11 +183,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
                     return;
                 }
 
-                const newPosts = data.Items.filter(post => !fetchedPostIds.has(post.postId));
-
-                if (newPosts.length > 0) {
-                    newPosts.forEach(post => {
-                        fetchedPostIds.add(post.postId); // Add to set of fetched post IDs
+                if (data.Items.length > 0) {
+                    data.Items.forEach(post => {
+                        console.log('Post data:', post);
 
                         // Determine if the post is liked by the current user
                         const isLiked = post.isLiked; // Ensure `isLiked` is provided by the backend
@@ -289,31 +227,27 @@ document.addEventListener('DOMContentLoaded', (event) => {
                         `;
 
                         postElement.innerHTML = postTemplate;
-                        document.getElementById('hive-feed-area').appendChild(postElement);
+                        postsContainer.appendChild(postElement);
                     });
 
-                    // Update lastTimestamp for the next fetch
-                    lastTimestamp = data.LastEvaluatedKey || null;
-                    console.log('Updated lastTimestamp:', lastTimestamp);
+                    // Update lastPostTimestamp for next fetch
+                    lastPostTimestamp = data.LastEvaluatedKey;
 
-                    // Show/hide load more button based on availability of more posts
-                    loadMoreButton.style.display = lastTimestamp ? 'block' : 'none';
+                    if (lastPostTimestamp) {
+                        loadMoreButton.style.display = 'block';
+                    } else {
+                        loadMoreButton.style.display = 'none';
+                    }
                 } else {
-                    // No new posts, or all posts have been fetched
                     loadMoreButton.style.display = 'none';
                 }
-
-                handleImageLoad(); // Ensure this function is defined and properly handles image loading
-
-                isFetching = false;
-                removeSkeletonLoader();
             })
-            .catch(error => {
-                console.error('Error fetching posts:', error);
+            .catch(error => console.error('Error fetching posts:', error))
+            .finally(() => {
                 isFetching = false;
-                removeSkeletonLoader();
             });
     }
+
 
     loadMoreButton.addEventListener('click', fetchPosts);
 
@@ -321,7 +255,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     fetchPosts();
 
     function clearFeed() {
-        document.getElementById('newsfeed-posts-container').innerHTML = '';
+        document.getElementById('hive-feed-area').innerHTML = '';
         lastTimestamp = null;
         fetchedPostIds.clear(); // Optionally clear fetched post IDs
     }
@@ -569,6 +503,63 @@ function updateUserProfile(user) {
     loggedInUserName.href = `/${username}`; 
 
     document.querySelector('.navbar-profile-pic').src = user.profile_picture_url;
+}
+
+function showSkeletonLoader() {
+    for (let i = 0; i < 3; i++) { // Adjust the number of skeleton loaders as needed
+        const skeletonElement = document.createElement('div');
+        skeletonElement.className = 'col-md-4 hive-post-element hive-post-skeleton mx-auto';
+        skeletonElement.innerHTML = `
+            <div class="row hive-post-user-details hive-post-details-skeleton align-items-center">
+                <div class="col hive-pfp-skeleton"></div>
+                <div class="col hive-user-details-text">
+                    <div class="hive-user-acc-deets"></div>
+                </div>
+            </div>
+            <div class="row hive-post-content hive-post-content-skeleton">
+                <div class="hive-post-image-skelly shadow"></div>
+            </div>
+            <div class="hive-social-stats">
+                <div class="hive-stat-skelly"></div>
+                <hr class="divider-skelly">
+                <div class="hive-like-btn-skeleton"></div>
+            </div>
+        `;
+        postsContainer.appendChild(skeletonElement);
+    }
+}
+
+function removeSkeletonLoader() {
+    const skeletons = document.querySelectorAll('.hive-post-skeleton');
+    skeletons.forEach(skeleton => skeleton.remove());
+}
+
+function handleImageLoad() {
+    const images = postsContainer.querySelectorAll('.hive-post-img-src');
+    let loadedImagesCount = 0;
+
+    images.forEach(image => {
+        if (image.complete) {
+            loadedImagesCount++;
+        } else {
+            image.addEventListener('load', () => {
+                loadedImagesCount++;
+                if (loadedImagesCount === images.length) {
+                    removeSkeletonLoader();
+                }
+            });
+            image.addEventListener('error', () => {
+                loadedImagesCount++;
+                if (loadedImagesCount === images.length) {
+                    removeSkeletonLoader();
+                }
+            });
+        }
+    });
+
+    if (loadedImagesCount === images.length) {
+        removeSkeletonLoader();
+    }
 }
 
 dayjs.extend(dayjs_plugin_relativeTime);
