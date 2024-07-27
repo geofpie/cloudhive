@@ -364,34 +364,6 @@ document.addEventListener('DOMContentLoaded', function() {
             });
     }
     
-    function handleImageLoad() {
-        const images = document.querySelectorAll('.hive-post-img-src');
-        const totalImages = images.length;
-        let loadedImages = 0;
-    
-        if (totalImages === 0) {
-            // If there are no images, remove the skeleton loader immediately
-            removeSkeletonLoader();
-            return;
-        }
-    
-        images.forEach(img => {
-            img.addEventListener('load', () => {
-                loadedImages++;
-                if (loadedImages === totalImages) {
-                    removeSkeletonLoader();
-                }
-            });
-    
-            img.addEventListener('error', () => {
-                loadedImages++;
-                if (loadedImages === totalImages) {
-                    removeSkeletonLoader();
-                }
-            });
-        });
-    }
-
     loadMoreButton.addEventListener('click', fetchPosts);
 
     // Initial fetch
