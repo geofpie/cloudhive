@@ -80,14 +80,14 @@ function fetchUserInfo() {
     });
 }
 
-function updateUserProfileFields(data) {
-    document.getElementById('user-fullname').innerText = `${data.first_name} ${data.last_name}`;
-    document.getElementById('user-username').innerText = `@${data.username}`;
-    document.getElementById('user-email').innerText = data.email;
-    document.querySelector('.user-info-card img').src = data.profile_picture_url;
-    document.getElementById('hive-logged-in-user-name').innerText = `${data.first_name}`;
-    document.getElementById('hive-logged-in-user-name').href = `/${data.username}`;
-    document.querySelector('.navbar-profile-pic').src = data.profile_picture_url;
+function updateUserProfileFields(user) {
+    document.getElementById('user-fullname').innerText = `${user.first_name} ${user.last_name}`;
+    document.getElementById('user-username').innerText = `@${user.username}`;
+    document.getElementById('user-email').innerText = user.email;
+    document.querySelector('.user-info-card img').src = user.profile_picture_url;
+    document.getElementById('hive-logged-in-user-name').innerText = `${user.first_name}`;
+    document.getElementById('hive-logged-in-user-name').href = `/${user.username}`;
+    document.querySelector('.navbar-profile-pic').src = user.profile_picture_url;
 }
 
 const notificationsModal = document.getElementById('notificationsModal');
