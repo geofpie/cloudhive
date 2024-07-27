@@ -403,7 +403,15 @@ a:hover {
 
 .hive-post-user-sub {
     display: block;
-    color: #a8a8a8;
+    color: #ffc2d1;
+}
+
+.pic {
+    color: #6d23b6;
+}
+
+.write {
+    color: #ac46a1;
 }
 
 .hive-post-time-icon, .hive-post-time {
