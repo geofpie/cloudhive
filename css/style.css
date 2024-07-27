@@ -1114,3 +1114,47 @@ a:hover {
     padding: 0;
     margin: 0;
 }
+
+.follow-container {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 16px;
+    margin-bottom: 10px;
+}
+
+.request-profile-pic {
+    margin-right: 15px;
+}
+
+.follow-details {
+    flex: 1;
+}
+
+.follow-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.follow-actions .btn {
+    padding: 5px 10px;
+}
+
+.follow-btn-action {
+    padding: 6px 12px 6px 12px;
+    font-size: 12px;
+    font-weight: 600;
+    border-radius: 12px;
+    border: 1px solid #ddd;
+    background-color: white;
+    transition: 0.2s ease-in-out;
+}
+
+.accept:hover {
+    background-color: #04a777;
+}
+
+.deny:hover {
+    background-color: #d90368;
+}

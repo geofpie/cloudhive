@@ -444,14 +444,18 @@ document.getElementById('notifications-link').addEventListener('click', function
                 const profilePicUrl = request.profile_picture_url || '../assets/default-profile.jpg';
 
                 listItem.innerHTML = `
-                    <img src="${profilePicUrl}" alt="Profile Picture" class="rounded-circle" width="40" height="40">
-                    <div>
-                        <strong>${request.first_name} ${request.last_name}</strong>
-                        <p>@${request.username}</p>
-                    </div>
-                    <div>
-                        <button class="btn btn-success btn-sm mr-2" onclick="acceptFollowRequest('${request.username}')">Accept</button>
-                        <button class="btn btn-danger btn-sm" onclick="denyFollowRequest('${request.username}')">Deny</button>
+                     <div class="follow-container">
+                        <div class="request-profile-pic">
+                            <img src="${profilePicUrl}" alt="Profile Picture" class="rounded-circle" width="40" height="40">
+                        </div>
+                        <div class="follow-details">
+                            <strong>${request.first_name} ${request.last_name}</strong>
+                            <p>@${request.username}</p>
+                        </div>
+                        <div class="follow-actions">
+                            <button class="follow-btn-action accept shadow" onclick="acceptFollowRequest('${request.username}')"><img src="assets/accept.svg" width="28" height="28"></button>
+                            <button class="follow-btn-action deny shadow" onclick="denyFollowRequest('${request.username}')"><img src="assets/deny.svg" width="28" height="28"></button>
+                        </div>
                     </div>
                 `;
 
