@@ -551,23 +551,3 @@ window.onclick = function(event) {
         postModal.classList.add('hidden');
     }
 }
-
-document.addEventListener('DOMContentLoaded', function() {
-    document.getElementById('logout-link').addEventListener('click', function() {
-        // Handle logout functionality
-        fetch('/api/logout', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + localStorage.getItem('token')
-            }
-        })
-        .then(response => response.text())
-        .then(() => {
-            // Clear the token and redirect to login page
-            localStorage.removeItem('token');
-            window.location.href = '/login';
-        })
-        .catch(error => console.error('Logout error:', error));
-    });
-});
