@@ -76,7 +76,3 @@ window.onclick = function(event) {
         notificationsModal.style.display = 'none';
     }
 }
-
-document.addEventListener('DOMContentLoaded', (event) => {
-    fetchUserInfo();
-});
