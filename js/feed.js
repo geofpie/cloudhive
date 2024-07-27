@@ -81,12 +81,6 @@ document.addEventListener('DOMContentLoaded', function() {
         document.body.style.overflow = '';
     }
 
-    window.onclick = function(event) {
-        if (event.target == postModal) {
-            postModal.classList.add('hidden');
-        }
-    }
-
     writePostButton.addEventListener('click', showModal);
     sharePostButton.addEventListener('click', showModal);
     picPostButton.addEventListener('click', showModal);
@@ -551,3 +545,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
+window.onclick = function(event) {
+    if (event.target == postModal) {
+        postModal.classList.add('hidden');
+    }
+}

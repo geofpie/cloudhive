@@ -37,12 +37,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
         button.addEventListener('click', hideModal);
     });
 
-    window.onclick = function(event) {
-        if (event.target == postModal) {
-            postModal.classList.add('hidden');
-        }
-    }
-
     attachImageButton.addEventListener('click', () => {
         postImageInput.click();
     });
@@ -790,5 +784,11 @@ const notificationsModal = document.getElementById('notificationsModal');
 window.onclick = function(event) {
     if (event.target == notificationsModal) {
         notificationsModal.style.display = 'none';
+    }
+}
+
+window.onclick = function(event) {
+    if (event.target == postModal) {
+        postModal.classList.add('hidden');
     }
 }
