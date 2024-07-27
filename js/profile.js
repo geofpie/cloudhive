@@ -780,7 +780,6 @@ function adjustTextColorBasedOnImage(imageSelector) {
 }
 
 const notificationsModal = document.getElementById('notificationsModal');
-
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
     if (event.target == notificationsModal) {
@@ -788,8 +787,7 @@ window.onclick = function(event) {
     }
 }
 
-const postModal = document.getElementById('post-modal-content');
-
+const postModal = document.getElementById('postModal');
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
     if (event.target == postModal) {
