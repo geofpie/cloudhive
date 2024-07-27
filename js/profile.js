@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     let isFetching = false;
     const username = window.location.pathname.split('/').pop(); // Get the username from the URL
     const fetchedPostIds = new Set();
+    let lastTimestamp = null;
 
     adjustTextColorBasedOnImage('.profile-fullwidth-header img');
 
