@@ -42,6 +42,7 @@ document.addEventListener('DOMContentLoaded', function() {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
+                // No need to include Authorization header with Bearer token
             },
             body: JSON.stringify({ newEmail })
         })
@@ -56,7 +57,8 @@ document.addEventListener('DOMContentLoaded', function() {
         })
         .catch(error => console.error('Error changing email:', error));
     });
-    
+});
+
 function fetchUserInfo() {
     fetch('/api/get_user_info', {
         method: 'GET',
