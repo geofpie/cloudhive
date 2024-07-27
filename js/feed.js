@@ -269,16 +269,16 @@ document.addEventListener('DOMContentLoaded', function() {
     function fetchPosts() {
         if (isFetching) return;
         isFetching = true;
-
+    
         showSkeletonLoader();
-
+    
         let url = '/api/newsfeed';
         if (lastTimestamp) {
             url += `?lastTimestamp=${encodeURIComponent(lastTimestamp)}`; // Encode URI component for safety
         }
-
+    
         console.log('Fetching posts from URL:', url);
-
+    
         fetch(url)
             .then(response => {
                 if (!response.ok) {
@@ -288,29 +288,29 @@ document.addEventListener('DOMContentLoaded', function() {
             })
             .then(data => {
                 console.log('Fetched posts data:', data);
-
+    
                 if (!data.Items) {
                     console.error('No items in fetched data');
                     return;
                 }
-
+    
                 const newPosts = data.Items.filter(post => !fetchedPostIds.has(post.postId));
-
+    
                 if (newPosts.length > 0) {
                     newPosts.forEach(post => {
                         fetchedPostIds.add(post.postId); // Add to set of fetched post IDs
-
+    
                         // Determine if the post is liked by the current user
                         const isLiked = post.isLiked; // Ensure `isLiked` is provided by the backend
-
+    
                         // Update button appearance based on the `isLiked` status
                         const likeButtonIcon = isLiked ? '../assets/liked.svg' : '../assets/unliked.svg';
                         const likeButtonText = isLiked ? 'Liked' : 'Like';
                         const likeButtonClass = isLiked ? 'liked' : '';
-
+    
                         const postElement = document.createElement('div');
                         postElement.className = 'hive-post';
-
+    
                         const postTemplate = `
                         <div class="col-md-4 hive-post-element mx-auto" data-post-id="${post.postId}">
                             <div class="row hive-post-user-details align-items-center">
@@ -338,32 +338,58 @@ document.addEventListener('DOMContentLoaded', function() {
                             </div>
                         </div>
                         `;
-
+    
                         postElement.innerHTML = postTemplate;
                         document.getElementById('newsfeed-posts-container').appendChild(postElement);
                     });
-
+    
                     // Update lastTimestamp for the next fetch
                     lastTimestamp = data.LastEvaluatedKey || null;
                     console.log('Updated lastTimestamp:', lastTimestamp);
-
+    
                     // Show/hide load more button based on availability of more posts
                     loadMoreButton.style.display = lastTimestamp ? 'block' : 'none';
                 } else {
                     // No new posts, or all posts have been fetched
                     loadMoreButton.style.display = 'none';
                 }
-
+    
                 handleImageLoad(); // Ensure this function is defined and properly handles image loading
-
+    
                 isFetching = false;
-                removeSkeletonLoader();
             })
             .catch(error => {
                 console.error('Error fetching posts:', error);
                 isFetching = false;
-                removeSkeletonLoader();
             });
+    }
+    
+    function handleImageLoad() {
+        const images = document.querySelectorAll('.hive-post-img-src');
+        const totalImages = images.length;
+        let loadedImages = 0;
+    
+        if (totalImages === 0) {
+            // If there are no images, remove the skeleton loader immediately
+            removeSkeletonLoader();
+            return;
+        }
+    
+        images.forEach(img => {
+            img.addEventListener('load', () => {
+                loadedImages++;
+                if (loadedImages === totalImages) {
+                    removeSkeletonLoader();
+                }
+            });
+    
+            img.addEventListener('error', () => {
+                loadedImages++;
+                if (loadedImages === totalImages) {
+                    removeSkeletonLoader();
+                }
+            });
+        });
     }
 
     loadMoreButton.addEventListener('click', fetchPosts);
