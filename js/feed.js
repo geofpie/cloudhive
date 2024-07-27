@@ -545,6 +545,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
+const postModal = document.getElementById('postModal');
 window.onclick = function(event) {
     if (event.target == postModal) {
         postModal.classList.add('hidden');
