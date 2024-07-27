@@ -481,7 +481,7 @@ a:hover {
 
 .profile-fullwidth-header {
     min-height: 50vh;
-    margin-top: -60px;
+    margin-top: -70px;
     margin-left: 20px;
     margin-right: 20px;
     background-size: cover;
@@ -512,6 +512,10 @@ a:hover {
     width: 100%;
     border-bottom-left-radius: 22px;
     border-bottom-right-radius: 22px;
+}
+
+.profile-user-post {
+    width: 100%;
 }
 
 .profile-user-stats strong {
