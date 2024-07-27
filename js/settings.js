@@ -4,30 +4,34 @@ document.addEventListener('DOMContentLoaded', function() {
 
     document.getElementById('changePasswordForm').addEventListener('submit', function(event) {
         event.preventDefault();
+    
         const currentPassword = document.getElementById('currentPassword').value;
         const newPassword = document.getElementById('newPassword').value;
         const confirmNewPassword = document.getElementById('confirmNewPassword').value;
-
+    
         if (newPassword !== confirmNewPassword) {
             alert('New passwords do not match.');
             return;
         }
-
-        fetch('/api/change-password', {
+    
+        fetch('/api/change_password', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + localStorage.getItem('token')
             },
-            body: JSON.stringify({ currentPassword, newPassword })
+            body: JSON.stringify({ currentPassword, newPassword, confirmNewPassword })
         })
-        .then(response => response.text())
+        .then(response => response.json()) // Assuming the server responds with JSON
         .then(data => {
-            alert(data);
+            if (data.error) {
+                alert(data.error);
+            } else {
+                alert(data.message || 'Password changed successfully');
+            }
         })
         .catch(error => console.error('Error changing password:', error));
     });
-
+    
     document.getElementById('changeEmailForm').addEventListener('submit', function(event) {
         event.preventDefault();
         const newEmail = document.getElementById('newEmail').value;
