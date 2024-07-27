@@ -564,36 +564,46 @@ document.addEventListener('DOMContentLoaded', () => {
 document.addEventListener('DOMContentLoaded', function() {
     const preloader = document.getElementById('preloader');
     const content = document.getElementById('content');
-    
-    // Check if all images are loaded
-    const images = Array.from(document.images);
-    let loadedImagesCount = 0;
 
-    if (images.length === 0) {
-        // No images to load
-        fadeOutPreloader();
-    } else {
-        images.forEach(img => {
-            img.addEventListener('load', () => {
-                loadedImagesCount++;
-                if (loadedImagesCount === images.length) {
-                    fadeOutPreloader();
-                }
-            });
-            img.addEventListener('error', () => {
-                // If an image fails to load, still consider it as loaded
-                loadedImagesCount++;
-                if (loadedImagesCount === images.length) {
-                    fadeOutPreloader();
-                }
+    // Function to check if all images are loaded
+    const checkAllImagesLoaded = () => {
+        const images = Array.from(document.images);
+        let loadedImagesCount = 0;
+
+        if (images.length === 0) {
+            // No images to load
+            return Promise.resolve();
+        }
+
+        return new Promise((resolve, reject) => {
+            images.forEach(img => {
+                img.addEventListener('load', () => {
+                    loadedImagesCount++;
+                    if (loadedImagesCount === images.length) {
+                        resolve();
+                    }
+                });
+                img.addEventListener('error', () => {
+                    // Consider image as loaded in case of error
+                    loadedImagesCount++;
+                    if (loadedImagesCount === images.length) {
+                        resolve();
+                    }
+                });
             });
         });
-    }
+    };
 
-    function fadeOutPreloader() {
+    checkAllImagesLoaded().then(() => {
+        // Fade out preloader
         preloader.classList.add('fade-out');
+
+        // Show the content
+        content.style.display = 'block';
+
+        // Optionally hide preloader after transition
         setTimeout(() => {
             preloader.style.display = 'none';
-        }, 500); // Match the duration of the CSS fade-out transition
-    }
+        }, 500); // Match this timeout with the CSS transition duration
+    });
 });
