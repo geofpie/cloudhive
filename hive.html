@@ -77,21 +77,17 @@
         </div>
     </nav>
     <!-- End Nav -->
-    <!-- Notifications-->
-    <div class="modal fade" id="notificationsModal" tabindex="-1" role="dialog" aria-labelledby="notificationsModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="notificationsModalLabel">Follow Requests</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <ul id="follow-requests-list" class="list-group">
-                        <!-- Follow requests will be appended here -->
-                    </ul>
-                </div>
+    <!-- Custom Modal -->
+    <div id="notificationsModal" class="notifications-modal">
+        <div class="notifications-modal-content">
+            <div class="notifications-modal-header">
+                <h5 class="notifications-modal-title">Follow Requests</h5>
+                <button type="button" class="custom-modal-close" onclick="closeCustomModal()">&times;</button>
+            </div>
+            <div class="notifications-modal-body">
+                <ul id="follow-requests-list" class="notifications-list-group">
+                    <!-- Follow requests will be appended here -->
+                </ul>
             </div>
         </div>
     </div>
