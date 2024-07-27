@@ -1,10 +1,6 @@
 function fetchUserInfo() {
     fetch('/api/get_user_info', {
         method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + localStorage.getItem('token')
-        }
     })
     .then(response => {
         if (response.status === 401) {
