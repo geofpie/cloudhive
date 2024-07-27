@@ -778,3 +778,21 @@ function adjustTextColorBasedOnImage(imageSelector) {
         });
     }
 }
+
+const notificationsModal = document.getElementById('notificationsModal');
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+    if (event.target == notificationsModal) {
+        notificationsModal.style.display = 'none';
+    }
+}
+
+const postModal = document.getElementById('post-modal-content');
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+    if (event.target == postModal) {
+        postModal.style.display = 'none';
+    }
+}
