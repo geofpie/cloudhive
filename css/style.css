@@ -461,6 +461,11 @@ a:hover {
     margin-right: 4px;
 }
 
+.liked {
+    color: #fb6f92;
+    background-color: #ffc4d6;
+}
+
 .share-post-button:hover {
     background-color: #e8e8e8;
 }
