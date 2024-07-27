@@ -382,7 +382,7 @@ document.addEventListener('DOMContentLoaded', function() {
         fetchPosts();
     }
 
-    // Event delegation to handle clicks on dynamically added like buttons
+   // Event delegation to handle clicks on dynamically added like buttons
     postsContainer.addEventListener('click', function(event) {
         if (event.target.closest('.hive-stat-like-btn')) {
             const likeButton = event.target.closest('.hive-stat-like-btn');
@@ -408,8 +408,16 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Correctly target the like button icon and like count for the specific post
                 const postElement = document.querySelector(`.hive-post-element[data-post-id="${postId}"]`);
                 const likeButtonIcon = postElement.querySelector(`#like-btn-hive`);
-                const likeButtonIconSrc = data.message === 'Like added' ? '../assets/liked.svg' : '../assets/unliked.svg';
-                likeButtonIcon.src = likeButtonIconSrc;
+                const likeButton = postElement.querySelector('.hive-stat-like-btn');
+                
+                // Toggle the liked class based on response
+                if (data.message === 'Like added') {
+                    likeButton.classList.add('liked');
+                    likeButtonIcon.src = '../assets/liked.svg'; // Change to liked icon
+                } else {
+                    likeButton.classList.remove('liked');
+                    likeButtonIcon.src = '../assets/unliked.svg'; // Change to unliked icon
+                }
 
                 // Update like count
                 const likeCountElement = postElement.querySelector('.hive-stat-like strong');
