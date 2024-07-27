@@ -34,7 +34,7 @@
     <meta name="theme-color" content="#ffffff">
 </head>
 <body>
-   <!-- Navbar -->
+    <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light sticky-top hive-navbar">
         <a class="navbar-brand" href="/hive">
             <img src="../assets/logo-dark.svg" width="46" height="46" alt="cloudhive">
@@ -42,6 +42,7 @@
         <button class="navbar-toggler navbar-hamburger" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
+      
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <form class="form-inline my-2 my-lg-0" action="/search" method="GET">
                 <div class="input-group hive-searchbar-group">
@@ -64,16 +65,13 @@
                     <a class="nav-link" href="#"><img src="assets/settings.svg" class="nav-icons"></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#" id="notifications-link"><img src="assets/notifications.svg" class="nav-icons"></a>
+                        <a class="nav-link" href="#" id="notifications-link"><img src="assets/notifications.svg" class="nav-icons"></a>
                 </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <img src="../assets/default-profile.jpg" alt="Profile" class="navbar-profile-pic">
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="profileDropdown">
-                        <a class="dropdown-item" href="#" id="profile-link">Profile</a>
-                        <a class="dropdown-item" href="#" id="logout-link">Logout</a>
-                    </div>
+                <li class="nav-item hive-nav-btn">
+                    <a class="nav-link hive-logged-in-user-name" id="hive-logged-in-user-name" href="#"></a>
+                </li>
+                <li class="nav-item hive-nav-btn">
+                    <img src="../assets/default-profile.jpg" alt="Profile" class="navbar-profile-pic">
                 </li>
             </ul>
         </div>
