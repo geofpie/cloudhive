@@ -16,6 +16,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const username = window.location.pathname.split('/').pop(); // Get the username from the URL
     const fetchedPostIds = new Set();
 
+    adjustTextColorBasedOnImage('.profile-fullwidth-header img');
+
     if (!uploadIndicator) {
         console.error('Upload indicator element not found');
         return;
@@ -554,11 +556,6 @@ function handleImageLoad() {
 
 dayjs.extend(dayjs_plugin_relativeTime);
 
-document.addEventListener('DOMContentLoaded', function() {
-    const profileHeaderUrl = '<%= user.profile_header_url || "../assets/loginbg.jpg" %>';
-    setTextColorBasedOnBackground(profileHeaderUrl);
-});
-
 // Get the modal
 const modal = document.getElementById('editProfileModal');
 
@@ -687,36 +684,33 @@ function compressImage(file, targetQuality = 0.8) {
         reader.readAsDataURL(file);
     });
 }
-function getAverageColor(imageUrl, callback) {
-    const img = new Image();
-    img.crossOrigin = 'Anonymous'; // This is needed for CORS
-    img.src = imageUrl;
+function getImageLightness(imageElement, callback) {
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+    
+    // Set canvas dimensions to match the image
+    canvas.width = imageElement.width;
+    canvas.height = imageElement.height;
+    ctx.drawImage(imageElement, 0, 0, canvas.width, canvas.height);
+    
+    // Get image data from canvas
+    const frame = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    let r = 0, g = 0, b = 0;
+    const length = frame.data.length / 4;
+    
+    for (let i = 0; i < length; i++) {
+        r += frame.data[i * 4];
+        g += frame.data[i * 4 + 1];
+        b += frame.data[i * 4 + 2];
+    }
 
-    img.onload = function() {
-        const canvas = document.createElement('canvas');
-        const ctx = canvas.getContext('2d');
-        canvas.width = img.width;
-        canvas.height = img.height;
-        ctx.drawImage(img, 0, 0);
+    r = Math.floor(r / length);
+    g = Math.floor(g / length);
+    b = Math.floor(b / length);
 
-        const frame = ctx.getImageData(0, 0, canvas.width, canvas.height);
-        let r = 0, g = 0, b = 0;
-        const length = frame.data.length / 4;
-        
-        for (let i = 0; i < length; i++) {
-            r += frame.data[i * 4];
-            g += frame.data[i * 4 + 1];
-            b += frame.data[i * 4 + 2];
-        }
-
-        r = Math.floor(r / length);
-        g = Math.floor(g / length);
-        b = Math.floor(b / length);
-
-        // Convert to HSL to get lightness
-        const hsl = rgbToHsl(r, g, b);
-        callback(hsl.l);
-    };
+    // Convert to HSL to get lightness
+    const hsl = rgbToHsl(r, g, b);
+    callback(hsl.l);
 }
 
 function rgbToHsl(r, g, b) {
@@ -743,11 +737,14 @@ function rgbToHsl(r, g, b) {
     return { h: h * 360, s: s * 100, l: l * 100 };
 }
 
-function setTextColorBasedOnBackground(imageUrl) {
-    getAverageColor(imageUrl, function(lightness) {
-        const textColor = lightness > 50 ? 'black' : 'white'; // Adjust threshold as needed
-        document.querySelectorAll('.profile-user-name-elem, .profile-user-country').forEach(el => {
-            el.style.color = textColor;
+function adjustTextColorBasedOnImage(imageSelector) {
+    const imageElement = document.querySelector(imageSelector);
+    if (imageElement) {
+        getImageLightness(imageElement, function(lightness) {
+            const textColor = lightness > 50 ? 'black' : 'white'; // Adjust threshold as needed
+            document.querySelectorAll('.profile-user-name-elem, .profile-user-country').forEach(el => {
+                el.style.color = textColor;
+            });
         });
-    });
+    }
 }
