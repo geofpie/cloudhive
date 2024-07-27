@@ -108,3 +108,88 @@ window.onclick = function(event) {
         notificationsModal.style.display = 'none';
     }
 }
+
+document.getElementById('notifications-link').addEventListener('click', function() {
+    fetch('/api/follow-requests')
+        .then(response => response.json())
+        .then(data => {
+            const followRequestsList = document.getElementById('follow-requests-list');
+            followRequestsList.innerHTML = ''; // Clear the list
+
+            data.forEach(request => {
+                const listItem = document.createElement('li');
+                listItem.className = 'notifications-list-group-item';
+
+                const profilePicUrl = request.profile_picture_url || '../assets/default-profile.jpg';
+
+                listItem.innerHTML = `
+                     <div class="follow-container" data-username="${request.username}">
+                        <div class="request-profile-pic">
+                            <img src="${profilePicUrl}" alt="Profile Picture" class="rounded-circle" width="40" height="40">
+                        </div>
+                        <div class="follow-details">
+                            <strong>${request.first_name} ${request.last_name}</strong>
+                            <p>@${request.username}</p>
+                        </div>
+                        <div class="follow-actions">
+                            <button class="follow-btn-action accept" onclick="acceptFollowRequest('${request.username}')"><img src="assets/accept.svg" width="28" height="28"></button>
+                            <button class="follow-btn-action deny" onclick="denyFollowRequest('${request.username}')"><img src="assets/deny.svg" width="28" height="28"></button>
+                        </div>
+                    </div>
+                `;
+
+                followRequestsList.appendChild(listItem);
+            });
+
+            openNotificationsModal();
+        })
+        .catch(error => console.error('Error fetching follow requests:', error));
+});
+
+function openNotificationsModal() {
+    document.getElementById('notificationsModal').style.display = 'block';
+}
+
+function closeCustomModal() {
+    document.getElementById('notificationsModal').style.display = 'none';
+}
+
+function acceptFollowRequest(username) {
+    fetch('/api/follow-requests/accept', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ username })
+    })
+    .then(response => response.text())
+    .then(data => {
+        alert(data);
+        // Remove the request from the list or update the UI to show it as accepted
+        const followItem = document.querySelector(`.follow-container[data-username="${username}"]`);
+        if (followItem) {
+            followItem.remove(); // Remove the follow request from the UI
+        }
+    })
+    .catch(error => console.error('Error:', error));
+}
+
+function denyFollowRequest(username) {
+    fetch('/api/follow-requests/deny', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ username })
+    })
+    .then(response => response.text())
+    .then(data => {
+        alert(data);
+        // Remove the request from the list
+        const followItem = document.querySelector(`.follow-container[data-username="${username}"]`);
+        if (followItem) {
+            followItem.remove(); // Remove the follow request from the UI
+        }
+    })
+    .catch(error => console.error('Error:', error));
+}
