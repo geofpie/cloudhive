@@ -382,6 +382,17 @@ document.addEventListener('DOMContentLoaded', function() {
         fetchPosts();
     }
 
+    function validateSearch() {
+        const searchInput = document.querySelector('#search-form-selector .hive-searchbar');
+        // Check if the input field is empty
+        if (searchInput.value.trim() === '') {
+            // Prevent form submission if input is empty
+            alert('Please enter a search query');
+            return false; // Prevent form submission
+        }
+        // Allow form submission if input is not empty
+        return true;
+    }
    // Event delegation to handle clicks on dynamically added like buttons
     postsContainer.addEventListener('click', function(event) {
         if (event.target.closest('.hive-stat-like-btn')) {
