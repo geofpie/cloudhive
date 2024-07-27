@@ -444,7 +444,7 @@ document.getElementById('notifications-link').addEventListener('click', function
                 const profilePicUrl = request.profile_picture_url || '../assets/default-profile.jpg';
 
                 listItem.innerHTML = `
-                     <div class="follow-container">
+                     <<div class="follow-container" data-username="${request.username}">
                         <div class="request-profile-pic">
                             <img src="${profilePicUrl}" alt="Profile Picture" class="rounded-circle" width="40" height="40">
                         </div>
