@@ -421,6 +421,13 @@ function sendFollowRequest(username) {
                 alert('You have already sent a follow request.');
             } else {
                 alert(data); // Show success message
+
+                // Update the button text and disable it
+                const followButton = document.getElementById('follow-button');
+                if (followButton) {
+                    followButton.innerHTML = '<i class="fa fa-clock uab"></i>Requested';
+                    followButton.disabled = true;
+                }
             }
         })
         .catch(error => {
