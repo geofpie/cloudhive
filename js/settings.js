@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
+    console.log(localStorage.getItem('token'));
     fetchUserInfo();
 
     document.getElementById('changePasswordForm').addEventListener('submit', function(event) {
