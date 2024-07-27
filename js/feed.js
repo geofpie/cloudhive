@@ -354,7 +354,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     loadMoreButton.style.display = 'none';
                 }
     
-                handleImageLoad(); // Ensure this function is defined and properly handles image loading
+                handleImageLoad();
     
                 isFetching = false;
             })
