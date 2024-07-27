@@ -555,7 +555,8 @@ function handleImageLoad() {
 dayjs.extend(dayjs_plugin_relativeTime);
 
 document.addEventListener('DOMContentLoaded', function() {
-   
+    const profileHeaderUrl = '<%= user.profile_header_url || "../assets/loginbg.jpg" %>';
+    setTextColorBasedOnBackground(profileHeaderUrl);
 });
 
 // Get the modal
@@ -750,7 +751,3 @@ function setTextColorBasedOnBackground(imageUrl) {
         });
     });
 }
-
-// Usage example
-const profileHeaderUrl = '<%= user.profile_header_url || "../assets/loginbg.jpg" %>';
-setTextColorBasedOnBackground(profileHeaderUrl);
