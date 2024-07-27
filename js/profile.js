@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const imagePreview = document.getElementById('imagePreview');
     const submitPostButton = document.getElementById('submitPostButton');
     const uploadIndicator = document.getElementById('uploadIndicator'); // Ensure this is correctly defined
-    let lastPostTimestamp = null;
+    let lastTimestamp = null;
     const postsContainer = document.getElementById('hive-feed-area');
     const loadMoreButton = document.getElementById('load-more');
     let isFetching = false;
@@ -219,8 +219,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
         isFetching = true;
     
         let url = `/api/user/${username}/posts`;
-        if (lastPostTimestamp) {
-            url += `?lastPostTimestamp=${encodeURIComponent(lastPostTimestamp)}`;
+        if (lastTimestamp) {
+            url += `?lastTimestamp=${encodeURIComponent(lastTimestamp)}`;
         }
     
         console.log('Fetching posts from URL:', url);
@@ -293,12 +293,12 @@ document.addEventListener('DOMContentLoaded', (event) => {
                         fetchedPostIds.add(post.postId);
                     });
     
-                    // Update lastPostTimestamp for the next fetch
-                    lastPostTimestamp = data.LastEvaluatedKey || null;
-                    console.log('Updated lastPostTimestamp:', lastPostTimestamp);
+                    // Update lastTimestamp for the next fetch
+                    lastTimestamp = data.LastEvaluatedKey || null;
+                    console.log('Updated lastTimestamp:', lastTimestamp);
     
                     // Show/hide load more button based on availability of more posts
-                    loadMoreButton.style.display = lastPostTimestamp ? 'block' : 'none';
+                    loadMoreButton.style.display = lastTimestamp ? 'block' : 'none';
                 } else {
                     // No new posts, or all posts have been fetched
                     loadMoreButton.style.display = 'none';
@@ -323,7 +323,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     
     function clearFeed() {
         document.getElementById('hive-feed-area').innerHTML = '';
-        lastPostTimestamp = null;
+        lastTimestamp = null;
         fetchedPostIds.clear(); // Optionally clear fetched post IDs
     }
     
@@ -383,7 +383,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     // Infinite scroll
    /* window.addEventListener('scroll', () => {
-        if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 100 && !isFetching && lastPostTimestamp) {
+        if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 100 && !isFetching && lastTimestamp) {
             fetchPosts();
         }
     }); */
