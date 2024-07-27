@@ -15,7 +15,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
     let isFetching = false;
     const username = window.location.pathname.split('/').pop(); // Get the username from the URL
     const fetchedPostIds = new Set();
-    let lastTimestamp = null;
 
     adjustTextColorBasedOnImage('.profile-fullwidth-header img');
 
@@ -221,7 +220,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     
         let url = `/api/user/${username}/posts`;
         if (lastPostTimestamp) {
-            url += `?lastPostTimestamp=${lastPostTimestamp}`;
+            url += `?lastPostTimestamp=${encodeURIComponent(lastPostTimestamp)}`;
         }
     
         console.log('Fetching posts from URL:', url);
@@ -316,15 +315,15 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 removeSkeletonLoader();
             });
     }
-
+    
     loadMoreButton.addEventListener('click', fetchPosts);
-
+    
     // Initial fetch
     fetchPosts();
-
+    
     function clearFeed() {
         document.getElementById('hive-feed-area').innerHTML = '';
-        lastTimestamp = null;
+        lastPostTimestamp = null;
         fetchedPostIds.clear(); // Optionally clear fetched post IDs
     }
     
