@@ -1049,6 +1049,18 @@ a:hover {
 .load-more-btn {
     align-items: center;
     padding: 12px; 
-    border-radius: 8px;
+    border-radius: 18px;
+    border: none;
     margin: 12px 0 12px 0;
+    background-color: #ffe5ec;
+    transition: 0.2s ease-in-out;
+    -webkit-transition: 0.2s ease-in-out;
+}
+
+.load-more-btn:hover {
+    background-color: #ffc2d1;
+}
+
+.load-more-btn:active {
+    background-color: #ffb3c6;
 }
