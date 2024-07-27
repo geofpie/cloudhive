@@ -556,8 +556,6 @@ function fetchUserInfo() {
     fetch('/api/get_user_info', {
         method: 'GET',
         headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + localStorage.getItem('token') // Assuming you're using JWT tokens stored in localStorage
         }
     })
     .then(response => {
