@@ -553,8 +553,6 @@ window.onclick = function(event) {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-    fetchUserInfo(); // Fetch user info when page loads
-
     document.getElementById('profile-link').addEventListener('click', function() {
         window.location.href = `/${document.getElementById('hive-logged-in-user-name').getAttribute('data-username')}`;
     });
