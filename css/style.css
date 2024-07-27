@@ -344,6 +344,19 @@ a:hover {
     border-radius: 50%;
     height: 40px;
     width: 40px;
+    cursor: pointer;
+}
+
+.dropdown-menu {
+    min-width: 150px;
+}
+
+.dropdown-item {
+    cursor: pointer;
+}
+
+.dropdown-item:hover {
+    background-color: #f8f9fa;
 }
 
 .postbar-profile-pic {
