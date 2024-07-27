@@ -1097,6 +1097,7 @@ a:hover {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: 12px; 
 }
 
 .notifications-modal-title {
@@ -1106,7 +1107,6 @@ a:hover {
 .notifications-modal-close {
     background: none;
     border: none;
-    font-size: 24px;
     cursor: pointer;
 }
 
