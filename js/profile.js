@@ -192,8 +192,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         let loadedImages = 0;
     
         if (totalImages === 0) {
-            // If there are no images, immediately remove the skeleton loader
-            removeSkeletonLoader();
+            // If there are no images, call the callback immediately
             if (callback) callback();
             return;
         }
@@ -202,7 +201,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
             img.addEventListener('load', () => {
                 loadedImages++;
                 if (loadedImages === totalImages) {
-                    removeSkeletonLoader();
                     if (callback) callback();
                 }
             });
@@ -210,7 +208,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
             img.addEventListener('error', () => {
                 loadedImages++;
                 if (loadedImages === totalImages) {
-                    removeSkeletonLoader();
                     if (callback) callback();
                 }
             });
@@ -242,6 +239,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
     
                 if (!data.Items) {
                     console.error('No items in fetched data');
+                    removeSkeletonLoader();
+                    isFetching = false;
                     return;
                 }
     
@@ -303,7 +302,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 }
     
                 handleImageLoad(() => {
-                    // Ensure that skeleton loader is removed even if there are no images
+                    // Always ensure that skeleton loader is removed even if there are no images
                     removeSkeletonLoader();
                     isFetching = false;
                 });
