@@ -1038,39 +1038,3 @@ a:hover {
     border-radius: 8px;
     width: 100%;
 }
-
-* Container styling */
-.input-group.hive-searchbar-group {
-    display: flex;
-    align-items: center;
-    border-radius: 5px; /* Match the border radius of input and button */
-    overflow: hidden;   /* Ensure the shadow is not cut off */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Seamless shadow effect */
-}
-
-/* Input styling */
-.input-group .form-control.hive-searchbar {
-    border: none;       /* Remove default border */
-    border-radius: 5px; /* Same as container and button */
-    padding: 0.5rem 1rem; /* Adjust padding as needed */
-}
-
-/* Button styling */
-.input-group .btn.hive-searchbar-btn {
-    border: none;        /* Remove default border */
-    border-radius: 5px; /* Same as container and input */
-    background-color: #007bff; /* Background color of the button */
-    color: white;       /* Text color */
-    padding: 0.5rem 1rem; /* Adjust padding as needed */
-    cursor: pointer;    /* Pointer cursor on hover */
-    outline: none;      /* Remove outline */
-}
-
-.input-group .btn.hive-searchbar-btn:hover {
-    background-color: #0056b3; /* Darker color on hover */
-}
-
-/* Optional: Adjust icon size */
-.input-group .hive-searchbar-btn-icon {
-    font-size: 1.2rem; /* Adjust icon size as needed */
-}
