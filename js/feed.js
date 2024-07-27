@@ -487,9 +487,9 @@ function acceptFollowRequest(username) {
     .then(data => {
         alert(data);
         // Remove the request from the list or update the UI to show it as accepted
-        const listItem = document.querySelector(`li[data-username="${username}"]`);
-        if (listItem) {
-            listItem.remove(); // Remove the list item from the UI
+        const followItem = document.querySelector(`.follow-container[data-username="${username}"]`);
+        if (followItem) {
+            followItem.remove(); // Remove the follow request from the UI
         }
     })
     .catch(error => console.error('Error:', error));
@@ -507,9 +507,9 @@ function denyFollowRequest(username) {
     .then(data => {
         alert(data);
         // Remove the request from the list
-        const listItem = document.querySelector(`li[data-username="${username}"]`);
-        if (listItem) {
-            listItem.remove(); // Remove the list item from the UI
+        const followItem = document.querySelector(`.follow-container[data-username="${username}"]`);
+        if (followItem) {
+            followItem.remove(); // Remove the follow request from the UI
         }
     })
     .catch(error => console.error('Error:', error));
