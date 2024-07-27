@@ -686,3 +686,71 @@ function compressImage(file, targetQuality = 0.8) {
         reader.readAsDataURL(file);
     });
 }
+function getAverageColor(imageUrl, callback) {
+    const img = new Image();
+    img.crossOrigin = 'Anonymous'; // This is needed for CORS
+    img.src = imageUrl;
+
+    img.onload = function() {
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = img.width;
+        canvas.height = img.height;
+        ctx.drawImage(img, 0, 0);
+
+        const frame = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        let r = 0, g = 0, b = 0;
+        const length = frame.data.length / 4;
+        
+        for (let i = 0; i < length; i++) {
+            r += frame.data[i * 4];
+            g += frame.data[i * 4 + 1];
+            b += frame.data[i * 4 + 2];
+        }
+
+        r = Math.floor(r / length);
+        g = Math.floor(g / length);
+        b = Math.floor(b / length);
+
+        // Convert to HSL to get lightness
+        const hsl = rgbToHsl(r, g, b);
+        callback(hsl.l);
+    };
+}
+
+function rgbToHsl(r, g, b) {
+    r /= 255;
+    g /= 255;
+    b /= 255;
+    let max = Math.max(r, g, b);
+    let min = Math.min(r, g, b);
+    let h, s, l = (max + min) / 2;
+
+    if (max === min) {
+        h = s = 0;
+    } else {
+        const d = max - min;
+        s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+        switch (max) {
+            case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+            case g: h = (b - r) / d + 2; break;
+            case b: h = (r - g) / d + 4; break;
+        }
+        h /= 6;
+    }
+
+    return { h: h * 360, s: s * 100, l: l * 100 };
+}
+
+function setTextColorBasedOnBackground(imageUrl) {
+    getAverageColor(imageUrl, function(lightness) {
+        const textColor = lightness > 50 ? 'black' : 'white'; // Adjust threshold as needed
+        document.querySelectorAll('.profile-user-name-elem, .profile-user-country').forEach(el => {
+            el.style.color = textColor;
+        });
+    });
+}
+
+// Usage example
+const profileHeaderUrl = '<%= user.profile_header_url || "../assets/loginbg.jpg" %>';
+setTextColorBasedOnBackground(profileHeaderUrl);

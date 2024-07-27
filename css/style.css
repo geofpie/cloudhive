@@ -450,11 +450,15 @@ a:hover {
     padding-top: 10px;
     padding-bottom: 10px;
     border-radius: 16px;
-    margin-bottom: 6px;
+    margin-bottom: 18px;
     background-color: #efeff0;
     border: none;
     transition: 0.2s ease-in;
     -webkit-transition: 0.2s ease-in;
+}
+
+.uab {
+    margin-right: 4px;
 }
 
 .share-post-button:hover {
