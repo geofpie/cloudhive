@@ -161,9 +161,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
         if (isFetching) return;
         isFetching = true;
 
-        let url = `/api/user/${username}/posts`;
-        if (lastPostTimestamp) {
-            url += `?lastPostTimestamp=${lastPostTimestamp}`;
+        showSkeletonLoader();
+
+        let url = '/api/newsfeed';
+        if (lastTimestamp) {
+            url += `?lastTimestamp=${encodeURIComponent(lastTimestamp)}`; // Encode URI component for safety
         }
 
         console.log('Fetching posts from URL:', url);
@@ -171,7 +173,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         fetch(url)
             .then(response => {
                 if (!response.ok) {
-                    throw new Error('Network response was not ok');
+                    throw new Error('Failed to fetch posts');
                 }
                 return response.json();
             })
@@ -183,9 +185,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
                     return;
                 }
 
-                if (data.Items.length > 0) {
-                    data.Items.forEach(post => {
-                        console.log('Post data:', post);
+                const newPosts = data.Items.filter(post => !fetchedPostIds.has(post.postId));
+
+                if (newPosts.length > 0) {
+                    newPosts.forEach(post => {
+                        fetchedPostIds.add(post.postId); // Add to set of fetched post IDs
 
                         // Determine if the post is liked by the current user
                         const isLiked = post.isLiked; // Ensure `isLiked` is provided by the backend
@@ -227,27 +231,31 @@ document.addEventListener('DOMContentLoaded', (event) => {
                         `;
 
                         postElement.innerHTML = postTemplate;
-                        postsContainer.appendChild(postElement);
+                        document.getElementById('newsfeed-posts-container').appendChild(postElement);
                     });
 
-                    // Update lastPostTimestamp for next fetch
-                    lastPostTimestamp = data.LastEvaluatedKey;
+                    // Update lastTimestamp for the next fetch
+                    lastTimestamp = data.LastEvaluatedKey || null;
+                    console.log('Updated lastTimestamp:', lastTimestamp);
 
-                    if (lastPostTimestamp) {
-                        loadMoreButton.style.display = 'block';
-                    } else {
-                        loadMoreButton.style.display = 'none';
-                    }
+                    // Show/hide load more button based on availability of more posts
+                    loadMoreButton.style.display = lastTimestamp ? 'block' : 'none';
                 } else {
+                    // No new posts, or all posts have been fetched
                     loadMoreButton.style.display = 'none';
                 }
-            })
-            .catch(error => console.error('Error fetching posts:', error))
-            .finally(() => {
+
+                handleImageLoad(); // Ensure this function is defined and properly handles image loading
+
                 isFetching = false;
+                removeSkeletonLoader();
+            })
+            .catch(error => {
+                console.error('Error fetching posts:', error);
+                isFetching = false;
+                removeSkeletonLoader();
             });
     }
-
 
     loadMoreButton.addEventListener('click', fetchPosts);
 
@@ -255,7 +263,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     fetchPosts();
 
     function clearFeed() {
-        document.getElementById('hive-feed-area').innerHTML = '';
+        document.getElementById('newsfeed-posts-container').innerHTML = '';
         lastTimestamp = null;
         fetchedPostIds.clear(); // Optionally clear fetched post IDs
     }
@@ -264,7 +272,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         clearFeed();
         fetchPosts();
     }
-
+    
     // Event delegation to handle clicks on dynamically added like buttons
     postsContainer.addEventListener('click', function(event) {
         if (event.target.closest('.hive-stat-like-btn')) {
