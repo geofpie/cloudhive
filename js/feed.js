@@ -381,7 +381,7 @@ document.addEventListener('DOMContentLoaded', function() {
         clearFeed();
         fetchPosts();
     }
-    
+
    // Event delegation to handle clicks on dynamically added like buttons
     postsContainer.addEventListener('click', function(event) {
         if (event.target.closest('.hive-stat-like-btn')) {
@@ -559,4 +559,41 @@ document.addEventListener('DOMContentLoaded', () => {
             image.classList.add('image-visible');
         }
     });
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+    const preloader = document.getElementById('preloader');
+    const content = document.getElementById('content');
+    
+    // Check if all images are loaded
+    const images = Array.from(document.images);
+    let loadedImagesCount = 0;
+
+    if (images.length === 0) {
+        // No images to load
+        fadeOutPreloader();
+    } else {
+        images.forEach(img => {
+            img.addEventListener('load', () => {
+                loadedImagesCount++;
+                if (loadedImagesCount === images.length) {
+                    fadeOutPreloader();
+                }
+            });
+            img.addEventListener('error', () => {
+                // If an image fails to load, still consider it as loaded
+                loadedImagesCount++;
+                if (loadedImagesCount === images.length) {
+                    fadeOutPreloader();
+                }
+            });
+        });
+    }
+
+    function fadeOutPreloader() {
+        preloader.classList.add('fade-out');
+        setTimeout(() => {
+            preloader.style.display = 'none';
+        }, 500); // Match the duration of the CSS fade-out transition
+    }
 });
