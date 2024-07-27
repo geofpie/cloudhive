@@ -1206,31 +1206,3 @@ a:hover {
 .card-body {
     padding: 20px;
 }
-
-/* Base styles for the follow button */
-.profile-stat.hive-user-action {
-    position: relative;
-    cursor: pointer;
-}
-
-/* Hover effect for the Requested button */
-.profile-stat.hive-user-action[data-status="requested"]:hover::after {
-    content: "Cancel Request";
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 0.9rem;
-    color: #ff4d4d; /* Change color as needed */
-}
-
-/* Ensure the hover effect only appears on the button with the "Requested" status */
-.profile-stat.hive-user-action[data-status="requested"]::after {
-    content: "Requested";
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 0.9rem;
-    color: #000; /* Change color as needed */
-}
