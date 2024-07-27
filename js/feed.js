@@ -48,6 +48,7 @@ function updateUserProfile(user) {
 dayjs.extend(dayjs_plugin_relativeTime);
 
 document.addEventListener('DOMContentLoaded', function() {
+    console.log(localStorage.getItem('token'));
     const postsContainer = document.getElementById('newsfeed-posts-container');
     const loadMoreButton = document.getElementById('load-more');
     const writePostButton = document.getElementById('write-post');
