@@ -186,39 +186,37 @@ document.addEventListener('DOMContentLoaded', (event) => {
         skeletons.forEach(skeleton => skeleton.remove());
     }
     
-    function handleImageLoad(callback) {
+    function handleImageLoad() {
         const images = postsContainer.querySelectorAll('.hive-post-img-src');
-        const totalImages = images.length;
-        let loadedImages = 0;
+        let loadedImagesCount = 0;
     
-        if (totalImages === 0) {
-            // If there are no images, call the callback immediately
-            if (callback) callback();
-            return;
-        }
-    
-        images.forEach(img => {
-            img.addEventListener('load', () => {
-                loadedImages++;
-                if (loadedImages === totalImages) {
-                    if (callback) callback();
-                }
-            });
-    
-            img.addEventListener('error', () => {
-                loadedImages++;
-                if (loadedImages === totalImages) {
-                    if (callback) callback();
-                }
-            });
+        images.forEach(image => {
+            if (image.complete) {
+                loadedImagesCount++;
+            } else {
+                image.addEventListener('load', () => {
+                    loadedImagesCount++;
+                    if (loadedImagesCount === images.length) {
+                        removeSkeletonLoader();
+                    }
+                });
+                image.addEventListener('error', () => {
+                    loadedImagesCount++;
+                    if (loadedImagesCount === images.length) {
+                        removeSkeletonLoader();
+                    }
+                });
+            }
         });
+    
+        if (loadedImagesCount === images.length) {
+            removeSkeletonLoader();
+        }
     }
     
     function fetchPosts() {
         if (isFetching) return;
         isFetching = true;
-    
-        showSkeletonLoader();
     
         let url = `/api/user/${username}/posts`;
         if (lastTimestamp) {
@@ -239,8 +237,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
     
                 if (!data.Items) {
                     console.error('No items in fetched data');
-                    removeSkeletonLoader();
-                    isFetching = false;
                     return;
                 }
     
@@ -251,7 +247,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
                     newPosts.forEach(post => {
                         console.log('Post data:', post);
     
-                        const isLiked = post.isLiked;
+                        // Determine if the post is liked by the current user
+                        const isLiked = post.isLiked; // Ensure `isLiked` is provided by the backend
+    
+                        // Update button appearance based on the `isLiked` status
                         const likeButtonIcon = isLiked ? '../assets/liked.svg' : '../assets/unliked.svg';
                         const likeButtonText = isLiked ? 'Liked' : 'Like';
                         const likeButtonClass = isLiked ? 'liked' : '';
@@ -290,27 +289,30 @@ document.addEventListener('DOMContentLoaded', (event) => {
                         postElement.innerHTML = postTemplate;
                         postsContainer.appendChild(postElement);
     
+                        // Add post ID to fetched IDs
                         fetchedPostIds.add(post.postId);
                     });
     
+                    // Update lastTimestamp for the next fetch
                     lastTimestamp = data.LastEvaluatedKey || null;
                     console.log('Updated lastTimestamp:', lastTimestamp);
     
+                    // Show/hide load more button based on availability of more posts
                     loadMoreButton.style.display = lastTimestamp ? 'block' : 'none';
                 } else {
+                    // No new posts, or all posts have been fetched
                     loadMoreButton.style.display = 'none';
                 }
     
-                handleImageLoad(() => {
-                    // Always ensure that skeleton loader is removed even if there are no images
-                    removeSkeletonLoader();
-                    isFetching = false;
-                });
+                handleImageLoad(); // Ensure this function is defined and properly handles image loading
+    
+                isFetching = false;
+                removeSkeletonLoader();
             })
             .catch(error => {
                 console.error('Error fetching posts:', error);
-                removeSkeletonLoader(); // Always remove the skeleton loader in case of an error
                 isFetching = false;
+                removeSkeletonLoader();
             });
     }
     
@@ -380,11 +382,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
     });
 
     // Infinite scroll
-   /* window.addEventListener('scroll', () => {
+   window.addEventListener('scroll', () => {
         if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 100 && !isFetching && lastTimestamp) {
             fetchPosts();
         }
-    }); */
+    });
 
     writePostButton.addEventListener('click', showModal);
     sharePostButton.addEventListener('click', showModal);
