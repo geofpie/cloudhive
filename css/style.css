@@ -1174,3 +1174,29 @@ a:hover {
 .deny:hover {
     background-color: #d90368;
 }
+
+.user-info-card {
+    display: flex;
+    padding: 20px;
+    border-radius: 22px;
+}
+
+.user-info-card img {
+    border: 3px solid #ddd;
+}
+
+.user-info-card .ml-3 {
+    margin-left: 15px;
+}
+
+.card {
+    margin-bottom: 20px;
+}
+
+.card-header {
+    background-color: #f8f9fa;
+}
+
+.card-body {
+    padding: 20px;
+}
