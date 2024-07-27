@@ -156,6 +156,63 @@ document.addEventListener('DOMContentLoaded', (event) => {
             hideUploadIndicator(); // Hide spinner if there's an error
         });
     }
+
+    function showSkeletonLoader() {
+        for (let i = 0; i < 3; i++) { // Adjust the number of skeleton loaders as needed
+            const skeletonElement = document.createElement('div');
+            skeletonElement.className = 'col-md-4 hive-post-element hive-post-skeleton mx-auto';
+            skeletonElement.innerHTML = `
+                <div class="row hive-post-user-details hive-post-details-skeleton align-items-center">
+                    <div class="col hive-pfp-skeleton"></div>
+                    <div class="col hive-user-details-text">
+                        <div class="hive-user-acc-deets"></div>
+                    </div>
+                </div>
+                <div class="row hive-post-content hive-post-content-skeleton">
+                    <div class="hive-post-image-skelly shadow"></div>
+                </div>
+                <div class="hive-social-stats">
+                    <div class="hive-stat-skelly"></div>
+                    <hr class="divider-skelly">
+                    <div class="hive-like-btn-skeleton"></div>
+                </div>
+            `;
+            postsContainer.appendChild(skeletonElement);
+        }
+    }
+    
+    function removeSkeletonLoader() {
+        const skeletons = document.querySelectorAll('.hive-post-skeleton');
+        skeletons.forEach(skeleton => skeleton.remove());
+    }
+    
+    function handleImageLoad() {
+        const images = postsContainer.querySelectorAll('.hive-post-img-src');
+        let loadedImagesCount = 0;
+    
+        images.forEach(image => {
+            if (image.complete) {
+                loadedImagesCount++;
+            } else {
+                image.addEventListener('load', () => {
+                    loadedImagesCount++;
+                    if (loadedImagesCount === images.length) {
+                        removeSkeletonLoader();
+                    }
+                });
+                image.addEventListener('error', () => {
+                    loadedImagesCount++;
+                    if (loadedImagesCount === images.length) {
+                        removeSkeletonLoader();
+                    }
+                });
+            }
+        });
+    
+        if (loadedImagesCount === images.length) {
+            removeSkeletonLoader();
+        }
+    }
     
     function fetchPosts() {
         if (isFetching) return;
@@ -272,7 +329,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         clearFeed();
         fetchPosts();
     }
-    
+
     // Event delegation to handle clicks on dynamically added like buttons
     postsContainer.addEventListener('click', function(event) {
         if (event.target.closest('.hive-stat-like-btn')) {
@@ -511,63 +568,6 @@ function updateUserProfile(user) {
     loggedInUserName.href = `/${username}`; 
 
     document.querySelector('.navbar-profile-pic').src = user.profile_picture_url;
-}
-
-function showSkeletonLoader() {
-    for (let i = 0; i < 3; i++) { // Adjust the number of skeleton loaders as needed
-        const skeletonElement = document.createElement('div');
-        skeletonElement.className = 'col-md-4 hive-post-element hive-post-skeleton mx-auto';
-        skeletonElement.innerHTML = `
-            <div class="row hive-post-user-details hive-post-details-skeleton align-items-center">
-                <div class="col hive-pfp-skeleton"></div>
-                <div class="col hive-user-details-text">
-                    <div class="hive-user-acc-deets"></div>
-                </div>
-            </div>
-            <div class="row hive-post-content hive-post-content-skeleton">
-                <div class="hive-post-image-skelly shadow"></div>
-            </div>
-            <div class="hive-social-stats">
-                <div class="hive-stat-skelly"></div>
-                <hr class="divider-skelly">
-                <div class="hive-like-btn-skeleton"></div>
-            </div>
-        `;
-        postsContainer.appendChild(skeletonElement);
-    }
-}
-
-function removeSkeletonLoader() {
-    const skeletons = document.querySelectorAll('.hive-post-skeleton');
-    skeletons.forEach(skeleton => skeleton.remove());
-}
-
-function handleImageLoad() {
-    const images = postsContainer.querySelectorAll('.hive-post-img-src');
-    let loadedImagesCount = 0;
-
-    images.forEach(image => {
-        if (image.complete) {
-            loadedImagesCount++;
-        } else {
-            image.addEventListener('load', () => {
-                loadedImagesCount++;
-                if (loadedImagesCount === images.length) {
-                    removeSkeletonLoader();
-                }
-            });
-            image.addEventListener('error', () => {
-                loadedImagesCount++;
-                if (loadedImagesCount === images.length) {
-                    removeSkeletonLoader();
-                }
-            });
-        }
-    });
-
-    if (loadedImagesCount === images.length) {
-        removeSkeletonLoader();
-    }
 }
 
 dayjs.extend(dayjs_plugin_relativeTime);
