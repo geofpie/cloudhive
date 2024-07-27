@@ -308,7 +308,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
     
                 handleImageLoad(); // Ensure this function is defined and properly handles image loading
     
-                isFetching = false;
             })
             .catch(error => {
                 console.error('Error fetching posts:', error);
