@@ -1069,7 +1069,7 @@ a:hover {
 .notifications-modal {
     display: none; /* Hidden by default */
     position: fixed;
-    z-index: 1000; /* Sit on top */
+    z-index: 1050; /* Sit on top */
     left: 0;
     top: 0;
     width: 100%;
@@ -1080,10 +1080,16 @@ a:hover {
 
 .notifications-modal-content {
     background-color: #fefefe;
-    margin: 15% auto; /* 15% from the top and centered */
+    margin: 15% auto;
     padding: 20px;
     border: 1px solid #888;
-    width: 80%; /* Could be more or less, depending on screen size */
+    width: 50%;
+}
+
+@media screen and (max-width: 960px) {
+    .notifications-modal-content {
+        width: 90%;
+    }
 }
 
 .notifications-modal-header {
