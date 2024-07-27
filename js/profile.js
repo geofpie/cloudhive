@@ -421,18 +421,39 @@ function sendFollowRequest(username) {
                 alert('You have already sent a follow request.');
             } else {
                 alert(data); // Show success message
-
-                // Update the button text and disable it
-                const followButton = document.getElementById('follow-button');
-                if (followButton) {
-                    followButton.innerHTML = '<i class="fa fa-clock uab"></i>Requested';
-                    followButton.disabled = true;
-                }
+                // Update button text
+                document.querySelector('[data-status="requested"]').innerHTML = '<i class="fa fa-clock uab"></i>Requested';
             }
         })
         .catch(error => {
             console.error('Error:', error);
             alert('Error sending follow request');
+        });
+}
+
+// Function to cancel follow request
+function cancelFollowRequest(username) {
+    fetch(`/api/cancel-follow/${username}`, { method: 'DELETE' })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.text();
+        })
+        .then(data => {
+            alert(data); // Show success message
+            // Update button text
+            const button = document.querySelector('[data-status="requested"]');
+            if (button) {
+                button.innerHTML = '<i class="fa fa-user-plus uab"></i>Follow';
+                button.removeAttribute('data-status');
+                button.removeAttribute('id');
+                button.removeAttribute('onclick');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error canceling follow request');
         });
 }
 
