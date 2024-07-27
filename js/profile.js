@@ -218,14 +218,14 @@ document.addEventListener('DOMContentLoaded', (event) => {
     function fetchPosts() {
         if (isFetching) return;
         isFetching = true;
-
+    
         let url = `/api/user/${username}/posts`;
         if (lastPostTimestamp) {
             url += `?lastPostTimestamp=${lastPostTimestamp}`;
         }
-
+    
         console.log('Fetching posts from URL:', url);
-
+    
         fetch(url)
             .then(response => {
                 if (!response.ok) {
@@ -235,27 +235,30 @@ document.addEventListener('DOMContentLoaded', (event) => {
             })
             .then(data => {
                 console.log('Fetched posts data:', data);
-
+    
                 if (!data.Items) {
                     console.error('No items in fetched data');
                     return;
                 }
-
+    
                 if (data.Items.length > 0) {
-                    data.Items.forEach(post => {
+                    // Filter out already fetched posts
+                    const newPosts = data.Items.filter(post => !fetchedPostIds.has(post.postId));
+    
+                    newPosts.forEach(post => {
                         console.log('Post data:', post);
-
+    
                         // Determine if the post is liked by the current user
                         const isLiked = post.isLiked; // Ensure `isLiked` is provided by the backend
-
+    
                         // Update button appearance based on the `isLiked` status
                         const likeButtonIcon = isLiked ? '../assets/liked.svg' : '../assets/unliked.svg';
                         const likeButtonText = isLiked ? 'Liked' : 'Like';
                         const likeButtonClass = isLiked ? 'liked' : '';
-
+    
                         const postElement = document.createElement('div');
                         postElement.className = 'hive-post';
-
+    
                         const postTemplate = `
                         <div class="col-md-4 hive-post-element mx-auto" data-post-id="${post.postId}">
                             <div class="row hive-post-user-details align-items-center">
@@ -283,34 +286,36 @@ document.addEventListener('DOMContentLoaded', (event) => {
                             </div>
                         </div>
                         `;
-
+    
                         postElement.innerHTML = postTemplate;
                         postsContainer.appendChild(postElement);
+    
+                        // Add post ID to fetched IDs
+                        fetchedPostIds.add(post.postId);
                     });
-
-                     // Update lastTimestamp for the next fetch
-                     lastTimestamp = data.LastEvaluatedKey || null;
-                     console.log('Updated lastTimestamp:', lastTimestamp);
- 
-                     // Show/hide load more button based on availability of more posts
-                     loadMoreButton.style.display = lastTimestamp ? 'block' : 'none';
-                 } else {
-                     // No new posts, or all posts have been fetched
-                     loadMoreButton.style.display = 'none';
-                 }
- 
-                 handleImageLoad(); // Ensure this function is defined and properly handles image loading
- 
-                 isFetching = false;
-                 removeSkeletonLoader();
-             })
-             .catch(error => {
-                 console.error('Error fetching posts:', error);
-                 isFetching = false;
-                 removeSkeletonLoader();
-             });
+    
+                    // Update lastPostTimestamp for the next fetch
+                    lastPostTimestamp = data.LastEvaluatedKey || null;
+                    console.log('Updated lastPostTimestamp:', lastPostTimestamp);
+    
+                    // Show/hide load more button based on availability of more posts
+                    loadMoreButton.style.display = lastPostTimestamp ? 'block' : 'none';
+                } else {
+                    // No new posts, or all posts have been fetched
+                    loadMoreButton.style.display = 'none';
+                }
+    
+                handleImageLoad(); // Ensure this function is defined and properly handles image loading
+    
+                isFetching = false;
+                removeSkeletonLoader();
+            })
+            .catch(error => {
+                console.error('Error fetching posts:', error);
+                isFetching = false;
+                removeSkeletonLoader();
+            });
     }
-
 
     loadMoreButton.addEventListener('click', fetchPosts);
 
