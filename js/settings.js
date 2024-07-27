@@ -70,7 +70,7 @@ function fetchUserInfo() {
             // Handle redirect instructions from the server
             window.location.href = data.redirect;
         } else {
-            updateUserProfileFields(data); // Call the separate function to update fields
+            updateUserProfileFields(data.userInfo); // Call the separate function to update fields
         }
     })
     .catch(error => {
