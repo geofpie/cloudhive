@@ -541,7 +541,8 @@ a:hover {
 
 .profile-user-name-elem {
     display: inline;
-    text-shadow: 2px 3px 5px rgba(0,0,0,0.5);
+    margin-right: 6px;
+    text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
 }
 
 .header-profile-pic {
@@ -569,7 +570,7 @@ a:hover {
 
 .profile-user-country {
     display: inline;
-    text-shadow: 2px 3px 5px rgba(0,0,0,0.5);
+    text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
 }
 
 .write-post-btn {
