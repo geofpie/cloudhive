@@ -1060,7 +1060,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 })
                 .then(response => response.json())
                 .then(data => {
-                    if (data.message === 'Post deleted successfully.') {
+                    if (data.message === 'Post and associated image deleted successfully.') {
                         // Remove the post element from the DOM
                         const postElement = document.querySelector(`.hive-post-element[data-post-id="${postId}"]`);
                         if (postElement) {
