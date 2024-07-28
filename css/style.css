@@ -1274,6 +1274,7 @@ a:hover {
     margin: 10px auto;
     max-width: 600px; /* Or your preferred width */
     width: 100%;
+    max-height: 500px;
 }
 
 .crop-modal-content {
