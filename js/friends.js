@@ -21,6 +21,8 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     function loadFriends(tab) {
+        console.log(`Fetching data for tab: ${tab}`); // Log which tab is being fetched
+
         fetch(`/api/${tab}`)
             .then(response => {
                 if (!response.ok) {
@@ -29,6 +31,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 return response.json();
             })
             .then(data => {
+                console.log(`Data fetched for ${tab}:`, data); // Log the fetched data
+                
                 const container = document.getElementById(`${tab}-cards`);
                 container.innerHTML = '';
 
