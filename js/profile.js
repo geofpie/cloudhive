@@ -604,8 +604,7 @@ btn.onclick = function() {
 
 // When the user clicks on <span> (x), close the modal
 document.getElementById('closeEditProfileModal').onclick = function() {
-    modal.style.display = 'none';
-    document.querySelector('.edit-profile-modal').classList.remove = 'show';
+    closeEditProfile();
 }
 
 // When the user clicks anywhere outside of the modal, close it
@@ -613,6 +612,11 @@ window.onclick = function(event) {
     if (event.target == modal) {
         modal.style.display = 'none';
     }
+}
+
+function closeEditProfile() {
+    const modal = document.getElementById('editProfileModal');
+    modal.style.display = 'none';
 }
 
 document.getElementById('edit-profile').addEventListener('click', function () {
