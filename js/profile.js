@@ -816,8 +816,6 @@ function handleModalConfirm() {
 
 // Function to cancel follow request
 function cancelFollowRequest(username) {
-    const username = currentUsername; 
-
     fetch(`/api/cancel-follow/${username}`, { method: 'DELETE' })
         .then(response => {
             if (!response.ok) {
