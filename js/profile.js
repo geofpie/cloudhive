@@ -884,6 +884,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const cropModal = document.getElementById('cropModal');
     const cropModalClose = cropModal.querySelector('.crop-modal-close');
     const cropSubmitBtn = document.getElementById('crop-submit-btn');
+    const cropModelCancel = cropModal.querySelector('.crop-modal-cancel');
     let cropper;
 
     // Event listener for opening crop modal when profile pic input changes
