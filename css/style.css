@@ -1334,15 +1334,6 @@ a:hover {
     opacity: 0.8;
 }
 
-/* Ensure the cropper container is fixed to 500px */
-.cropper-container {
-    width: 500px; /* Fixed width */
-    height: 500px; /* Fixed height */
-    overflow: hidden; /* Hide any overflow content */
-}
-
-/* Ensure the cropper background is also fixed to the same size */
-.cropper-bg {
-    width: 500px; /* Fixed width */
-    height: 500px; /* Fixed height */
+.cropper-container, .cropper-bg {
+    max-height: 80vh;
 }
