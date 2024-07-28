@@ -1419,15 +1419,6 @@ a:hover {
     justify-content: center;
 }
 
-.friends-card {
-    width: 200px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 16px;
-    text-align: center;
-    background: #fff;
-}
-
 .friends-card img {
     width: 100px;
     height: 100px;
@@ -1448,7 +1439,7 @@ a:hover {
 .friends-card {
     background: #fff;
     border: 1px solid #ddd;
-    border-radius: 8px;
+    border-radius: 16px;
     padding: 16px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     width: calc(33.333% - 16px); /* Adjust width to fit three cards per row with gap */
@@ -1463,4 +1454,8 @@ a:hover {
         opacity: 1;
         transform: translateY(0);
     }
+}
+
+.friends-card {
+    width: calc(25% - 16px); /* Adjust for four cards per row */
 }
