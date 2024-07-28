@@ -659,13 +659,13 @@ document.getElementById('submitEditProfileButton').addEventListener('click', asy
     // Handle header image upload if exists
     if (headerImageFile) {
         // Convert image to blob and append to formData
+        console.log(headerImageFile);
         const compressedBlob = await compressImage(headerImageFile);
         formData.append('headerPic', compressedBlob, headerImageFile.name);
     }
 
     if (profileImageFile) {
-        const compressedProfileBlob = await compressImage(profileImageFile)
-        formData.append('profilePic', compressedProfileBlob, profileImageFile.name);
+        formData.append('profilePic', profileImageFile, profileImageFile.name);
         console.log(formData);
     }
 
