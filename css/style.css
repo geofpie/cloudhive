@@ -1207,47 +1207,81 @@ a:hover {
     padding: 20px;
 }
 
-/* Follow Modal styles */
-.follow-modal-content {
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+/* Modal Background */
+.follow-modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 1000; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4); /* Black with opacity */
 }
 
-.follow-modal-header {
-    border-bottom: 1px solid #dee2e6;
-}
-
-.follow-modal-title {
-    font-size: 1.25rem;
-    font-weight: 500;
-}
-
-.follow-modal-body {
-    font-size: 1rem;
-}
-
-.follow-modal-footer {
-    border-top: 1px solid #dee2e6;
-}
-
-.follow-modal-footer .btn {
-    border-radius: 8px;
-    font-size: 0.875rem;
-}
-
+/* Modal Content */
 .follow-modal-dialog {
-    max-width: 400px;
+    position: relative;
+    margin: auto;
+    padding: 20px;
+    max-width: 500px;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
-.follow-modal-backdrop.show {
-    opacity: 0.5; /* Dim the background */
+/* Modal Content Box */
+.follow-modal-content {
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
 }
 
-.follow-modal-dialog .follow-modal-content {
-    background-color: #fff; /* Ensure the modal content is white */
+/* Modal Header */
+.follow-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
 }
 
-.follow-modal-body span {
-    font-weight: bold;
-    color: #007bff; /* Highlight the action type */
+/* Close Button */
+.follow-modal-close {
+    font-size: 24px;
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+
+/* Modal Body */
+.follow-modal-body {
+    padding: 20px;
+}
+
+/* Modal Footer */
+.follow-modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    padding: 10px;
+    border-top: 1px solid #ddd;
+}
+
+/* Buttons */
+.btn-secondary, .btn-primary {
+    border: none;
+    padding: 10px 20px;
+    margin-left: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-secondary {
+    background-color: #f0f0f0;
+    color: #333;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    color: #fff;
 }

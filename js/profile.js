@@ -798,57 +798,47 @@ window.onclick = function(event) {
     }
 }
 
-let currentAction = ''; // Holds the action type ('cancel' or other)
+let currentAction = ''; // Define the variable
 
-// Function to show the modal and set up the action
-function showFollowActionsModal(action, username) {
-    currentAction = action;
-    const actionText = action === 'cancel' ? 'cancel' : 'perform this action';
-    
-    // Update modal content
-    document.getElementById('followActionType').textContent = actionText;
-    
-    // Show the modal
-    $('#followActionsModal').modal('show');
-    
-    // Set up the confirm button click handler
-    document.getElementById('confirmFollowAction').onclick = function() {
-        handleFollowAction(username);
-    };
+// Function to show the modal
+function showFollowActionsModal(action) {
+    currentAction = action; // Set the current action
+    const modal = document.getElementById('followActionsModal');
+    const actionType = document.getElementById('followActionType');
+
+    if (action === 'cancel') {
+        actionType.textContent = 'cancel your follow request';
+    } else if (action === 'unfollow') {
+        actionType.textContent = 'unfollow this user';
+    }
+
+    modal.style.display = 'block'; // Show the modal
 }
 
-// Function to handle the follow action based on currentAction
-function handleFollowAction(username) {
-    let method = 'DELETE';
-    let endpoint = `/api/cancel-follow/${username}`;
-    
-    if (currentAction === 'other') {
-        method = 'POST'; // Example for other actions
-        endpoint = `/api/other-action/${username}`;
+// Function to close the modal
+function closeFollowActionsModal() {
+    const modal = document.getElementById('followActionsModal');
+    modal.style.display = 'none'; // Hide the modal
+}
+
+// Function to handle confirmation
+function handleModalConfirm() {
+    if (currentAction === 'cancel') {
+        cancelFollowRequest(); // Call your cancel function
+    } else if (currentAction === 'unfollow') {
+        unfollowUser(); // Call your unfollow function
     }
-    
-    fetch(endpoint, { method })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.text();
-        })
-        .then(data => {
-            alert(data); // Show success message
-            $('#followActionsModal').modal('hide'); // Hide the modal
-            
-            // Update button text or other UI changes
-            const button = document.querySelector(`[data-username="${username}"]`);
-            if (button) {
-                button.innerHTML = '<i class="fa fa-user-plus uab"></i>Follow';
-                button.removeAttribute('data-status');
-                button.removeAttribute('id');
-                button.removeAttribute('onclick');
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('Error performing the action');
-        });
+    closeFollowActionsModal(); // Close the modal after action
+}
+
+// Function to cancel follow request
+function cancelFollowRequest() {
+    // Implement your cancel follow request logic here
+    console.log('Cancel follow request');
+}
+
+// Function to unfollow user
+function unfollowUser() {
+    // Implement your unfollow user logic here
+    console.log('Unfollow user');
 }
