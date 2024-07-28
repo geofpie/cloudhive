@@ -1350,3 +1350,7 @@ a:hover {
     height: auto;
     overflow: none;
 }
+
+.cropper-image img {
+    object-fit: cover;
+}

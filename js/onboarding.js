@@ -79,6 +79,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     guides: false,
                     center: false,
                     highlight: false,
+                    background: false,
+                    responsive: true,
                     cropBoxMovable: false,
                     cropBoxResizable: false,
                     toggleDragModeOnDblclick: false,
