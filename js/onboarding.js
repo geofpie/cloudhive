@@ -74,7 +74,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     dragMode: 'move',
                     aspectRatio: 1 / 1,
                     viewMode: 2,
-                    autoCropArea: 0.8,
+                    autoCropArea: 1,
                     restore: false,
                     guides: false,
                     center: false,
