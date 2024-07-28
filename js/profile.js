@@ -663,6 +663,10 @@ document.getElementById('submitEditProfileButton').addEventListener('click', asy
         formData.append('headerPic', compressedBlob, headerImageFile.name);
     }
 
+    if (profileImageFile) {
+        formData.append('profilePic', profileImageFile, profileImageFile.name);
+    }
+
     // Send form data to backend (e.g., to update user profile)
     fetch('/api/update_profile', {
         method: 'POST',
