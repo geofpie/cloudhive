@@ -280,7 +280,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
                                     <a href="/${post.username}" class="hive-post-user-sub">@${post.username}</a>
                                 </div>
                                 <div class="col hive-user-details-time">
-                                    <i class="fa fa-clock hive-post-time-icon"></i><p class="hive-post-time">${dayjs(post.postTimestamp).fromNow()}</p>
+                                    <i class="fa fa-clock hive-post-time-icon"></i>
+                                    <p class="hive-post-time">${dayjs(post.postTimestamp).fromNow()}</p>
                                 </div>
                             </div>
                             <div class="row hive-post-content">
@@ -290,9 +291,23 @@ document.addEventListener('DOMContentLoaded', (event) => {
                             <div class="hive-social-stats">
                                 <p class="hive-stat-like"><strong>${post.likes || 0}</strong> likes</p>
                                 <hr>
-                                <button class="hive-stat-like-btn ${likeButtonClass}" data-post-id="${post.postId}">
-                                    <img id="like-btn-hive" src="${likeButtonIcon}" alt="${likeButtonText}" style="width: 22px; height: 22px; vertical-align: middle;">
-                                </button>
+                                <div class="d-flex align-items-center">
+                                    <button class="hive-stat-like-btn ${likeButtonClass}" data-post-id="${post.postId}">
+                                        <img id="like-btn-hive" src="${likeButtonIcon}" alt="${likeButtonText}" style="width: 22px; height: 22px; vertical-align: middle;">
+                                    </button>
+                                    ${post.isUserPost ? `
+                                        <div class="post-options">
+                                            <button class="hive-stat-options-btn" onclick="toggleOptionsMenu(event)">
+                                                <img id="options-btn-hive" src="assets/options.svg" alt="Options" style="width: 22px; height: 22px;">
+                                            </button>
+                                            <div class="options-menu">
+                                                <ul>
+                                                    <li><a href="#" class="delete-post" data-id="${post.postId}">Delete</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    ` : ''}
+                                </div>
                             </div>
                         </div>
                         `;
@@ -992,4 +1007,72 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
             }
         });    
+});
+
+function toggleOptionsMenu(event) {
+    const button = event.currentTarget;
+    const optionsMenu = button.nextElementSibling;
+
+    // Hide any open options menus
+    document.querySelectorAll('.options-menu').forEach(menu => {
+        if (menu !== optionsMenu) {
+            menu.style.display = 'none';
+        }
+    });
+
+    // Toggle the visibility of the clicked options menu
+    optionsMenu.style.display = optionsMenu.style.display === 'block' ? 'none' : 'block';
+
+    // Prevent the click event from closing the menu immediately
+    event.stopPropagation();
+}
+
+// Close the options menu if clicking outside of it
+document.addEventListener('click', function(event) {
+    const isClickInside = event.target.closest('.post-options');
+    if (!isClickInside) {
+        document.querySelectorAll('.options-menu').forEach(menu => {
+            menu.style.display = 'none';
+        });
+    }
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+    // Attach event listener to the document
+    document.addEventListener('click', function (event) {
+        // Check if the clicked element is a delete button
+        if (event.target && event.target.classList.contains('delete-post')) {
+            event.preventDefault();
+
+            // Confirm before deleting
+            if (confirm('Are you sure you want to delete this post?')) {
+                const postId = event.target.getAttribute('data-id');
+
+                // Send delete request to the server
+                fetch(`/api/posts/${postId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.message === 'Post deleted successfully.') {
+                        // Remove the post element from the DOM
+                        const postElement = document.querySelector(`.hive-post-element[data-post-id="${postId}"]`);
+                        if (postElement) {
+                            postElement.remove();
+                        }
+                        alert('Post deleted successfully.');
+                    } else {
+                        alert('Failed to delete the post: ' + data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('An error occurred while deleting the post.');
+                });
+            }
+        }
+    });
 });

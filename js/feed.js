@@ -340,7 +340,6 @@ document.addEventListener('DOMContentLoaded', function() {
                                             </button>
                                             <div class="options-menu">
                                                 <ul>
-                                                    <li><a href="#" class="edit-post" data-id="${post.postId}">Edit</a></li>
                                                     <li><a href="#" class="delete-post" data-id="${post.postId}">Delete</a></li>
                                                 </ul>
                                             </div>
