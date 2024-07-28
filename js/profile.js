@@ -15,7 +15,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
     let isFetching = false;
     const username = window.location.pathname.split('/').pop(); // Get the username from the URL
     const fetchedPostIds = new Set();
-    let currentAction = ''; // Define the variable
+    let currentAction = null;
+    let currentUsername = null;
 
     adjustTextColorBasedOnImage('.profile-fullwidth-header img');
 
@@ -814,13 +815,18 @@ function showFollowActionsModal(action) {
     modal.style.display = 'block'; // Show the modal
 }
 
-// Function to close the modal
-function closeFollowActionsModal() {
-    const modal = document.getElementById('followActionsModal');
-    modal.style.display = 'none'; // Hide the modal
+function showFollowActionsModal(action, username) {
+    currentAction = action;
+    currentUsername = username;
+
+    const actionText = action === 'cancel' ? 'cancel' : 'unfollow';
+    document.getElementById('followActionType').textContent = actionText;
+    
+    const followActionsModal = document.getElementById('followActionsModal');
+    const modal = new bootstrap.Modal(followActionsModal);
+    modal.show();
 }
 
-// Function to handle confirmation
 function handleModalConfirm() {
     if (currentAction === 'cancel') {
         cancelFollowRequest(); // Call your cancel function
@@ -830,9 +836,8 @@ function handleModalConfirm() {
     closeFollowActionsModal(); // Close the modal after action
 }
 
-// Function to cancel follow request
-function cancelFollowRequest(username) {
-    fetch(`/api/cancel-follow/${username}`, { method: 'DELETE' })
+function cancelFollowRequest() {
+    fetch(`/api/cancel-follow/${currentUsername}`, { method: 'DELETE' })
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -842,7 +847,7 @@ function cancelFollowRequest(username) {
         .then(data => {
             alert(data); // Show success message
             // Update button text
-            const button = document.querySelector(`[data-username="${username}"]`);
+            const button = document.querySelector('[data-status="requested"]');
             if (button) {
                 button.innerHTML = '<i class="fa fa-user-plus uab"></i>Follow';
                 button.removeAttribute('data-status');
