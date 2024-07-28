@@ -93,24 +93,22 @@
             <div class="col"></div>
         </div>
     </div>
-    <!-- Modal for Image Crop -->
-    <div class="modal fade" id="cropModal" tabindex="-1" role="dialog" aria-labelledby="cropModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="cropModalLabel">Crop Your Profile Picture</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+    <!-- Custom Modal for Image Crop -->
+    <div id="cropModal" class="crop-modal">
+        <div class="crop-modal-dialog">
+            <div class="crop-modal-content">
+                <div class="crop-modal-header">
+                    <h5 class="crop-modal-title">Crop Your Profile Picture</h5>
+                    <button type="button" class="custom-modal-close" onclick="closeCropModal()">&times;</button>
                 </div>
-                <div class="modal-body">
+                <div class="crop-modal-body">
                     <div id="cropper-container">
                         <img id="cropper-image" src="" alt="Image to crop">
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    <button id="crop-submit-btn" type="button" class="btn btn-primary">Crop Image</button>
+                <div class="crop-modal-footer">
+                    <button type="button" class="custom-modal-cancel" onclick="closeCropModal()">Cancel</button>
+                    <button id="crop-submit-btn" type="button" class="custom-modal-confirm">Crop Image</button>
                 </div>
             </div>
         </div>

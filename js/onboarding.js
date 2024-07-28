@@ -1,7 +1,10 @@
 document.addEventListener('DOMContentLoaded', function() {
     const spinnerWrapper = document.querySelector('.spinner-wrapper');
     const profilePicInput = document.getElementById('profile-pic');
-    const cropModal = new bootstrap.Modal(document.getElementById('cropModal'));
+    const cropModal = document.getElementById('cropModal');
+    const cropModalDialog = cropModal.querySelector('.crop-modal-dialog'); // Custom modal dialog
+    const cropModalClose = cropModal.querySelector('.crop-modal-close'); // Custom close button
+    const cropSubmitBtn = document.getElementById('crop-submit-btn'); // Crop button in custom modal
     let cropper;
 
     // Function to hide spinner and show content
@@ -50,19 +53,21 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Event listener for opening crop modal when profile pic input changes
     profilePicInput.addEventListener('change', function(e) {
-        var files = e.target.files;
-        var reader = new FileReader();
+        const files = e.target.files;
+        if (files.length === 0) return;
+
+        const reader = new FileReader();
         reader.onload = function(e) {
-            // Destroy previous Cropper instance if exists
+            // Destroy previous Cropper instance if it exists
             if (cropper) {
                 cropper.destroy();
             }
 
-            // Set the image source to cropper and preview
+            // Set the image source for the cropper and preview
             const image = document.getElementById('cropper-image');
             image.src = e.target.result;
 
-            // Check if image source is loaded
+            // Check if the image source is loaded
             image.onload = function() {
                 // Initialize Cropper.js
                 cropper = new Cropper(image, {
@@ -78,8 +83,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
                 });
 
-                // Show crop modal
-                cropModal.show();
+                // Show custom crop modal
+                openCropModal();
             };
 
             // Log the loaded image source for debugging
@@ -88,8 +93,21 @@ document.addEventListener('DOMContentLoaded', function() {
         reader.readAsDataURL(files[0]);
     });
 
-    // Event listener for crop image button in modal
-    document.getElementById('crop-submit-btn').addEventListener('click', function() {
+    // Function to open the custom crop modal
+    function openCropModal() {
+        cropModal.style.display = 'block';
+    }
+
+    // Function to close the custom crop modal
+    function closeCropModal() {
+        cropModal.style.display = 'none';
+    }
+
+    // Event listener for the custom close button in the modal
+    cropModalClose.addEventListener('click', closeCropModal);
+
+    // Event listener for the crop image button in the modal
+    cropSubmitBtn.addEventListener('click', function() {
         if (cropper) {
             cropper.getCroppedCanvas({
                 width: 500, // Desired width
@@ -97,15 +115,15 @@ document.addEventListener('DOMContentLoaded', function() {
             }).toBlob(function(blob) {
                 // Store the blob in a variable for later use
                 window.croppedImageBlob = blob;
-    
+
                 // Create a URL for the cropped image
                 const croppedImageUrl = URL.createObjectURL(blob);
-    
+
                 // Update the background image of the preview div
                 document.getElementById('profile-pic-preview').style.backgroundImage = `url(${croppedImageUrl})`;
-    
-                // Hide crop modal
-                cropModal.hide();
+
+                // Hide custom crop modal
+                closeCropModal();
             });
         }
     });    
@@ -161,7 +179,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
 
                 console.log('Profile picture uploaded successfully:', data);
-                //redirect to homepage
+                // Redirect to homepage
                 window.location.href = '/hive';
             })
             .catch(error => {

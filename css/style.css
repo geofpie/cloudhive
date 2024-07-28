@@ -1285,3 +1285,81 @@ a:hover {
     background-color: #007bff;
     color: #fff;
 }
+
+/* Basic custom modal styles */
+.crop-modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 1050; /* Make sure it's above other content */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+}
+
+.crop-modal-dialog {
+    position: relative;
+    margin: 10px auto;
+    max-width: 800px; /* Or your preferred width */
+    width: 100%;
+}
+
+.crop-modal-content {
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    position: relative;
+}
+
+.crop-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.crop-modal-title {
+    margin: 0;
+    font-size: 18px;
+}
+
+.crop-modal-close {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.crop-modal-body {
+    margin-top: 20px;
+}
+
+.crop-modal-footer {
+    margin-top: 20px;
+    text-align: right;
+}
+
+.crop-modal-cancel {
+    background: #6c757d;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.crop-modal-confirm {
+    background: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.crop-modal-confirm:hover,
+.crop-modal-cancel:hover {
+    opacity: 0.8;
+}
