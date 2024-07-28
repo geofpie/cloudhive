@@ -1460,3 +1460,9 @@ a:hover {
 .friends-card {
     width: calc(25% - 16px); /* Adjust for four cards per row */
 }
+
+@media screen and (max-width: 960px) {
+    .friends-card {
+        width: calc(100% - 16px);
+    }
+}
