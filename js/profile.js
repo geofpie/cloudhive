@@ -667,24 +667,6 @@ document.getElementById('submitEditProfileButton').addEventListener('click', asy
     if (profileImageFile) {
         const compressedProfilePicBlob = await compressImage(profileImageFile);
         console.log(compressedProfilePicBlob);
-        // Determine the file extension
-        const mimeType = profileImageFile.mimetype;
-        let extension = '';
-        switch (mimeType) {
-            case 'image/jpeg':
-                extension = 'jpg';
-                break;
-            case 'image/png':
-                extension = 'png';
-                break;
-            case 'image/gif':
-                extension = 'gif';
-                break;
-            default:
-                console.error('non supported filetype!');
-        }
-        const profileImageFileName = `${profileImageFile.name}.${extension}`;
-        console.log(profileImageFileName);
         formData.append('profilePic', compressedProfilePicBlob, profileImageFile.name);
         console.log(formData);
     }
