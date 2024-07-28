@@ -815,16 +815,10 @@ function showFollowActionsModal(action) {
     modal.style.display = 'block'; // Show the modal
 }
 
-function showFollowActionsModal(action, username) {
-    currentAction = action;
-    currentUsername = username;
-
-    const actionText = action === 'cancel' ? 'cancel' : 'unfollow';
-    document.getElementById('followActionType').textContent = actionText;
-    
-    const followActionsModal = document.getElementById('followActionsModal');
-    const modal = new bootstrap.Modal(followActionsModal);
-    modal.show();
+// Function to close the modal
+function closeFollowActionsModal() {
+    const modal = document.getElementById('followActionsModal');
+    modal.style.display = 'none'; // Hide the modal
 }
 
 function handleModalConfirm() {
