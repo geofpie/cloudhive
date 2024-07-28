@@ -658,7 +658,6 @@ document.getElementById('submitEditProfileButton').addEventListener('click', asy
 
     // Handle header image upload if exists
     if (headerImageFile) {
-        // Convert image to blob and append to formData
         console.log(headerImageFile);
         const compressedBlob = await compressImage(headerImageFile);
         console.log(compressedBlob);
@@ -668,6 +667,24 @@ document.getElementById('submitEditProfileButton').addEventListener('click', asy
     if (profileImageFile) {
         const compressedProfilePicBlob = await compressImage(profileImageFile);
         console.log(compressedProfilePicBlob);
+        // Determine the file extension
+        const mimeType = profileImageFile.mimetype;
+        let extension = '';
+        switch (mimeType) {
+            case 'image/jpeg':
+                extension = 'jpg';
+                break;
+            case 'image/png':
+                extension = 'png';
+                break;
+            case 'image/gif':
+                extension = 'gif';
+                break;
+            default:
+                return res.status(400).json({ error: 'Unsupported file type' });
+        }
+        const profileImageFileName = `${profileImageFile.name}.${extension}`;
+        console.log(profileImageFileName);
         formData.append('profilePic', compressedProfilePicBlob, profileImageFile.name);
         console.log(formData);
     }
