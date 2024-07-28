@@ -1342,3 +1342,8 @@ a:hover {
 .cropper-view-box {
     border-radius: 50%; 
 }
+
+.cropper-image {
+    width: 100%;
+    height: auto;
+}
