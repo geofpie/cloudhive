@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function loadFriends(tab) {
         console.log(`Fetching data for tab: ${tab}`); // Log which tab is being fetched
-
+    
         fetch(`/api/${tab}`)
             .then(response => {
                 if (!response.ok) {
@@ -35,10 +35,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 const container = document.getElementById(`${tab}-cards`);
                 container.innerHTML = '';
-
-                data.forEach(user => {
+    
+                data.forEach((user, index) => {
                     const card = document.createElement('div');
                     card.classList.add('friends-card');
+                    card.style.animationDelay = `${index * 0.1}s`; // Staggered delay based on index
                     card.innerHTML = `
                         <img src="${user.profile_picture_url || 'default-profile.png'}" alt="${user.username}'s profile picture">
                         <h3>${user.username}</h3>

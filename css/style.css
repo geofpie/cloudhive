@@ -1434,3 +1434,33 @@ a:hover {
     border-radius: 50%;
     object-fit: cover;
 }
+
+/* Container for friends cards */
+#following-cards, #followers-cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px; /* Adjust spacing between cards */
+    margin: 0 auto;
+    max-width: 1200px; /* Adjust width as needed */
+}
+
+/* Individual card styling */
+.friends-card {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 16px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: calc(33.333% - 16px); /* Adjust width to fit three cards per row with gap */
+    opacity: 0;
+    transform: translateY(20px); /* Start position for floating animation */
+    animation: floatIn 0.5s forwards;
+}
+
+/* Floating animation */
+@keyframes floatIn {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
