@@ -679,6 +679,7 @@ document.getElementById('submitEditProfileButton').addEventListener('click', asy
     .then(response => response.json())
     .then(data => {
         console.log('Profile updated successfully:', data);
+        alert('Profile updated successfully!');
         document.getElementById('editProfileModal').classList.add('hidden');
         window.location.reload();
     })
