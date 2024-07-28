@@ -54,6 +54,18 @@ document.addEventListener('DOMContentLoaded', function() {
             });
     }
 
-    // Load default tab (following)
-    loadFriends('following');
+    // Activate default tab and load corresponding data
+    const defaultTab = 'following'; // Change to the default tab you want
+    const defaultTabButton = document.querySelector(`.tab-button[data-tab="${defaultTab}"]`);
+    if (defaultTabButton) {
+        defaultTabButton.classList.add('active');
+    }
+
+    // Ensure the default tab content is visible
+    tabContents.forEach(content => {
+        content.style.display = content.id === defaultTab ? 'block' : 'none';
+    });
+
+    // Load the default tab's data
+    loadFriends(defaultTab);
 });
