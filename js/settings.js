@@ -99,6 +99,7 @@ function updateUserProfileFields(user) {
     document.getElementById('hive-logged-in-user-name').innerText = `${user.first_name}`;
     document.getElementById('hive-logged-in-user-name').href = `/${user.username}`;
     document.querySelector('.navbar-profile-pic').src = user.profile_picture_url;
+    document.getElementById('hive-logged-in-dp').href = `/${user.username}`;
 }
 
 const notificationsModal = document.getElementById('notificationsModal');

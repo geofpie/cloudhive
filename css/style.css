@@ -623,6 +623,14 @@ a:hover {
     padding: 24px 12px 24px 12px;
 }
 
+.newsfeed-posts-container {
+    padding: 0 12px 0 12px;
+}
+
+.profile-user-post {
+    padding: 0 12px 0 12px;
+}
+
 .hive-user-action {
     position: inline-block;
     padding: 6px 10px 6px 10px;
