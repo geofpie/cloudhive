@@ -866,6 +866,8 @@ function unfollowUser(username) {
                 // Update button attributes
                 button.removeAttribute('data-status'); // Remove data-status if present
                 button.setAttribute('onclick', `sendFollowRequest('${username}')`); // Set onclick to call sendFollowRequest
+
+                window.location.reload();
             } else {
                 console.error('Button not found for username:', username);
             }
