@@ -804,7 +804,7 @@ window.onclick = function(event) {
 function showFollowActionsModal(action, username) {
     currentAction = action; // Set the current action
     currentUsername = username;
-    
+
     const modal = document.getElementById('followActionsModal');
     const actionType = document.getElementById('followActionType');
 
@@ -832,13 +832,18 @@ function handleModalConfirm() {
     closeFollowActionsModal(); // Close the modal after action
 }
 
+// Function to cancel follow request
 function cancelFollowRequest() {
-    fetch(`/api/cancel-follow/${currentUsername}`, { method: 'DELETE' })
+    // Ensure currentUsername is correctly set
+    const username = currentUsername; 
+
+    // Make a DELETE request to the backend endpoint
+    fetch(`/api/cancel-follow/${username}`, { method: 'DELETE' })
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
-            return response.text();
+            return response.text(); // Expecting text response from the backend
         })
         .then(data => {
             alert(data); // Show success message
