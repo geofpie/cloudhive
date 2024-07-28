@@ -96,8 +96,6 @@ function updateUserProfileFields(user) {
     document.getElementById('user-username').innerText = `@${user.username}`;
     document.getElementById('user-email').innerText = user.email;
     document.querySelector('.user-info-card img').src = user.profile_picture_url;
-    document.getElementById('hive-logged-in-user-name').innerText = `${user.first_name}`;
-    document.getElementById('hive-logged-in-user-name').href = `/${user.username}`;
     document.querySelector('.navbar-profile-pic').src = user.profile_picture_url;
     document.getElementById('hive-logged-in-dp').href = `/${user.username}`;
 }

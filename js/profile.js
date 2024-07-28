@@ -594,12 +594,9 @@ function fetchUserInfo() {
 }
 
 function updateUserProfile(user) {
-    const loggedInUserName = document.getElementById('hive-logged-in-user-name');
     const loggedInUserPic = document.getElementById('hive-logged-in-dp');
     const username = user.username;
 
-    loggedInUserName.innerText = user.first_name;
-    loggedInUserName.href = `/${username}`; 
     loggedInUserPic.href = `/${username}`;
 
     document.querySelector('.navbar-profile-pic').src = user.profile_picture_url;
