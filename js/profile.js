@@ -482,7 +482,7 @@ function openNotificationsModal() {
     document.getElementById('notificationsModal').style.display = 'block';
 }
 
-function closeCustomModal() {
+function closeNotificationsModal() {
     document.getElementById('notificationsModal').style.display = 'none';
 }
 
@@ -530,8 +530,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     fetchUserInfo();
 });
 
-document.addEventListener('DOMContentLoaded', () => {
-    const notificationsModal = document.getElementById('notificationsModal');
+const notificationsModal = document.getElementById('notificationsModal');
     // When the user clicks anywhere outside of the modal, close it
     window.onclick = function(event) {
         if (event.target == notificationsModal) {
@@ -545,7 +544,6 @@ document.addEventListener('DOMContentLoaded', () => {
             postModal.classList.add('hidden');
         }
     }
-});
 
 function fetchUserInfo() {
     fetch('/api/get_user_info', {
