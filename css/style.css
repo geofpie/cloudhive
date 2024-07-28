@@ -317,6 +317,19 @@ a:hover {
     background-position: center;
 }
 
+/* Ensure Cropper.js container fills the modal body */
+.modal-body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: auto; /* Adjust as needed for your modal height */
+}
+
+/* Ensure square preview */
+.cropper-view-box {
+    border-radius: 50%; 
+}
+
 .navbar-profile-pic {
     border-radius: 50%;
     height: 40px;
@@ -1339,21 +1352,4 @@ a:hover {
 .crop-modal-confirm:hover,
 .crop-modal-cancel:hover {
     opacity: 0.8;
-}
-
-/* Cropper container with fixed size */
-.cropper-container {
-    width: 300px; /* Fixed size for the cropper */
-    height: 300px; /* Fixed size for the cropper */
-    overflow: hidden; /* Hide overflow to maintain the square shape */
-    position: relative;
-    background-color: #f5f5f5; /* Background color to visualize the container */
-}
-
-/* Cropper image to move inside the container */
-.cropper-container img {
-    position: absolute; /* Allow positioning inside the container */
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%); /* Center the image */
 }
