@@ -603,8 +603,8 @@ btn.onclick = function() {
 }
 
 // When the user clicks on <span> (x), close the modal
-document.getElementById('closeEditProfileModal').onclick = function() {
-    closeEditProfile();
+document.getElementById('closeEditProfileModal').onclick = function(event) {
+    modal.style.display = 'none';
 }
 
 // When the user clicks anywhere outside of the modal, close it
