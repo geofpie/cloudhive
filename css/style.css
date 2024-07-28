@@ -1444,6 +1444,7 @@ a:hover {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     width: calc(33.333% - 16px); /* Adjust width to fit three cards per row with gap */
     opacity: 0;
+    text-align: center;
     transform: translateY(20px); /* Start position for floating animation */
     animation: floatIn 0.5s forwards;
 }
