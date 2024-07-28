@@ -598,7 +598,7 @@ const modal = document.getElementById('editProfileModal');
 const btn = document.getElementById('edit-profile');
 
 // When the user clicks on <span> (x), close the modal
-document.getElementById('closeEditProfileModal').onclick = function(event) {
+document.getElementById('closeEditProfileModal').onclick = function() {
     modal.style.display('none');
 }
 
