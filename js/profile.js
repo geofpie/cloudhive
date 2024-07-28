@@ -831,9 +831,29 @@ function handleModalConfirm() {
 }
 
 // Function to cancel follow request
-function cancelFollowRequest() {
-    // Implement your cancel follow request logic here
-    console.log('Cancel follow request');
+function cancelFollowRequest(username) {
+    fetch(`/api/cancel-follow/${username}`, { method: 'DELETE' })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.text();
+        })
+        .then(data => {
+            alert(data); // Show success message
+            // Update button text
+            const button = document.querySelector(`[data-username="${username}"]`);
+            if (button) {
+                button.innerHTML = '<i class="fa fa-user-plus uab"></i>Follow';
+                button.removeAttribute('data-status');
+                button.removeAttribute('id');
+                button.removeAttribute('onclick');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error canceling follow request');
+        });
 }
 
 // Function to unfollow user
