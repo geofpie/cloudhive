@@ -467,7 +467,7 @@ function openNotificationsModal() {
     document.getElementById('notificationsModal').style.display = 'block';
 }
 
-function closeCustomModal() {
+function closeNotificationsModal() {
     document.getElementById('notificationsModal').style.display = 'none';
 }
 

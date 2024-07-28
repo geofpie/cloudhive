@@ -530,14 +530,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
     fetchUserInfo();
 });
 
-const notificationsModal = document.getElementById('notificationsModal');
-    // When the user clicks anywhere outside of the modal, close it
-    window.onclick = function(event) {
-        if (event.target == notificationsModal) {
-            notificationsModal.style.display = 'none';
-        }
-    }
-
     const postModal = document.getElementById('postModal');
     window.onclick = function(event) {
         if (event.target == postModal) {
@@ -992,3 +984,12 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });    
 });
+
+const notificationsModal = document.getElementById('notificationsModal');
+    
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+    if (event.target == notificationsModal) {
+        notificationsModal.style.display = 'none';
+    }
+}
