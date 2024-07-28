@@ -17,6 +17,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const fetchedPostIds = new Set();
     let currentAction = null;
     let currentUsername = null;
+    const profilePicInput = document.getElementById('profilePicInput');
+    const cropModal = document.getElementById('cropModal');
+    const cropModalClose = cropModal.querySelector('.crop-modal-close');
+    const cropSubmitBtn = document.getElementById('crop-submit-btn');
+    let cropper;
 
     adjustTextColorBasedOnImage('.profile-fullwidth-header img');
 
@@ -702,6 +707,100 @@ function compressImage(file, targetQuality = 0.8) {
         reader.readAsDataURL(file);
     });
 }
+
+// Event listener for opening crop modal when profile pic input changes
+profilePicInput.addEventListener('change', function(e) {
+    const files = e.target.files;
+    if (files.length === 0) return;
+
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        // Destroy previous Cropper instance if it exists
+        if (cropper) {
+            cropper.destroy();
+        }
+
+        // Set the image source for the cropper and preview
+        const image = document.getElementById('cropper-image');
+        image.src = e.target.result;
+
+        // Check if the image source is loaded
+        image.onload = function() {
+            // Initialize Cropper.js
+            cropper = new Cropper(image, {
+                dragMode: 'move',
+                aspectRatio: 1 / 1,
+                viewMode: 2,
+                autoCropArea: 1,
+                restore: false,
+                guides: false,
+                center: false,
+                highlight: false,
+                background: false,
+                zoomable: true,
+                responsive: true,
+                cropBoxMovable: false,
+                cropBoxResizable: false,
+                toggleDragModeOnDblclick: false,
+                ready: function() {
+                    console.log('Cropper.js initialized.');
+                }
+            });
+
+            // Show custom crop modal
+            openCropModal();
+        };
+
+        // Log the loaded image source for debugging
+        console.log('Image source set for cropping:', e.target.result);
+    };
+    reader.readAsDataURL(files[0]);
+});
+
+// Function to open the custom crop modal
+function openCropModal() {
+    cropModal.style.display = 'block';
+}
+
+// Function to close the custom crop modal
+function closeCropModal() {
+    cropModal.style.display = 'none';
+}
+
+// Event listener for the custom close button in the modal
+cropModalClose.addEventListener('click', closeCropModal);
+
+cropModelCancel.addEventListener('click', closeCropModal);
+
+window.onclick = function(event) {
+    if (event.target == cropModal) {
+        closeCropModal();
+    }
+}
+
+// Event listener for the crop image button in the modal
+cropSubmitBtn.addEventListener('click', function() {
+    if (cropper) {
+        cropper.getCroppedCanvas({
+            width: 500, // Desired width
+            height: 500, // Desired height
+        }).toBlob(function(blob) {
+            // Store the blob in a variable for later use
+            window.croppedImageBlob = blob;
+
+            // Create a URL for the cropped image
+            const croppedImageUrl = URL.createObjectURL(blob);
+
+            // Update the background image of the preview div
+            document.getElementById('profilePicPreview').style.backgroundImage = `url(${croppedImageUrl})`;
+
+            // Hide custom crop modal
+            closeCropModal();
+        });
+    }
+});    
+
+
 function getImageLightness(imageElement, callback) {
     const canvas = document.createElement('canvas');
     const ctx = canvas.getContext('2d');
