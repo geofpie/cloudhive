@@ -1,84 +1,49 @@
-    document.addEventListener('DOMContentLoaded', function () {
-        fetchUserInfo();
+document.addEventListener('DOMContentLoaded', function() {
+    const tabs = document.querySelectorAll('.tab-button');
+    const tabContents = document.querySelectorAll('.tab-content');
 
-        // Get the token from a global variable or another source
-        const token = '<%= user.token %>';
+    tabs.forEach(tab => {
+        tab.addEventListener('click', function() {
+            const targetTab = this.getAttribute('data-tab');
 
-        fetch('/api/friends', {
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        })
-        .then(response => response.json())
-        .then(data => {
-            const friendsContainer = document.querySelector('.row');
-            friendsContainer.innerHTML = ''; // Clear existing content
-            data.friends.forEach(friend => {
-                const friendCard = `
-                    <div class="col-md-4">
-                        <div class="card mb-4">
-                            <img src="${friend.profile_picture_url || '/assets/default-profile.jpg'}" class="card-img-top" alt="Profile Picture">
-                            <div class="card-body">
-                                <h5 class="card-title">${friend.first_name} ${friend.last_name}</h5>
-                                <p class="card-text">@${friend.username}</p>
-                                <p class="card-text">Following: ${friend.following}</p>
-                                <p class="card-text">Followers: ${friend.followers}</p>
-                                <a href="/${friend.username}" class="btn btn-primary">View Profile</a>
-                            </div>
-                        </div>
-                    </div>`;
-                friendsContainer.insertAdjacentHTML('beforeend', friendCard);
+            // Set active tab
+            tabs.forEach(t => t.classList.remove('active'));
+            this.classList.add('active');
+
+            // Display the correct tab content
+            tabContents.forEach(content => {
+                content.style.display = content.id === targetTab ? 'block' : 'none';
             });
-        })
-        .catch(error => {
-            console.error('Error fetching friends data:', error);
+
+            // Load the corresponding data
+            loadFriends(targetTab);
         });
     });
 
-    function fetchUserInfo() {
-        fetch('/api/get_user_info', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + localStorage.getItem('token')
-            }
-        })
-        .then(response => {
-            if (response.status === 401) {
-                // Redirect to homepage if user is unauthorised
-                window.location.href = '/';
-                return; // Stop further processing
-            }
-            
-            if (!response.ok) {
-                throw new Error('Generic error ' + response.statusText);
-            }
-            
-            return response.json();
-        })
-        .then(data => {
-            if (data.redirect) {
-                // Handle any additional redirect instructions from the server
-                window.location.href = data.redirect;
-            } else {
-                updateUserProfile(data.userInfo);
-            }
-        })
-        .catch(error => {
-            console.error('There was a problem with the fetch operation:', error);
-            // Optionally redirect to homepage on catch error
-            window.location.href = '/';
-        });
+    function loadFriends(tab) {
+        fetch(`/api/${tab}`)
+            .then(response => response.json())
+            .then(data => {
+                const container = document.getElementById(`${tab}-cards`);
+                container.innerHTML = '';
+
+                data.forEach(user => {
+                    const card = document.createElement('div');
+                    card.classList.add('card');
+                    card.innerHTML = `
+                        <img src="${user.profile_picture_url || 'default-profile.png'}" alt="${user.username}'s profile picture">
+                        <h3>${user.username}</h3>
+                        <p>${user.first_name} ${user.last_name}</p>
+                        <a href="/profile/${user.username}">View Profile</a>
+                    `;
+                    container.appendChild(card);
+                });
+            })
+            .catch(error => {
+                console.error('Error loading friends:', error);
+            });
     }
-    
-    function updateUserProfile(user) {
-        const loggedInUserName = document.getElementById('hive-logged-in-user-name');
-        const username = user.username;
-    
-        loggedInUserName.innerText = user.first_name;
-        loggedInUserName.href = `/${username}`; 
-    
-        document.querySelector('.navbar-profile-pic').src = user.profile_picture_url;
-        document.querySelector('.postbar-profile-pic').src = user.profile_picture_url;
-    }
-    
+
+    // Load default tab (following)
+    loadFriends('following');
+});
