@@ -528,7 +528,9 @@ function denyFollowRequest(username) {
 
 document.addEventListener('DOMContentLoaded', (event) => {
     fetchUserInfo();
-    
+});
+
+document.addEventListener('DOMContentLoaded', () => {
     const notificationsModal = document.getElementById('notificationsModal');
     // When the user clicks anywhere outside of the modal, close it
     window.onclick = function(event) {
@@ -603,6 +605,7 @@ btn.onclick = function() {
 // When the user clicks on <span> (x), close the modal
 document.getElementById('closeEditProfileModal').onclick = function() {
     modal.style.display = 'none';
+    modal.classList.remove = 'show';
 }
 
 // When the user clicks anywhere outside of the modal, close it
