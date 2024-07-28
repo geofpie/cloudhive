@@ -1,3 +1,7 @@
+document.addEventListener('DOMContentLoaded', (event) => {
+    fetchUserInfo();
+});
+
 const notificationsModal = document.getElementById('notificationsModal');
     
 // When the user clicks anywhere outside of the modal, close it
@@ -549,10 +553,6 @@ function denyFollowRequest(username) {
     })
     .catch(error => console.error('Error:', error));
 }
-
-document.addEventListener('DOMContentLoaded', (event) => {
-    fetchUserInfo();
-});
 
     const postModal = document.getElementById('postModal');
     window.onclick = function(event) {
