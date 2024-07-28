@@ -338,12 +338,6 @@ document.addEventListener('DOMContentLoaded', function() {
                                             <button class="hive-stat-options-btn">
                                                 <img id="options-btn-hive" src="assets/options.svg" alt="Options" style="width: 22px; height: 22px;">
                                             </button>
-                                            <div class="options-menu">
-                                                <ul>
-                                                    <li><a href="#" class="edit-post" data-id="${post.postId}">Edit</a></li>
-                                                    <li><a href="#" class="delete-post" data-id="${post.postId}">Delete</a></li>
-                                                </ul>
-                                            </div>
                                         </div>
                                     ` : ''}
                                 </div>
