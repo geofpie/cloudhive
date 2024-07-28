@@ -641,6 +641,8 @@ document.getElementById('headerPicInput').addEventListener('change', function(e)
     }
 });
 
+let profileImageFile = null; 
+
 // Listen for form submit
 document.getElementById('submitEditProfileButton').addEventListener('click', async function() {
     // Gather form data
@@ -972,6 +974,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
                     // Update the background image of the preview div
                     document.getElementById('profilePicPreview').src = `${croppedImageUrl}`;
+                    profileImageFile = croppedImageUrl;
+                    console.log(profileImageFile);
 
                     // Hide custom crop modal
                     closeCropModal();
