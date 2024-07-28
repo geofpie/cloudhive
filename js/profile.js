@@ -1,3 +1,12 @@
+const notificationsModal = document.getElementById('notificationsModal');
+    
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+    if (event.target == notificationsModal) {
+        notificationsModal.style.display = 'none';
+    }
+}
+
 document.addEventListener('DOMContentLoaded', (event) => {
     const writePostButton = document.getElementById('write-post');
     const sharePostButton = document.getElementById('share-post');
@@ -984,12 +993,3 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });    
 });
-
-const notificationsModal = document.getElementById('notificationsModal');
-    
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-    if (event.target == notificationsModal) {
-        notificationsModal.style.display = 'none';
-    }
-}
