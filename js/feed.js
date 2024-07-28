@@ -1,15 +1,20 @@
 function fetchUserInfo() {
     fetch('/api/get_user_info', {
         method: 'GET',
+        credentials: 'include',
     })
     .then(response => {
         if (response.status === 401) {
             // Redirect to homepage if user is unauthorised
+            console.log('Response status:', response.status);
+            console.log('Response headers:', response.headers);
             window.location.href = '/';
             return; // Stop further processing
         }
         
         if (!response.ok) {
+            console.log('Response status:', response.status);
+            console.log('Response headers:', response.headers);
             throw new Error('Generic error ' + response.statusText);
         }
         
@@ -31,12 +36,9 @@ function fetchUserInfo() {
 }
 
 function updateUserProfile(user) {
-    const loggedInUserName = document.getElementById('hive-logged-in-user-name');
     const loggedInUserPic = document.getElementById('hive-logged-in-dp');
     const username = user.username;
 
-    loggedInUserName.innerText = user.first_name;
-    loggedInUserName.href = `/${username}`; 
     loggedInUserPic.href = `/${username}`;
 
     document.querySelector('.navbar-profile-pic').src = user.profile_picture_url;
