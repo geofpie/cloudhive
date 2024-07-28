@@ -1335,7 +1335,7 @@ a:hover {
 }
 
 .cropper-container, .cropper-bg {
-    max-height: 500px;
+    max-height: 560px;
 }
 
 /* Ensure square preview */
