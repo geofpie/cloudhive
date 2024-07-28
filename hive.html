@@ -42,9 +42,9 @@
         <button class="navbar-toggler navbar-hamburger" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-      
+
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <form class="form-inline my-2 my-lg-0" action="/search" method="GET">
+            <form class="form-inline my-2 my-lg-0" action="/api/search" method="GET">
                 <div class="input-group hive-searchbar-group">
                     <input class="form-control hive-searchbar" type="search" name="query" placeholder="Search" aria-label="Search" required>
                     <div class="input-group-append">
@@ -54,21 +54,32 @@
                     </div>
                 </div>
             </form>
-            <ul class="navbar-nav ml-auto">
+            <div class="navbar-icons-wrapper d-lg-none">
+                <!-- Mobile-specific icons -->
+                <a class="nav-link" href="/hive"><img src="../assets/homeicon.svg" class="nav-icons"></a>
+                <a class="nav-link" href="#"><img src="../assets/friends.svg" class="nav-icons"></a>
+                <a class="nav-link" href="/settings"><img src="../assets/settings.svg" class="nav-icons"></a>
+                <a class="nav-link" href="#" id="notifications-link"><img src="../assets/notifications.svg" class="nav-icons"></a>
+                <a class="nav-link" href="#">
+                    <img src="../assets/default-profile.jpg" alt="Profile" class="navbar-profile-pic">
+                </a>
+            </div>
+            <ul class="navbar-nav ml-auto d-none d-lg-flex">
+                <!-- Desktop icons and profile pic -->
                 <li class="nav-item hive-nav-btn active">
-                    <a class="nav-link" href="/hive"><img src="assets/homeicon.svg" class="nav-icons"></a>
+                    <a class="nav-link" href="/hive"><img src="../assets/homeicon.svg" class="nav-icons"></a>
                 </li>
                 <li class="nav-item hive-nav-btn">
-                    <a class="nav-link" href="#"><img src="assets/friends.svg" class="nav-icons"></a>
+                    <a class="nav-link" href="#"><img src="../assets/friends.svg" class="nav-icons"></a>
                 </li>
                 <li class="nav-item hive-nav-btn">
-                    <a class="nav-link" href="/settings"><img src="assets/settings.svg" class="nav-icons"></a>
+                    <a class="nav-link" href="/settings"><img src="../assets/settings.svg" class="nav-icons"></a>
                 </li>
                 <li class="nav-item">
-                        <a class="nav-link" href="#" id="notifications-link"><img src="assets/notifications.svg" class="nav-icons"></a>
+                    <a class="nav-link" href="#" id="notifications-link"><img src="../assets/notifications.svg" class="nav-icons"></a>
                 </li>
-                <li class="nav-item hive-nav-btn">
-                    <a class="nav-link hive-logged-in-user-name" id="hive-logged-in-user-name" href="#"></a>
+                <li class="nav-item hive-nav-btn d-none d-lg-block">
+                    <a class="nav-link hive-logged-in-user-name" id="hive-logged-in-user-name" href="#">{user}</a>
                 </li>
                 <li class="nav-item hive-nav-btn">
                     <a class="nav-link hive-logged-in-user-name" id="hive-logged-in-dp" href="#">

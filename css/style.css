@@ -1407,3 +1407,34 @@ a:hover {
 .options-menu li a:hover {
     color: #007bff;
 }
+
+/* Mobile view adjustments */
+@media (max-width: 991px) {
+    .navbar-icons-wrapper {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        padding: 10px 0;
+    }
+
+    .navbar-icons-wrapper .nav-link {
+        margin: 0 10px;
+    }
+
+    .navbar-profile-pic {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+    }
+
+    .navbar-nav .d-none.d-lg-block {
+        display: none;
+    }
+}
+
+/* Desktop view adjustments */
+@media (min-width: 992px) {
+    .navbar-icons-wrapper {
+        display: none;
+    }
+}
