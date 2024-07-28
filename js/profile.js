@@ -423,8 +423,16 @@ function sendFollowRequest(username) {
                 alert('You have already sent a follow request.');
             } else {
                 alert(data); // Show success message
-                // Update button text
-                document.querySelector('[data-status="requested"]').innerHTML = '<i class="fa fa-clock uab"></i>Requested';
+                // Find the button by ID
+                const button = document.getElementById(`follow-button-${username}`);
+                if (button) {
+                    // Update button text
+                    button.innerHTML = '<i class="fa fa-clock uab"></i>Requested';
+                    // Set data-status attribute to "requested"
+                    button.setAttribute('data-status', 'requested');
+                    // Remove onclick handler if necessary
+                    button.removeAttribute('onclick');
+                }
             }
         })
         .catch(error => {
@@ -440,17 +448,17 @@ function cancelFollowRequest(username) {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
-            return response.text();
+            return response.json(); // Parse the JSON response
         })
         .then(data => {
-            alert(data); // Show success message
-            // Update button text
-            const button = document.querySelector('[data-status="requested"]');
+            alert(data.message); // Show the message from the JSON response
+            // Find the button by ID using the username
+            const button = document.getElementById(`follow-button-${username}`);
             if (button) {
+                // Update button text and attributes
                 button.innerHTML = '<i class="fa fa-user-plus uab"></i>Follow';
                 button.removeAttribute('data-status');
-                button.removeAttribute('id');
-                button.removeAttribute('onclick');
+                button.setAttribute('onclick', `sendFollowRequest('${username}')`);
             }
         })
         .catch(error => {
