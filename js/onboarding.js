@@ -80,6 +80,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     center: false,
                     highlight: false,
                     background: false,
+                    zoomable: true,
                     responsive: true,
                     cropBoxMovable: false,
                     cropBoxResizable: false,
