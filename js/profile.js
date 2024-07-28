@@ -606,6 +606,7 @@ btn.onclick = function() {
 document.getElementById('closeEditProfileModal').onclick = function(event) {
     modal.style.display = 'none';
     document.body.classList.remove('modal-open');
+    document.getElementById('editProfileModal').classList.remove('show');
 }
 
 // When the user clicks anywhere outside of the modal, close it
