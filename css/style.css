@@ -322,7 +322,7 @@ a:hover {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: auto; /* Adjust as needed for your modal height */
+    height: 500px; /* Adjust as needed for your modal height */
 }
 
 /* Ensure square preview */
