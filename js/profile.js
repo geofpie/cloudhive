@@ -593,8 +593,6 @@ function fetchUserInfo() {
     })
     .catch(error => {
         console.error('There was a problem with the fetch operation:', error);
-        // Optionally redirect to homepage on catch error
-        window.location.href = '/';
     });
 }
 
@@ -604,7 +602,6 @@ function updateUserProfile(user) {
 
     loggedInUserPic.href = `/${username}`;
 
-    document.querySelector('.navbar-profile-pic').src = user.profile_picture_url;
     document.querySelector('.postbar-profile-pic').src = user.profile_picture_url;
 }
 

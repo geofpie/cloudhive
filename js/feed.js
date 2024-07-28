@@ -30,8 +30,6 @@ function fetchUserInfo() {
     })
     .catch(error => {
         console.error('There was a problem with the fetch operation:', error);
-        // Optionally redirect to homepage on catch error
-        window.location.href = '/';
     });
 }
 
