@@ -661,6 +661,7 @@ document.getElementById('submitEditProfileButton').addEventListener('click', asy
         // Convert image to blob and append to formData
         console.log(headerImageFile);
         const compressedBlob = await compressImage(headerImageFile);
+        console.log(compressedBlob);
         formData.append('headerPic', compressedBlob, headerImageFile.name);
     }
 
