@@ -971,7 +971,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     const croppedImageUrl = URL.createObjectURL(blob);
 
                     // Update the background image of the preview div
-                    document.getElementById('profilePicPreview').style.backgroundImage = `url(${croppedImageUrl})`;
+                    document.getElementById('profilePicPreview').src = `${croppedImageUrl}`;
 
                     // Hide custom crop modal
                     closeCropModal();
