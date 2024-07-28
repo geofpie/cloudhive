@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     let isFetching = false;
     const username = window.location.pathname.split('/').pop(); // Get the username from the URL
     const fetchedPostIds = new Set();
+    let currentAction = ''; // Define the variable
 
     adjustTextColorBasedOnImage('.profile-fullwidth-header img');
 
@@ -797,8 +798,6 @@ window.onclick = function(event) {
         postModal.classList.add('hidden');
     }
 }
-
-let currentAction = ''; // Define the variable
 
 // Function to show the modal
 function showFollowActionsModal(action) {
