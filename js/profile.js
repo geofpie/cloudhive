@@ -681,7 +681,7 @@ document.getElementById('submitEditProfileButton').addEventListener('click', asy
                 extension = 'gif';
                 break;
             default:
-                return res.status(400).json({ error: 'Unsupported file type' });
+                console.error('non supported filetype!');
         }
         const profileImageFileName = `${profileImageFile.name}.${extension}`;
         console.log(profileImageFileName);
