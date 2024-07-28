@@ -1337,3 +1337,7 @@ a:hover {
 .cropper-container, .cropper-bg {
     max-height: 80vh;
 }
+
+.cropper-container img {
+    max-height: 80vh;
+}
