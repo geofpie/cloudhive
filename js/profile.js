@@ -846,7 +846,9 @@ function cancelFollowRequest() {
             return response.text(); // Expecting text response from the backend
         })
         .then(data => {
-            alert(data); // Show success message
+            // Show success message
+            alert(data);
+
             // Update button text
             const button = document.querySelector('[data-status="requested"]');
             if (button) {
