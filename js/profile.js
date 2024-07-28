@@ -850,7 +850,7 @@ function cancelFollowRequest() {
             alert(data.message || 'Follow request canceled successfully.');
 
             // Update button text
-            const button = document.querySelector('[data-username="${username}"]');
+            const button = document.querySelector('[data-status="requested"]');
             if (button) {
                 button.innerHTML = '<i class="fa fa-user-plus uab"></i>Follow';
                 button.removeAttribute('data-status');
