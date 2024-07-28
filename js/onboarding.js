@@ -71,15 +71,16 @@ document.addEventListener('DOMContentLoaded', function() {
             image.onload = function() {
                 // Initialize Cropper.js
                 cropper = new Cropper(image, {
-                    dragMode: "move",
-                    aspectRatio: 1 / 1, // Set to 1 for square aspect ratio
-                    viewMode: 2, // Set to 1 for preview mode, allowing user manipulation
-                    autoCropArea: 1, // Set to 0.8 for initial crop area size (80% of the image)
-                    movable: false, // Disable user movement of the crop box
-                    zoomable: false, // Allow user to zoom the image
-                    rotatable: false, // Disable image rotation
-                    scalable: false, // Disable image scaling
+                    dragMode: 'move',
+                    aspectRatio: 1 / 1,
+                    autoCropArea: 0.8,
+                    restore: false,
+                    guides: false,
+                    center: false,
+                    highlight: false,
+                    cropBoxMovable: false,
                     cropBoxResizable: false,
+                    toggleDragModeOnDblclick: false,
                     ready: function() {
                         console.log('Cropper.js initialized.');
                     }
