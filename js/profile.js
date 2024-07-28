@@ -443,8 +443,6 @@ function sendFollowRequest(username) {
 
 // Function to cancel follow request
 function cancelFollowRequest(username) {
-    const username = currentUsername; 
-
     fetch(`/api/cancel-follow/${username}`, { method: 'DELETE' })
         .then(response => {
             if (!response.ok) {
@@ -476,8 +474,6 @@ function cancelFollowRequest(username) {
 
 // Function to handle unfollow request
 function unfollowUser(username) {
-    const username = currentUsername; 
-
     fetch(`/api/unfollow/${username}`, { method: 'DELETE' })
         .then(response => {
             if (!response.ok) {
