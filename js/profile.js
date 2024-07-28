@@ -666,8 +666,10 @@ document.getElementById('submitEditProfileButton').addEventListener('click', asy
     }
 
     if (profileImageFile) {
-        formData.append('profilePic', profileImageFile, profileImageFile.name);
-        console.log(formData);
+        const compressedProfilePicBlob = await compressImage(profileImageFile);
+        console.log(compressedProfilePicBlob);
+        // formData.append('profilePic', profileImageFile, profileImageFile.name);
+        // console.log(formData);
     }
 
     // Send form data to backend (e.g., to update user profile)
