@@ -1206,3 +1206,48 @@ a:hover {
 .card-body {
     padding: 20px;
 }
+
+/* Follow Modal styles */
+.follow-modal-content {
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.follow-modal-header {
+    border-bottom: 1px solid #dee2e6;
+}
+
+.follow-modal-title {
+    font-size: 1.25rem;
+    font-weight: 500;
+}
+
+.follow-modal-body {
+    font-size: 1rem;
+}
+
+.follow-modal-footer {
+    border-top: 1px solid #dee2e6;
+}
+
+.follow-modal-footer .btn {
+    border-radius: 8px;
+    font-size: 0.875rem;
+}
+
+.follow-modal-dialog {
+    max-width: 400px;
+}
+
+.follow-modal-backdrop.show {
+    opacity: 0.5; /* Dim the background */
+}
+
+.follow-modal-dialog .follow-modal-content {
+    background-color: #fff; /* Ensure the modal content is white */
+}
+
+.follow-modal-body span {
+    font-weight: bold;
+    color: #007bff; /* Highlight the action type */
+}

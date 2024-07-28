@@ -797,3 +797,58 @@ window.onclick = function(event) {
         postModal.classList.add('hidden');
     }
 }
+
+let currentAction = ''; // Holds the action type ('cancel' or other)
+
+// Function to show the modal and set up the action
+function showFollowActionsModal(action, username) {
+    currentAction = action;
+    const actionText = action === 'cancel' ? 'cancel' : 'perform this action';
+    
+    // Update modal content
+    document.getElementById('followActionType').textContent = actionText;
+    
+    // Show the modal
+    $('#followActionsModal').modal('show');
+    
+    // Set up the confirm button click handler
+    document.getElementById('confirmFollowAction').onclick = function() {
+        handleFollowAction(username);
+    };
+}
+
+// Function to handle the follow action based on currentAction
+function handleFollowAction(username) {
+    let method = 'DELETE';
+    let endpoint = `/api/cancel-follow/${username}`;
+    
+    if (currentAction === 'other') {
+        method = 'POST'; // Example for other actions
+        endpoint = `/api/other-action/${username}`;
+    }
+    
+    fetch(endpoint, { method })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.text();
+        })
+        .then(data => {
+            alert(data); // Show success message
+            $('#followActionsModal').modal('hide'); // Hide the modal
+            
+            // Update button text or other UI changes
+            const button = document.querySelector(`[data-username="${username}"]`);
+            if (button) {
+                button.innerHTML = '<i class="fa fa-user-plus uab"></i>Follow';
+                button.removeAttribute('data-status');
+                button.removeAttribute('id');
+                button.removeAttribute('onclick');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error performing the action');
+        });
+}
