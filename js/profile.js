@@ -664,7 +664,8 @@ document.getElementById('submitEditProfileButton').addEventListener('click', asy
     }
 
     if (profileImageFile) {
-        formData.append('profilePic', profileImageFile, profileImageFile.name);
+        const compressedProfileBlob = await compressImage(profileImageFile)
+        formData.append('profilePic', compressedProfileBlob, profileImageFile.name);
         console.log(formData);
     }
 
