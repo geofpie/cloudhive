@@ -528,6 +528,21 @@ function denyFollowRequest(username) {
 
 document.addEventListener('DOMContentLoaded', (event) => {
     fetchUserInfo();
+    
+    const notificationsModal = document.getElementById('notificationsModal');
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+        if (event.target == notificationsModal) {
+            notificationsModal.style.display = 'none';
+        }
+    }
+
+    const postModal = document.getElementById('postModal');
+    window.onclick = function(event) {
+        if (event.target == postModal) {
+            postModal.classList.add('hidden');
+        }
+    }
 });
 
 function fetchUserInfo() {
@@ -777,21 +792,6 @@ function adjustTextColorBasedOnImage(imageSelector) {
                 el.style.color = textColor;
             });
         });
-    }
-}
-
-const notificationsModal = document.getElementById('notificationsModal');
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-    if (event.target == notificationsModal) {
-        notificationsModal.style.display = 'none';
-    }
-}
-
-const postModal = document.getElementById('postModal');
-window.onclick = function(event) {
-    if (event.target == postModal) {
-        postModal.classList.add('hidden');
     }
 }
 

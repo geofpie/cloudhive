@@ -539,11 +539,11 @@ document.addEventListener('DOMContentLoaded', () => {
             notificationsModal.style.display = 'none';
         }
     }
-});
 
-const postModal = document.getElementById('postModal');
-window.onclick = function(event) {
-    if (event.target == postModal) {
-        postModal.classList.add('hidden');
+    const postModal = document.getElementById('postModal');
+    window.onclick = function(event) {
+        if (event.target == postModal) {
+            postModal.classList.add('hidden');
+        }
     }
-}
+});
