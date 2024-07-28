@@ -1346,6 +1346,7 @@ a:hover {
 
 .cropper-image {
     width: 100%;
-    height: 500px;
-    object-fit: cover;
+    max-height: 500px;
+    height: auto;
+    overflow: none;
 }
