@@ -1338,6 +1338,7 @@ a:hover {
     max-height: 80vh;
 }
 
-.cropper-container img {
-    max-height: 80vh;
+/* Ensure square preview */
+.cropper-view-box {
+    border-radius: 50%; 
 }
