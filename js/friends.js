@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 data.forEach(user => {
                     const card = document.createElement('div');
-                    card.classList.add('card');
+                    card.classList.add('friends-card shadow');
                     card.innerHTML = `
                         <img src="${user.profile_picture_url || 'default-profile.png'}" alt="${user.username}'s profile picture">
                         <h3>${user.username}</h3>

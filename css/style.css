@@ -1419,16 +1419,16 @@ a:hover {
     justify-content: center;
 }
 
-.card {
+.friends-card {
     width: 200px;
     padding: 10px;
     border: 1px solid #ccc;
-    border-radius: 5px;
+    border-radius: 16px;
     text-align: center;
     background: #fff;
 }
 
-.card img {
+.friends-card img {
     width: 100px;
     height: 100px;
     border-radius: 50%;
