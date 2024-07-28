@@ -333,6 +333,7 @@ a:hover {
 .cropper-container img {
     max-width: 100%; 
     height: auto;
+    aspect-ratio: 1/1;
 }
 
 /* Ensure square preview */
@@ -1302,7 +1303,7 @@ a:hover {
 .crop-modal-dialog {
     position: relative;
     margin: 10px auto;
-    max-width: 800px; /* Or your preferred width */
+    max-width: 600px; /* Or your preferred width */
     width: 100%;
 }
 
