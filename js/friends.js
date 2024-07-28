@@ -22,7 +22,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function loadFriends(tab) {
         fetch(`/api/${tab}`)
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                return response.json();
+            })
             .then(data => {
                 const container = document.getElementById(`${tab}-cards`);
                 container.innerHTML = '';
@@ -41,6 +46,7 @@ document.addEventListener('DOMContentLoaded', function() {
             })
             .catch(error => {
                 console.error('Error loading friends:', error);
+                alert('Failed to load friends. Please try again later.');
             });
     }
 

@@ -4,25 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Friends</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css"> <!-- Include your CSS file -->
 </head>
 <body>
-    <div class="container">
-        <h1>Friends</h1>
-        <div class="tabs">
-            <button class="tab-button active" data-tab="following">Following</button>
-            <button class="tab-button" data-tab="followedBy">Followed By</button>
-        </div>
-        <div class="tab-content" id="following">
-            <div class="card-container" id="following-cards">
-                <!-- Cards will be inserted here -->
-            </div>
-        </div>
-        <div class="tab-content" id="followedBy" style="display: none;">
-            <div class="card-container" id="followedBy-cards">
-                <!-- Cards will be inserted here -->
-            </div>
-        </div>
+    <div class="tabs-container">
+        <button class="tab-button active" data-tab="following">Following</button>
+        <button class="tab-button" data-tab="followers">Followers</button>
+    </div>
+    <div class="tab-content" id="following">
+        <div id="following-cards" class="cards-container"></div>
+    </div>
+    <div class="tab-content" id="followers" style="display: none;">
+        <div id="followers-cards" class="cards-container"></div>
     </div>
 
     <script src="js/friends.js"></script>
