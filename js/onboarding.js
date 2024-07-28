@@ -1,9 +1,8 @@
 document.addEventListener('DOMContentLoaded', function() {
     const spinnerWrapper = document.querySelector('.spinner-wrapper');
     const profilePicInput = document.getElementById('profile-pic');
-    const cropModal = document.getElementById('cropModal');
-    const cropModalDialog = cropModal.querySelector('.crop-modal-dialog'); // Custom modal dialog
-    const cropModalClose = cropModal.querySelector('.crop-modal-close'); // Custom close button
+    const cropModal = new bootstrap.Modal(document.getElementById('cropModal'));
+    const cropModalDialog = document.querySelector('.custom-modal-dialog'); // Custom modal dialog
     const cropSubmitBtn = document.getElementById('crop-submit-btn'); // Crop button in custom modal
     let cropper;
 
@@ -80,11 +79,19 @@ document.addEventListener('DOMContentLoaded', function() {
                     scalable: false, // Disable image scaling
                     ready: function() {
                         console.log('Cropper.js initialized.');
+                        // Resize Cropper to fit its container
+                        cropper.resize();
                     }
                 });
 
                 // Show custom crop modal
-                openCropModal();
+                cropModal.show();
+
+                // Adjust Cropper on modal resize
+                window.addEventListener('resize', () => cropper?.resize());
+
+                // Ensure Cropper adjusts to the modal's size
+                cropModal._element.addEventListener('shown.bs.modal', () => cropper?.resize());
             };
 
             // Log the loaded image source for debugging
@@ -92,19 +99,6 @@ document.addEventListener('DOMContentLoaded', function() {
         };
         reader.readAsDataURL(files[0]);
     });
-
-    // Function to open the custom crop modal
-    function openCropModal() {
-        cropModal.style.display = 'block';
-    }
-
-    // Function to close the custom crop modal
-    function closeCropModal() {
-        cropModal.style.display = 'none';
-    }
-
-    // Event listener for the custom close button in the modal
-    cropModalClose.addEventListener('click', closeCropModal);
 
     // Event listener for the crop image button in the modal
     cropSubmitBtn.addEventListener('click', function() {
@@ -123,10 +117,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 document.getElementById('profile-pic-preview').style.backgroundImage = `url(${croppedImageUrl})`;
 
                 // Hide custom crop modal
-                closeCropModal();
+                cropModal.hide();
             });
         }
-    });    
+    });
 
     // Select the form element
     const onboardingForm = document.querySelector('.onboarding-form');
