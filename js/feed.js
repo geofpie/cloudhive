@@ -270,7 +270,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
         let url = '/api/newsfeed';
         if (lastTimestamp) {
-            url += `?lastTimestamp=${encodeURIComponent(lastTimestamp)}`;
+            url += `?lastTimestamp=${encodeURIComponent(lastTimestamp)}`; // Encode URI component for safety
         }
     
         console.log('Fetching posts from URL:', url);
@@ -294,9 +294,12 @@ document.addEventListener('DOMContentLoaded', function() {
     
                 if (newPosts.length > 0) {
                     newPosts.forEach(post => {
-                        fetchedPostIds.add(post.postId);
+                        fetchedPostIds.add(post.postId); // Add to set of fetched post IDs
     
-                        const isLiked = post.isLiked || false;
+                        // Determine if the post is liked by the current user
+                        const isLiked = post.isLiked; // Ensure `isLiked` is provided by the backend
+    
+                        // Update button appearance based on the `isLiked` status
                         const likeButtonIcon = isLiked ? '../assets/liked.svg' : '../assets/unliked.svg';
                         const likeButtonText = isLiked ? 'Liked' : 'Like';
                         const likeButtonClass = isLiked ? 'liked' : '';
@@ -305,42 +308,46 @@ document.addEventListener('DOMContentLoaded', function() {
                         postElement.className = 'hive-post';
     
                         const postTemplate = `
-                            <div class="col-md-4 hive-post-element mx-auto" data-post-id="${post.postId}">
-                                <div class="row hive-post-user-details align-items-center">
-                                    <div class="hive-post-pfp">
-                                        <img src="${post.userProfilePicture || '../assets/default-profile.jpg'}" alt="Profile" class="post-profile-pic">
-                                    </div>
-                                    <div class="col hive-user-details-text">
-                                        <a href="/${post.username}" class="hive-post-username">${post.firstName}</a>
-                                        <a href="/${post.username}" class="hive-post-user-sub">@${post.username}</a>
-                                    </div>
-                                    <div class="col hive-user-details-time">
-                                        <i class="fa fa-clock hive-post-time-icon"></i><p class="hive-post-time">${dayjs(post.postTimestamp).fromNow()}</p>
-                                    </div>
+                        <div class="col-md-4 hive-post-element mx-auto" data-post-id="${post.postId}">
+                            <div class="row hive-post-user-details align-items-center">
+                                <div class="hive-post-pfp">
+                                    <img src="${post.userProfilePicture || '../assets/default-profile.jpg'}" alt="Profile" class="post-profile-pic">
                                 </div>
-                                <div class="row hive-post-content">
-                                    <p class="hive-post-text">${post.content}</p>
-                                    ${post.imageUrl ? `<div class="hive-post-image shadow"><img class="hive-post-img-src" data-src="${post.imageUrl}" src="${post.imageUrl}" alt="Post Image" loading="lazy"></div>` : ''}
+                                <div class="col hive-user-details-text">
+                                    <a href="/${post.username}" class="hive-post-username">${post.firstName}</a>
+                                    <a href="/${post.username}" class="hive-post-user-sub">@${post.username}</a>
                                 </div>
-                                <div class="hive-social-stats">
-                                    <p class="hive-stat-like"><strong>${post.likes || 0}</strong> likes</p>
-                                    <hr>
-                                    <button class="hive-stat-like-btn ${likeButtonClass}" data-post-id="${post.postId}">
-                                        <img id="like-btn-hive" src="${likeButtonIcon}" alt="${likeButtonText}" style="width: 22px; height: 22px; vertical-align: middle;">
-                                    </button>
-                                    ${post.isUserPost ? '<div class="post-options"><button class="options-button">...</button><div class="options-menu"><ul><li><a href="#" class="edit-post" data-id="' + post.postId + '">Edit</a></li><li><a href="#" class="delete-post" data-id="' + post.postId + '">Delete</a></li></ul></div></div>' : ''}
+                                <div class="col hive-user-details-time">
+                                    <i class="fa fa-clock hive-post-time-icon"></i><p class="hive-post-time">${dayjs(post.postTimestamp).fromNow()}</p>
                                 </div>
                             </div>
+                            <div class="row hive-post-content">
+                                <p class="hive-post-text">${post.content}</p>
+                                ${post.imageUrl ? `<div class="hive-post-image shadow"><img class="hive-post-img-src" data-src="${post.imageUrl}" src="${post.imageUrl}" alt="Post Image"></div>` : ''}
+                            </div>
+                            <div class="hive-social-stats">
+                                <p class="hive-stat-like"><strong>${post.likes || 0}</strong> likes</p>
+                                <hr>
+                                <button class="hive-stat-like-btn ${likeButtonClass}" data-post-id="${post.postId}">
+                                    <img id="like-btn-hive" src="${likeButtonIcon}" alt="${likeButtonText}" style="width: 22px; height: 22px; vertical-align: middle;">
+                                </button>
+                                ${post.isUserPost ? '<div class="post-options"><button class="options-button">...</button><div class="options-menu"><ul><li><a href="#" class="edit-post" data-id="' + post.postId + '">Edit</a></li><li><a href="#" class="delete-post" data-id="' + post.postId + '">Delete</a></li></ul></div></div>' : ''}
+                            </div>
+                        </div>
                         `;
     
                         postElement.innerHTML = postTemplate;
                         document.getElementById('newsfeed-posts-container').appendChild(postElement);
                     });
     
+                    // Update lastTimestamp for the next fetch
                     lastTimestamp = data.LastEvaluatedKey || null;
                     console.log('Updated lastTimestamp:', lastTimestamp);
+    
+                    // Show/hide load more button based on availability of more posts
                     loadMoreButton.style.display = lastTimestamp ? 'block' : 'none';
                 } else {
+                    // No new posts, or all posts have been fetched
                     loadMoreButton.style.display = 'none';
                 }
     
