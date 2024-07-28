@@ -801,8 +801,10 @@ window.onclick = function(event) {
 }
 
 // Function to show the modal
-function showFollowActionsModal(action) {
+function showFollowActionsModal(action, username) {
     currentAction = action; // Set the current action
+    currentUsername = username;
+    
     const modal = document.getElementById('followActionsModal');
     const actionType = document.getElementById('followActionType');
 
