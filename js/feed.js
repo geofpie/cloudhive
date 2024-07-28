@@ -606,8 +606,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 fetch(`/api/posts/${postId}`, {
                     method: 'DELETE',
                     headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${localStorage.getItem('authToken')}` // Assumes token is stored in localStorage
+                        'Content-Type': 'application/json'
                     }
                 })
                 .then(response => response.json())
