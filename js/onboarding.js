@@ -5,6 +5,15 @@ document.addEventListener('DOMContentLoaded', function() {
     const cropSubmitBtn = document.getElementById('crop-submit-btn');
     let cropper;
 
+    // Function to adjust cropper container size
+    function adjustCropperContainer() {
+        const container = document.querySelector('.cropper-container');
+        if (container) {
+            container.style.width = '500px'; // Set fixed width
+            container.style.height = '500px'; // Set fixed height
+        }
+    }
+
     profilePicInput.addEventListener('change', function(e) {
         const files = e.target.files;
         if (files.length === 0) return;
@@ -20,19 +29,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
             image.onload = function() {
                 // Ensure container dimensions match modal size
-                const container = document.querySelector('.cropper-container');
-                container.style.maxWidth = '100%';
-                container.style.maxHeight = '100%';
+                adjustCropperContainer();
 
                 // Initialize Cropper.js
                 cropper = new Cropper(image, {
-                    aspectRatio: 1,
-                    viewMode: 1,
-                    autoCropArea: 1,
-                    movable: false,
-                    zoomable: false,
-                    rotatable: false,
-                    scalable: false,
+                    aspectRatio: 1, // Square aspect ratio
+                    viewMode: 1, // Restrict the crop box within the container
+                    autoCropArea: 1, // Fill the crop box with the image
+                    movable: true, // Allow moving the image
+                    zoomable: true, // Allow zooming the image
+                    rotatable: false, // Disable rotation
+                    scalable: false, // Disable scaling
                     ready: function() {
                         console.log('Cropper.js initialized.');
                     }

@@ -1334,24 +1334,15 @@ a:hover {
     opacity: 0.8;
 }
 
-/* Ensure the Cropper container doesn't exceed the modal dimensions */
+/* Ensure the cropper container is fixed to 500px */
 .cropper-container {
-    max-width: 100%; /* Limit to the modal width */
-    max-height: 100%; /* Limit to the modal height */
-    width: 100%; /* Full width of the parent container */
-    height: 100%; /* Full height of the parent container */
+    width: 500px; /* Fixed width */
+    height: 500px; /* Fixed height */
+    overflow: hidden; /* Hide any overflow content */
 }
 
-/* Adjust the size of the cropper view box if necessary */
-.cropper-view-box {
-    max-width: 100%; /* Ensure it fits within the container */
-    max-height: 100%; /* Ensure it fits within the container */
-}
-
-/* Make sure the modal is centered and the cropper is visible */
-.modal-body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 500px; /* Adjust as needed */
+/* Ensure the cropper background is also fixed to the same size */
+.cropper-bg {
+    width: 500px; /* Fixed width */
+    height: 500px; /* Fixed height */
 }
