@@ -2,7 +2,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const spinnerWrapper = document.querySelector('.spinner-wrapper');
     const profilePicInput = document.getElementById('profile-pic');
     const cropModal = document.getElementById('cropModal');
-    const cropModalDialog = cropModal.querySelector('.crop-modal-dialog');
     const cropModalClose = cropModal.querySelector('.crop-modal-close');
     const cropSubmitBtn = document.getElementById('crop-submit-btn');
     let cropper;
@@ -48,17 +47,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
             image.onload = function() {
                 cropper = new Cropper(image, {
-                    aspectRatio: 1,
-                    viewMode: 1,
-                    autoCropArea: 0.8,
-                    movable: false,
-                    zoomable: true,
-                    rotatable: false,
-                    scalable: false,
+                    aspectRatio: 1, // Square crop
+                    viewMode: 1, // Restrict the crop box within the container
+                    autoCropArea: 1, // Fill the crop box with the image
+                    movable: true, // Allow moving the image
+                    zoomable: true, // Allow zooming the image
+                    rotatable: false, // Disable rotation
+                    scalable: false, // Disable scaling
                     ready: function() {
                         console.log('Cropper.js initialized.');
-
-                        // Adjust Cropper to fit image
                         adjustCropper();
                     }
                 });
@@ -147,15 +144,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function adjustCropper() {
         if (cropper) {
-            // Force Cropper to fit its container
+            // Make sure the cropper fits the container
             const container = document.querySelector('.cropper-container');
             const image = document.getElementById('cropper-image');
 
-            // Ensure Cropper container fits the image
-            image.style.width = '100%';
+            image.style.width = 'auto';
             image.style.height = 'auto';
 
-            cropper.resize(); // Trigger a resize event
+            // Adjust cropper dimensions
+            cropper.setAspectRatio(1);
+            cropper.resize();
         }
     }
 
