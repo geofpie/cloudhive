@@ -843,11 +843,11 @@ function cancelFollowRequest() {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
-            return response.text(); // Expecting text response from the backend
+            return response.json(); // Parse JSON response from the backend
         })
         .then(data => {
-            // Show success message
-            alert(data);
+            // Show success message from JSON response
+            alert(data.message || 'Follow request canceled successfully.');
 
             // Update button text
             const button = document.querySelector('[data-status="requested"]');
