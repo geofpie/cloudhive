@@ -334,10 +334,16 @@ document.addEventListener('DOMContentLoaded', function() {
                                         <img id="like-btn-hive" src="${likeButtonIcon}" alt="${likeButtonText}" style="width: 22px; height: 22px; vertical-align: middle;">
                                     </button>
                                     ${post.isUserPost ? `
-                                        <div class="post-options ml-2">
-                                            <button class="hive-stat-options-btn">
+                                        <div class="post-options">
+                                            <button class="hive-stat-options-btn" onclick="toggleOptionsMenu(event)">
                                                 <img id="options-btn-hive" src="assets/options.svg" alt="Options" style="width: 22px; height: 22px;">
                                             </button>
+                                            <div class="options-menu">
+                                                <ul>
+                                                    <li><a href="#" class="edit-post" data-id="${post.postId}">Edit</a></li>
+                                                    <li><a href="#" class="delete-post" data-id="${post.postId}">Delete</a></li>
+                                                </ul>
+                                            </div>
                                         </div>
                                     ` : ''}
                                 </div>
@@ -555,5 +561,33 @@ document.addEventListener('DOMContentLoaded', () => {
         if (event.target == postModal) {
             postModal.classList.add('hidden');
         }
+    }
+});
+
+function toggleOptionsMenu(event) {
+    const button = event.currentTarget;
+    const optionsMenu = button.nextElementSibling;
+
+    // Hide any open options menus
+    document.querySelectorAll('.options-menu').forEach(menu => {
+        if (menu !== optionsMenu) {
+            menu.style.display = 'none';
+        }
+    });
+
+    // Toggle the visibility of the clicked options menu
+    optionsMenu.style.display = optionsMenu.style.display === 'block' ? 'none' : 'block';
+
+    // Prevent the click event from closing the menu immediately
+    event.stopPropagation();
+}
+
+// Close the options menu if clicking outside of it
+document.addEventListener('click', function(event) {
+    const isClickInside = event.target.closest('.post-options');
+    if (!isClickInside) {
+        document.querySelectorAll('.options-menu').forEach(menu => {
+            menu.style.display = 'none';
+        });
     }
 });
