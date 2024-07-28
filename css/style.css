@@ -317,19 +317,6 @@ a:hover {
     background-position: center;
 }
 
-/* Ensure Cropper.js container fills the modal body */
-.modal-body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: auto; /* Adjust as needed for your modal height */
-}
-
-/* Ensure square preview */
-.cropper-view-box {
-    border-radius: 50%; 
-}
-
 .navbar-profile-pic {
     border-radius: 50%;
     height: 40px;
