@@ -597,14 +597,9 @@ const modal = document.getElementById('editProfileModal');
 // Get the button that opens the modal
 const btn = document.getElementById('edit-profile');
 
-// When the user clicks the button, open the modal 
-btn.onclick = function() {
-    modal.style.display = 'block';
-}
-
 // When the user clicks on <span> (x), close the modal
 document.getElementById('closeEditProfileModal').onclick = function(event) {
-    modal.classList.add('hidden');
+    modal.style.display('none');
 }
 
 // When the user clicks anywhere outside of the modal, close it
