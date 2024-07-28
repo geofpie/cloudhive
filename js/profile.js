@@ -807,9 +807,9 @@ function closeFollowActionsModal() {
 
 function handleModalConfirm() {
     if (currentAction === 'cancel') {
-        cancelFollowRequest(); // Call your cancel function
+        cancelFollowRequest(currentUsername); // Call your cancel function
     } else if (currentAction === 'unfollow') {
-        unfollowUser(); // Call your unfollow function
+        unfollowUser(currentUsername); // Call your unfollow function
     }
     closeFollowActionsModal(); // Close the modal after action
 }
@@ -849,8 +849,6 @@ function cancelFollowRequest(username) {
 
 // Function to handle unfollow request
 function unfollowUser(username) {
-    const username = currentUsername; 
-
     fetch(`/api/unfollow/${username}`, { method: 'DELETE' })
         .then(response => {
             if (!response.ok) {
