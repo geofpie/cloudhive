@@ -593,14 +593,15 @@ document.addEventListener('click', function(event) {
 });
 
 document.addEventListener('DOMContentLoaded', function () {
-    // Handle click event on delete post links
-    document.querySelectorAll('.delete-post').forEach(button => {
-        button.addEventListener('click', function (event) {
+    // Attach event listener to the document
+    document.addEventListener('click', function (event) {
+        // Check if the clicked element is a delete button
+        if (event.target && event.target.classList.contains('delete-post')) {
             event.preventDefault();
 
             // Confirm before deleting
             if (confirm('Are you sure you want to delete this post?')) {
-                const postId = this.getAttribute('data-id');
+                const postId = event.target.getAttribute('data-id');
 
                 // Send delete request to the server
                 fetch(`/api/posts/${postId}`, {
@@ -627,6 +628,6 @@ document.addEventListener('DOMContentLoaded', function () {
                     alert('An error occurred while deleting the post.');
                 });
             }
-        });
+        }
     });
 });
