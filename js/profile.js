@@ -472,6 +472,37 @@ function cancelFollowRequest(username) {
         });
 }
 
+// Function to handle unfollow request
+function unfollowRequest(username) {
+    fetch(`/api/unfollow/${username}`, { method: 'DELETE' })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json(); // Parse the JSON response
+        })
+        .then(data => {
+            alert(data.message); // Show the message from the JSON response
+
+            // Find the button by ID using the username
+            const button = document.getElementById(`follow-button-${username}`);
+            if (button) {
+                // Update button text
+                button.innerHTML = '<i class="fa fa-user-plus uab"></i>Follow';
+
+                // Update button attributes
+                button.removeAttribute('data-status'); // Remove data-status if present
+                button.setAttribute('onclick', `sendFollowRequest('${username}')`); // Set onclick to call sendFollowRequest
+            } else {
+                console.error('Button not found for username:', username);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error unfollowing user');
+        });
+}
+
 document.getElementById('notifications-link').addEventListener('click', function() {
     fetch('/api/follow-requests')
         .then(response => response.json())
