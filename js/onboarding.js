@@ -73,6 +73,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 cropper = new Cropper(image, {
                     dragMode: 'move',
                     aspectRatio: 1 / 1,
+                    viewMode: 2,
                     autoCropArea: 0.8,
                     restore: false,
                     guides: false,
