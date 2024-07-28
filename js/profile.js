@@ -564,15 +564,20 @@ document.addEventListener('DOMContentLoaded', (event) => {
 function fetchUserInfo() {
     fetch('/api/get_user_info', {
         method: 'GET',
+        credentials: 'include',
     })
     .then(response => {
         if (response.status === 401) {
             // Redirect to homepage if user is unauthorised
+            console.log('Response status:', response.status);
+            console.log('Response headers:', response.headers);
             window.location.href = '/';
             return; // Stop further processing
         }
         
         if (!response.ok) {
+            console.log('Response status:', response.status);
+            console.log('Response headers:', response.headers);
             throw new Error('Generic error ' + response.statusText);
         }
         
