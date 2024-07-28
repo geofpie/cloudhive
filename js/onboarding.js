@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const cropModalDialog = cropModal.querySelector('.crop-modal-dialog'); // Custom modal dialog
     const cropModalClose = cropModal.querySelector('.crop-modal-close'); // Custom close button
     const cropSubmitBtn = document.getElementById('crop-submit-btn'); // Crop button in custom modal
+    const cropModelCancel = cropModal.querySelector('.crop-modal-cancel');
     let cropper;
 
     // Function to hide spinner and show content
@@ -112,6 +113,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Event listener for the custom close button in the modal
     cropModalClose.addEventListener('click', closeCropModal);
+
+    cropModelCancel.addEventListener('click', closeCropModal);
+
+    window.onclick = function(event) {
+        if (event.target == cropModal) {
+            closeCropModal();
+        }
+    }
 
     // Event listener for the crop image button in the modal
     cropSubmitBtn.addEventListener('click', function() {
