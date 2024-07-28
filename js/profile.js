@@ -591,32 +591,13 @@ function updateUserProfile(user) {
 
 dayjs.extend(dayjs_plugin_relativeTime);
 
-// Get the modal
+// Get the modal and button
 const modal = document.getElementById('editProfileModal');
-
-// Get the button that opens the modal
 const btn = document.getElementById('edit-profile');
+const closeBtn = document.getElementById('closeEditProfileModal');
 
-const closeEventBtn = document.getElementById('closeEditProfileModal');
-
-// When the user clicks on <span> (x), close the modal
-closeEventBtn.onclick = function() {
-    modal.style.display = 'none';
-}
-
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-    if (event.target == modal) {
-        modal.style.display = 'none';
-    }
-}
-
-function closeEditProfile() {
-    const modal = document.getElementById('editProfileModal');
-    modal.style.display = 'none';
-}
-
-document.getElementById('edit-profile').addEventListener('click', function () {
+// Function to open the modal
+function openEditProfileModal() {
     fetch('/api/get_user_info')
         .then(response => response.json())
         .then(data => {
@@ -629,7 +610,7 @@ document.getElementById('edit-profile').addEventListener('click', function () {
                     document.getElementById('profilePicPreview').style.display = 'block';
                 }
                 // Show the modal
-                $('#editProfileModal').modal('show');
+                modal.style.display = 'block';
             } else {
                 alert('Failed to load user information.');
             }
@@ -638,7 +619,23 @@ document.getElementById('edit-profile').addEventListener('click', function () {
             console.error('Error fetching user information:', error);
             alert('Failed to load user information.');
         });
-});
+}
+
+// Function to close the modal
+function closeEditProfileModal() {
+    modal.style.display = 'none';
+}
+
+// Event listeners
+btn.onclick = openEditProfileModal;
+closeBtn.onclick = closeEditProfileModal;
+
+// Close modal when clicking outside
+window.onclick = function(event) {
+    if (event.target == modal) {
+        closeEditProfileModal();
+    }
+};
 
 // Initialize variables
 let headerImageFile = null;
