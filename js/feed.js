@@ -318,7 +318,8 @@ document.addEventListener('DOMContentLoaded', function() {
                                     <a href="/${post.username}" class="hive-post-user-sub">@${post.username}</a>
                                 </div>
                                 <div class="col hive-user-details-time">
-                                    <i class="fa fa-clock hive-post-time-icon"></i><p class="hive-post-time">${dayjs(post.postTimestamp).fromNow()}</p>
+                                    <i class="fa fa-clock hive-post-time-icon"></i>
+                                    <p class="hive-post-time">${dayjs(post.postTimestamp).fromNow()}</p>
                                 </div>
                             </div>
                             <div class="row hive-post-content">
@@ -328,10 +329,24 @@ document.addEventListener('DOMContentLoaded', function() {
                             <div class="hive-social-stats">
                                 <p class="hive-stat-like"><strong>${post.likes || 0}</strong> likes</p>
                                 <hr>
-                                <button class="hive-stat-like-btn ${likeButtonClass}" data-post-id="${post.postId}">
-                                    <img id="like-btn-hive" src="${likeButtonIcon}" alt="${likeButtonText}" style="width: 22px; height: 22px; vertical-align: middle;">
-                                </button>
-                                ${post.isUserPost ? '<div class="post-options"><button class="options-button">...</button><div class="options-menu"><ul><li><a href="#" class="edit-post" data-id="' + post.postId + '">Edit</a></li><li><a href="#" class="delete-post" data-id="' + post.postId + '">Delete</a></li></ul></div></div>' : ''}
+                                <div class="d-flex align-items-center">
+                                    <button class="hive-stat-like-btn ${likeButtonClass}" data-post-id="${post.postId}">
+                                        <img id="like-btn-hive" src="${likeButtonIcon}" alt="${likeButtonText}" style="width: 22px; height: 22px; vertical-align: middle;">
+                                    </button>
+                                    ${post.isUserPost ? `
+                                        <div class="post-options ml-2">
+                                            <button class="hive-stat-options-btn">
+                                                <img id="options-btn-hive" src="assets/options.svg" alt="Options" style="width: 22px; height: 22px;">
+                                            </button>
+                                            <div class="options-menu">
+                                                <ul>
+                                                    <li><a href="#" class="edit-post" data-id="${post.postId}">Edit</a></li>
+                                                    <li><a href="#" class="delete-post" data-id="${post.postId}">Delete</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    ` : ''}
+                                </div>
                             </div>
                         </div>
                         `;
