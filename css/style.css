@@ -1335,7 +1335,7 @@ a:hover {
 }
 
 .cropper-container, .cropper-bg {
-    max-height: auto;
+    max-height: 500px;
     height: auto;
 }
 
