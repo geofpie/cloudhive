@@ -591,3 +591,43 @@ document.addEventListener('click', function(event) {
         });
     }
 });
+
+document.addEventListener('DOMContentLoaded', function () {
+    // Handle click event on delete post links
+    document.querySelectorAll('.delete-post').forEach(button => {
+        button.addEventListener('click', function (event) {
+            event.preventDefault();
+
+            // Confirm before deleting
+            if (confirm('Are you sure you want to delete this post?')) {
+                const postId = this.getAttribute('data-id');
+
+                // Send delete request to the server
+                fetch(`/api/posts/${postId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${localStorage.getItem('authToken')}` // Assumes token is stored in localStorage
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.message === 'Post deleted successfully.') {
+                        // Remove the post element from the DOM
+                        const postElement = document.querySelector(`.hive-post-element[data-post-id="${postId}"]`);
+                        if (postElement) {
+                            postElement.remove();
+                        }
+                        alert('Post deleted successfully.');
+                    } else {
+                        alert('Failed to delete the post: ' + data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('An error occurred while deleting the post.');
+                });
+            }
+        });
+    });
+});
