@@ -121,42 +121,45 @@ document.addEventListener('DOMContentLoaded', function() {
     loadFriends(defaultTab);
 });
 
-document.getElementById('notifications-link').forEach.addEventListener('click', function() {
-    fetch('/api/follow-requests')
-        .then(response => response.json())
-        .then(data => {
-            const followRequestsList = document.getElementById('follow-requests-list');
-            followRequestsList.innerHTML = ''; // Clear the list
+document.querySelectorAll('.notifications-link').forEach(link => {
+    link.addEventListener('click', function() {
+        fetch('/api/follow-requests')
+            .then(response => response.json())
+            .then(data => {
+                const followRequestsList = document.getElementById('follow-requests-list');
+                followRequestsList.innerHTML = ''; // Clear the list
 
-            data.forEach(request => {
-                const listItem = document.createElement('li');
-                listItem.className = 'notifications-list-group-item';
+                data.forEach(request => {
+                    const listItem = document.createElement('li');
+                    listItem.className = 'notifications-list-group-item';
 
-                const profilePicUrl = request.profile_picture_url || '../assets/default-profile.jpg';
+                    const profilePicUrl = request.profile_picture_url || '../assets/default-profile.jpg';
 
-                listItem.innerHTML = `
-                     <div class="follow-container" data-username="${request.username}">
-                        <div class="request-profile-pic">
-                            <img src="${profilePicUrl}" alt="Profile Picture" class="rounded-circle" width="40" height="40">
+                    listItem.innerHTML = `
+                        <div class="follow-container" data-username="${request.username}">
+                            <div class="request-profile-pic">
+                                <img src="${profilePicUrl}" alt="Profile Picture" class="rounded-circle" width="40" height="40">
+                            </div>
+                            <div class="follow-details">
+                                <strong>${request.first_name} ${request.last_name}</strong>
+                                <p>@${request.username}</p>
+                            </div>
+                            <div class="follow-actions">
+                                <button class="follow-btn-action accept" onclick="acceptFollowRequest('${request.username}')"><img src="assets/accept.svg" width="28" height="28"></button>
+                                <button class="follow-btn-action deny" onclick="denyFollowRequest('${request.username}')"><img src="assets/deny.svg" width="28" height="28"></button>
+                            </div>
                         </div>
-                        <div class="follow-details">
-                            <strong>${request.first_name} ${request.last_name}</strong>
-                            <p>@${request.username}</p>
-                        </div>
-                        <div class="follow-actions">
-                            <button class="follow-btn-action accept" onclick="acceptFollowRequest('${request.username}')"><img src="assets/accept.svg" width="28" height="28"></button>
-                            <button class="follow-btn-action deny" onclick="denyFollowRequest('${request.username}')"><img src="assets/deny.svg" width="28" height="28"></button>
-                        </div>
-                    </div>
-                `;
+                    `;
 
-                followRequestsList.appendChild(listItem);
-            });
+                    followRequestsList.appendChild(listItem);
+                });
 
-            openNotificationsModal();
-        })
-        .catch(error => console.error('Error fetching follow requests:', error));
+                openNotificationsModal();
+            })
+            .catch(error => console.error('Error fetching follow requests:', error));
+    });
 });
+
 
 function openNotificationsModal() {
     document.getElementById('notificationsModal').style.display = 'block';
