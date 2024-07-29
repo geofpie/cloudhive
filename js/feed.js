@@ -206,13 +206,11 @@ document.addEventListener('DOMContentLoaded', function() {
         })
         .then(data => {
             console.log('Post created successfully:', data);
-            hideUploadIndicator(); // Hide spinner after upload
             hideModal(); // Hide modal after successful post
             refreshFeed(); // Clear current feed and fetch new posts
         })
         .catch(error => {
             console.error('Error creating post:', error);
-            hideUploadIndicator(); // Hide spinner if there's an error
         });
     }
 
