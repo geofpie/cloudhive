@@ -112,14 +112,17 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     submitPostButton.addEventListener('click', () => {
-        const postContent = document.getElementById('postContent').value;
+        const postContent = document.getElementById('postContent');
         const postImage = postImageInput.files[0];
         
-        if (postContent.trim() || postImage) {
+        if (postContent.value.trim() || postImage) {
             showSpinner(submitPostButton); // Show spinner during upload
-            submitPost(postContent, postImage)
+            submitPost(postContent.value, postImage)
                 .then(() => {
                     hideSpinner(submitPostButton); // Hide spinner after upload
+                    postContent.value = ''; // Clear the text field
+                    postImageInput.value = ''; // Clear the file input
+                    document.getElementById('imagePreview').style.display = 'none'; // Hide image preview if needed
                 })
                 .catch((error) => {
                     console.error('Error uploading post:', error);

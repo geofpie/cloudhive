@@ -143,11 +143,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
         if (imageFile) {
             formData.append('postImage', imageFile);
         }
-
+    
         console.log('Submitting FormData:', formData);
         console.log('Image File in FormData:', formData.get('postImage'));
-
-        fetch('/api/create_post', {
+    
+        return fetch('/api/create_post', { // Return the Promise from fetch
             method: 'POST',
             body: formData,
             headers: {
@@ -162,16 +162,16 @@ document.addEventListener('DOMContentLoaded', (event) => {
         })
         .then(data => {
             console.log('Post created successfully:', data);
-            hideUploadIndicator(); // Hide spinner after upload
             hideModal(); // Hide modal after successful post
-            refreshFeed();
+            refreshFeed(); // Clear current feed and fetch new posts
+            return data; // Return data for chaining
         })
         .catch(error => {
             console.error('Error creating post:', error);
-            hideUploadIndicator(); // Hide spinner if there's an error
+            throw error; // Re-throw the error for handling in the caller
         });
     }
-
+    
     function showSkeletonLoader() {
         for (let i = 0; i < 3; i++) { // Adjust the number of skeleton loaders as needed
             const skeletonElement = document.createElement('div');
