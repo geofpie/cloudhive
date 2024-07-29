@@ -1359,40 +1359,52 @@ a:hover {
     }
 }
 
+.container-flex {
+    padding: 0!important;
+}
+
 /* Full-width header background */
 .profile-fullwidth-header {
     background-size: cover;
     background-position: center;
-    height: 300px; /* Adjust height as needed */
+    height: 200px; /* Adjust height as needed */
     position: relative;
 }
 
 /* Container for profile details */
 .profile-content {
     position: relative;
-    text-align: center;
-    padding: 0 20px; /* Adjust padding as needed */    
+    background-color: #fff; /* White background for profile details */
+    border-top: 5px solid #007bff; /* Optional border to separate */
+    padding: 70px 20px 20px 20px; /* Adjust padding as needed */
+    margin-top: -75px; /* Pull up to overlap header */
+    z-index: 1; /* Ensure it’s above header */
 }
 
-/* Profile picture */
+/* Profile picture container */
 .profile-picture-container {
-    position: relative;
+    position: absolute;
+    top: 50%; /* Center vertically */
+    left: 50%; /* Center horizontally */
+    transform: translate(-50%, -50%); /* Center the element */
     width: 150px; /* Adjust size as needed */
     height: 150px;
-    margin: -75px auto 20px auto; /* Overlap effect */
     overflow: hidden;
+    border-radius: 50%; /* Make it a circle */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    z-index: 2; /* Ensure it’s above the content */
 }
 
+/* Profile picture styling */
 .header-profile-pic {
     width: 100%;
     height: auto;
-    border-radius: 50%;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
-/* User info */
+/* User info styling */
 .profile-info {
-    margin-bottom: 20px;
+    text-align: center;
+    margin-top: 80px; /* Space for the profile picture overlap */
 }
 
 .profile-user-name {
@@ -1410,7 +1422,7 @@ a:hover {
     display: flex;
     justify-content: center;
     gap: 20px; /* Space between stats */
-    margin-bottom: 20px;
+    margin-top: 20px;
 }
 
 .profile-stat {
