@@ -92,9 +92,10 @@ document.addEventListener('DOMContentLoaded', function() {
                     card.style.animationDelay = `${index * 0.1}s`; // Staggered delay based on index
                     card.innerHTML = `
                         <img src="${user.profile_picture_url || 'default-profile.png'}" alt="${user.username}'s profile picture">
-                        <h3>${user.username}</h3>
-                        <p>${user.first_name} ${user.last_name}</p>
-                        <a href="/${user.username}">View Profile</a>
+                        <h3 class="friends-card-header">${user.first_name} ${user.last_name}</h3>
+                        <p>@${user.username}</p>
+                        <hr class="friends-card-div">
+                        <a class="friends-card-btn" href="/${user.username}">View Profile</a>
                     `;
                     container.appendChild(card);
                 });

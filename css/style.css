@@ -1466,13 +1466,14 @@ a:hover {
     padding: 10px 20px;
     margin: 0 5px;
     cursor: pointer;
-    background: #f1f1f1;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    background: #a64ae0;
+    color: white;
+    border: none;
+    border-radius: 16px;
 }
 
 .tab-button.active {
-    background: #ddd;
+    background: #6e00b3;
 }
 
 .tab-content {
@@ -1505,11 +1506,10 @@ a:hover {
 /* Individual card styling */
 .friends-card {
     background: #fff;
-    border: 1px solid #ddd;
+    border: none;
     border-radius: 16px;
-    padding: 16px;
+    padding: 22px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: calc(33.333% - 16px); /* Adjust width to fit three cards per row with gap */
     opacity: 0;
     text-align: center;
     transform: translateY(20px); /* Start position for floating animation */
@@ -1587,4 +1587,28 @@ a:hover {
 .footer-learn-more {
     font-size: 9px;
     margin-bottom: 8px;
+}
+
+.friends-card-header {
+    margin-top: 12px;
+    margin-bottom: 0;
+    font-size: 22px;
+}
+
+.friends-card-btn {
+    padding: 12px;
+    background-color: #6e00b3;
+    color: white;
+    border-radius: 22px;
+    transition: 0.2s ease-in-out;
+    -webkit-transition: 0.2s ease-in-out;
+}
+
+.friends-card-btn:hover {
+    background-color: #5a0092;
+    color: white;
+}
+
+.friends-card-btn:active {
+    background-color: #44006f;
 }
