@@ -327,6 +327,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                     <p class="hive-post-time">${dayjs(post.postTimestamp).fromNow()}</p>
                                 </div>
                             </div>
+                            <hr>
                             <div class="row hive-post-content">
                                 <p class="hive-post-text">${post.content}</p>
                                 ${post.imageUrl ? `<div class="hive-post-image shadow"><img class="hive-post-img-src" data-src="${post.imageUrl}" src="${post.imageUrl}" alt="Post Image"></div>` : ''}

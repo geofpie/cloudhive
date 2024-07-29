@@ -637,11 +637,15 @@ a:hover {
 }
 
 .hive-post-element { 
-    padding: 26px;
+    padding: 16px 26px 16px 26px;
     background-color: #fff;
-    border-radius: 22px;
+    border-radius: 26px;
     align-items: center;;
     margin-bottom: 18px;
+}
+
+.hive-post-user-details {
+    padding: 0 12px 0 12px;
 }
 
 .hive-post-image {
