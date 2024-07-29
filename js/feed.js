@@ -61,17 +61,11 @@ document.addEventListener('DOMContentLoaded', function() {
     const postImageInput = document.getElementById('postImage');
     const imagePreview = document.getElementById('imagePreview');
     const submitPostButton = document.getElementById('submitPostButton');
-    const uploadIndicator = document.getElementById('uploadIndicator');
     let isFetching = false;
     let lastTimestamp = null;
     const fetchedPostIds = new Set();
 
     fetchUserInfo();
-
-    if (!uploadIndicator) {
-        console.error('Upload indicator element not found');
-        return;
-    }
 
     function showModal() {
         postModal.classList.remove('hidden');
