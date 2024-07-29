@@ -1407,12 +1407,15 @@ a:hover {
 
 /* Profile stats */
 .profile-stats {
+    display: flex;
+    justify-content: center;
+    gap: 20px; /* Space between stats */
     margin-bottom: 20px;
 }
 
 .profile-stat {
     font-size: 1.1em;
-    margin: 5px 0;
+    margin: 0;
 }
 
 /* Action button */
