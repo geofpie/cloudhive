@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', function() {
         })
         .then(response => {
             if (!response.ok) {
-                throw new Error('Network response was not ok');
+                throw new Error('Network error');
             }
             return response.json();
         })
@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
             if (data.token) {
                 // Registration success with token
-                displayPopup('Registration was successful! Please check your email and confirm your email address.', 'text-success');
+                displayPopup('Registration was successful! You can proceed to login now.', 'text-success');
             } else {
                 // Registration error (username or email exists)
                 const errorMessage = data.error || 'Unknown Error';
