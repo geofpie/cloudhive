@@ -1469,3 +1469,34 @@ a:hover {
     }
 }
 
+/* Show icons horizontally on mobile screens */
+@media (max-width: 991px) {
+    .navbar-nav {
+        display: flex;
+        justify-content: space-around;
+        width: 100%;
+        margin-top: 56px; /* Adjust based on your navbar height */
+        padding: 0.5rem;
+        background: white; /* Ensure background is solid for better visibility */
+        position: absolute; /* Ensure it’s above other content */
+        top: 0;
+        left: 0;
+        z-index: 1000; /* Ensure it’s above other content */
+    }
+
+    /* Hide default icon display on smaller screens */
+    .navbar-collapse {
+        display: none;
+    }
+}
+
+/* Show mobile menu items on larger screens */
+@media (min-width: 992px) {
+    .navbar-nav {
+        display: flex; /* Ensure the default horizontal layout on larger screens */
+    }
+
+    .navbar-collapse {
+        display: flex; /* Show the default collapse menu on larger screens */
+    }
+}
