@@ -742,15 +742,23 @@ a:hover {
 .post-modal-header, .post-modal-footer {
     display: flex;
     justify-content: space-between;
+    text-align: center;
     align-items: center;
 }
 
+.post-modal-divider {
+    margin: 6px 0 12px 0;
+}
+
 .post-modal-close {
-    width: 28px;
-    height: 28px; 
-    border-radius: 100%;
+    width: 32px;
+    height: 32px; 
+    margin-top: auto;
+    margin-bottom: auto;
+    border-radius: 50%;
     border: none;
     cursor: pointer;
+    background: none;
 }
 
 .post-modal-close-icon {
@@ -834,11 +842,12 @@ a:hover {
 }
 
 .attach-image-btn {
-    padding: 12px;
-    border-radius: 12px;
-    color: #333333;
-    background-color: #e9e9e9;
-    font-size: 14px;
+    border-radius: 50%;
+    color: #197292;
+    background-color: #d6eaf1;
+    font-size: 18px;
+    width: auto;
+    height: auto;
 }
 
 .send-post-btn { 
@@ -861,7 +870,14 @@ a:hover {
 }
 
 .post-modal-title {
-    font-size: 22px;
+    font-size: 18px;
+    text-align: center;
+}
+
+.post-modal-profile-pic {
+    border-radius: 50%;
+    height: 32px;
+    width: 32px;
 }
 
 .nav-icons {
@@ -880,8 +896,8 @@ a:hover {
 .share-post-area {
     border-radius: 18px;
     border: none; 
-    background-color: #e9e9e9;
     padding: 12px;
+    resize: none;
 }
 
 .navbar-hamburger {

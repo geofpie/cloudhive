@@ -126,17 +126,19 @@
     <!-- Create Post Modal -->
     <div id="postModal" class="post-modal hidden">
         <div class="post-modal-content">
-            <div class="post-modal-header">
+            <div class="post-modal-header align-items-center">
+                <img src="../assets/default-profile.jpg" alt="Profile" class="post-modal-profile-pic">
                 <h2 class="post-modal-title">Share something</h2>
                 <button id="closeModal" class="post-modal-close"><img src="assets/closebtn.svg" class="post-modal-close-icon"></button>
             </div>
+            <hr class="post-modal-divider">
             <div class="post-modal-body">
                 <form id="writePostForm">
                     <div class="form-group">
                         <textarea class="form-control share-post-area" id="postContent" rows="3" placeholder="What's on your mind?"></textarea>
                     </div>
                     <div class="form-group">
-                        <button type="button" id="attachImageButton" class="btn attach-image-btn"><i class="fa fa-image"></i> Share an Image</button>
+                        <button type="button" id="attachImageButton" class="btn attach-image-btn"><i class="fa fa-image"></i></button>
                         <input type="file" id="postImage" class="form-control-file" style="display: none;">
                     </div>
                     <img id="imagePreview" src="#" alt="Image Preview" class="upload-img-preview" style="display: none;">
