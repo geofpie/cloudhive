@@ -94,7 +94,6 @@ document.addEventListener('DOMContentLoaded', function() {
                         <img src="${user.profile_picture_url || 'default-profile.png'}" alt="${user.username}'s profile picture">
                         <h3 class="friends-card-header">${user.first_name} ${user.last_name}</h3>
                         <p>@${user.username}</p>
-                        <hr class="friends-card-div">
                         <a class="friends-card-btn" href="/${user.username}">View Profile</a>
                     `;
                     container.appendChild(card);
