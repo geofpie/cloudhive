@@ -208,9 +208,11 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log('Post created successfully:', data);
             hideModal(); // Hide modal after successful post
             refreshFeed(); // Clear current feed and fetch new posts
+            resolve(data);
         })
         .catch(error => {
             console.error('Error creating post:', error);
+            reject(error);
         });
     }
 
