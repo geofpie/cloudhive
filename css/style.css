@@ -15,13 +15,13 @@ h2 {
 
 a {
     text-decoration: none;
-    color: #ff87ab;
+    color: #3c0061;
     transition: 0.2s;
     -webkit-transition: 0.2s;
 }
 
 a:hover { 
-    color: #ff5d8f;
+    color: #24003b;
     text-decoration: none;
 }
 
@@ -376,15 +376,15 @@ a:hover {
 
 .hive-post-user-sub {
     display: block;
-    color: #ffc2d1;
+    color: #6e00b3;
 }
 
 .pic {
-    color: #6d23b6;
+    color: #3c0061;
 }
 
 .write {
-    color: #ac46a1;
+    color: #3c0061;
 }
 
 .hive-post-time-icon, .hive-post-time {
@@ -637,7 +637,7 @@ a:hover {
 }
 
 .hive-post-element { 
-    padding: 16px 26px 16px 26px;
+    padding: 20px 26px 16px 26px;
     background-color: #fff;
     border-radius: 26px;
     align-items: center;;
@@ -645,7 +645,7 @@ a:hover {
 }
 
 .hive-post-user-details {
-    padding: 0 12px 0 12px;
+    padding: 0 12px 12px 12px;
 }
 
 .hive-post-image {
@@ -844,7 +844,17 @@ a:hover {
 
 .send-post-btn { 
     width: 100%;
-    border-radius: 16px;
+    padding: 10px 20px;
+    border-radius: 22px;
+    background-color: #6e00b3;
+}
+
+.send-post-btn:hover {
+    background-color: #550089;
+}
+
+.send-post-btn:active {
+    background-color: #3d0063;
 }
 
 .post-modal-title {
