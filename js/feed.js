@@ -187,11 +187,11 @@ document.addEventListener('DOMContentLoaded', function() {
         if (imageFile) {
             formData.append('postImage', imageFile);
         }
-
+    
         console.log('Submitting FormData:', formData);
         console.log('Image File in FormData:', formData.get('postImage'));
-
-        fetch('/api/create_post', {
+    
+        return fetch('/api/create_post', { // Return the Promise from fetch
             method: 'POST',
             body: formData,
             headers: {
@@ -208,11 +208,11 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log('Post created successfully:', data);
             hideModal(); // Hide modal after successful post
             refreshFeed(); // Clear current feed and fetch new posts
-            resolve(data);
+            return data; // Return data for chaining
         })
         .catch(error => {
             console.error('Error creating post:', error);
-            reject(error);
+            throw error; // Re-throw the error for handling in the caller
         });
     }
 
@@ -458,7 +458,7 @@ document.querySelectorAll('.notifications-link').forEach(link => {
             .then(response => response.json())
             .then(data => {
                 const followRequestsList = document.getElementById('follow-requests-list');
-                followRequestsList.innerHTML = ''; // Clear the list
+                followRequestsList.innerHTML = '';
 
                 data.forEach(request => {
                     const listItem = document.createElement('li');
