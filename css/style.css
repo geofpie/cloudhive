@@ -1649,4 +1649,139 @@ a:hover {
 .settings-form {
     border-radius: 12px;
     font-size: 14px;
+    padding: 16px 18px 16px 18px;
+}
+
+/* dark mode styles */
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: black;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        color: white;
+    }
+
+    p {
+        color: white;
+    }
+
+    a {
+        color: #9d00ff;
+    }
+
+    .hive-navbar {
+        background: rgba(0, 0, 0, 0.5);
+    }
+
+    .nav-icons {
+        filter: invert(97%) sepia(3%) saturate(0%) hue-rotate(213deg) brightness(102%) contrast(105%);
+    }
+
+    .navbar-brand {
+        filter: invert(97%) sepia(3%) saturate(0%) hue-rotate(213deg) brightness(250%) contrast(105%);
+    }
+
+    .friends-card {
+        background-color: #333;
+    }
+
+    .hive-searchbar, .hive-searchbar-btn {
+        background: rgba(255, 255, 255, 0.2);
+        border: none;
+    }
+
+    .profile-user-stats {
+        background: rgba(0, 0, 0, 0.3);
+    }
+    
+    .profile-user-stats strong {
+        color: white;
+    }
+
+    .hive-post-action-bar {
+        background-color: #333;
+    }
+
+    .share-post-button {
+        background-color: #222;
+        color: white;
+    }
+
+    .share-post-button:hover {
+        background-color: #111;
+    }
+
+    .write-post-btn  {
+        background-color: #333;
+        color: white;
+    }
+
+    .write-post-btn:hover {
+        background-color: #222;
+    }
+
+    .hive-post-element {
+        background-color: #333;
+    }
+
+    .hive-post-username {
+        color: white;
+    }
+
+    .hive-post-user-sub {
+        color: #e9e9e9;
+    }
+
+    .hive-stat-like-btn, .hive-stat-options-btn {
+        background-color: #222;
+    }
+
+    .hive-stat-like-btn img, .hive-stat-options-btn img {
+        filter: invert(97%) sepia(3%) saturate(0%) hue-rotate(213deg) brightness(250%) contrast(105%);
+    }
+
+    .post-modal-content, .edit-profile-modal-content, .settings-card, .notifications-modal-content {
+        background-color: #333;
+        border: none;
+    }
+
+    .post-modal-close-icon, .notifications-modal-close {
+        filter: invert(97%) sepia(3%) saturate(0%) hue-rotate(213deg) brightness(102%) contrast(105%);
+    }
+
+    .share-post-area {
+        background-color: #333;
+        color: #e9e9e9;
+    }
+
+    .share-post-area:focus {
+        background-color: #333;
+        color: #e9e9e9;
+    }
+
+    .settings-form {
+        background-color: #555;
+        color: white;
+        border: none;
+    }
+
+    .settings-form:focus {
+        background-color: #555;
+        color: white;
+    }
+
+    .settings-card-header {
+        background-color: #222;
+        border: none;
+    }
+
+    .options-menu {
+        background-color: #444;
+        border: none;
+    }
+
+    .delete-post {
+        color: white!important;
+    }
 }
