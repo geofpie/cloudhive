@@ -565,6 +565,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
+$(document).ready(function() {
+    // Initialize tooltips
+    $('[data-toggle="tooltip"]').tooltip();
+});
+
 function toggleOptionsMenu(event) {
     const button = event.currentTarget;
     const optionsMenu = button.nextElementSibling;

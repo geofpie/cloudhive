@@ -331,6 +331,8 @@ a:hover {
 .hive-nav-btn {
     display: inline-block;
     padding-right: 12px;
+    margin-top: auto;
+    margin-bottom: auto;
 }
 
 .hive-greeting-row {
