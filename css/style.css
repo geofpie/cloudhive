@@ -741,6 +741,12 @@ a:hover {
     -webkit-transition: height 0.8s ease-in-out; 
 }
 
+@media screen and (max-width: 960px) {
+    .post-modal-content {
+        width: 90%;
+    }
+}
+
 .post-modal-header, .post-modal-footer {
     display: flex;
     justify-content: space-between;
