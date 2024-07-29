@@ -67,25 +67,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     fetchUserInfo();
 
-    var profilePic = document.getElementById('profile-pic');
-        var contextMenu = document.getElementById('context-menu');
-
-        // Show the context menu on right-click
-        profilePic.addEventListener('contextmenu', function(e) {
-            e.preventDefault(); // Prevent default context menu
-            var rect = profilePic.getBoundingClientRect();
-            contextMenu.style.display = 'block';
-            contextMenu.style.top = `${e.clientY}px`;
-            contextMenu.style.left = `${e.clientX}px`;
-        });
-
-        // Hide the context menu when clicking elsewhere
-        document.addEventListener('click', function(e) {
-            if (e.target !== profilePic && !contextMenu.contains(e.target)) {
-                contextMenu.style.display = 'none';
-            }
-        });
-
     if (!uploadIndicator) {
         console.error('Upload indicator element not found');
         return;
