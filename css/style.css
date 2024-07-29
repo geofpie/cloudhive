@@ -1487,7 +1487,7 @@ a:hover {
 }
 
 /* Hide the mobile menu icons on larger screens */
-@media (min-width: 992px) {
+@media (min-width: 960px) {
     .mobile-menu-icons {
         display: none;
     }
@@ -1495,8 +1495,8 @@ a:hover {
 
 /* Style for nav icons to fit well in the mobile menu */
 .mobile-menu-icons .nav-icons {
-    width: 24px;
-    height: 24px;
+    width: 28px;
+    height: 28px;
     margin: 0;
 }
 
