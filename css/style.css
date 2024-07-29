@@ -1504,3 +1504,21 @@ a:hover {
 .hive-searchbar-group {
     margin-bottom: auto;
 }
+
+.footer-center {
+    text-align: center;
+    margin: 24px 0 24px 0;
+}
+
+.footer-brand-name {
+    margin-bottom: 0;
+}
+.footer-version {
+    font-size: 9px;
+    margin-bottom: 0;
+}
+
+.footer-learn-more {
+    font-size: 9px;
+    margin-bottom: 8px;
+}
