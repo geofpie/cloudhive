@@ -316,7 +316,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         <div class="col-md-4 hive-post-element mx-auto" data-post-id="${post.postId}">
                             <div class="row hive-post-user-details align-items-center">
                                 <div class="hive-post-pfp">
-                                    <img src="${post.userProfilePicture || '../assets/default-profile.jpg'}" alt="Profile" class="post-profile-pic">
+                                    <a href="/${post.username}"><img src="${post.userProfilePicture || '../assets/default-profile.jpg'}" alt="Profile" class="post-profile-pic"></a>
                                 </div>
                                 <div class="col hive-user-details-text">
                                     <a href="/${post.username}" class="hive-post-username">${post.firstName}</a>
