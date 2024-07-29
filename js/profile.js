@@ -598,12 +598,15 @@ function fetchUserInfo() {
 
 function updateUserProfile(user) {
     const loggedInUserPic = document.getElementById('hive-logged-in-dp');
+    const loggedInUserPicMob = document.getElementById('hive-logged-in-dp-mob');
     const username = user.username;
 
     loggedInUserPic.href = `/${username}`;
+    loggedInUserPicMob.href = `/${username}`;
 
     document.querySelector('.navbar-profile-pic').src = user.profile_picture_url;
     document.querySelector('.postbar-profile-pic').src = user.profile_picture_url;
+    document.querySelector('.navbar-profile-pic-mob').src = user.profile_picture_url;
 }
 
 dayjs.extend(dayjs_plugin_relativeTime);
@@ -1078,4 +1081,9 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         }
     });
+});
+
+$(document).ready(function() {
+    // Initialize tooltips
+    $('[data-toggle="tooltip"]').tooltip();
 });

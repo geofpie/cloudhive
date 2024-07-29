@@ -98,6 +98,8 @@ function updateUserProfileFields(user) {
     document.querySelector('.user-info-card img').src = user.profile_picture_url;
     document.querySelector('.navbar-profile-pic').src = user.profile_picture_url;
     document.getElementById('hive-logged-in-dp').href = `/${user.username}`;
+    document.querySelector('navbar-profile-pic-mob').src = user.profile_picture_url;
+    document.getElementById('hive-logged-in-dp-mob').href = `/${user.username}`;
 }
 
 const notificationsModal = document.getElementById('notificationsModal');
@@ -192,3 +194,8 @@ function denyFollowRequest(username) {
     })
     .catch(error => console.error('Error:', error));
 }
+
+$(document).ready(function() {
+    // Initialize tooltips
+    $('[data-toggle="tooltip"]').tooltip();
+});

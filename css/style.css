@@ -1513,9 +1513,11 @@ a:hover {
 .footer-brand-name {
     margin-bottom: 0;
 }
+
 .footer-version {
     font-size: 9px;
     margin-bottom: 0;
+    color: #a7a7a7;
 }
 
 .footer-learn-more {
