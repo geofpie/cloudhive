@@ -1087,10 +1087,6 @@ a:hover {
     padding: 20px;
 }
 
-.result.card {
-    border-radius: 12px; 
-}
-
 .hive-btn { 
     padding: 12px;
     border-radius: 8px;
@@ -1611,4 +1607,9 @@ a:hover {
 
 .friends-card-btn:active {
     background-color: #44006f;
+}
+
+.search-results-header {
+    margin-top: 18px;
+    margin-bottom: 6px;
 }
