@@ -469,7 +469,7 @@ function sendFollowRequest(username) {
         });
 }
 
-document.getElementById('notifications-link').addEventListener('click', function() {
+document.getElementById('notifications-link').forEach.addEventListener('click', function() {
     fetch('/api/follow-requests')
         .then(response => response.json())
         .then(data => {
