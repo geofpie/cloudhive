@@ -340,7 +340,6 @@ a:hover {
 .hive-greeting-msg {
     font-size: 28px;
 }
-
 .hive-post-action-bar {
     margin: 10px;
     padding: 18px 0 6px 0;
@@ -440,8 +439,108 @@ a:hover {
     background-color: #e8e8e8;
 }
 
+.profile-header {
+    border-radius: 26px;
+    background-image: url('../assets/loginbg.jpg');
+    min-height: 40vh;
+    background-size: cover;
+    margin: 12px 12px 0 12px;
+    vertical-align: bottom;
+    padding: 24px;
+}
+
+.profile-fullwidth-header {
+    min-height: 50vh;
+    margin-top: -75px;
+    margin-left: 20px;
+    margin-right: 20px;
+    background-size: cover;
+    vertical-align: bottom;
+    border-bottom-left-radius: 22px;
+    border-bottom-right-radius: 22px;
+}
+
+@media screen and (max-width: 960px) {
+    .profile-fullwidth-header {
+        margin-left: 0;
+        margin-right: 0;
+        min-height: 40vh;
+    }
+}
+
+.profile-user-stats {
+    padding: 18px 0 0 12px;
+    text-align: center;
+    font-weight: 400;
+    color: rgba(0, 0, 0, 0.3);
+    background: rgba(255 ,255, 255, 0.3);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(10px);
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    border-bottom-left-radius: 22px;
+    border-bottom-right-radius: 22px;
+}
+
 .profile-user-post {
     width: 100%;
+}
+
+.profile-user-stats strong {
+    font-size: 18px;
+    color: rgba(0, 0, 0, 0.6);
+}
+
+.profile-stat {
+    display: inline-block;
+    padding-right: 12px;
+}
+
+.profile-user-name {
+    position: absolute;
+    z-index: 1;
+}
+
+@media screen and (min-width: 780px) {
+    .profile-user-name {
+        bottom: 0;
+    }
+}
+
+.profile-user-name-elem {
+    display: inline;
+    margin-right: 6px;
+    text-shadow: 2px 2px 8px rgba(0,0,0,0.9);
+}
+
+.header-profile-pic {
+    border-radius: 50%;
+    height: 140px;
+    width: 140px;
+    margin-bottom: 16px;
+    margin-left: 4px;
+    margin-right: 8px;
+    transition: 0.2s width ease-in-out;
+}
+
+@media screen and (max-width: 960px) {
+    .header-profile-pic {
+        height: 100px;
+        width: 100px;
+    }
+
+    .profile-user-name {
+        position: inline-block;
+        margin-top: 100px;
+        margin-bottom: 100px;
+    }
+}
+
+.profile-user-country {
+    display: inline;
+    text-shadow: 2px 2px 8px rgba(0,0,0,0.9);
 }
 
 .write-post-btn {
@@ -873,6 +972,15 @@ a:hover {
     left: 0;
     z-index: 1;
     border-radius: 16px;
+}
+
+.profile-picture-container {
+    position: absolute;
+    bottom: -50px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+    text-align: center;
 }
 
 .edit-profile-img-preview {
@@ -1359,105 +1467,3 @@ a:hover {
     }
 }
 
-/* Full-width header background */
-.profile-fullwidth-header {
-    background-size: cover;
-    background-position: center;
-    height: 300px; /* Adjust height as needed */
-    position: relative;
-}
-
-/* Container for profile details */
-.profile-content {
-    position: relative;
-    text-align: center;
-    padding: 0 20px; /* Adjust padding as needed */
-}
-
-/* Profile picture */
-.profile-picture-container {
-    position: relative;
-    width: 150px; /* Adjust size as needed */
-    height: 150px;
-    margin: -75px auto 20px auto; /* Overlap effect */
-    overflow: hidden;
-}
-
-.header-profile-pic {
-    width: 100%;
-    height: auto;
-    border-radius: 50%;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-}
-
-/* User info */
-.profile-info {
-    margin-bottom: 20px;
-}
-
-.profile-user-name {
-    font-size: 1.5em;
-    margin: 0;
-}
-
-.profile-user-handle {
-    font-size: 1.2em;
-    color: #888;
-}
-
-/* Profile stats */
-.profile-stats {
-    display: flex;
-    justify-content: center;
-    gap: 20px; /* Space between stats */
-    margin-bottom: 20px;
-}
-
-.profile-stat {
-    font-size: 1.1em;
-    margin: 0;
-}
-
-/* Action button */
-.profile-action {
-    margin-top: 20px;
-}
-
-.profile-action-button {
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    font-size: 1em;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.profile-action-button:hover {
-    background-color: #0056b3;
-}
-
-/* Responsive design */
-@media (max-width: 768px) {
-    .header-profile-pic {
-        width: 120px;
-        height: 120px;
-    }
-
-    .profile-user-name {
-        font-size: 1.2em;
-    }
-
-    .profile-user-handle {
-        font-size: 1em;
-    }
-
-    .profile-stat {
-        font-size: 1em;
-    }
-
-    .profile-action-button {
-        font-size: 0.9em;
-    }
-}
