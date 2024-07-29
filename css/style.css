@@ -1081,17 +1081,18 @@ a:hover {
     border-radius: 18px;
     border: none;
     margin: 12px 0 12px 0;
-    background-color: #ffe5ec;
+    background-color: #6e00b3;
+    color: white;
     transition: 0.2s ease-in-out;
     -webkit-transition: 0.2s ease-in-out;
 }
 
 .load-more-btn:hover {
-    background-color: #ffc2d1;
+    background-color: #5a0092;
 }
 
 .load-more-btn:active {
-    background-color: #ffb3c6;
+    background-color: #4f0080;
 }
 
 /* Custom Modal Styles */
