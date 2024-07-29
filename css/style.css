@@ -297,12 +297,13 @@ a:hover {
     background-position: center;
 }
 
-.navbar-profile-pic {
+.navbar-profile-pic, .navbar-profile-pic-mob {
     border-radius: 50%;
     height: 40px;
     width: 40px;
     cursor: pointer;
 }
+
 
 .dropdown-menu {
     min-width: 150px;
