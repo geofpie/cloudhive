@@ -1361,6 +1361,7 @@ a:hover {
 
 /* Full-width header background */
 .profile-fullwidth-header {
+    width: 100%;
     background-size: cover;
     background-position: center;
     padding: 30px 0; /* Adjust padding as needed */
