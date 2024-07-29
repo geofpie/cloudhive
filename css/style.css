@@ -1784,4 +1784,8 @@ a:hover {
     .delete-post {
         color: white!important;
     }
+
+    .navbar-toggler-icon {
+        filter: invert(97%) sepia(3%) saturate(0%) hue-rotate(213deg) brightness(102%) contrast(105%);
+    }
 }
