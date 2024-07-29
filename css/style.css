@@ -340,6 +340,7 @@ a:hover {
 .hive-greeting-msg {
     font-size: 28px;
 }
+
 .hive-post-action-bar {
     margin: 10px;
     padding: 18px 0 6px 0;
@@ -439,79 +440,8 @@ a:hover {
     background-color: #e8e8e8;
 }
 
-.profile-header {
-    border-radius: 26px;
-    background-image: url('../assets/loginbg.jpg');
-    min-height: 40vh;
-    background-size: cover;
-    margin: 12px 12px 0 12px;
-    vertical-align: bottom;
-    padding: 24px;
-}
-
-.profile-user-stats {
-    padding: 18px 0 0 12px;
-    text-align: center;
-    font-weight: 400;
-    color: rgba(0, 0, 0, 0.3);
-    background: rgba(255 ,255, 255, 0.3);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(10px);
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    border-bottom-left-radius: 22px;
-    border-bottom-right-radius: 22px;
-}
-
 .profile-user-post {
     width: 100%;
-}
-
-.profile-user-stats strong {
-    font-size: 18px;
-    color: rgba(0, 0, 0, 0.6);
-}
-
-.profile-stat {
-    display: inline-block;
-    padding-right: 12px;
-}
-
-.profile-user-name {
-    position: absolute;
-    z-index: 1;
-}
-
-@media screen and (min-width: 780px) {
-    .profile-user-name {
-        bottom: 0;
-    }
-}
-
-.profile-user-name-elem {
-    display: inline;
-    margin-right: 6px;
-    text-shadow: 2px 2px 8px rgba(0,0,0,0.9);
-}
-
-@media screen and (max-width: 960px) {
-    .header-profile-pic {
-        height: 100px;
-        width: 100px;
-    }
-
-    .profile-user-name {
-        position: inline-block;
-        margin-top: 100px;
-        margin-bottom: 100px;
-    }
-}
-
-.profile-user-country {
-    display: inline;
-    text-shadow: 2px 2px 8px rgba(0,0,0,0.9);
 }
 
 .write-post-btn {
