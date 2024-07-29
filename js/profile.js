@@ -617,6 +617,7 @@ function updateUserProfile(user) {
     document.querySelector('.navbar-profile-pic').src = user.profile_picture_url;
     document.querySelector('.postbar-profile-pic').src = user.profile_picture_url;
     document.querySelector('.navbar-profile-pic-mob').src = user.profile_picture_url;
+    document.querySelector('.post-modal-profile-pic').src = user.profile_picture_url;
 }
 
 dayjs.extend(dayjs_plugin_relativeTime);
