@@ -1371,22 +1371,22 @@ a:hover {
     position: relative;
 }
 
-/* Container for profile details */
-.profile-content {
+/* Container for profile content */
+.profile-container {
     position: relative;
+    margin-top: -100px; /* Pull up to overlap header */
+    padding-top: 100px; /* Space for the profile picture overlap */
     background-color: #fff; /* White background for profile details */
+    z-index: 1; /* Ensure it's behind the profile picture */
     border-top: 5px solid #007bff; /* Optional border to separate */
-    padding: 70px 20px 20px 20px; /* Adjust padding as needed */
-    margin-top: -75px; /* Pull up to overlap header */
-    z-index: 1; /* Ensure it’s above header */
 }
 
 /* Profile picture container */
 .profile-picture-container {
     position: absolute;
-    top: 50%; /* Center vertically */
-    left: 50%; /* Center horizontally */
-    transform: translate(-50%, -50%); /* Center the element */
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
     width: 150px; /* Adjust size as needed */
     height: 150px;
     overflow: hidden;
@@ -1404,7 +1404,7 @@ a:hover {
 /* User info styling */
 .profile-info {
     text-align: center;
-    margin-top: 80px; /* Space for the profile picture overlap */
+    margin-top: 70px; /* Space for the profile picture overlap */
 }
 
 .profile-user-name {
