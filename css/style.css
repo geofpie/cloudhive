@@ -716,6 +716,28 @@ a:hover {
     padding-bottom: 24px;
 }
 
+.send-post-btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.spinner-border {
+    position: absolute;
+    right: 10px; /* Adjust as needed */
+    display: none; /* Hidden by default */
+}
+
+.send-post-btn .spinner-border {
+    display: inline-block;
+}
+
+.send-post-btn.disabled {
+    pointer-events: none; /* Prevent clicking while disabled */
+    opacity: 0.5; /* Visual feedback */
+}
+
 /* Custom Modal Styles */
 .post-modal {
     position: fixed;
@@ -1092,7 +1114,7 @@ a:hover {
 }
 
 .load-more-btn:active {
-    background-color: #4f0080;
+    background-color: #6e00b3;
 }
 
 /* Custom Modal Styles */
