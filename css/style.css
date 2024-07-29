@@ -1363,7 +1363,7 @@ a:hover {
 .profile-fullwidth-header {
     background-size: cover;
     background-position: center;
-    height: 200px; /* Adjust height as needed */
+    height: 300px; /* Adjust height as needed */
     position: relative;
 }
 
@@ -1372,6 +1372,7 @@ a:hover {
     position: relative;
     text-align: center;
     padding: 0 20px; /* Adjust padding as needed */
+    background-color: white;
 }
 
 /* Profile picture */
