@@ -21,7 +21,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const postImageInput = document.getElementById('postImage');
     const imagePreview = document.getElementById('imagePreview');
     const submitPostButton = document.getElementById('submitPostButton');
-    const uploadIndicator = document.getElementById('uploadIndicator'); // Ensure this is correctly defined
     let lastTimestamp = null;
     const postsContainer = document.getElementById('hive-feed-area');
     const loadMoreButton = document.getElementById('load-more');
@@ -32,11 +31,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
     let currentUsername = null;
 
     adjustTextColorBasedOnImage('.profile-fullwidth-header img');
-
-    if (!uploadIndicator) {
-        console.error('Upload indicator element not found');
-        return;
-    }
 
     function showModal() {
         postModal.classList.remove('hidden');
@@ -79,32 +73,46 @@ document.addEventListener('DOMContentLoaded', (event) => {
     });
 
     submitPostButton.addEventListener('click', () => {
-        const postContent = document.getElementById('postContent').value;
+        const postContent = document.getElementById('postContent');
         const postImage = postImageInput.files[0];
-        if (postContent.trim() || postImage) {
-            showUploadIndicator(); // Show spinner during upload
-            submitPost(postContent, postImage);
+        
+        if (postContent.value.trim() || postImage) {
+            showSpinner(submitPostButton); // Show spinner during upload
+            submitPost(postContent.value, postImage)
+                .then(() => {
+                    hideSpinner(submitPostButton); // Hide spinner after upload
+                    postContent.value = ''; // Clear the text field
+                    postImageInput.value = ''; // Clear the file input
+                    document.getElementById('imagePreview').style.display = 'none'; // Hide image preview if needed
+                })
+                .catch((error) => {
+                    console.error('Error uploading post:', error);
+                    hideSpinner(submitPostButton); // Hide spinner if error occurs
+                });
         } else {
             alert('Please enter content or attach an image.');
         }
     });
 
-    function showUploadIndicator() {
-        if (uploadIndicator) {
-            uploadIndicator.classList.remove('hidden');
-            document.querySelector('.post-modal-content').classList.add('disabled'); // Disable form
-        } else {
-            console.error('Upload indicator element not found');
-        }
+    function showSpinner(button) {
+        // Store the original text of the button
+        const originalText = button.innerHTML;
+        
+        // Add spinner and disable button
+        button.innerHTML = '<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>';
+        button.disabled = true;
+        
+        // Store original text for later use
+        button.dataset.originalText = originalText;
     }
-
-    function hideUploadIndicator() {
-        if (uploadIndicator) {
-            uploadIndicator.classList.add('hidden');
-            document.querySelector('.post-modal-content').classList.remove('disabled'); // Enable form
-        } else {
-            console.error('Upload indicator element not found');
-        }
+    
+    function hideSpinner(button) {
+        // Retrieve the original text from data attribute
+        const originalText = button.dataset.originalText;
+        
+        // Restore original text and enable button
+        button.innerHTML = originalText;
+        button.disabled = false;
     }
 
     async function resizeImage(file) {
