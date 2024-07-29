@@ -61,7 +61,7 @@
                     <a class="nav-link" href="/friends" data-toggle="tooltip" title="Friends"><img src="assets/friends.svg" class="nav-icons" alt="Friends"></a>
                     <a class="nav-link" href="/settings" data-toggle="tooltip" title="Settings"><img src="assets/settings.svg" class="nav-icons" alt="Settings"></a>
                     <a class="nav-link" href="#" id="notifications-link" data-toggle="tooltip" title="Notifications"><img src="assets/notifications.svg" class="nav-icons" alt="Notifications"></a>
-                    <a class="nav-link hive-logged-in-user-name" id="hive-logged-in-dp-mob" href="#" data-toggle="tooltip" title="Profile">
+                    <a class="nav-link hive-logged-in-user-name" id="hive-logged-in-dp-mob" href="#" title="Profile">
                         <img src="../assets/default-profile.jpg" alt="Profile" class="navbar-profile-pic-mob">
                     </a>
                 </div>
@@ -81,9 +81,13 @@
                     <a class="nav-link" href="#" id="notifications-link" data-toggle="tooltip" title="Notifications"><img src="assets/notifications.svg" class="nav-icons" alt="Notifications"></a>
                 </li>
                 <li class="nav-item hive-nav-btn">
-                    <a class="nav-link hive-logged-in-user-name" id="hive-logged-in-dp" href="#" data-toggle="tooltip" title="Profile">
+                    <a class="nav-link hive-logged-in-user-name" id="profile-pic">
                         <img src="../assets/default-profile.jpg" alt="Profile" class="navbar-profile-pic">
                     </a>
+                    <div id="context-menu" class="context-menu">
+                        <a href="/profile" class="context-menu-item">Profile</a>
+                        <a href="/logout" class="context-menu-item">Logout</a>
+                    </div>
                 </li>
             </ul>
         </div>

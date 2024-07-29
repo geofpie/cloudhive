@@ -1502,5 +1502,29 @@ a:hover {
 
 /* Adjust search bar for mobile view */
 .hive-searchbar-group {
-    margin-bottom: 1rem;
+    margin-bottom: auto;
+}
+
+/* Context Menu Styling */
+.context-menu {
+    display: none; /* Hide by default */
+    position: absolute;
+    top: 100%; /* Position below the profile picture */
+    right: 0;
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+}
+
+.context-menu-item {
+    display: block;
+    padding: 10px;
+    color: #333;
+    text-decoration: none;
+}
+
+.context-menu-item:hover {
+    background-color: #f8f9fa;
 }
