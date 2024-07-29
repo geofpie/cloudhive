@@ -1210,32 +1210,6 @@ a:hover {
     background-color: #d90368;
 }
 
-.user-info-card {
-    display: flex;
-    padding: 20px;
-    border-radius: 22px;
-}
-
-.user-info-card img {
-    border: 3px solid #ddd;
-}
-
-.user-info-card .ml-3 {
-    margin-left: 15px;
-}
-
-.card {
-    margin-bottom: 20px;
-}
-
-.card-header {
-    background-color: #f8f9fa;
-}
-
-.card-body {
-    padding: 20px;
-}
-
 /* Modal Background */
 .follow-modal {
     display: none; /* Hidden by default */
@@ -1612,4 +1586,67 @@ a:hover {
 .search-results-header {
     margin-top: 18px;
     margin-bottom: 6px;
+}
+
+.settings-card {
+    border: 1px solid #ddd;
+    border-radius: 22px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    background-color: #fff;
+}
+
+.settings-card-body {
+    padding: 20px;
+}
+
+.settings-card-header {
+    background-color: #f7f7f7;
+    padding: 15px;
+    border-bottom: 1px solid #ddd;
+}
+
+.profile-pic {
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+}
+
+.user-fullname {
+    font-size: 22px;
+    margin-bottom: 0;
+}
+
+.user-username {
+    color: #6c757d;
+    margin-bottom: 0.5rem;
+}
+
+.user-email {
+    color: #6c757d;
+}
+
+.settings-btn-primary {
+    background-color: #6e00b3;
+    border: none;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 22px;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.settings-btn-primary:hover {
+    background-color: #510084;
+    color: white;
+}
+
+.user-info-card img {
+    border: 3px solid #ddd;
+}
+
+.settings-form {
+    border-radius: 12px;
+    font-size: 14px;
 }
