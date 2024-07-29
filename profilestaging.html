@@ -22,7 +22,7 @@
     <!-- Pica Image Compress -->
     <script src="https://unpkg.com/pica/dist/pica.min.js"></script>
     <!-- Feed JS -->
-    <script defer src="js/s.js" defer></script>
+    <script defer src="js/profile.js" defer></script>
     <!-- day.js for relative time calculation -->
     <script src="https://cdn.jsdelivr.net/npm/dayjs/dayjs.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/dayjs/plugin/relativeTime.js"></script>
@@ -94,42 +94,50 @@
     </div>
     <!-- profile.ejs -->
     <div class="container-fluid">
-        <div class="row profile-fullwidth-header" style="background-image: url('../assets/loginbg.jpg'); background-size: cover; background-position: center;">
+        <div class="row profile-fullwidth-header" style="background-image: url('<%= user.profile_header_url || "../assets/loginbg.jpg" %>'); background-size: cover; background-position: center;">
             <div class="col d-flex">
                 <div class="profile-user-name align">
-                    <img src="../assets/default-profile.jpg" alt="Profile" class="header-profile-pic shadow">
-                    <h3 class="profile-user-name-elem">Geoffrey Lee</h3>
-                    <p class="profile-user-country" id="profile-user-country">@geofpie</p>
+                    <img src="<%= user.profile_picture_url || '../assets/default-profile.jpg' %>" alt="Profile" class="header-profile-pic shadow">
+                    <h3 class="profile-user-name-elem"><%= user.first_name %> <%= user.last_name %></h3>
+                    <p class="profile-user-country" id="profile-user-country">@<%= user.username %></p>
                 </div>
                 <div class="profile-user-stats mt-auto align-bottom">
                     <div class="col">
-                        <p class="profile-stat profile-posts-count" id="profile-posts-count"><strong>0</strong> posts</p>
-                        <p class="profile-stat profile-user-follower-count" id="profile-user-follower-count"><strong>0</strong> followers</p>
-                        <p class="profile-stat profile-user-following-count" id="profile-user-following-count"><strong>0</strong> following</p>
+                        <p class="profile-stat profile-posts-count" id="profile-posts-count"><strong><%= user.postsCount || 0 %></strong> posts</p>
+                        <p class="profile-stat profile-user-follower-count" id="profile-user-follower-count"><strong><%= user.followerCount || 0 %></strong> followers</p>
+                        <p class="profile-stat profile-user-following-count" id="profile-user-following-count"><strong><%= user.followingCount || 0 %></strong> following</p>
+                        <% if (loggedInUser.username === user.username) { %>
                             <!-- Show edit profile button -->
                             <button class="profile-stat hive-user-action" id="edit-profile"><i class="fa fa-edit uab"></i>Edit Profile</button>
+                        <% } else { %>
                             <!-- Show follow button -->
+                            <% if (followStatus === 'requested') { %>
                                 <button id="follow-button-<%= user.username %>" class="profile-stat hive-user-action" 
                                         data-username="<%= user.username %>" 
                                         data-status="requested" 
                                         onclick="showFollowActionsModal('cancel', '<%= user.username %>')">
                                     <i class="fa fa-clock uab"></i>Requested
                                 </button>
+                            <% } else if (followStatus === 'following') { %>
                                 <button id="follow-button-<%= user.username %>" class="profile-stat hive-user-action" 
                                         onclick="showFollowActionsModal('unfollow', '<%= user.username %>')">
                                     <i class="fa fa-user-plus uab"></i>Following
                                 </button>
+                            <% } else { %>
                                 <button id="follow-button-<%= user.username %>" class="profile-stat hive-user-action" 
                                         data-username="<%= user.username %>" 
                                         onclick="sendFollowRequest('<%= user.username %>')">
                                     <i class="fa fa-user-plus uab"></i>Follow
                                 </button>
+                            <% } %>
+                        <% } %>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
+        <% if (loggedInUser.username === user.username) { %>
         <div class="profile-user-post d-flex">
             <div class="col-md-4 hive-post-action-bar mx-auto">
                 <img src="<%= user.profile_picture_url || '../assets/default-profile.jpg' %>" alt="Profile" class="navbar-profile-pic">

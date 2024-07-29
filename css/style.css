@@ -1361,19 +1361,17 @@ a:hover {
 
 /* Full-width header background */
 .profile-fullwidth-header {
-    width: 100%;
     background-size: cover;
     background-position: center;
-    padding: 30px 0; /* Adjust padding as needed */
+    height: 200px; /* Adjust height as needed */
     position: relative;
 }
 
-/* Center content and profile picture */
+/* Container for profile details */
 .profile-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    position: relative;
     text-align: center;
+    padding: 0 20px; /* Adjust padding as needed */
 }
 
 /* Profile picture */
@@ -1381,7 +1379,7 @@ a:hover {
     position: relative;
     width: 150px; /* Adjust size as needed */
     height: 150px;
-    margin-bottom: -75px; /* Half of the height to overlap */
+    margin: -75px auto 20px auto; /* Overlap effect */
     overflow: hidden;
 }
 
