@@ -39,7 +39,7 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light sticky-top hive-navbar">
         <a class="navbar-brand" href="/hive">
-            <img src="../assets/logo-dark.svg" width="46" height="46" alt="cloudhive">
+            <img src="../assets/logo-dark.svg" width="46" height="46" alt="cloudhive" class="image-visible">
         </a>
         <button class="navbar-toggler navbar-hamburger" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -48,10 +48,10 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <form class="form-inline my-2 my-lg-0" action="/search" method="GET">
                 <div class="input-group hive-searchbar-group">
-                    <input class="form-control hive-searchbar" type="search" name="query" placeholder="Search" aria-label="Search" required>
+                    <input class="form-control hive-searchbar" type="search" name="query" placeholder="Search" aria-label="Search" required="">
                     <div class="input-group-append">
                         <button class="btn hive-searchbar-btn" type="submit">
-                            <i class="fa fa-search hive-searchbar-btn-icon"></i>
+                            <i class="fa fa-search hive-searchbar-btn-icon" aria-hidden="true"></i>
                         </button>
                     </div>
                 </div>
@@ -59,32 +59,32 @@
             <div class="d-lg-none my-3">
                 <!-- Mobile Menu Icons -->
                 <div class="mobile-menu-icons">
-                    <a class="nav-link" href="/hive" data-toggle="tooltip" title="Home"><img src="assets/homeicon.svg" class="nav-icons" alt="Home"></a>
-                    <a class="nav-link" href="/friends" data-toggle="tooltip" title="Friends"><img src="assets/friends.svg" class="nav-icons" alt="Friends"></a>
-                    <a class="nav-link" href="/settings" data-toggle="tooltip" title="Settings"><img src="assets/settings.svg" class="nav-icons" alt="Settings"></a>
-                    <a class="nav-link" href="#" id="notifications-link" data-toggle="tooltip" title="Notifications"><img src="assets/notifications.svg" class="nav-icons notifications-link" alt="Notifications"></a>
-                    <a class="nav-link hive-logged-in-user-name" id="hive-logged-in-dp-mob" href="#" title="Profile">
-                        <img src="../assets/default-profile.jpg" alt="Profile" class="navbar-profile-pic-mob">
+                    <a class="nav-link" href="/hive" data-toggle="tooltip" title="" data-original-title="Home"><img src="assets/homeicon.svg" class="nav-icons image-visible" alt="Home"></a>
+                    <a class="nav-link" href="/friends" data-toggle="tooltip" title="" data-original-title="Friends"><img src="assets/friends.svg" class="nav-icons image-visible" alt="Friends"></a>
+                    <a class="nav-link" href="/settings" data-toggle="tooltip" title="" data-original-title="Settings"><img src="assets/settings.svg" class="nav-icons image-visible" alt="Settings"></a>
+                    <a class="nav-link" href="#" id="notifications-link" data-toggle="tooltip" title="" data-original-title="Notifications"><img src="assets/notifications.svg" class="nav-icons notifications-link image-visible" alt="Notifications"></a>
+                    <a class="nav-link hive-logged-in-user-name" id="hive-logged-in-dp-mob" href="/testuser" title="Profile">
+                        <img src="../assets/default-profile.jpg" alt="Profile" class="navbar-profile-pic-mob image-visible">
                     </a>
                 </div>
             </div>
             <ul class="navbar-nav ml-auto d-none d-lg-flex">
                 <!-- Desktop Menu Items -->
                 <li class="nav-item hive-nav-btn">
-                    <a class="nav-link" href="/hive" data-toggle="tooltip" title="Home"><img src="assets/homeicon.svg" class="nav-icons" alt="Home"></a>
+                    <a class="nav-link" href="/hive" data-toggle="tooltip" title="" data-original-title="Home"><img src="assets/homeicon.svg" class="nav-icons image-visible" alt="Home"></a>
                 </li>
                 <li class="nav-item hive-nav-btn">
-                    <a class="nav-link" href="/friends" data-toggle="tooltip" title="Friends"><img src="assets/friends.svg" class="nav-icons" alt="Friends"></a>
+                    <a class="nav-link" href="/friends" data-toggle="tooltip" title="" data-original-title="Friends"><img src="assets/friends.svg" class="nav-icons image-visible" alt="Friends"></a>
                 </li>
                 <li class="nav-item hive-nav-btn">
-                    <a class="nav-link" href="/settings" data-toggle="tooltip" title="Settings"><img src="assets/settings.svg" class="nav-icons" alt="Settings"></a>
+                    <a class="nav-link" href="/settings" data-toggle="tooltip" title="" data-original-title="Settings"><img src="assets/settings.svg" class="nav-icons image-visible" alt="Settings"></a>
                 </li>
                 <li class="nav-item hive-nav-btn">
-                    <a class="nav-link" href="#" id="notifications-link" data-toggle="tooltip" title="Notifications"><img src="assets/notifications.svg" class="nav-icons notifications-link" alt="Notifications"></a>
+                    <a class="nav-link" href="#" id="notifications-link" data-toggle="tooltip" title="" data-original-title="Notifications"><img src="assets/notifications.svg" class="nav-icons notifications-link image-visible" alt="Notifications"></a>
                 </li>
                 <li class="nav-item hive-nav-btn">
-                    <a class="nav-link hive-logged-in-user-name" id="hive-logged-in-dp" href="#" title="Profile">
-                        <img src="../assets/default-profile.jpg" alt="Profile" class="navbar-profile-pic">
+                    <a class="nav-link hive-logged-in-user-name" id="hive-logged-in-dp" href="/testuser" title="Profile">
+                        <img src="https://cloudhive-userdata.s3.amazonaws.com/profile-pics/5300e9bf648701c6bf586ac4.jpeg?X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=ASIAYMHYVNWZHCE5OWDD%2F20240730%2Fus-east-1%2Fs3%2Faws4_request&amp;X-Amz-Date=20240730T161855Z&amp;X-Amz-Expires=3600&amp;X-Amz-Security-Token=IQoJb3JpZ2luX2VjEGEaCXVzLWVhc3QtMSJHMEUCIAwFCK2wSbtJO865zhmSAE2Ahc%2BNRSRCFOa7wDz%2BlohEAiEA8201AKBhSLj3AEm%2F%2BEn2tQ5KZkTaDZu77D8Ycy%2FjA6squgUISRAAGgw1NzYwNDcxMTU2OTgiDDeTWEFIgBEVy4dpWCqXBVPWHnxhA1hbMGo1SDZfHaRBTh4xdbKa4X0iBOoMknaruwLq%2FW0xo7Yl9p3%2FWBxleYIrWVIYGm%2Fth4SBSuFbuhYZhbezvfT4q%2B7bThTD75sACyybrS7UfDpxaP1Q3IsUejv%2FPO%2BokcMOx6F7G9Re852ohHuWyKsZ6cpkVhVo%2B2W%2FF3BIfvOQd%2FvAk38rq94l5NrPCZvSZ9U7yzjNoADHyiOhNVpXrHFPGrbBaDlsfcF4Ue%2F2VZCQw9AJAYS%2BJHIpIQTHfP5dtMApGFgrQew9hlFWEQc5WxCYHBNIjQjwrNiZgWiwpfkMzFzcuzPRLbW8ib%2Fmy3pKjqi6A%2F7uDk33zAwQhd%2B22JE%2BzE%2BWTsMgbfd1WVKc6z0NZ662cP2BJKQDHA63kLxQt8VW7HKllFhLK585tsg%2FLUe8373LyF2I7DdifFmSMfcA%2FSoz2WqiPfMk1LIgJuhHBTd5OtDs1BM3ERRBNkslDxvUgjTzdcl4sHgKPLGSar4uzEh1c0v9%2F9c%2F5OyyhChy8LnS1QF0xTpu60NORJMMo085w9tbDFnP7gnXmk8mTAqbeacHtbHdnOUOA4JpAmT0Rp2pLg68fpSpq%2Be%2FAh7ukiqVCIOBzjrvPVfoghtMHWnrsOZGP1CG1%2BRE%2F%2BDn3jqh9jmPuw4zSQEhaOi717SC7EjOta68vx%2Bi%2B3JZBhFfBFx73Xnhl5LElCvxtRsikBih0CMFRXj5OCtA6UAz%2BnDv6Q3Lap%2FE4QdN6Ieuog1nEqmL9TzMTLIyFROpeVi%2Blg22GxsptZOELmqG2RmS7JZDgu0EIjplNksawkW%2BeyiKD2lN0uFyFDaN7Ir6BD6X3BzL5zP0sAQ%2Fd2HZIVYRwPNEo5Uvxr6eNi4FVQKI%2B04QxM%2FCVDDFo6S1BjqxAQ5KA9psokZL2lmKbjG%2Bkqitkgmfo0EI1cZd6oCG6T9RGj2HGQUIUldBDMgfe%2F%2FgjCGqUJbasqHc4ukD2vB5m%2FtnerT%2BaCtddCrppSIRxlQMn6UxexbV5By0fZldxJzB1LWpa9bQDX6%2FDKIxLin%2FTRqnxsXzfsUOEy12sGRCk%2Ba8BrQF57ooKLMxnLVR0POUVSdZv4zHMUSgHGuinXNCdo%2FidfThVvzcZ%2FyajHrypMVMoA%3D%3D&amp;X-Amz-Signature=92fb5f90a67902acfdc5d72ac65dd2d7ca07fad69c7d842763f546391b262571&amp;X-Amz-SignedHeaders=host" alt="Profile" class="navbar-profile-pic image-visible">
                     </a>
                 </li>
             </ul>
@@ -92,81 +92,85 @@
     </nav>
     <!-- End Nav -->
     <!-- Notifications Modal -->
-    <div id="notificationsModal" class="notifications-modal">
+    <div id="notificationsModal" class="notifications-modal" style="display: block;">
         <div class="notifications-modal-content">
             <div class="notifications-modal-header">
                 <h5 class="notifications-modal-title">Follow Requests</h5>
-                <button type="button" class="notifications-modal-close" onclick="closeNotificationsModal()"><img src="assets/deny.svg" width="20" height="20"></button>
+                <button type="button" class="notifications-modal-close" onclick="closeNotificationsModal()"><img src="assets/deny.svg" width="20" height="20" class="image-visible"></button>
             </div>
+            <hr class="post-modal-divider">
             <div class="notifications-modal-body">
-                <ul id="follow-requests-list" class="notifications-list-group">
-                    <!-- Follow requests will be appended here -->
-                </ul>
+                <ul id="follow-requests-list" class="notifications-list-group"><li class="notifications-list-group-item">
+                        <div class="follow-container" data-username="testuser4">
+                            <div class="request-profile-pic">
+                                <img src="https://cloudhive-userdata.s3.amazonaws.com/profile-pics/c8ca441c33e43fdf5e179e2b.jpeg?X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=ASIAYMHYVNWZHCE5OWDD%2F20240730%2Fus-east-1%2Fs3%2Faws4_request&amp;X-Amz-Date=20240730T162042Z&amp;X-Amz-Expires=3600&amp;X-Amz-Security-Token=IQoJb3JpZ2luX2VjEGEaCXVzLWVhc3QtMSJHMEUCIAwFCK2wSbtJO865zhmSAE2Ahc%2BNRSRCFOa7wDz%2BlohEAiEA8201AKBhSLj3AEm%2F%2BEn2tQ5KZkTaDZu77D8Ycy%2FjA6squgUISRAAGgw1NzYwNDcxMTU2OTgiDDeTWEFIgBEVy4dpWCqXBVPWHnxhA1hbMGo1SDZfHaRBTh4xdbKa4X0iBOoMknaruwLq%2FW0xo7Yl9p3%2FWBxleYIrWVIYGm%2Fth4SBSuFbuhYZhbezvfT4q%2B7bThTD75sACyybrS7UfDpxaP1Q3IsUejv%2FPO%2BokcMOx6F7G9Re852ohHuWyKsZ6cpkVhVo%2B2W%2FF3BIfvOQd%2FvAk38rq94l5NrPCZvSZ9U7yzjNoADHyiOhNVpXrHFPGrbBaDlsfcF4Ue%2F2VZCQw9AJAYS%2BJHIpIQTHfP5dtMApGFgrQew9hlFWEQc5WxCYHBNIjQjwrNiZgWiwpfkMzFzcuzPRLbW8ib%2Fmy3pKjqi6A%2F7uDk33zAwQhd%2B22JE%2BzE%2BWTsMgbfd1WVKc6z0NZ662cP2BJKQDHA63kLxQt8VW7HKllFhLK585tsg%2FLUe8373LyF2I7DdifFmSMfcA%2FSoz2WqiPfMk1LIgJuhHBTd5OtDs1BM3ERRBNkslDxvUgjTzdcl4sHgKPLGSar4uzEh1c0v9%2F9c%2F5OyyhChy8LnS1QF0xTpu60NORJMMo085w9tbDFnP7gnXmk8mTAqbeacHtbHdnOUOA4JpAmT0Rp2pLg68fpSpq%2Be%2FAh7ukiqVCIOBzjrvPVfoghtMHWnrsOZGP1CG1%2BRE%2F%2BDn3jqh9jmPuw4zSQEhaOi717SC7EjOta68vx%2Bi%2B3JZBhFfBFx73Xnhl5LElCvxtRsikBih0CMFRXj5OCtA6UAz%2BnDv6Q3Lap%2FE4QdN6Ieuog1nEqmL9TzMTLIyFROpeVi%2Blg22GxsptZOELmqG2RmS7JZDgu0EIjplNksawkW%2BeyiKD2lN0uFyFDaN7Ir6BD6X3BzL5zP0sAQ%2Fd2HZIVYRwPNEo5Uvxr6eNi4FVQKI%2B04QxM%2FCVDDFo6S1BjqxAQ5KA9psokZL2lmKbjG%2Bkqitkgmfo0EI1cZd6oCG6T9RGj2HGQUIUldBDMgfe%2F%2FgjCGqUJbasqHc4ukD2vB5m%2FtnerT%2BaCtddCrppSIRxlQMn6UxexbV5By0fZldxJzB1LWpa9bQDX6%2FDKIxLin%2FTRqnxsXzfsUOEy12sGRCk%2Ba8BrQF57ooKLMxnLVR0POUVSdZv4zHMUSgHGuinXNCdo%2FidfThVvzcZ%2FyajHrypMVMoA%3D%3D&amp;X-Amz-Signature=2ca597a9c523621cb40d9bf8610e42701a92590598209b6020dd0a79ad688000&amp;X-Amz-SignedHeaders=host" alt="Profile Picture" class="rounded-circle" width="40" height="40">
+                            </div>
+                            <div class="follow-details">
+                                <strong>test user</strong>
+                                <p>@testuser4</p>
+                            </div>
+                            <div class="follow-actions">
+                                <button class="follow-btn-action accept" onclick="acceptFollowRequest('testuser4')"><img src="assets/accept.svg" width="28" height="28"></button>
+                                <button class="follow-btn-action deny" onclick="denyFollowRequest('testuser4')"><img src="assets/deny.svg" width="28" height="28"></button>
+                            </div>
+                        </div>
+                    </li></ul>
             </div>
         </div>
     </div>
-    <div class="container">
-        <div class="row search-results-header">
-            <h2 class="search-results-text">Search</h2>
+    <div class="container-fluid">
+        <div class="tabs-container">
+            <button class="tab-button" data-tab="following">Following</button>
+            <button class="tab-button active" data-tab="followers">Followers</button>
         </div>
-        <div class="cards-container">
-                    <div class="friends-card" style="animation-delay: 0s;">
-                        <img src="https://cloudhive-userdata.s3.amazonaws.com/profile-pics/5300e9bf648701c6bf586ac4.jpeg?X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=ASIAYMHYVNWZGUHIBGEW%2F20240729%2Fus-east-1%2Fs3%2Faws4_request&amp;X-Amz-Date=20240729T172505Z&amp;X-Amz-Expires=3600&amp;X-Amz-Security-Token=IQoJb3JpZ2luX2VjEEoaCXVzLWVhc3QtMSJHMEUCIQDdPmQvYaU%2BmVZdglXd%2Fj4AGRDPyAYCddBND3whIYOjwQIgG2Ht%2B4VaWBMGEoCcmcOeiVtV3bA%2FxtkCgk0a583Ljf0qugUIMhAAGgw1NzYwNDcxMTU2OTgiDNOZXUsPJJlIF1ORDyqXBUMBawSzepfL0tCkXv7hKlVqYStWuWOsJVg5dWu8J0MqhDfrVE%2B6Aqes%2FfQt2U26gIZtruZMVt6nHgm%2FxRTm1Apm0Ny8Yd9rs5gfn7goOwPvymwnSmyqNGo%2BWeBer2mJDPO4xkiAsA8at3XoplQTO6DO78eLlxpu0uEh0%2F%2FvHUJbmtXIWjPnSFB5AZ2fhNi46o3UbRc9haTW3C%2F0hIEYnBcel7oDcC%2BgsbBSCxGTeS%2BEVD%2Bg%2BSdaFChSzsrk4Ct2KqFu77379JVtuvD203%2FIV9AX153%2FeQrvv6tJ%2B5wJHadEIuoPEI3k4%2Ftnn%2FK4Ga3235uEtkztEUh1JHm%2BSiNg1yS9ruPiVs6TTdoYHvjpKIQYJUtQwlZL09RRo4WiL9dmaJynOoxpGmw4w3gOFtqSbpaINhf9Mwm7INr%2FicPyvHHTsQuj9oPJPxE8Is9Nx0Dy9Tdy%2BL6Gt3vVT0ZLT%2F%2BAvLmx57PR5yLsAeoToeFpKqmWmLSukTYyoqBr3TlIhyM4UnnlHUkIR6HxA38cO%2FUDKXi5xNBHCV9IKWr8KzRo7OpTeS7d5n%2FYQTDt8Ryk6%2BzeYNFAurban7c3%2F79Zz0PwouiTOCvimlglZgYJx4QPUq91qs0xLo%2BixP%2FoCq2E3Pam3TV4y%2Bz1glHpW8lEP78vWGDMlQ6ZgCrTXiKbBqgTVeKJmg%2F5NAo%2BMfa5WrCCJYfzm3uprLfcOe3VLUL6FgDvJTd8t%2F9n3xhFqf3VAVY1PlGnTi0lzZieAPz5GM8%2FOplmYpwRE2D6QVF55fEwx6a9TYz616NTY6uaZNVijaDPerFjlbLdTm%2BrD2Imey5oLMwXFOQTY9BUOuG8cGyRE%2BS8t0y3NWVsekaLrR86FUCRk9LzGm0g4JHiejD6m5%2B1BjqxAUDf0sjQhCS5nM4WUZo6i1fxFQAbrOEigKBoG%2BNmthQmJvi80Ltt%2FsmQ2xbit%2FOTTQLTljsgOuukFl9MHIz33AKHSHoO%2Bxgb6SgrziuTmd3rKdDNeKsdEj0tOqD%2BWKg2oZkoBIvtO%2FQEI7zxigZOPNDwMhSjsO4OPWFJM8kidTTnMpX7Cmf%2FtfETML1lsugSo0TYEGWzvbtgu6eJEUnI7on1yJ2zcmxdBNOkBwA2gb1DBg%3D%3D&amp;X-Amz-Signature=6525707a8206a8515deb78012ecb8573e25ff8fe2b8351571323f20a09b054eb&amp;X-Amz-SignedHeaders=host" alt="testuser's profile picture">
-                        <h3 class="friends-card-header">Test User</h3>
-                        <p>@testuser</p>
-                        <a class="friends-card-btn" href="/testuser">View Profile</a>
-                    </div>
-            
-                    <div class="friends-card" style="animation-delay: 0.1s;">
-                        <img src="https://cloudhive-userdata.s3.amazonaws.com/profile-pics/3b210b3970efe322173e3e98.jpeg?X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=ASIAYMHYVNWZGUHIBGEW%2F20240729%2Fus-east-1%2Fs3%2Faws4_request&amp;X-Amz-Date=20240729T172505Z&amp;X-Amz-Expires=3600&amp;X-Amz-Security-Token=IQoJb3JpZ2luX2VjEEoaCXVzLWVhc3QtMSJHMEUCIQDdPmQvYaU%2BmVZdglXd%2Fj4AGRDPyAYCddBND3whIYOjwQIgG2Ht%2B4VaWBMGEoCcmcOeiVtV3bA%2FxtkCgk0a583Ljf0qugUIMhAAGgw1NzYwNDcxMTU2OTgiDNOZXUsPJJlIF1ORDyqXBUMBawSzepfL0tCkXv7hKlVqYStWuWOsJVg5dWu8J0MqhDfrVE%2B6Aqes%2FfQt2U26gIZtruZMVt6nHgm%2FxRTm1Apm0Ny8Yd9rs5gfn7goOwPvymwnSmyqNGo%2BWeBer2mJDPO4xkiAsA8at3XoplQTO6DO78eLlxpu0uEh0%2F%2FvHUJbmtXIWjPnSFB5AZ2fhNi46o3UbRc9haTW3C%2F0hIEYnBcel7oDcC%2BgsbBSCxGTeS%2BEVD%2Bg%2BSdaFChSzsrk4Ct2KqFu77379JVtuvD203%2FIV9AX153%2FeQrvv6tJ%2B5wJHadEIuoPEI3k4%2Ftnn%2FK4Ga3235uEtkztEUh1JHm%2BSiNg1yS9ruPiVs6TTdoYHvjpKIQYJUtQwlZL09RRo4WiL9dmaJynOoxpGmw4w3gOFtqSbpaINhf9Mwm7INr%2FicPyvHHTsQuj9oPJPxE8Is9Nx0Dy9Tdy%2BL6Gt3vVT0ZLT%2F%2BAvLmx57PR5yLsAeoToeFpKqmWmLSukTYyoqBr3TlIhyM4UnnlHUkIR6HxA38cO%2FUDKXi5xNBHCV9IKWr8KzRo7OpTeS7d5n%2FYQTDt8Ryk6%2BzeYNFAurban7c3%2F79Zz0PwouiTOCvimlglZgYJx4QPUq91qs0xLo%2BixP%2FoCq2E3Pam3TV4y%2Bz1glHpW8lEP78vWGDMlQ6ZgCrTXiKbBqgTVeKJmg%2F5NAo%2BMfa5WrCCJYfzm3uprLfcOe3VLUL6FgDvJTd8t%2F9n3xhFqf3VAVY1PlGnTi0lzZieAPz5GM8%2FOplmYpwRE2D6QVF55fEwx6a9TYz616NTY6uaZNVijaDPerFjlbLdTm%2BrD2Imey5oLMwXFOQTY9BUOuG8cGyRE%2BS8t0y3NWVsekaLrR86FUCRk9LzGm0g4JHiejD6m5%2B1BjqxAUDf0sjQhCS5nM4WUZo6i1fxFQAbrOEigKBoG%2BNmthQmJvi80Ltt%2FsmQ2xbit%2FOTTQLTljsgOuukFl9MHIz33AKHSHoO%2Bxgb6SgrziuTmd3rKdDNeKsdEj0tOqD%2BWKg2oZkoBIvtO%2FQEI7zxigZOPNDwMhSjsO4OPWFJM8kidTTnMpX7Cmf%2FtfETML1lsugSo0TYEGWzvbtgu6eJEUnI7on1yJ2zcmxdBNOkBwA2gb1DBg%3D%3D&amp;X-Amz-Signature=a7cde3678c126ad4328cc8b00ce7bf0ab1ad09fed0c8a7534fd0f67bf09e66a2&amp;X-Amz-SignedHeaders=host" alt="testuser2's profile picture">
+        <div class="tab-content" id="following" style="display: none;">
+            <div id="following-cards" class="cards-container"><div class="friends-card" style="animation-delay: 0s;">
+                        <img src="https://cloudhive-userdata.s3.amazonaws.com/profile-pics/3b210b3970efe322173e3e98.jpeg?X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=ASIAYMHYVNWZHCE5OWDD%2F20240730%2Fus-east-1%2Fs3%2Faws4_request&amp;X-Amz-Date=20240730T161855Z&amp;X-Amz-Expires=3600&amp;X-Amz-Security-Token=IQoJb3JpZ2luX2VjEGEaCXVzLWVhc3QtMSJHMEUCIAwFCK2wSbtJO865zhmSAE2Ahc%2BNRSRCFOa7wDz%2BlohEAiEA8201AKBhSLj3AEm%2F%2BEn2tQ5KZkTaDZu77D8Ycy%2FjA6squgUISRAAGgw1NzYwNDcxMTU2OTgiDDeTWEFIgBEVy4dpWCqXBVPWHnxhA1hbMGo1SDZfHaRBTh4xdbKa4X0iBOoMknaruwLq%2FW0xo7Yl9p3%2FWBxleYIrWVIYGm%2Fth4SBSuFbuhYZhbezvfT4q%2B7bThTD75sACyybrS7UfDpxaP1Q3IsUejv%2FPO%2BokcMOx6F7G9Re852ohHuWyKsZ6cpkVhVo%2B2W%2FF3BIfvOQd%2FvAk38rq94l5NrPCZvSZ9U7yzjNoADHyiOhNVpXrHFPGrbBaDlsfcF4Ue%2F2VZCQw9AJAYS%2BJHIpIQTHfP5dtMApGFgrQew9hlFWEQc5WxCYHBNIjQjwrNiZgWiwpfkMzFzcuzPRLbW8ib%2Fmy3pKjqi6A%2F7uDk33zAwQhd%2B22JE%2BzE%2BWTsMgbfd1WVKc6z0NZ662cP2BJKQDHA63kLxQt8VW7HKllFhLK585tsg%2FLUe8373LyF2I7DdifFmSMfcA%2FSoz2WqiPfMk1LIgJuhHBTd5OtDs1BM3ERRBNkslDxvUgjTzdcl4sHgKPLGSar4uzEh1c0v9%2F9c%2F5OyyhChy8LnS1QF0xTpu60NORJMMo085w9tbDFnP7gnXmk8mTAqbeacHtbHdnOUOA4JpAmT0Rp2pLg68fpSpq%2Be%2FAh7ukiqVCIOBzjrvPVfoghtMHWnrsOZGP1CG1%2BRE%2F%2BDn3jqh9jmPuw4zSQEhaOi717SC7EjOta68vx%2Bi%2B3JZBhFfBFx73Xnhl5LElCvxtRsikBih0CMFRXj5OCtA6UAz%2BnDv6Q3Lap%2FE4QdN6Ieuog1nEqmL9TzMTLIyFROpeVi%2Blg22GxsptZOELmqG2RmS7JZDgu0EIjplNksawkW%2BeyiKD2lN0uFyFDaN7Ir6BD6X3BzL5zP0sAQ%2Fd2HZIVYRwPNEo5Uvxr6eNi4FVQKI%2B04QxM%2FCVDDFo6S1BjqxAQ5KA9psokZL2lmKbjG%2Bkqitkgmfo0EI1cZd6oCG6T9RGj2HGQUIUldBDMgfe%2F%2FgjCGqUJbasqHc4ukD2vB5m%2FtnerT%2BaCtddCrppSIRxlQMn6UxexbV5By0fZldxJzB1LWpa9bQDX6%2FDKIxLin%2FTRqnxsXzfsUOEy12sGRCk%2Ba8BrQF57ooKLMxnLVR0POUVSdZv4zHMUSgHGuinXNCdo%2FidfThVvzcZ%2FyajHrypMVMoA%3D%3D&amp;X-Amz-Signature=e904a58466ac4b27f2155b23e1e90c9ddcaca34f6fa7ad4e7ba79cacaf02e889&amp;X-Amz-SignedHeaders=host" alt="testuser2's profile picture">
                         <h3 class="friends-card-header">stella tan</h3>
                         <p>@testuser2</p>
                         <a class="friends-card-btn" href="/testuser2">View Profile</a>
-                    </div>
-            
-                    <div class="friends-card" style="animation-delay: 0.2s;">
-                        <img src="https://cloudhive-userdata.s3.amazonaws.com/profile-pics/d8386f42d5ab5a9b853f735e.jpeg?X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=ASIAYMHYVNWZGUHIBGEW%2F20240729%2Fus-east-1%2Fs3%2Faws4_request&amp;X-Amz-Date=20240729T172505Z&amp;X-Amz-Expires=3600&amp;X-Amz-Security-Token=IQoJb3JpZ2luX2VjEEoaCXVzLWVhc3QtMSJHMEUCIQDdPmQvYaU%2BmVZdglXd%2Fj4AGRDPyAYCddBND3whIYOjwQIgG2Ht%2B4VaWBMGEoCcmcOeiVtV3bA%2FxtkCgk0a583Ljf0qugUIMhAAGgw1NzYwNDcxMTU2OTgiDNOZXUsPJJlIF1ORDyqXBUMBawSzepfL0tCkXv7hKlVqYStWuWOsJVg5dWu8J0MqhDfrVE%2B6Aqes%2FfQt2U26gIZtruZMVt6nHgm%2FxRTm1Apm0Ny8Yd9rs5gfn7goOwPvymwnSmyqNGo%2BWeBer2mJDPO4xkiAsA8at3XoplQTO6DO78eLlxpu0uEh0%2F%2FvHUJbmtXIWjPnSFB5AZ2fhNi46o3UbRc9haTW3C%2F0hIEYnBcel7oDcC%2BgsbBSCxGTeS%2BEVD%2Bg%2BSdaFChSzsrk4Ct2KqFu77379JVtuvD203%2FIV9AX153%2FeQrvv6tJ%2B5wJHadEIuoPEI3k4%2Ftnn%2FK4Ga3235uEtkztEUh1JHm%2BSiNg1yS9ruPiVs6TTdoYHvjpKIQYJUtQwlZL09RRo4WiL9dmaJynOoxpGmw4w3gOFtqSbpaINhf9Mwm7INr%2FicPyvHHTsQuj9oPJPxE8Is9Nx0Dy9Tdy%2BL6Gt3vVT0ZLT%2F%2BAvLmx57PR5yLsAeoToeFpKqmWmLSukTYyoqBr3TlIhyM4UnnlHUkIR6HxA38cO%2FUDKXi5xNBHCV9IKWr8KzRo7OpTeS7d5n%2FYQTDt8Ryk6%2BzeYNFAurban7c3%2F79Zz0PwouiTOCvimlglZgYJx4QPUq91qs0xLo%2BixP%2FoCq2E3Pam3TV4y%2Bz1glHpW8lEP78vWGDMlQ6ZgCrTXiKbBqgTVeKJmg%2F5NAo%2BMfa5WrCCJYfzm3uprLfcOe3VLUL6FgDvJTd8t%2F9n3xhFqf3VAVY1PlGnTi0lzZieAPz5GM8%2FOplmYpwRE2D6QVF55fEwx6a9TYz616NTY6uaZNVijaDPerFjlbLdTm%2BrD2Imey5oLMwXFOQTY9BUOuG8cGyRE%2BS8t0y3NWVsekaLrR86FUCRk9LzGm0g4JHiejD6m5%2B1BjqxAUDf0sjQhCS5nM4WUZo6i1fxFQAbrOEigKBoG%2BNmthQmJvi80Ltt%2FsmQ2xbit%2FOTTQLTljsgOuukFl9MHIz33AKHSHoO%2Bxgb6SgrziuTmd3rKdDNeKsdEj0tOqD%2BWKg2oZkoBIvtO%2FQEI7zxigZOPNDwMhSjsO4OPWFJM8kidTTnMpX7Cmf%2FtfETML1lsugSo0TYEGWzvbtgu6eJEUnI7on1yJ2zcmxdBNOkBwA2gb1DBg%3D%3D&amp;X-Amz-Signature=48cf6225372340695d0a944ccc54631c768b9544013f8aaed9f4915a07a8a340&amp;X-Amz-SignedHeaders=host" alt="testuser3's profile picture">
+                    </div><div class="friends-card" style="animation-delay: 0.1s;">
+                        <img src="https://cloudhive-userdata.s3.amazonaws.com/profile-pics/d8386f42d5ab5a9b853f735e.jpeg?X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=ASIAYMHYVNWZHCE5OWDD%2F20240730%2Fus-east-1%2Fs3%2Faws4_request&amp;X-Amz-Date=20240730T161855Z&amp;X-Amz-Expires=3600&amp;X-Amz-Security-Token=IQoJb3JpZ2luX2VjEGEaCXVzLWVhc3QtMSJHMEUCIAwFCK2wSbtJO865zhmSAE2Ahc%2BNRSRCFOa7wDz%2BlohEAiEA8201AKBhSLj3AEm%2F%2BEn2tQ5KZkTaDZu77D8Ycy%2FjA6squgUISRAAGgw1NzYwNDcxMTU2OTgiDDeTWEFIgBEVy4dpWCqXBVPWHnxhA1hbMGo1SDZfHaRBTh4xdbKa4X0iBOoMknaruwLq%2FW0xo7Yl9p3%2FWBxleYIrWVIYGm%2Fth4SBSuFbuhYZhbezvfT4q%2B7bThTD75sACyybrS7UfDpxaP1Q3IsUejv%2FPO%2BokcMOx6F7G9Re852ohHuWyKsZ6cpkVhVo%2B2W%2FF3BIfvOQd%2FvAk38rq94l5NrPCZvSZ9U7yzjNoADHyiOhNVpXrHFPGrbBaDlsfcF4Ue%2F2VZCQw9AJAYS%2BJHIpIQTHfP5dtMApGFgrQew9hlFWEQc5WxCYHBNIjQjwrNiZgWiwpfkMzFzcuzPRLbW8ib%2Fmy3pKjqi6A%2F7uDk33zAwQhd%2B22JE%2BzE%2BWTsMgbfd1WVKc6z0NZ662cP2BJKQDHA63kLxQt8VW7HKllFhLK585tsg%2FLUe8373LyF2I7DdifFmSMfcA%2FSoz2WqiPfMk1LIgJuhHBTd5OtDs1BM3ERRBNkslDxvUgjTzdcl4sHgKPLGSar4uzEh1c0v9%2F9c%2F5OyyhChy8LnS1QF0xTpu60NORJMMo085w9tbDFnP7gnXmk8mTAqbeacHtbHdnOUOA4JpAmT0Rp2pLg68fpSpq%2Be%2FAh7ukiqVCIOBzjrvPVfoghtMHWnrsOZGP1CG1%2BRE%2F%2BDn3jqh9jmPuw4zSQEhaOi717SC7EjOta68vx%2Bi%2B3JZBhFfBFx73Xnhl5LElCvxtRsikBih0CMFRXj5OCtA6UAz%2BnDv6Q3Lap%2FE4QdN6Ieuog1nEqmL9TzMTLIyFROpeVi%2Blg22GxsptZOELmqG2RmS7JZDgu0EIjplNksawkW%2BeyiKD2lN0uFyFDaN7Ir6BD6X3BzL5zP0sAQ%2Fd2HZIVYRwPNEo5Uvxr6eNi4FVQKI%2B04QxM%2FCVDDFo6S1BjqxAQ5KA9psokZL2lmKbjG%2Bkqitkgmfo0EI1cZd6oCG6T9RGj2HGQUIUldBDMgfe%2F%2FgjCGqUJbasqHc4ukD2vB5m%2FtnerT%2BaCtddCrppSIRxlQMn6UxexbV5By0fZldxJzB1LWpa9bQDX6%2FDKIxLin%2FTRqnxsXzfsUOEy12sGRCk%2Ba8BrQF57ooKLMxnLVR0POUVSdZv4zHMUSgHGuinXNCdo%2FidfThVvzcZ%2FyajHrypMVMoA%3D%3D&amp;X-Amz-Signature=50439865f4864707875e5b89cc6273f2045a1225a8978f44e980f1e0b8c4acbe&amp;X-Amz-SignedHeaders=host" alt="testuser3's profile picture">
                         <h3 class="friends-card-header">geoffrey lee</h3>
                         <p>@testuser3</p>
                         <a class="friends-card-btn" href="/testuser3">View Profile</a>
-                    </div>
-            
-                    <div class="friends-card" style="animation-delay: 0.30000000000000004s;">
-                        <img src="https://cloudhive-userdata.s3.amazonaws.com/profile-pics/4-testuser4-a2f2c0d50e61.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=ASIAYMHYVNWZGUHIBGEW%2F20240729%2Fus-east-1%2Fs3%2Faws4_request&amp;X-Amz-Date=20240729T172505Z&amp;X-Amz-Expires=3600&amp;X-Amz-Security-Token=IQoJb3JpZ2luX2VjEEoaCXVzLWVhc3QtMSJHMEUCIQDdPmQvYaU%2BmVZdglXd%2Fj4AGRDPyAYCddBND3whIYOjwQIgG2Ht%2B4VaWBMGEoCcmcOeiVtV3bA%2FxtkCgk0a583Ljf0qugUIMhAAGgw1NzYwNDcxMTU2OTgiDNOZXUsPJJlIF1ORDyqXBUMBawSzepfL0tCkXv7hKlVqYStWuWOsJVg5dWu8J0MqhDfrVE%2B6Aqes%2FfQt2U26gIZtruZMVt6nHgm%2FxRTm1Apm0Ny8Yd9rs5gfn7goOwPvymwnSmyqNGo%2BWeBer2mJDPO4xkiAsA8at3XoplQTO6DO78eLlxpu0uEh0%2F%2FvHUJbmtXIWjPnSFB5AZ2fhNi46o3UbRc9haTW3C%2F0hIEYnBcel7oDcC%2BgsbBSCxGTeS%2BEVD%2Bg%2BSdaFChSzsrk4Ct2KqFu77379JVtuvD203%2FIV9AX153%2FeQrvv6tJ%2B5wJHadEIuoPEI3k4%2Ftnn%2FK4Ga3235uEtkztEUh1JHm%2BSiNg1yS9ruPiVs6TTdoYHvjpKIQYJUtQwlZL09RRo4WiL9dmaJynOoxpGmw4w3gOFtqSbpaINhf9Mwm7INr%2FicPyvHHTsQuj9oPJPxE8Is9Nx0Dy9Tdy%2BL6Gt3vVT0ZLT%2F%2BAvLmx57PR5yLsAeoToeFpKqmWmLSukTYyoqBr3TlIhyM4UnnlHUkIR6HxA38cO%2FUDKXi5xNBHCV9IKWr8KzRo7OpTeS7d5n%2FYQTDt8Ryk6%2BzeYNFAurban7c3%2F79Zz0PwouiTOCvimlglZgYJx4QPUq91qs0xLo%2BixP%2FoCq2E3Pam3TV4y%2Bz1glHpW8lEP78vWGDMlQ6ZgCrTXiKbBqgTVeKJmg%2F5NAo%2BMfa5WrCCJYfzm3uprLfcOe3VLUL6FgDvJTd8t%2F9n3xhFqf3VAVY1PlGnTi0lzZieAPz5GM8%2FOplmYpwRE2D6QVF55fEwx6a9TYz616NTY6uaZNVijaDPerFjlbLdTm%2BrD2Imey5oLMwXFOQTY9BUOuG8cGyRE%2BS8t0y3NWVsekaLrR86FUCRk9LzGm0g4JHiejD6m5%2B1BjqxAUDf0sjQhCS5nM4WUZo6i1fxFQAbrOEigKBoG%2BNmthQmJvi80Ltt%2FsmQ2xbit%2FOTTQLTljsgOuukFl9MHIz33AKHSHoO%2Bxgb6SgrziuTmd3rKdDNeKsdEj0tOqD%2BWKg2oZkoBIvtO%2FQEI7zxigZOPNDwMhSjsO4OPWFJM8kidTTnMpX7Cmf%2FtfETML1lsugSo0TYEGWzvbtgu6eJEUnI7on1yJ2zcmxdBNOkBwA2gb1DBg%3D%3D&amp;X-Amz-Signature=7bd04b0fec15df2310c0d671b3a07a6973e0cb768aa873d8832d2e4d5e2d9c0b&amp;X-Amz-SignedHeaders=host" alt="testuser4's profile picture">
-                        <h3 class="friends-card-header">test user</h3>
-                        <p>@testuser4</p>
-                        <a class="friends-card-btn" href="/testuser4">View Profile</a>
-                    </div>
-            
-                    <div class="friends-card" style="animation-delay: 0.4s;">
-                        <img src="../assets/default-profile.jpg" alt="testuser5's profile picture">
-                        <h3 class="friends-card-header"> </h3>
-                        <p>@testuser5</p>
-                        <a class="friends-card-btn" href="/testuser5">View Profile</a>
-                    </div>
-            
-                    <div class="friends-card" style="animation-delay: 0.5s;">
-                        <img src="../assets/default-profile.jpg" alt="testuser6's profile picture">
-                        <h3 class="friends-card-header"> </h3>
-                        <p>@testuser6</p>
-                        <a class="friends-card-btn" href="/testuser6">View Profile</a>
-                    </div>
-            
-                    <div class="friends-card" style="animation-delay: 0.6000000000000001s;">
-                        <img src="../assets/default-profile.jpg" alt="testuser7's profile picture">
-                        <h3 class="friends-card-header"> </h3>
-                        <p>@testuser7</p>
-                        <a class="friends-card-btn" href="/testuser7">View Profile</a>
-                    </div>
-            
+                    </div><div class="friends-card" style="animation-delay: 0.2s;">
+                        <img src="https://cloudhive-userdata.s3.amazonaws.com/profile-pics/365eed5344e1247a190441a6.blob?X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=ASIAYMHYVNWZHCE5OWDD%2F20240730%2Fus-east-1%2Fs3%2Faws4_request&amp;X-Amz-Date=20240730T161855Z&amp;X-Amz-Expires=3600&amp;X-Amz-Security-Token=IQoJb3JpZ2luX2VjEGEaCXVzLWVhc3QtMSJHMEUCIAwFCK2wSbtJO865zhmSAE2Ahc%2BNRSRCFOa7wDz%2BlohEAiEA8201AKBhSLj3AEm%2F%2BEn2tQ5KZkTaDZu77D8Ycy%2FjA6squgUISRAAGgw1NzYwNDcxMTU2OTgiDDeTWEFIgBEVy4dpWCqXBVPWHnxhA1hbMGo1SDZfHaRBTh4xdbKa4X0iBOoMknaruwLq%2FW0xo7Yl9p3%2FWBxleYIrWVIYGm%2Fth4SBSuFbuhYZhbezvfT4q%2B7bThTD75sACyybrS7UfDpxaP1Q3IsUejv%2FPO%2BokcMOx6F7G9Re852ohHuWyKsZ6cpkVhVo%2B2W%2FF3BIfvOQd%2FvAk38rq94l5NrPCZvSZ9U7yzjNoADHyiOhNVpXrHFPGrbBaDlsfcF4Ue%2F2VZCQw9AJAYS%2BJHIpIQTHfP5dtMApGFgrQew9hlFWEQc5WxCYHBNIjQjwrNiZgWiwpfkMzFzcuzPRLbW8ib%2Fmy3pKjqi6A%2F7uDk33zAwQhd%2B22JE%2BzE%2BWTsMgbfd1WVKc6z0NZ662cP2BJKQDHA63kLxQt8VW7HKllFhLK585tsg%2FLUe8373LyF2I7DdifFmSMfcA%2FSoz2WqiPfMk1LIgJuhHBTd5OtDs1BM3ERRBNkslDxvUgjTzdcl4sHgKPLGSar4uzEh1c0v9%2F9c%2F5OyyhChy8LnS1QF0xTpu60NORJMMo085w9tbDFnP7gnXmk8mTAqbeacHtbHdnOUOA4JpAmT0Rp2pLg68fpSpq%2Be%2FAh7ukiqVCIOBzjrvPVfoghtMHWnrsOZGP1CG1%2BRE%2F%2BDn3jqh9jmPuw4zSQEhaOi717SC7EjOta68vx%2Bi%2B3JZBhFfBFx73Xnhl5LElCvxtRsikBih0CMFRXj5OCtA6UAz%2BnDv6Q3Lap%2FE4QdN6Ieuog1nEqmL9TzMTLIyFROpeVi%2Blg22GxsptZOELmqG2RmS7JZDgu0EIjplNksawkW%2BeyiKD2lN0uFyFDaN7Ir6BD6X3BzL5zP0sAQ%2Fd2HZIVYRwPNEo5Uvxr6eNi4FVQKI%2B04QxM%2FCVDDFo6S1BjqxAQ5KA9psokZL2lmKbjG%2Bkqitkgmfo0EI1cZd6oCG6T9RGj2HGQUIUldBDMgfe%2F%2FgjCGqUJbasqHc4ukD2vB5m%2FtnerT%2BaCtddCrppSIRxlQMn6UxexbV5By0fZldxJzB1LWpa9bQDX6%2FDKIxLin%2FTRqnxsXzfsUOEy12sGRCk%2Ba8BrQF57ooKLMxnLVR0POUVSdZv4zHMUSgHGuinXNCdo%2FidfThVvzcZ%2FyajHrypMVMoA%3D%3D&amp;X-Amz-Signature=900ff4cfc831734eebd8a1a389c12445a70b03bd1ec93b61ce7b4e4490702f58&amp;X-Amz-SignedHeaders=host" alt="geofpie's profile picture">
+                        <h3 class="friends-card-header">Geoffrey Lee</h3>
+                        <p>@geofpie</p>
+                        <a class="friends-card-btn" href="/geofpie">View Profile</a>
+                    </div><div class="friends-card" style="animation-delay: 0.3s;">
+                        <img src="https://cloudhive-userdata.s3.amazonaws.com/profile-pics/32a79ab9297cb2013a82c530.blob?X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=ASIAYMHYVNWZHCE5OWDD%2F20240730%2Fus-east-1%2Fs3%2Faws4_request&amp;X-Amz-Date=20240730T161855Z&amp;X-Amz-Expires=3600&amp;X-Amz-Security-Token=IQoJb3JpZ2luX2VjEGEaCXVzLWVhc3QtMSJHMEUCIAwFCK2wSbtJO865zhmSAE2Ahc%2BNRSRCFOa7wDz%2BlohEAiEA8201AKBhSLj3AEm%2F%2BEn2tQ5KZkTaDZu77D8Ycy%2FjA6squgUISRAAGgw1NzYwNDcxMTU2OTgiDDeTWEFIgBEVy4dpWCqXBVPWHnxhA1hbMGo1SDZfHaRBTh4xdbKa4X0iBOoMknaruwLq%2FW0xo7Yl9p3%2FWBxleYIrWVIYGm%2Fth4SBSuFbuhYZhbezvfT4q%2B7bThTD75sACyybrS7UfDpxaP1Q3IsUejv%2FPO%2BokcMOx6F7G9Re852ohHuWyKsZ6cpkVhVo%2B2W%2FF3BIfvOQd%2FvAk38rq94l5NrPCZvSZ9U7yzjNoADHyiOhNVpXrHFPGrbBaDlsfcF4Ue%2F2VZCQw9AJAYS%2BJHIpIQTHfP5dtMApGFgrQew9hlFWEQc5WxCYHBNIjQjwrNiZgWiwpfkMzFzcuzPRLbW8ib%2Fmy3pKjqi6A%2F7uDk33zAwQhd%2B22JE%2BzE%2BWTsMgbfd1WVKc6z0NZ662cP2BJKQDHA63kLxQt8VW7HKllFhLK585tsg%2FLUe8373LyF2I7DdifFmSMfcA%2FSoz2WqiPfMk1LIgJuhHBTd5OtDs1BM3ERRBNkslDxvUgjTzdcl4sHgKPLGSar4uzEh1c0v9%2F9c%2F5OyyhChy8LnS1QF0xTpu60NORJMMo085w9tbDFnP7gnXmk8mTAqbeacHtbHdnOUOA4JpAmT0Rp2pLg68fpSpq%2Be%2FAh7ukiqVCIOBzjrvPVfoghtMHWnrsOZGP1CG1%2BRE%2F%2BDn3jqh9jmPuw4zSQEhaOi717SC7EjOta68vx%2Bi%2B3JZBhFfBFx73Xnhl5LElCvxtRsikBih0CMFRXj5OCtA6UAz%2BnDv6Q3Lap%2FE4QdN6Ieuog1nEqmL9TzMTLIyFROpeVi%2Blg22GxsptZOELmqG2RmS7JZDgu0EIjplNksawkW%2BeyiKD2lN0uFyFDaN7Ir6BD6X3BzL5zP0sAQ%2Fd2HZIVYRwPNEo5Uvxr6eNi4FVQKI%2B04QxM%2FCVDDFo6S1BjqxAQ5KA9psokZL2lmKbjG%2Bkqitkgmfo0EI1cZd6oCG6T9RGj2HGQUIUldBDMgfe%2F%2FgjCGqUJbasqHc4ukD2vB5m%2FtnerT%2BaCtddCrppSIRxlQMn6UxexbV5By0fZldxJzB1LWpa9bQDX6%2FDKIxLin%2FTRqnxsXzfsUOEy12sGRCk%2Ba8BrQF57ooKLMxnLVR0POUVSdZv4zHMUSgHGuinXNCdo%2FidfThVvzcZ%2FyajHrypMVMoA%3D%3D&amp;X-Amz-Signature=7c85d2e1e30e1dd0a263c6e92c87ce8f07df42fbd799777f70434aee3853a1a0&amp;X-Amz-SignedHeaders=host" alt="stellatxy's profile picture">
+                        <h3 class="friends-card-header">stella tan</h3>
+                        <p>@stellatxy</p>
+                        <a class="friends-card-btn" href="/stellatxy">View Profile</a>
+                    </div></div>
+        </div>
+        <div class="tab-content" id="followers" style="display: block;">
+            <div id="followers-cards" class="cards-container"><div class="friends-card" style="animation-delay: 0s;">
+                        <img src="https://cloudhive-userdata.s3.amazonaws.com/profile-pics/3b210b3970efe322173e3e98.jpeg?X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=ASIAYMHYVNWZHCE5OWDD%2F20240730%2Fus-east-1%2Fs3%2Faws4_request&amp;X-Amz-Date=20240730T161902Z&amp;X-Amz-Expires=3600&amp;X-Amz-Security-Token=IQoJb3JpZ2luX2VjEGEaCXVzLWVhc3QtMSJHMEUCIAwFCK2wSbtJO865zhmSAE2Ahc%2BNRSRCFOa7wDz%2BlohEAiEA8201AKBhSLj3AEm%2F%2BEn2tQ5KZkTaDZu77D8Ycy%2FjA6squgUISRAAGgw1NzYwNDcxMTU2OTgiDDeTWEFIgBEVy4dpWCqXBVPWHnxhA1hbMGo1SDZfHaRBTh4xdbKa4X0iBOoMknaruwLq%2FW0xo7Yl9p3%2FWBxleYIrWVIYGm%2Fth4SBSuFbuhYZhbezvfT4q%2B7bThTD75sACyybrS7UfDpxaP1Q3IsUejv%2FPO%2BokcMOx6F7G9Re852ohHuWyKsZ6cpkVhVo%2B2W%2FF3BIfvOQd%2FvAk38rq94l5NrPCZvSZ9U7yzjNoADHyiOhNVpXrHFPGrbBaDlsfcF4Ue%2F2VZCQw9AJAYS%2BJHIpIQTHfP5dtMApGFgrQew9hlFWEQc5WxCYHBNIjQjwrNiZgWiwpfkMzFzcuzPRLbW8ib%2Fmy3pKjqi6A%2F7uDk33zAwQhd%2B22JE%2BzE%2BWTsMgbfd1WVKc6z0NZ662cP2BJKQDHA63kLxQt8VW7HKllFhLK585tsg%2FLUe8373LyF2I7DdifFmSMfcA%2FSoz2WqiPfMk1LIgJuhHBTd5OtDs1BM3ERRBNkslDxvUgjTzdcl4sHgKPLGSar4uzEh1c0v9%2F9c%2F5OyyhChy8LnS1QF0xTpu60NORJMMo085w9tbDFnP7gnXmk8mTAqbeacHtbHdnOUOA4JpAmT0Rp2pLg68fpSpq%2Be%2FAh7ukiqVCIOBzjrvPVfoghtMHWnrsOZGP1CG1%2BRE%2F%2BDn3jqh9jmPuw4zSQEhaOi717SC7EjOta68vx%2Bi%2B3JZBhFfBFx73Xnhl5LElCvxtRsikBih0CMFRXj5OCtA6UAz%2BnDv6Q3Lap%2FE4QdN6Ieuog1nEqmL9TzMTLIyFROpeVi%2Blg22GxsptZOELmqG2RmS7JZDgu0EIjplNksawkW%2BeyiKD2lN0uFyFDaN7Ir6BD6X3BzL5zP0sAQ%2Fd2HZIVYRwPNEo5Uvxr6eNi4FVQKI%2B04QxM%2FCVDDFo6S1BjqxAQ5KA9psokZL2lmKbjG%2Bkqitkgmfo0EI1cZd6oCG6T9RGj2HGQUIUldBDMgfe%2F%2FgjCGqUJbasqHc4ukD2vB5m%2FtnerT%2BaCtddCrppSIRxlQMn6UxexbV5By0fZldxJzB1LWpa9bQDX6%2FDKIxLin%2FTRqnxsXzfsUOEy12sGRCk%2Ba8BrQF57ooKLMxnLVR0POUVSdZv4zHMUSgHGuinXNCdo%2FidfThVvzcZ%2FyajHrypMVMoA%3D%3D&amp;X-Amz-Signature=359903fb004e6aa3d69f17eeef2fe0012ea17a5a1bc13935eef4f315f4b13ade&amp;X-Amz-SignedHeaders=host" alt="testuser2's profile picture">
+                        <h3 class="friends-card-header">stella tan</h3>
+                        <p>@testuser2</p>
+                        <a class="friends-card-btn" href="/testuser2">View Profile</a>
+                    </div><div class="friends-card" style="animation-delay: 0.1s;">
+                        <img src="https://cloudhive-userdata.s3.amazonaws.com/profile-pics/d8386f42d5ab5a9b853f735e.jpeg?X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=ASIAYMHYVNWZHCE5OWDD%2F20240730%2Fus-east-1%2Fs3%2Faws4_request&amp;X-Amz-Date=20240730T161902Z&amp;X-Amz-Expires=3600&amp;X-Amz-Security-Token=IQoJb3JpZ2luX2VjEGEaCXVzLWVhc3QtMSJHMEUCIAwFCK2wSbtJO865zhmSAE2Ahc%2BNRSRCFOa7wDz%2BlohEAiEA8201AKBhSLj3AEm%2F%2BEn2tQ5KZkTaDZu77D8Ycy%2FjA6squgUISRAAGgw1NzYwNDcxMTU2OTgiDDeTWEFIgBEVy4dpWCqXBVPWHnxhA1hbMGo1SDZfHaRBTh4xdbKa4X0iBOoMknaruwLq%2FW0xo7Yl9p3%2FWBxleYIrWVIYGm%2Fth4SBSuFbuhYZhbezvfT4q%2B7bThTD75sACyybrS7UfDpxaP1Q3IsUejv%2FPO%2BokcMOx6F7G9Re852ohHuWyKsZ6cpkVhVo%2B2W%2FF3BIfvOQd%2FvAk38rq94l5NrPCZvSZ9U7yzjNoADHyiOhNVpXrHFPGrbBaDlsfcF4Ue%2F2VZCQw9AJAYS%2BJHIpIQTHfP5dtMApGFgrQew9hlFWEQc5WxCYHBNIjQjwrNiZgWiwpfkMzFzcuzPRLbW8ib%2Fmy3pKjqi6A%2F7uDk33zAwQhd%2B22JE%2BzE%2BWTsMgbfd1WVKc6z0NZ662cP2BJKQDHA63kLxQt8VW7HKllFhLK585tsg%2FLUe8373LyF2I7DdifFmSMfcA%2FSoz2WqiPfMk1LIgJuhHBTd5OtDs1BM3ERRBNkslDxvUgjTzdcl4sHgKPLGSar4uzEh1c0v9%2F9c%2F5OyyhChy8LnS1QF0xTpu60NORJMMo085w9tbDFnP7gnXmk8mTAqbeacHtbHdnOUOA4JpAmT0Rp2pLg68fpSpq%2Be%2FAh7ukiqVCIOBzjrvPVfoghtMHWnrsOZGP1CG1%2BRE%2F%2BDn3jqh9jmPuw4zSQEhaOi717SC7EjOta68vx%2Bi%2B3JZBhFfBFx73Xnhl5LElCvxtRsikBih0CMFRXj5OCtA6UAz%2BnDv6Q3Lap%2FE4QdN6Ieuog1nEqmL9TzMTLIyFROpeVi%2Blg22GxsptZOELmqG2RmS7JZDgu0EIjplNksawkW%2BeyiKD2lN0uFyFDaN7Ir6BD6X3BzL5zP0sAQ%2Fd2HZIVYRwPNEo5Uvxr6eNi4FVQKI%2B04QxM%2FCVDDFo6S1BjqxAQ5KA9psokZL2lmKbjG%2Bkqitkgmfo0EI1cZd6oCG6T9RGj2HGQUIUldBDMgfe%2F%2FgjCGqUJbasqHc4ukD2vB5m%2FtnerT%2BaCtddCrppSIRxlQMn6UxexbV5By0fZldxJzB1LWpa9bQDX6%2FDKIxLin%2FTRqnxsXzfsUOEy12sGRCk%2Ba8BrQF57ooKLMxnLVR0POUVSdZv4zHMUSgHGuinXNCdo%2FidfThVvzcZ%2FyajHrypMVMoA%3D%3D&amp;X-Amz-Signature=0a28f6cf9f4f3e8600d5d66c421b8130f0aaeb32280b20d9ee5a70f5f4d36199&amp;X-Amz-SignedHeaders=host" alt="testuser3's profile picture">
+                        <h3 class="friends-card-header">geoffrey lee</h3>
+                        <p>@testuser3</p>
+                        <a class="friends-card-btn" href="/testuser3">View Profile</a>
+                    </div><div class="friends-card" style="animation-delay: 0.2s;">
+                        <img src="https://cloudhive-userdata.s3.amazonaws.com/profile-pics/365eed5344e1247a190441a6.blob?X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=ASIAYMHYVNWZHCE5OWDD%2F20240730%2Fus-east-1%2Fs3%2Faws4_request&amp;X-Amz-Date=20240730T161902Z&amp;X-Amz-Expires=3600&amp;X-Amz-Security-Token=IQoJb3JpZ2luX2VjEGEaCXVzLWVhc3QtMSJHMEUCIAwFCK2wSbtJO865zhmSAE2Ahc%2BNRSRCFOa7wDz%2BlohEAiEA8201AKBhSLj3AEm%2F%2BEn2tQ5KZkTaDZu77D8Ycy%2FjA6squgUISRAAGgw1NzYwNDcxMTU2OTgiDDeTWEFIgBEVy4dpWCqXBVPWHnxhA1hbMGo1SDZfHaRBTh4xdbKa4X0iBOoMknaruwLq%2FW0xo7Yl9p3%2FWBxleYIrWVIYGm%2Fth4SBSuFbuhYZhbezvfT4q%2B7bThTD75sACyybrS7UfDpxaP1Q3IsUejv%2FPO%2BokcMOx6F7G9Re852ohHuWyKsZ6cpkVhVo%2B2W%2FF3BIfvOQd%2FvAk38rq94l5NrPCZvSZ9U7yzjNoADHyiOhNVpXrHFPGrbBaDlsfcF4Ue%2F2VZCQw9AJAYS%2BJHIpIQTHfP5dtMApGFgrQew9hlFWEQc5WxCYHBNIjQjwrNiZgWiwpfkMzFzcuzPRLbW8ib%2Fmy3pKjqi6A%2F7uDk33zAwQhd%2B22JE%2BzE%2BWTsMgbfd1WVKc6z0NZ662cP2BJKQDHA63kLxQt8VW7HKllFhLK585tsg%2FLUe8373LyF2I7DdifFmSMfcA%2FSoz2WqiPfMk1LIgJuhHBTd5OtDs1BM3ERRBNkslDxvUgjTzdcl4sHgKPLGSar4uzEh1c0v9%2F9c%2F5OyyhChy8LnS1QF0xTpu60NORJMMo085w9tbDFnP7gnXmk8mTAqbeacHtbHdnOUOA4JpAmT0Rp2pLg68fpSpq%2Be%2FAh7ukiqVCIOBzjrvPVfoghtMHWnrsOZGP1CG1%2BRE%2F%2BDn3jqh9jmPuw4zSQEhaOi717SC7EjOta68vx%2Bi%2B3JZBhFfBFx73Xnhl5LElCvxtRsikBih0CMFRXj5OCtA6UAz%2BnDv6Q3Lap%2FE4QdN6Ieuog1nEqmL9TzMTLIyFROpeVi%2Blg22GxsptZOELmqG2RmS7JZDgu0EIjplNksawkW%2BeyiKD2lN0uFyFDaN7Ir6BD6X3BzL5zP0sAQ%2Fd2HZIVYRwPNEo5Uvxr6eNi4FVQKI%2B04QxM%2FCVDDFo6S1BjqxAQ5KA9psokZL2lmKbjG%2Bkqitkgmfo0EI1cZd6oCG6T9RGj2HGQUIUldBDMgfe%2F%2FgjCGqUJbasqHc4ukD2vB5m%2FtnerT%2BaCtddCrppSIRxlQMn6UxexbV5By0fZldxJzB1LWpa9bQDX6%2FDKIxLin%2FTRqnxsXzfsUOEy12sGRCk%2Ba8BrQF57ooKLMxnLVR0POUVSdZv4zHMUSgHGuinXNCdo%2FidfThVvzcZ%2FyajHrypMVMoA%3D%3D&amp;X-Amz-Signature=2191ba4aca863b91a3f2ec63850789bfea710bdf9061914d67d0588c0bfa1902&amp;X-Amz-SignedHeaders=host" alt="geofpie's profile picture">
+                        <h3 class="friends-card-header">Geoffrey Lee</h3>
+                        <p>@geofpie</p>
+                        <a class="friends-card-btn" href="/geofpie">View Profile</a>
+                    </div></div>
         </div>
     </div>
-</body>
+
 <footer>
     <div class="container d-flex">
         <div class="row mx-auto">
             <div class="col footer-center">
-                <img src="../assets/logo-dark.svg" width="46" height="46" alt="cloudhive">
+                <img src="../assets/logo-dark.svg" width="46" height="46" alt="cloudhive" class="image-visible">
                 <h6 class="footer-brand-name">cloudhive</h6>
                 <p class="footer-version">v0.3.0-beta-main</p>
                 <hr class="footer-divider">
@@ -176,5 +180,6 @@
         </div>
     </div>
 </footer>
+</body>
 </html>
 ``
