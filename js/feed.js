@@ -47,6 +47,39 @@ function updateUserProfile(user) {
     document.querySelector('.post-modal-profile-pic').src = user.profile_picture_url;
 }
 
+document.addEventListener('DOMContentLoaded', function() {
+    fetchMutualFollowers();
+});
+
+function fetchMutualFollowers() {
+    fetch('/api/get_mutual_followers')
+        .then(response => response.json())
+        .then(data => {
+            const friendsList = document.getElementById('friendsList');
+            friendsList.innerHTML = '';
+
+            data.friendsList.forEach(friend => {
+                const listItem = document.createElement('li');
+                listItem.classList.add('list-group-item', 'd-flex', 'align-items-center');
+                listItem.innerHTML = `
+                    <img src="${friend.profilepic_key ? getS3SignedUrl(friend.profilepic_key) : '../assets/default-profile.jpg'}" alt="Profile Picture" class="rounded-circle" width="40" height="40">
+                    <div class="ml-3">
+                        <h6>${friend.username}</h6>
+                        <small class="${friend.status === 'Online' ? 'text-success' : friend.status === 'Away' ? 'text-warning' : 'text-muted'}">${friend.status}</small>
+                        <br>
+                        <small>Last online: ${friend.timeAgo}</small>
+                    </div>
+                `;
+                friendsList.appendChild(listItem);
+            });
+        })
+        .catch(error => console.error('Error fetching mutual followers:', error));
+}
+
+function getS3SignedUrl(key) {
+    return `https://your-bucket-name.s3.amazonaws.com/${key}`;
+}
+
 dayjs.extend(dayjs_plugin_relativeTime);
 
 document.addEventListener('DOMContentLoaded', function() {

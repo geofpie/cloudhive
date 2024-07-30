@@ -997,8 +997,8 @@ a:hover {
     background-color: #fefefe;
     margin: 15% auto; /* 15% from the top and centered */
     padding: 20px;
-    border: 1px solid #888;
-    border-radius: 22px;
+    border: none;
+    border-radius: 26px;
     width: 50%;
 }
 
@@ -1072,7 +1072,7 @@ a:hover {
 
 .select-img-btn {
     width: 100%;
-    padding: 8px 0 8px 0;
+    padding: 16px 8px 16px 8px;
 }
 
 .edit-profile-modal-header {
@@ -1081,6 +1081,10 @@ a:hover {
     align-items: center;
     padding: 10px;
     border-bottom: 1px solid #ddd;
+}
+
+.edit-profile-modal-header h2 {
+    font-size: 24px;
 }
 
 .edit-profile-modal-body {
@@ -1111,6 +1115,14 @@ a:hover {
 
 .load-more-btn:active {
     background-color: #6e00b3;
+}
+
+.profile-modal-close-btn {
+    font-size: 22px;
+    border: none;
+    background: none;
+    margin-top: auto;
+    margin-bottom: auto;
 }
 
 /* Custom Modal Styles */
@@ -1236,7 +1248,7 @@ a:hover {
 /* Modal Content Box */
 .follow-modal-content {
     background-color: #fff;
-    border-radius: 5px;
+    border-radius: 22px;
     box-shadow: 0 4px 8px rgba(0,0,0,0.2);
 }
 
@@ -1245,8 +1257,8 @@ a:hover {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px;
-    border-bottom: 1px solid #ddd;
+    padding: 12px 12px 0 12px;
+    border: none;
 }
 
 /* Close Button */
@@ -1255,6 +1267,8 @@ a:hover {
     border: none;
     background: none;
     cursor: pointer;
+    margin-top: auto;
+    margin-bottom: 12px;
 }
 
 /* Modal Body */
@@ -1267,7 +1281,7 @@ a:hover {
     display: flex;
     justify-content: flex-end;
     padding: 10px;
-    border-top: 1px solid #ddd;
+    border: none;
 }
 
 /* Buttons */
@@ -1423,6 +1437,35 @@ a:hover {
 
 .options-menu li a:hover {
     color: #007bff;
+}
+
+.follow-action-pri {
+    padding: 12px;
+    border: none;
+    border-radius: 16px;
+    gap: 6px;
+    background-color: #6e00b3 ;
+    color: white;
+    transition: 0.2s ease-in-out;
+    -webkit-transition: 0.2s ease-in-out;
+}
+
+.follow-action-pri:hover {
+    background-color: #a64ae0;
+}
+
+.follow-action-sec {
+    padding: 12px;
+    border: none;
+    border-radius: 16px;
+    margin-right: 6px;
+    background-color: #c7c7c7;
+    transition: 0.2s ease-in-out;
+    -webkit-transition: 0.2s ease-in-out;
+}
+
+.follow-action-sec:hover {
+    background-color: #b8b8b8;
 }
 
 /* styles.css */
@@ -1699,8 +1742,20 @@ a:hover {
         color: white;
     }
 
-    .hive-post-action-bar {
+    .hive-post-action-bar, .user-not-followed, .follow-modal-content {
         background-color: #333;
+    }
+
+    .follow-modal-header {
+        border: none;
+    }
+
+    .follow-modal-close {
+        filter: invert(97%) sepia(3%) saturate(0%) hue-rotate(213deg) brightness(250%) contrast(105%);
+    }
+
+    .follow-modal-body {
+        color: white;
     }
 
     .share-post-button {
@@ -1788,4 +1843,13 @@ a:hover {
     .navbar-toggler-icon {
         filter: invert(97%) sepia(3%) saturate(0%) hue-rotate(213deg) brightness(102%) contrast(105%);
     }
+
+    .follow-action-sec {
+        background-color: #c7c7c7;
+    }
+    
+    .follow-action-sec:hover {
+        background-color: #b8b8b8;
+    }
+    
 }
