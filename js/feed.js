@@ -47,10 +47,6 @@ function updateUserProfile(user) {
     document.querySelector('.post-modal-profile-pic').src = user.profile_picture_url;
 }
 
-document.addEventListener('DOMContentLoaded', function() {
-    fetchMutualFollowers();
-});
-
 function fetchMutualFollowers() {
     fetch('/api/get_mutual_followers')
         .then(response => response.json())
@@ -107,6 +103,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const fetchedPostIds = new Set();
 
     fetchUserInfo();
+    fetchMutualFollowers();
 
     function showModal() {
         postModal.classList.remove('hidden');
