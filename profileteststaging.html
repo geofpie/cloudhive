@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Search | cloudhive</title>
+    <!-- cloudhive by Geoffrey Lee -->
+    <title>cloudhive | Welcome</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Bootstrap -->
@@ -10,22 +11,18 @@
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"></script>
-    <!-- Cropper.js -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.js"></script>
+    
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap" rel="stylesheet">
+
     <!-- Font Awesome -->
     <script src="https://kit.fontawesome.com/80b07c2a17.js" crossorigin="anonymous"></script>
+    
     <!-- Stylesheet -->
-    <link rel="stylesheet" href="../css/style.css"> 
-    <!-- Pica Image Compress -->
-    <script src="https://unpkg.com/pica/dist/pica.min.js"></script>
-    <!-- Feed JS -->
-    <script defer src="../js/profile.js" defer></script>
-    <!-- day.js for relative time calculation -->
-    <script src="https://cdn.jsdelivr.net/npm/dayjs/dayjs.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/dayjs/plugin/relativeTime.js"></script>
+    <link rel="stylesheet" href="css/style.css"> 
+
+    <!-- Application JS -->
+    <script defer src="js/main.js"></script>
     <!-- Favicon -->
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -36,580 +33,56 @@
     <meta name="theme-color" content="#ffffff">
 </head>
 <body>
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light sticky-top hive-navbar">
-        <a class="navbar-brand" href="/hive">
-            <img src="../assets/logo-dark.svg" width="46" height="46" alt="cloudhive">
-        </a>
-        <button class="navbar-toggler navbar-hamburger" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+    <div class="container-fluid p-0">
+        <div class="row no-gutters vh-100">
+            <!-- Left Side: Image and Text -->
+            <div class="col-lg-7 d-flex flex-column position-relative p-0 hero-section">
+                <!-- Logo -->
+                <img src="assets/logo-dark.svg" class="logo-login" alt="Logo">
     
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <form class="form-inline my-2 my-lg-0" action="/search" method="GET">
-                <div class="input-group hive-searchbar-group">
-                    <input class="form-control hive-searchbar" type="search" name="query" placeholder="Search" aria-label="Search" required="">
-                    <div class="input-group-append">
-                        <button class="btn hive-searchbar-btn" type="submit">
-                            <i class="fa fa-search hive-searchbar-btn-icon" aria-hidden="true"></i>
-                        </button>
+                <div class="hero-content text-center animate-content">
+                    <h6 class="header-hero-sub animate-text">cloudhive</h6>
+                    <h1 class="header-login-hero animate-text">Connect, Share & Thrive<br>in Your Digital Community</h1>
+                </div>
+                <img src="assets/friends-header.svg" class="hero-image img-fluid animate-image" alt="Friends Header">
+            </div>
+    
+            <!-- Right Side: Login Form -->
+            <div class="col-lg-5 d-flex align-items-center justify-content-center bg-light login-page-right">
+                <div class="login-page-inner-content">
+                    <h1 class="login-headline text-center">Hey, welcome back.</h1>
+                    <h6 class="login-subtitle text-center">Sign back in to get connected.</h6>
+                    <!-- Login Form -->
+                    <div class="login-form-container">
+                        <form id="login-form" method="post" action="api/login_redirect">
+                            <!-- Error Message Area -->
+                            <div id="error-message" class="alert alert-danger d-none" role="alert"></div>
+    
+                            <!-- Username Field -->
+                            <div class="form-group">
+                                <input id="login-field-username" class="new-login-field" type="text" name="username" placeholder="Username" required>
+                            </div>
+                            
+                            <!-- Password Field -->
+                            <div class="form-group">
+                                <input id="login-field-password" class="new-login-field" type="password" name="password" placeholder="Password" required>
+                            </div>
+                            
+                            <!-- Login Button -->
+                            <button class="login-register-button shadow" id="login-button" type="submit">Login</button>
+                        </form>
+    
+                        <!-- Register Form Toggle (Optional) -->
+                        <div class="text-center mt-3">
+                            <p>Don't have an account? <a href="/register" id="show-register-form">Register here</a></p>
+                        </div>
                     </div>
-                </div>
-            </form>
-            <div class="d-lg-none my-3">
-                <!-- Mobile Menu Icons -->
-                <div class="mobile-menu-icons">
-                    <a class="nav-link" href="/hive" data-toggle="tooltip" title="" data-original-title="Home"><img src="assets/homeicon.svg" class="nav-icons" alt="Home"></a>
-                    <a class="nav-link" href="/friends" data-toggle="tooltip" title="" data-original-title="Friends"><img src="assets/friends.svg" class="nav-icons" alt="Friends"></a>
-                    <a class="nav-link" href="/settings" data-toggle="tooltip" title="" data-original-title="Settings"><img src="assets/settings.svg" class="nav-icons" alt="Settings"></a>
-                    <a class="nav-link" href="#" id="notifications-link" data-toggle="tooltip" title="" data-original-title="Notifications"><img src="assets/notifications.svg" class="nav-icons notifications-link" alt="Notifications"></a>
-                    <a class="nav-link hive-logged-in-user-name" id="hive-logged-in-dp-mob" href="/geofpie" title="Profile">
-                        <img src="https://cloudhive-userdata.s3.amazonaws.com/profile-pics/365eed5344e1247a190441a6.blob?X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=ASIAYMHYVNWZLRQIFUCF%2F20240731%2Fus-east-1%2Fs3%2Faws4_request&amp;X-Amz-Date=20240731T143535Z&amp;X-Amz-Expires=3600&amp;X-Amz-Security-Token=IQoJb3JpZ2luX2VjEHYaCXVzLWVhc3QtMSJHMEUCIEWaDtaw00%2BeXiejO5YiZpvFWFYgYXg0VuMInUbHdBVSAiEA4eVIfSeCp%2B0EiU7b7%2Fti94IkwfWUExRRvKh3MKpnRvYqugUIXxAAGgw1NzYwNDcxMTU2OTgiDCldVpMdey8tayG65yqXBU50znjLjYfLqPrs02fPMRPqoLo4ikBf48iqZNbDaKUj4Nge2xwfEpV8ndvvSjajx9HK23xty9NbfRTXxn2Qqf86FEnOHn%2FWO3ay7R63uFFg3SYKWKWjzb71NLQbomRat8EQlZ1IDJkhhuelgbqbVCTVdOzABoQChryw20ISGUebsBJD0xp8d6%2BVuPaHeydWzCS5UIoGLQqIcGfr4qvYF0O8kjUjo1xuVj7o6p16NsN2dSqtZjtlXuSkbU0nG%2FUQSj4bV%2FKdk5OcJxZ9f%2FRpxTY1UBYklKnn9x%2FRyQ2BFLNUBX5b%2BVVX2NTzn6ZIMkFtAhWAhwQlPbgr87ediwEHqxRDn6D3LJ4Uz%2FvIF8noRxkh28oM72lgA1fTmlHjmMuLQYgUDLpIMLLC5XhjaDAfaSOxDr7RKCMny7UvhHRHE4IvIqftXeepL3fMckP1%2BiQVpQQAzmKrMQeOsBfQ%2BSNH%2FnntUdhzE5S%2BsoUy4HyHQJrSpuH6B3e0IYNwgjujf%2BDA805X%2FZI33vUC%2F4E1viuDUgRSqszDN%2FzOYH3uEUpJK1Ckqk%2B9YcBAi2NtYtkmsd9Xx9DQW08ukaOJZJcGqWmxJVndhfwusHiB5hRZxAWcqNMq5mXvXMS6cLzBzLbpNzmOs6jm%2FUeODSkBq0IcLlxbMp5C7OyOzN32YIf3RiZDJxAzUYt2VTHUZVfANbQcKuuHevmV2Dvxkcs1ITqkzkUKSPN1x7Un8EigdBUi5Xu%2B212OCxHZE5vxaCOAMYUj3PQ7ZdIAmbo75nAUNWhrvPDreaQIp5g1e0wYohISbgT22Y%2BYeUSkoq0ll3ALTebNx%2BHyfCjPWkGRPCH3MHzNxdnlBlptaOS4LLONqOvLDM6HYKdxTIvcVo3xozDF%2Fqi1BjqxASgJNeHeg36odzKzjVndA9JkROKnYR%2FabDYThnu%2By1ZUBsANO2hQxS2tZeeWxJHpxbvk9FEn618XslHI2AgcKTFH2W2jNGKyBUeIj2gUo2o0tJVXH7h7cESDR%2BQdI%2BiEbgNFgRIaAokhCTUzcU8GB6Tu5hmKpANttR25Wn4XwmpxX4%2BbEwB46EIjb%2B7cSeEarDqxZk1XwhRzIr4teuP5Lqionds3S8EwJPLDopVQzP91JA%3D%3D&amp;X-Amz-Signature=cf3de7770bfc2bed40aa588a46f0c17ac9aafe416953f80f778a7f09280511c0&amp;X-Amz-SignedHeaders=host" alt="Profile" class="navbar-profile-pic-mob">
-                    </a>
-                </div>
-            </div>
-            <ul class="navbar-nav ml-auto d-none d-lg-flex">
-                <!-- Desktop Menu Items -->
-                <li class="nav-item hive-nav-btn">
-                    <a class="nav-link" href="/hive" data-toggle="tooltip" title="" data-original-title="Home"><img src="assets/homeicon.svg" class="nav-icons" alt="Home"></a>
-                </li>
-                <li class="nav-item hive-nav-btn">
-                    <a class="nav-link" href="/friends" data-toggle="tooltip" title="" data-original-title="Friends"><img src="assets/friends.svg" class="nav-icons" alt="Friends"></a>
-                </li>
-                <li class="nav-item hive-nav-btn">
-                    <a class="nav-link" href="/settings" data-toggle="tooltip" title="" data-original-title="Settings"><img src="assets/settings.svg" class="nav-icons" alt="Settings"></a>
-                </li>
-                <li class="nav-item hive-nav-btn">
-                    <a class="nav-link" href="#" id="notifications-link" data-toggle="tooltip" title="" data-original-title="Notifications"><img src="assets/notifications.svg" class="nav-icons notifications-link" alt="Notifications"></a>
-                </li>
-                <li class="nav-item hive-nav-btn">
-                    <a class="nav-link hive-logged-in-user-name" id="hive-logged-in-dp" href="/geofpie" title="Profile">
-                        <img src="https://cloudhive-userdata.s3.amazonaws.com/profile-pics/365eed5344e1247a190441a6.blob?X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=ASIAYMHYVNWZLRQIFUCF%2F20240731%2Fus-east-1%2Fs3%2Faws4_request&amp;X-Amz-Date=20240731T143535Z&amp;X-Amz-Expires=3600&amp;X-Amz-Security-Token=IQoJb3JpZ2luX2VjEHYaCXVzLWVhc3QtMSJHMEUCIEWaDtaw00%2BeXiejO5YiZpvFWFYgYXg0VuMInUbHdBVSAiEA4eVIfSeCp%2B0EiU7b7%2Fti94IkwfWUExRRvKh3MKpnRvYqugUIXxAAGgw1NzYwNDcxMTU2OTgiDCldVpMdey8tayG65yqXBU50znjLjYfLqPrs02fPMRPqoLo4ikBf48iqZNbDaKUj4Nge2xwfEpV8ndvvSjajx9HK23xty9NbfRTXxn2Qqf86FEnOHn%2FWO3ay7R63uFFg3SYKWKWjzb71NLQbomRat8EQlZ1IDJkhhuelgbqbVCTVdOzABoQChryw20ISGUebsBJD0xp8d6%2BVuPaHeydWzCS5UIoGLQqIcGfr4qvYF0O8kjUjo1xuVj7o6p16NsN2dSqtZjtlXuSkbU0nG%2FUQSj4bV%2FKdk5OcJxZ9f%2FRpxTY1UBYklKnn9x%2FRyQ2BFLNUBX5b%2BVVX2NTzn6ZIMkFtAhWAhwQlPbgr87ediwEHqxRDn6D3LJ4Uz%2FvIF8noRxkh28oM72lgA1fTmlHjmMuLQYgUDLpIMLLC5XhjaDAfaSOxDr7RKCMny7UvhHRHE4IvIqftXeepL3fMckP1%2BiQVpQQAzmKrMQeOsBfQ%2BSNH%2FnntUdhzE5S%2BsoUy4HyHQJrSpuH6B3e0IYNwgjujf%2BDA805X%2FZI33vUC%2F4E1viuDUgRSqszDN%2FzOYH3uEUpJK1Ckqk%2B9YcBAi2NtYtkmsd9Xx9DQW08ukaOJZJcGqWmxJVndhfwusHiB5hRZxAWcqNMq5mXvXMS6cLzBzLbpNzmOs6jm%2FUeODSkBq0IcLlxbMp5C7OyOzN32YIf3RiZDJxAzUYt2VTHUZVfANbQcKuuHevmV2Dvxkcs1ITqkzkUKSPN1x7Un8EigdBUi5Xu%2B212OCxHZE5vxaCOAMYUj3PQ7ZdIAmbo75nAUNWhrvPDreaQIp5g1e0wYohISbgT22Y%2BYeUSkoq0ll3ALTebNx%2BHyfCjPWkGRPCH3MHzNxdnlBlptaOS4LLONqOvLDM6HYKdxTIvcVo3xozDF%2Fqi1BjqxASgJNeHeg36odzKzjVndA9JkROKnYR%2FabDYThnu%2By1ZUBsANO2hQxS2tZeeWxJHpxbvk9FEn618XslHI2AgcKTFH2W2jNGKyBUeIj2gUo2o0tJVXH7h7cESDR%2BQdI%2BiEbgNFgRIaAokhCTUzcU8GB6Tu5hmKpANttR25Wn4XwmpxX4%2BbEwB46EIjb%2B7cSeEarDqxZk1XwhRzIr4teuP5Lqionds3S8EwJPLDopVQzP91JA%3D%3D&amp;X-Amz-Signature=cf3de7770bfc2bed40aa588a46f0c17ac9aafe416953f80f778a7f09280511c0&amp;X-Amz-SignedHeaders=host" alt="Profile" class="navbar-profile-pic">
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-    <!-- End Nav -->
-   <!-- Notifications Modal -->
-    <div id="notificationsModal" class="notifications-modal">
-        <div class="notifications-modal-content">
-            <div class="notifications-modal-header">
-                <h5 class="notifications-modal-title">Follow Requests</h5>
-                <button type="button" class="notifications-modal-close" onclick="closeNotificationsModal()"><img src="assets/deny.svg" width="20" height="20"></button>
-            </div>
-            <hr class="post-modal-divider">
-            <div class="notifications-modal-body">
-                <ul id="follow-requests-list" class="notifications-list-group">
-                    <!-- Follow requests will be appended here -->
-                </ul>
-            </div>
-        </div>
-    </div>
-    <!-- profile.ejs -->
-    <div class="container-fluid">
-        <div class="row profile-fullwidth-header" style="background-image: url('https://cloudhive-userdata.s3.amazonaws.com/header_pic/022f0f9c7ac6ce38d3dde7ae.jpeg?X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=ASIAYMHYVNWZLRQIFUCF%2F20240731%2Fus-east-1%2Fs3%2Faws4_request&amp;X-Amz-Date=20240731T143534Z&amp;X-Amz-Expires=3600&amp;X-Amz-Security-Token=IQoJb3JpZ2luX2VjEHYaCXVzLWVhc3QtMSJHMEUCIEWaDtaw00%2BeXiejO5YiZpvFWFYgYXg0VuMInUbHdBVSAiEA4eVIfSeCp%2B0EiU7b7%2Fti94IkwfWUExRRvKh3MKpnRvYqugUIXxAAGgw1NzYwNDcxMTU2OTgiDCldVpMdey8tayG65yqXBU50znjLjYfLqPrs02fPMRPqoLo4ikBf48iqZNbDaKUj4Nge2xwfEpV8ndvvSjajx9HK23xty9NbfRTXxn2Qqf86FEnOHn%2FWO3ay7R63uFFg3SYKWKWjzb71NLQbomRat8EQlZ1IDJkhhuelgbqbVCTVdOzABoQChryw20ISGUebsBJD0xp8d6%2BVuPaHeydWzCS5UIoGLQqIcGfr4qvYF0O8kjUjo1xuVj7o6p16NsN2dSqtZjtlXuSkbU0nG%2FUQSj4bV%2FKdk5OcJxZ9f%2FRpxTY1UBYklKnn9x%2FRyQ2BFLNUBX5b%2BVVX2NTzn6ZIMkFtAhWAhwQlPbgr87ediwEHqxRDn6D3LJ4Uz%2FvIF8noRxkh28oM72lgA1fTmlHjmMuLQYgUDLpIMLLC5XhjaDAfaSOxDr7RKCMny7UvhHRHE4IvIqftXeepL3fMckP1%2BiQVpQQAzmKrMQeOsBfQ%2BSNH%2FnntUdhzE5S%2BsoUy4HyHQJrSpuH6B3e0IYNwgjujf%2BDA805X%2FZI33vUC%2F4E1viuDUgRSqszDN%2FzOYH3uEUpJK1Ckqk%2B9YcBAi2NtYtkmsd9Xx9DQW08ukaOJZJcGqWmxJVndhfwusHiB5hRZxAWcqNMq5mXvXMS6cLzBzLbpNzmOs6jm%2FUeODSkBq0IcLlxbMp5C7OyOzN32YIf3RiZDJxAzUYt2VTHUZVfANbQcKuuHevmV2Dvxkcs1ITqkzkUKSPN1x7Un8EigdBUi5Xu%2B212OCxHZE5vxaCOAMYUj3PQ7ZdIAmbo75nAUNWhrvPDreaQIp5g1e0wYohISbgT22Y%2BYeUSkoq0ll3ALTebNx%2BHyfCjPWkGRPCH3MHzNxdnlBlptaOS4LLONqOvLDM6HYKdxTIvcVo3xozDF%2Fqi1BjqxASgJNeHeg36odzKzjVndA9JkROKnYR%2FabDYThnu%2By1ZUBsANO2hQxS2tZeeWxJHpxbvk9FEn618XslHI2AgcKTFH2W2jNGKyBUeIj2gUo2o0tJVXH7h7cESDR%2BQdI%2BiEbgNFgRIaAokhCTUzcU8GB6Tu5hmKpANttR25Wn4XwmpxX4%2BbEwB46EIjb%2B7cSeEarDqxZk1XwhRzIr4teuP5Lqionds3S8EwJPLDopVQzP91JA%3D%3D&amp;X-Amz-Signature=849d65d8e667270f2bf67ef03957626198c3743d735582bb2acb480a4d6f6b9a&amp;X-Amz-SignedHeaders=host'); background-size: cover; background-position: center;">
-            <div class="col d-flex">
-                <div class="profile-user-name">
-                    <img src="https://cloudhive-userdata.s3.amazonaws.com/profile-pics/365eed5344e1247a190441a6.blob?X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=ASIAYMHYVNWZLRQIFUCF%2F20240731%2Fus-east-1%2Fs3%2Faws4_request&amp;X-Amz-Date=20240731T143534Z&amp;X-Amz-Expires=3600&amp;X-Amz-Security-Token=IQoJb3JpZ2luX2VjEHYaCXVzLWVhc3QtMSJHMEUCIEWaDtaw00%2BeXiejO5YiZpvFWFYgYXg0VuMInUbHdBVSAiEA4eVIfSeCp%2B0EiU7b7%2Fti94IkwfWUExRRvKh3MKpnRvYqugUIXxAAGgw1NzYwNDcxMTU2OTgiDCldVpMdey8tayG65yqXBU50znjLjYfLqPrs02fPMRPqoLo4ikBf48iqZNbDaKUj4Nge2xwfEpV8ndvvSjajx9HK23xty9NbfRTXxn2Qqf86FEnOHn%2FWO3ay7R63uFFg3SYKWKWjzb71NLQbomRat8EQlZ1IDJkhhuelgbqbVCTVdOzABoQChryw20ISGUebsBJD0xp8d6%2BVuPaHeydWzCS5UIoGLQqIcGfr4qvYF0O8kjUjo1xuVj7o6p16NsN2dSqtZjtlXuSkbU0nG%2FUQSj4bV%2FKdk5OcJxZ9f%2FRpxTY1UBYklKnn9x%2FRyQ2BFLNUBX5b%2BVVX2NTzn6ZIMkFtAhWAhwQlPbgr87ediwEHqxRDn6D3LJ4Uz%2FvIF8noRxkh28oM72lgA1fTmlHjmMuLQYgUDLpIMLLC5XhjaDAfaSOxDr7RKCMny7UvhHRHE4IvIqftXeepL3fMckP1%2BiQVpQQAzmKrMQeOsBfQ%2BSNH%2FnntUdhzE5S%2BsoUy4HyHQJrSpuH6B3e0IYNwgjujf%2BDA805X%2FZI33vUC%2F4E1viuDUgRSqszDN%2FzOYH3uEUpJK1Ckqk%2B9YcBAi2NtYtkmsd9Xx9DQW08ukaOJZJcGqWmxJVndhfwusHiB5hRZxAWcqNMq5mXvXMS6cLzBzLbpNzmOs6jm%2FUeODSkBq0IcLlxbMp5C7OyOzN32YIf3RiZDJxAzUYt2VTHUZVfANbQcKuuHevmV2Dvxkcs1ITqkzkUKSPN1x7Un8EigdBUi5Xu%2B212OCxHZE5vxaCOAMYUj3PQ7ZdIAmbo75nAUNWhrvPDreaQIp5g1e0wYohISbgT22Y%2BYeUSkoq0ll3ALTebNx%2BHyfCjPWkGRPCH3MHzNxdnlBlptaOS4LLONqOvLDM6HYKdxTIvcVo3xozDF%2Fqi1BjqxASgJNeHeg36odzKzjVndA9JkROKnYR%2FabDYThnu%2By1ZUBsANO2hQxS2tZeeWxJHpxbvk9FEn618XslHI2AgcKTFH2W2jNGKyBUeIj2gUo2o0tJVXH7h7cESDR%2BQdI%2BiEbgNFgRIaAokhCTUzcU8GB6Tu5hmKpANttR25Wn4XwmpxX4%2BbEwB46EIjb%2B7cSeEarDqxZk1XwhRzIr4teuP5Lqionds3S8EwJPLDopVQzP91JA%3D%3D&amp;X-Amz-Signature=f9e19d90d513d2142a127948ab537be7ce8603a164fdce463de68ad55c775bcc&amp;X-Amz-SignedHeaders=host" alt="Profile" class="header-profile-pic shadow">
-                    <div class="profile-user-name-class">
-                        <h3 class="profile-user-name-elem" style="color: white;">Geoffrey Lee</h3>
-                        <p class="profile-user-country" id="profile-user-country" style="color: white;">@geofpie</p>
-                    </div>
-                </div>
-                <div class="profile-user-stats mt-auto align-bottom">
-                    <div class="col">
-                        <p class="profile-stat profile-posts-count" id="profile-posts-count"><strong>14</strong> posts</p>
-                        <p class="profile-stat profile-user-follower-count" id="profile-user-follower-count"><strong>9</strong> followers</p>
-                        <p class="profile-stat profile-user-following-count" id="profile-user-following-count"><strong>9</strong> following</p>
-                        
-                            <!-- Show edit profile button -->
-                            <button class="profile-stat hive-user-action" id="edit-profile"><i class="fa fa-edit uab" aria-hidden="true"></i>Edit Profile</button>
-                        
+                    <div class="instance-details">
+                        <p>cloudhive v0.4.1</p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-        
-        <div class="profile-user-post d-flex">
-            <div class="col-md-4 hive-post-action-bar mx-auto">
-                <img src="https://cloudhive-userdata.s3.amazonaws.com/profile-pics/365eed5344e1247a190441a6.blob?X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=ASIAYMHYVNWZLRQIFUCF%2F20240731%2Fus-east-1%2Fs3%2Faws4_request&amp;X-Amz-Date=20240731T143535Z&amp;X-Amz-Expires=3600&amp;X-Amz-Security-Token=IQoJb3JpZ2luX2VjEHYaCXVzLWVhc3QtMSJHMEUCIEWaDtaw00%2BeXiejO5YiZpvFWFYgYXg0VuMInUbHdBVSAiEA4eVIfSeCp%2B0EiU7b7%2Fti94IkwfWUExRRvKh3MKpnRvYqugUIXxAAGgw1NzYwNDcxMTU2OTgiDCldVpMdey8tayG65yqXBU50znjLjYfLqPrs02fPMRPqoLo4ikBf48iqZNbDaKUj4Nge2xwfEpV8ndvvSjajx9HK23xty9NbfRTXxn2Qqf86FEnOHn%2FWO3ay7R63uFFg3SYKWKWjzb71NLQbomRat8EQlZ1IDJkhhuelgbqbVCTVdOzABoQChryw20ISGUebsBJD0xp8d6%2BVuPaHeydWzCS5UIoGLQqIcGfr4qvYF0O8kjUjo1xuVj7o6p16NsN2dSqtZjtlXuSkbU0nG%2FUQSj4bV%2FKdk5OcJxZ9f%2FRpxTY1UBYklKnn9x%2FRyQ2BFLNUBX5b%2BVVX2NTzn6ZIMkFtAhWAhwQlPbgr87ediwEHqxRDn6D3LJ4Uz%2FvIF8noRxkh28oM72lgA1fTmlHjmMuLQYgUDLpIMLLC5XhjaDAfaSOxDr7RKCMny7UvhHRHE4IvIqftXeepL3fMckP1%2BiQVpQQAzmKrMQeOsBfQ%2BSNH%2FnntUdhzE5S%2BsoUy4HyHQJrSpuH6B3e0IYNwgjujf%2BDA805X%2FZI33vUC%2F4E1viuDUgRSqszDN%2FzOYH3uEUpJK1Ckqk%2B9YcBAi2NtYtkmsd9Xx9DQW08ukaOJZJcGqWmxJVndhfwusHiB5hRZxAWcqNMq5mXvXMS6cLzBzLbpNzmOs6jm%2FUeODSkBq0IcLlxbMp5C7OyOzN32YIf3RiZDJxAzUYt2VTHUZVfANbQcKuuHevmV2Dvxkcs1ITqkzkUKSPN1x7Un8EigdBUi5Xu%2B212OCxHZE5vxaCOAMYUj3PQ7ZdIAmbo75nAUNWhrvPDreaQIp5g1e0wYohISbgT22Y%2BYeUSkoq0ll3ALTebNx%2BHyfCjPWkGRPCH3MHzNxdnlBlptaOS4LLONqOvLDM6HYKdxTIvcVo3xozDF%2Fqi1BjqxASgJNeHeg36odzKzjVndA9JkROKnYR%2FabDYThnu%2By1ZUBsANO2hQxS2tZeeWxJHpxbvk9FEn618XslHI2AgcKTFH2W2jNGKyBUeIj2gUo2o0tJVXH7h7cESDR%2BQdI%2BiEbgNFgRIaAokhCTUzcU8GB6Tu5hmKpANttR25Wn4XwmpxX4%2BbEwB46EIjb%2B7cSeEarDqxZk1XwhRzIr4teuP5Lqionds3S8EwJPLDopVQzP91JA%3D%3D&amp;X-Amz-Signature=cf3de7770bfc2bed40aa588a46f0c17ac9aafe416953f80f778a7f09280511c0&amp;X-Amz-SignedHeaders=host" alt="Profile" class="postbar-profile-pic">
-                <button class="share-post-button" id="share-post">Say or share something</button>
-                <button class="write-post-btn write" id="pic-post">
-                    <i class="fa fa-pen postbtn-icon" aria-hidden="true"></i>Write Post
-                </button>
-                <button class="write-post-btn pic" id="write-post">
-                    <i class="fa fa-camera postbtn-icon" aria-hidden="true"></i>Post Picture
-                </button>
-            </div>
-        </div>
-                
-        <div class="hive-feed-area" id="hive-feed-area">
-            <!-- Posts go here -->
-        <div class="hive-post">
-                        <div class="col-md-4 hive-post-element mx-auto" data-post-id="bd6104fc44d478b2b0fc9519eb1536ca">
-                            <div class="row hive-post-user-details align-items-center">
-                                <div class="hive-post-pfp">
-                                    <a href="/geofpie"><img src="https://cloudhive-userdata.s3.amazonaws.com/profile-pics/365eed5344e1247a190441a6.blob?X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=ASIAYMHYVNWZLRQIFUCF%2F20240731%2Fus-east-1%2Fs3%2Faws4_request&amp;X-Amz-Date=20240731T143535Z&amp;X-Amz-Expires=3600&amp;X-Amz-Security-Token=IQoJb3JpZ2luX2VjEHYaCXVzLWVhc3QtMSJHMEUCIEWaDtaw00%2BeXiejO5YiZpvFWFYgYXg0VuMInUbHdBVSAiEA4eVIfSeCp%2B0EiU7b7%2Fti94IkwfWUExRRvKh3MKpnRvYqugUIXxAAGgw1NzYwNDcxMTU2OTgiDCldVpMdey8tayG65yqXBU50znjLjYfLqPrs02fPMRPqoLo4ikBf48iqZNbDaKUj4Nge2xwfEpV8ndvvSjajx9HK23xty9NbfRTXxn2Qqf86FEnOHn%2FWO3ay7R63uFFg3SYKWKWjzb71NLQbomRat8EQlZ1IDJkhhuelgbqbVCTVdOzABoQChryw20ISGUebsBJD0xp8d6%2BVuPaHeydWzCS5UIoGLQqIcGfr4qvYF0O8kjUjo1xuVj7o6p16NsN2dSqtZjtlXuSkbU0nG%2FUQSj4bV%2FKdk5OcJxZ9f%2FRpxTY1UBYklKnn9x%2FRyQ2BFLNUBX5b%2BVVX2NTzn6ZIMkFtAhWAhwQlPbgr87ediwEHqxRDn6D3LJ4Uz%2FvIF8noRxkh28oM72lgA1fTmlHjmMuLQYgUDLpIMLLC5XhjaDAfaSOxDr7RKCMny7UvhHRHE4IvIqftXeepL3fMckP1%2BiQVpQQAzmKrMQeOsBfQ%2BSNH%2FnntUdhzE5S%2BsoUy4HyHQJrSpuH6B3e0IYNwgjujf%2BDA805X%2FZI33vUC%2F4E1viuDUgRSqszDN%2FzOYH3uEUpJK1Ckqk%2B9YcBAi2NtYtkmsd9Xx9DQW08ukaOJZJcGqWmxJVndhfwusHiB5hRZxAWcqNMq5mXvXMS6cLzBzLbpNzmOs6jm%2FUeODSkBq0IcLlxbMp5C7OyOzN32YIf3RiZDJxAzUYt2VTHUZVfANbQcKuuHevmV2Dvxkcs1ITqkzkUKSPN1x7Un8EigdBUi5Xu%2B212OCxHZE5vxaCOAMYUj3PQ7ZdIAmbo75nAUNWhrvPDreaQIp5g1e0wYohISbgT22Y%2BYeUSkoq0ll3ALTebNx%2BHyfCjPWkGRPCH3MHzNxdnlBlptaOS4LLONqOvLDM6HYKdxTIvcVo3xozDF%2Fqi1BjqxASgJNeHeg36odzKzjVndA9JkROKnYR%2FabDYThnu%2By1ZUBsANO2hQxS2tZeeWxJHpxbvk9FEn618XslHI2AgcKTFH2W2jNGKyBUeIj2gUo2o0tJVXH7h7cESDR%2BQdI%2BiEbgNFgRIaAokhCTUzcU8GB6Tu5hmKpANttR25Wn4XwmpxX4%2BbEwB46EIjb%2B7cSeEarDqxZk1XwhRzIr4teuP5Lqionds3S8EwJPLDopVQzP91JA%3D%3D&amp;X-Amz-Signature=cf3de7770bfc2bed40aa588a46f0c17ac9aafe416953f80f778a7f09280511c0&amp;X-Amz-SignedHeaders=host" alt="Profile" class="post-profile-pic"></a>
-                                </div>
-                                <div class="col hive-user-details-text">
-                                    <a href="/geofpie" class="hive-post-username">Geoffrey</a>
-                                    <a href="/geofpie" class="hive-post-user-sub">@geofpie</a>
-                                </div>
-                                <div class="col hive-user-details-time">
-                                    <i class="fa fa-clock hive-post-time-icon" aria-hidden="true"></i>
-                                    <p class="hive-post-time">2 hours ago</p>
-                                </div>
-                            </div>
-                            <div class="row hive-post-content">
-                                <p class="hive-post-text">test something to write</p>
-                                
-                            </div>
-                            <div class="hive-social-stats">
-                                <p class="hive-stat-like"><strong>0</strong> likes</p>
-                                <hr>
-                                <div class="d-flex align-items-center">
-                                    <button class="hive-stat-like-btn " data-post-id="bd6104fc44d478b2b0fc9519eb1536ca">
-                                        <img id="like-btn-hive" src="../assets/unliked.svg" alt="Like" style="width: 22px; height: 22px; vertical-align: middle;">
-                                    </button>
-                                    
-                                        <div class="post-options">
-                                            <button class="hive-stat-options-btn" onclick="toggleOptionsMenu(event)">
-                                                <img id="options-btn-hive" src="assets/options.svg" alt="Options" style="width: 22px; height: 22px;">
-                                            </button>
-                                            <div class="options-menu">
-                                                <ul>
-                                                    <li><a href="#" class="delete-post" data-id="bd6104fc44d478b2b0fc9519eb1536ca">Delete</a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    
-                                </div>
-                            </div>
-                        </div>
-                        </div><div class="hive-post">
-                        <div class="col-md-4 hive-post-element mx-auto" data-post-id="5538d820c4b223d13b42da9a4f9423cd">
-                            <div class="row hive-post-user-details align-items-center">
-                                <div class="hive-post-pfp">
-                                    <a href="/geofpie"><img src="https://cloudhive-userdata.s3.amazonaws.com/profile-pics/365eed5344e1247a190441a6.blob?X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=ASIAYMHYVNWZLRQIFUCF%2F20240731%2Fus-east-1%2Fs3%2Faws4_request&amp;X-Amz-Date=20240731T143535Z&amp;X-Amz-Expires=3600&amp;X-Amz-Security-Token=IQoJb3JpZ2luX2VjEHYaCXVzLWVhc3QtMSJHMEUCIEWaDtaw00%2BeXiejO5YiZpvFWFYgYXg0VuMInUbHdBVSAiEA4eVIfSeCp%2B0EiU7b7%2Fti94IkwfWUExRRvKh3MKpnRvYqugUIXxAAGgw1NzYwNDcxMTU2OTgiDCldVpMdey8tayG65yqXBU50znjLjYfLqPrs02fPMRPqoLo4ikBf48iqZNbDaKUj4Nge2xwfEpV8ndvvSjajx9HK23xty9NbfRTXxn2Qqf86FEnOHn%2FWO3ay7R63uFFg3SYKWKWjzb71NLQbomRat8EQlZ1IDJkhhuelgbqbVCTVdOzABoQChryw20ISGUebsBJD0xp8d6%2BVuPaHeydWzCS5UIoGLQqIcGfr4qvYF0O8kjUjo1xuVj7o6p16NsN2dSqtZjtlXuSkbU0nG%2FUQSj4bV%2FKdk5OcJxZ9f%2FRpxTY1UBYklKnn9x%2FRyQ2BFLNUBX5b%2BVVX2NTzn6ZIMkFtAhWAhwQlPbgr87ediwEHqxRDn6D3LJ4Uz%2FvIF8noRxkh28oM72lgA1fTmlHjmMuLQYgUDLpIMLLC5XhjaDAfaSOxDr7RKCMny7UvhHRHE4IvIqftXeepL3fMckP1%2BiQVpQQAzmKrMQeOsBfQ%2BSNH%2FnntUdhzE5S%2BsoUy4HyHQJrSpuH6B3e0IYNwgjujf%2BDA805X%2FZI33vUC%2F4E1viuDUgRSqszDN%2FzOYH3uEUpJK1Ckqk%2B9YcBAi2NtYtkmsd9Xx9DQW08ukaOJZJcGqWmxJVndhfwusHiB5hRZxAWcqNMq5mXvXMS6cLzBzLbpNzmOs6jm%2FUeODSkBq0IcLlxbMp5C7OyOzN32YIf3RiZDJxAzUYt2VTHUZVfANbQcKuuHevmV2Dvxkcs1ITqkzkUKSPN1x7Un8EigdBUi5Xu%2B212OCxHZE5vxaCOAMYUj3PQ7ZdIAmbo75nAUNWhrvPDreaQIp5g1e0wYohISbgT22Y%2BYeUSkoq0ll3ALTebNx%2BHyfCjPWkGRPCH3MHzNxdnlBlptaOS4LLONqOvLDM6HYKdxTIvcVo3xozDF%2Fqi1BjqxASgJNeHeg36odzKzjVndA9JkROKnYR%2FabDYThnu%2By1ZUBsANO2hQxS2tZeeWxJHpxbvk9FEn618XslHI2AgcKTFH2W2jNGKyBUeIj2gUo2o0tJVXH7h7cESDR%2BQdI%2BiEbgNFgRIaAokhCTUzcU8GB6Tu5hmKpANttR25Wn4XwmpxX4%2BbEwB46EIjb%2B7cSeEarDqxZk1XwhRzIr4teuP5Lqionds3S8EwJPLDopVQzP91JA%3D%3D&amp;X-Amz-Signature=cf3de7770bfc2bed40aa588a46f0c17ac9aafe416953f80f778a7f09280511c0&amp;X-Amz-SignedHeaders=host" alt="Profile" class="post-profile-pic"></a>
-                                </div>
-                                <div class="col hive-user-details-text">
-                                    <a href="/geofpie" class="hive-post-username">Geoffrey</a>
-                                    <a href="/geofpie" class="hive-post-user-sub">@geofpie</a>
-                                </div>
-                                <div class="col hive-user-details-time">
-                                    <i class="fa fa-clock hive-post-time-icon" aria-hidden="true"></i>
-                                    <p class="hive-post-time">2 days ago</p>
-                                </div>
-                            </div>
-                            <div class="row hive-post-content">
-                                <p class="hive-post-text">hiiii</p>
-                                
-                            </div>
-                            <div class="hive-social-stats">
-                                <p class="hive-stat-like"><strong>0</strong> likes</p>
-                                <hr>
-                                <div class="d-flex align-items-center">
-                                    <button class="hive-stat-like-btn " data-post-id="5538d820c4b223d13b42da9a4f9423cd">
-                                        <img id="like-btn-hive" src="../assets/unliked.svg" alt="Like" style="width: 22px; height: 22px; vertical-align: middle;">
-                                    </button>
-                                    
-                                        <div class="post-options">
-                                            <button class="hive-stat-options-btn" onclick="toggleOptionsMenu(event)">
-                                                <img id="options-btn-hive" src="assets/options.svg" alt="Options" style="width: 22px; height: 22px;">
-                                            </button>
-                                            <div class="options-menu">
-                                                <ul>
-                                                    <li><a href="#" class="delete-post" data-id="5538d820c4b223d13b42da9a4f9423cd">Delete</a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    
-                                </div>
-                            </div>
-                        </div>
-                        </div><div class="hive-post">
-                        <div class="col-md-4 hive-post-element mx-auto" data-post-id="f6099b8a88e101c9e663c09e65c07a4d">
-                            <div class="row hive-post-user-details align-items-center">
-                                <div class="hive-post-pfp">
-                                    <a href="/geofpie"><img src="https://cloudhive-userdata.s3.amazonaws.com/profile-pics/365eed5344e1247a190441a6.blob?X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=ASIAYMHYVNWZLRQIFUCF%2F20240731%2Fus-east-1%2Fs3%2Faws4_request&amp;X-Amz-Date=20240731T143535Z&amp;X-Amz-Expires=3600&amp;X-Amz-Security-Token=IQoJb3JpZ2luX2VjEHYaCXVzLWVhc3QtMSJHMEUCIEWaDtaw00%2BeXiejO5YiZpvFWFYgYXg0VuMInUbHdBVSAiEA4eVIfSeCp%2B0EiU7b7%2Fti94IkwfWUExRRvKh3MKpnRvYqugUIXxAAGgw1NzYwNDcxMTU2OTgiDCldVpMdey8tayG65yqXBU50znjLjYfLqPrs02fPMRPqoLo4ikBf48iqZNbDaKUj4Nge2xwfEpV8ndvvSjajx9HK23xty9NbfRTXxn2Qqf86FEnOHn%2FWO3ay7R63uFFg3SYKWKWjzb71NLQbomRat8EQlZ1IDJkhhuelgbqbVCTVdOzABoQChryw20ISGUebsBJD0xp8d6%2BVuPaHeydWzCS5UIoGLQqIcGfr4qvYF0O8kjUjo1xuVj7o6p16NsN2dSqtZjtlXuSkbU0nG%2FUQSj4bV%2FKdk5OcJxZ9f%2FRpxTY1UBYklKnn9x%2FRyQ2BFLNUBX5b%2BVVX2NTzn6ZIMkFtAhWAhwQlPbgr87ediwEHqxRDn6D3LJ4Uz%2FvIF8noRxkh28oM72lgA1fTmlHjmMuLQYgUDLpIMLLC5XhjaDAfaSOxDr7RKCMny7UvhHRHE4IvIqftXeepL3fMckP1%2BiQVpQQAzmKrMQeOsBfQ%2BSNH%2FnntUdhzE5S%2BsoUy4HyHQJrSpuH6B3e0IYNwgjujf%2BDA805X%2FZI33vUC%2F4E1viuDUgRSqszDN%2FzOYH3uEUpJK1Ckqk%2B9YcBAi2NtYtkmsd9Xx9DQW08ukaOJZJcGqWmxJVndhfwusHiB5hRZxAWcqNMq5mXvXMS6cLzBzLbpNzmOs6jm%2FUeODSkBq0IcLlxbMp5C7OyOzN32YIf3RiZDJxAzUYt2VTHUZVfANbQcKuuHevmV2Dvxkcs1ITqkzkUKSPN1x7Un8EigdBUi5Xu%2B212OCxHZE5vxaCOAMYUj3PQ7ZdIAmbo75nAUNWhrvPDreaQIp5g1e0wYohISbgT22Y%2BYeUSkoq0ll3ALTebNx%2BHyfCjPWkGRPCH3MHzNxdnlBlptaOS4LLONqOvLDM6HYKdxTIvcVo3xozDF%2Fqi1BjqxASgJNeHeg36odzKzjVndA9JkROKnYR%2FabDYThnu%2By1ZUBsANO2hQxS2tZeeWxJHpxbvk9FEn618XslHI2AgcKTFH2W2jNGKyBUeIj2gUo2o0tJVXH7h7cESDR%2BQdI%2BiEbgNFgRIaAokhCTUzcU8GB6Tu5hmKpANttR25Wn4XwmpxX4%2BbEwB46EIjb%2B7cSeEarDqxZk1XwhRzIr4teuP5Lqionds3S8EwJPLDopVQzP91JA%3D%3D&amp;X-Amz-Signature=cf3de7770bfc2bed40aa588a46f0c17ac9aafe416953f80f778a7f09280511c0&amp;X-Amz-SignedHeaders=host" alt="Profile" class="post-profile-pic"></a>
-                                </div>
-                                <div class="col hive-user-details-text">
-                                    <a href="/geofpie" class="hive-post-username">Geoffrey</a>
-                                    <a href="/geofpie" class="hive-post-user-sub">@geofpie</a>
-                                </div>
-                                <div class="col hive-user-details-time">
-                                    <i class="fa fa-clock hive-post-time-icon" aria-hidden="true"></i>
-                                    <p class="hive-post-time">3 days ago</p>
-                                </div>
-                            </div>
-                            <div class="row hive-post-content">
-                                <p class="hive-post-text">long queue af</p>
-                                <div class="hive-post-image shadow"><img class="hive-post-img-src" data-src="https://cloudhive-userdata.s3.amazonaws.com/posts/17-ebce6c8bfe40.jpeg?X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=ASIAYMHYVNWZLRQIFUCF%2F20240731%2Fus-east-1%2Fs3%2Faws4_request&amp;X-Amz-Date=20240731T143535Z&amp;X-Amz-Expires=3600&amp;X-Amz-Security-Token=IQoJb3JpZ2luX2VjEHYaCXVzLWVhc3QtMSJHMEUCIEWaDtaw00%2BeXiejO5YiZpvFWFYgYXg0VuMInUbHdBVSAiEA4eVIfSeCp%2B0EiU7b7%2Fti94IkwfWUExRRvKh3MKpnRvYqugUIXxAAGgw1NzYwNDcxMTU2OTgiDCldVpMdey8tayG65yqXBU50znjLjYfLqPrs02fPMRPqoLo4ikBf48iqZNbDaKUj4Nge2xwfEpV8ndvvSjajx9HK23xty9NbfRTXxn2Qqf86FEnOHn%2FWO3ay7R63uFFg3SYKWKWjzb71NLQbomRat8EQlZ1IDJkhhuelgbqbVCTVdOzABoQChryw20ISGUebsBJD0xp8d6%2BVuPaHeydWzCS5UIoGLQqIcGfr4qvYF0O8kjUjo1xuVj7o6p16NsN2dSqtZjtlXuSkbU0nG%2FUQSj4bV%2FKdk5OcJxZ9f%2FRpxTY1UBYklKnn9x%2FRyQ2BFLNUBX5b%2BVVX2NTzn6ZIMkFtAhWAhwQlPbgr87ediwEHqxRDn6D3LJ4Uz%2FvIF8noRxkh28oM72lgA1fTmlHjmMuLQYgUDLpIMLLC5XhjaDAfaSOxDr7RKCMny7UvhHRHE4IvIqftXeepL3fMckP1%2BiQVpQQAzmKrMQeOsBfQ%2BSNH%2FnntUdhzE5S%2BsoUy4HyHQJrSpuH6B3e0IYNwgjujf%2BDA805X%2FZI33vUC%2F4E1viuDUgRSqszDN%2FzOYH3uEUpJK1Ckqk%2B9YcBAi2NtYtkmsd9Xx9DQW08ukaOJZJcGqWmxJVndhfwusHiB5hRZxAWcqNMq5mXvXMS6cLzBzLbpNzmOs6jm%2FUeODSkBq0IcLlxbMp5C7OyOzN32YIf3RiZDJxAzUYt2VTHUZVfANbQcKuuHevmV2Dvxkcs1ITqkzkUKSPN1x7Un8EigdBUi5Xu%2B212OCxHZE5vxaCOAMYUj3PQ7ZdIAmbo75nAUNWhrvPDreaQIp5g1e0wYohISbgT22Y%2BYeUSkoq0ll3ALTebNx%2BHyfCjPWkGRPCH3MHzNxdnlBlptaOS4LLONqOvLDM6HYKdxTIvcVo3xozDF%2Fqi1BjqxASgJNeHeg36odzKzjVndA9JkROKnYR%2FabDYThnu%2By1ZUBsANO2hQxS2tZeeWxJHpxbvk9FEn618XslHI2AgcKTFH2W2jNGKyBUeIj2gUo2o0tJVXH7h7cESDR%2BQdI%2BiEbgNFgRIaAokhCTUzcU8GB6Tu5hmKpANttR25Wn4XwmpxX4%2BbEwB46EIjb%2B7cSeEarDqxZk1XwhRzIr4teuP5Lqionds3S8EwJPLDopVQzP91JA%3D%3D&amp;X-Amz-Signature=52d35b5625c60837ddb1c0f2588e6cc3cff859373ea00ca54fec27aba0bed3f4&amp;X-Amz-SignedHeaders=host" src="https://cloudhive-userdata.s3.amazonaws.com/posts/17-ebce6c8bfe40.jpeg?X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=ASIAYMHYVNWZLRQIFUCF%2F20240731%2Fus-east-1%2Fs3%2Faws4_request&amp;X-Amz-Date=20240731T143535Z&amp;X-Amz-Expires=3600&amp;X-Amz-Security-Token=IQoJb3JpZ2luX2VjEHYaCXVzLWVhc3QtMSJHMEUCIEWaDtaw00%2BeXiejO5YiZpvFWFYgYXg0VuMInUbHdBVSAiEA4eVIfSeCp%2B0EiU7b7%2Fti94IkwfWUExRRvKh3MKpnRvYqugUIXxAAGgw1NzYwNDcxMTU2OTgiDCldVpMdey8tayG65yqXBU50znjLjYfLqPrs02fPMRPqoLo4ikBf48iqZNbDaKUj4Nge2xwfEpV8ndvvSjajx9HK23xty9NbfRTXxn2Qqf86FEnOHn%2FWO3ay7R63uFFg3SYKWKWjzb71NLQbomRat8EQlZ1IDJkhhuelgbqbVCTVdOzABoQChryw20ISGUebsBJD0xp8d6%2BVuPaHeydWzCS5UIoGLQqIcGfr4qvYF0O8kjUjo1xuVj7o6p16NsN2dSqtZjtlXuSkbU0nG%2FUQSj4bV%2FKdk5OcJxZ9f%2FRpxTY1UBYklKnn9x%2FRyQ2BFLNUBX5b%2BVVX2NTzn6ZIMkFtAhWAhwQlPbgr87ediwEHqxRDn6D3LJ4Uz%2FvIF8noRxkh28oM72lgA1fTmlHjmMuLQYgUDLpIMLLC5XhjaDAfaSOxDr7RKCMny7UvhHRHE4IvIqftXeepL3fMckP1%2BiQVpQQAzmKrMQeOsBfQ%2BSNH%2FnntUdhzE5S%2BsoUy4HyHQJrSpuH6B3e0IYNwgjujf%2BDA805X%2FZI33vUC%2F4E1viuDUgRSqszDN%2FzOYH3uEUpJK1Ckqk%2B9YcBAi2NtYtkmsd9Xx9DQW08ukaOJZJcGqWmxJVndhfwusHiB5hRZxAWcqNMq5mXvXMS6cLzBzLbpNzmOs6jm%2FUeODSkBq0IcLlxbMp5C7OyOzN32YIf3RiZDJxAzUYt2VTHUZVfANbQcKuuHevmV2Dvxkcs1ITqkzkUKSPN1x7Un8EigdBUi5Xu%2B212OCxHZE5vxaCOAMYUj3PQ7ZdIAmbo75nAUNWhrvPDreaQIp5g1e0wYohISbgT22Y%2BYeUSkoq0ll3ALTebNx%2BHyfCjPWkGRPCH3MHzNxdnlBlptaOS4LLONqOvLDM6HYKdxTIvcVo3xozDF%2Fqi1BjqxASgJNeHeg36odzKzjVndA9JkROKnYR%2FabDYThnu%2By1ZUBsANO2hQxS2tZeeWxJHpxbvk9FEn618XslHI2AgcKTFH2W2jNGKyBUeIj2gUo2o0tJVXH7h7cESDR%2BQdI%2BiEbgNFgRIaAokhCTUzcU8GB6Tu5hmKpANttR25Wn4XwmpxX4%2BbEwB46EIjb%2B7cSeEarDqxZk1XwhRzIr4teuP5Lqionds3S8EwJPLDopVQzP91JA%3D%3D&amp;X-Amz-Signature=52d35b5625c60837ddb1c0f2588e6cc3cff859373ea00ca54fec27aba0bed3f4&amp;X-Amz-SignedHeaders=host" alt="Post Image"></div>
-                            </div>
-                            <div class="hive-social-stats">
-                                <p class="hive-stat-like"><strong>4</strong> likes</p>
-                                <hr>
-                                <div class="d-flex align-items-center">
-                                    <button class="hive-stat-like-btn liked" data-post-id="f6099b8a88e101c9e663c09e65c07a4d">
-                                        <img id="like-btn-hive" src="../assets/liked.svg" alt="Liked" style="width: 22px; height: 22px; vertical-align: middle;">
-                                    </button>
-                                    
-                                        <div class="post-options">
-                                            <button class="hive-stat-options-btn" onclick="toggleOptionsMenu(event)">
-                                                <img id="options-btn-hive" src="assets/options.svg" alt="Options" style="width: 22px; height: 22px;">
-                                            </button>
-                                            <div class="options-menu">
-                                                <ul>
-                                                    <li><a href="#" class="delete-post" data-id="f6099b8a88e101c9e663c09e65c07a4d">Delete</a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    
-                                </div>
-                            </div>
-                        </div>
-                        </div><div class="hive-post">
-                        <div class="col-md-4 hive-post-element mx-auto" data-post-id="276e18d45a369d99cdf4d8ff522210da">
-                            <div class="row hive-post-user-details align-items-center">
-                                <div class="hive-post-pfp">
-                                    <a href="/geofpie"><img src="https://cloudhive-userdata.s3.amazonaws.com/profile-pics/365eed5344e1247a190441a6.blob?X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=ASIAYMHYVNWZLRQIFUCF%2F20240731%2Fus-east-1%2Fs3%2Faws4_request&amp;X-Amz-Date=20240731T143535Z&amp;X-Amz-Expires=3600&amp;X-Amz-Security-Token=IQoJb3JpZ2luX2VjEHYaCXVzLWVhc3QtMSJHMEUCIEWaDtaw00%2BeXiejO5YiZpvFWFYgYXg0VuMInUbHdBVSAiEA4eVIfSeCp%2B0EiU7b7%2Fti94IkwfWUExRRvKh3MKpnRvYqugUIXxAAGgw1NzYwNDcxMTU2OTgiDCldVpMdey8tayG65yqXBU50znjLjYfLqPrs02fPMRPqoLo4ikBf48iqZNbDaKUj4Nge2xwfEpV8ndvvSjajx9HK23xty9NbfRTXxn2Qqf86FEnOHn%2FWO3ay7R63uFFg3SYKWKWjzb71NLQbomRat8EQlZ1IDJkhhuelgbqbVCTVdOzABoQChryw20ISGUebsBJD0xp8d6%2BVuPaHeydWzCS5UIoGLQqIcGfr4qvYF0O8kjUjo1xuVj7o6p16NsN2dSqtZjtlXuSkbU0nG%2FUQSj4bV%2FKdk5OcJxZ9f%2FRpxTY1UBYklKnn9x%2FRyQ2BFLNUBX5b%2BVVX2NTzn6ZIMkFtAhWAhwQlPbgr87ediwEHqxRDn6D3LJ4Uz%2FvIF8noRxkh28oM72lgA1fTmlHjmMuLQYgUDLpIMLLC5XhjaDAfaSOxDr7RKCMny7UvhHRHE4IvIqftXeepL3fMckP1%2BiQVpQQAzmKrMQeOsBfQ%2BSNH%2FnntUdhzE5S%2BsoUy4HyHQJrSpuH6B3e0IYNwgjujf%2BDA805X%2FZI33vUC%2F4E1viuDUgRSqszDN%2FzOYH3uEUpJK1Ckqk%2B9YcBAi2NtYtkmsd9Xx9DQW08ukaOJZJcGqWmxJVndhfwusHiB5hRZxAWcqNMq5mXvXMS6cLzBzLbpNzmOs6jm%2FUeODSkBq0IcLlxbMp5C7OyOzN32YIf3RiZDJxAzUYt2VTHUZVfANbQcKuuHevmV2Dvxkcs1ITqkzkUKSPN1x7Un8EigdBUi5Xu%2B212OCxHZE5vxaCOAMYUj3PQ7ZdIAmbo75nAUNWhrvPDreaQIp5g1e0wYohISbgT22Y%2BYeUSkoq0ll3ALTebNx%2BHyfCjPWkGRPCH3MHzNxdnlBlptaOS4LLONqOvLDM6HYKdxTIvcVo3xozDF%2Fqi1BjqxASgJNeHeg36odzKzjVndA9JkROKnYR%2FabDYThnu%2By1ZUBsANO2hQxS2tZeeWxJHpxbvk9FEn618XslHI2AgcKTFH2W2jNGKyBUeIj2gUo2o0tJVXH7h7cESDR%2BQdI%2BiEbgNFgRIaAokhCTUzcU8GB6Tu5hmKpANttR25Wn4XwmpxX4%2BbEwB46EIjb%2B7cSeEarDqxZk1XwhRzIr4teuP5Lqionds3S8EwJPLDopVQzP91JA%3D%3D&amp;X-Amz-Signature=cf3de7770bfc2bed40aa588a46f0c17ac9aafe416953f80f778a7f09280511c0&amp;X-Amz-SignedHeaders=host" alt="Profile" class="post-profile-pic"></a>
-                                </div>
-                                <div class="col hive-user-details-text">
-                                    <a href="/geofpie" class="hive-post-username">Geoffrey</a>
-                                    <a href="/geofpie" class="hive-post-user-sub">@geofpie</a>
-                                </div>
-                                <div class="col hive-user-details-time">
-                                    <i class="fa fa-clock hive-post-time-icon" aria-hidden="true"></i>
-                                    <p class="hive-post-time">4 days ago</p>
-                                </div>
-                            </div>
-                            <div class="row hive-post-content">
-                                <p class="hive-post-text">eggz</p>
-                                <div class="hive-post-image shadow"><img class="hive-post-img-src" data-src="https://cloudhive-userdata.s3.amazonaws.com/posts/17-06c8d3ecc027.jpeg?X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=ASIAYMHYVNWZLRQIFUCF%2F20240731%2Fus-east-1%2Fs3%2Faws4_request&amp;X-Amz-Date=20240731T143535Z&amp;X-Amz-Expires=3600&amp;X-Amz-Security-Token=IQoJb3JpZ2luX2VjEHYaCXVzLWVhc3QtMSJHMEUCIEWaDtaw00%2BeXiejO5YiZpvFWFYgYXg0VuMInUbHdBVSAiEA4eVIfSeCp%2B0EiU7b7%2Fti94IkwfWUExRRvKh3MKpnRvYqugUIXxAAGgw1NzYwNDcxMTU2OTgiDCldVpMdey8tayG65yqXBU50znjLjYfLqPrs02fPMRPqoLo4ikBf48iqZNbDaKUj4Nge2xwfEpV8ndvvSjajx9HK23xty9NbfRTXxn2Qqf86FEnOHn%2FWO3ay7R63uFFg3SYKWKWjzb71NLQbomRat8EQlZ1IDJkhhuelgbqbVCTVdOzABoQChryw20ISGUebsBJD0xp8d6%2BVuPaHeydWzCS5UIoGLQqIcGfr4qvYF0O8kjUjo1xuVj7o6p16NsN2dSqtZjtlXuSkbU0nG%2FUQSj4bV%2FKdk5OcJxZ9f%2FRpxTY1UBYklKnn9x%2FRyQ2BFLNUBX5b%2BVVX2NTzn6ZIMkFtAhWAhwQlPbgr87ediwEHqxRDn6D3LJ4Uz%2FvIF8noRxkh28oM72lgA1fTmlHjmMuLQYgUDLpIMLLC5XhjaDAfaSOxDr7RKCMny7UvhHRHE4IvIqftXeepL3fMckP1%2BiQVpQQAzmKrMQeOsBfQ%2BSNH%2FnntUdhzE5S%2BsoUy4HyHQJrSpuH6B3e0IYNwgjujf%2BDA805X%2FZI33vUC%2F4E1viuDUgRSqszDN%2FzOYH3uEUpJK1Ckqk%2B9YcBAi2NtYtkmsd9Xx9DQW08ukaOJZJcGqWmxJVndhfwusHiB5hRZxAWcqNMq5mXvXMS6cLzBzLbpNzmOs6jm%2FUeODSkBq0IcLlxbMp5C7OyOzN32YIf3RiZDJxAzUYt2VTHUZVfANbQcKuuHevmV2Dvxkcs1ITqkzkUKSPN1x7Un8EigdBUi5Xu%2B212OCxHZE5vxaCOAMYUj3PQ7ZdIAmbo75nAUNWhrvPDreaQIp5g1e0wYohISbgT22Y%2BYeUSkoq0ll3ALTebNx%2BHyfCjPWkGRPCH3MHzNxdnlBlptaOS4LLONqOvLDM6HYKdxTIvcVo3xozDF%2Fqi1BjqxASgJNeHeg36odzKzjVndA9JkROKnYR%2FabDYThnu%2By1ZUBsANO2hQxS2tZeeWxJHpxbvk9FEn618XslHI2AgcKTFH2W2jNGKyBUeIj2gUo2o0tJVXH7h7cESDR%2BQdI%2BiEbgNFgRIaAokhCTUzcU8GB6Tu5hmKpANttR25Wn4XwmpxX4%2BbEwB46EIjb%2B7cSeEarDqxZk1XwhRzIr4teuP5Lqionds3S8EwJPLDopVQzP91JA%3D%3D&amp;X-Amz-Signature=7d331858d9cf23e0dc2292dd385009832bf0bce8904b571cd7453d0b0731ace6&amp;X-Amz-SignedHeaders=host" src="https://cloudhive-userdata.s3.amazonaws.com/posts/17-06c8d3ecc027.jpeg?X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=ASIAYMHYVNWZLRQIFUCF%2F20240731%2Fus-east-1%2Fs3%2Faws4_request&amp;X-Amz-Date=20240731T143535Z&amp;X-Amz-Expires=3600&amp;X-Amz-Security-Token=IQoJb3JpZ2luX2VjEHYaCXVzLWVhc3QtMSJHMEUCIEWaDtaw00%2BeXiejO5YiZpvFWFYgYXg0VuMInUbHdBVSAiEA4eVIfSeCp%2B0EiU7b7%2Fti94IkwfWUExRRvKh3MKpnRvYqugUIXxAAGgw1NzYwNDcxMTU2OTgiDCldVpMdey8tayG65yqXBU50znjLjYfLqPrs02fPMRPqoLo4ikBf48iqZNbDaKUj4Nge2xwfEpV8ndvvSjajx9HK23xty9NbfRTXxn2Qqf86FEnOHn%2FWO3ay7R63uFFg3SYKWKWjzb71NLQbomRat8EQlZ1IDJkhhuelgbqbVCTVdOzABoQChryw20ISGUebsBJD0xp8d6%2BVuPaHeydWzCS5UIoGLQqIcGfr4qvYF0O8kjUjo1xuVj7o6p16NsN2dSqtZjtlXuSkbU0nG%2FUQSj4bV%2FKdk5OcJxZ9f%2FRpxTY1UBYklKnn9x%2FRyQ2BFLNUBX5b%2BVVX2NTzn6ZIMkFtAhWAhwQlPbgr87ediwEHqxRDn6D3LJ4Uz%2FvIF8noRxkh28oM72lgA1fTmlHjmMuLQYgUDLpIMLLC5XhjaDAfaSOxDr7RKCMny7UvhHRHE4IvIqftXeepL3fMckP1%2BiQVpQQAzmKrMQeOsBfQ%2BSNH%2FnntUdhzE5S%2BsoUy4HyHQJrSpuH6B3e0IYNwgjujf%2BDA805X%2FZI33vUC%2F4E1viuDUgRSqszDN%2FzOYH3uEUpJK1Ckqk%2B9YcBAi2NtYtkmsd9Xx9DQW08ukaOJZJcGqWmxJVndhfwusHiB5hRZxAWcqNMq5mXvXMS6cLzBzLbpNzmOs6jm%2FUeODSkBq0IcLlxbMp5C7OyOzN32YIf3RiZDJxAzUYt2VTHUZVfANbQcKuuHevmV2Dvxkcs1ITqkzkUKSPN1x7Un8EigdBUi5Xu%2B212OCxHZE5vxaCOAMYUj3PQ7ZdIAmbo75nAUNWhrvPDreaQIp5g1e0wYohISbgT22Y%2BYeUSkoq0ll3ALTebNx%2BHyfCjPWkGRPCH3MHzNxdnlBlptaOS4LLONqOvLDM6HYKdxTIvcVo3xozDF%2Fqi1BjqxASgJNeHeg36odzKzjVndA9JkROKnYR%2FabDYThnu%2By1ZUBsANO2hQxS2tZeeWxJHpxbvk9FEn618XslHI2AgcKTFH2W2jNGKyBUeIj2gUo2o0tJVXH7h7cESDR%2BQdI%2BiEbgNFgRIaAokhCTUzcU8GB6Tu5hmKpANttR25Wn4XwmpxX4%2BbEwB46EIjb%2B7cSeEarDqxZk1XwhRzIr4teuP5Lqionds3S8EwJPLDopVQzP91JA%3D%3D&amp;X-Amz-Signature=7d331858d9cf23e0dc2292dd385009832bf0bce8904b571cd7453d0b0731ace6&amp;X-Amz-SignedHeaders=host" alt="Post Image"></div>
-                            </div>
-                            <div class="hive-social-stats">
-                                <p class="hive-stat-like"><strong>0</strong> likes</p>
-                                <hr>
-                                <div class="d-flex align-items-center">
-                                    <button class="hive-stat-like-btn " data-post-id="276e18d45a369d99cdf4d8ff522210da">
-                                        <img id="like-btn-hive" src="../assets/unliked.svg" alt="Like" style="width: 22px; height: 22px; vertical-align: middle;">
-                                    </button>
-                                    
-                                        <div class="post-options">
-                                            <button class="hive-stat-options-btn" onclick="toggleOptionsMenu(event)">
-                                                <img id="options-btn-hive" src="assets/options.svg" alt="Options" style="width: 22px; height: 22px;">
-                                            </button>
-                                            <div class="options-menu">
-                                                <ul>
-                                                    <li><a href="#" class="delete-post" data-id="276e18d45a369d99cdf4d8ff522210da">Delete</a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    
-                                </div>
-                            </div>
-                        </div>
-                        </div><div class="hive-post">
-                        <div class="col-md-4 hive-post-element mx-auto" data-post-id="e909a272f89aa1e14ecbdce0f52644f3">
-                            <div class="row hive-post-user-details align-items-center">
-                                <div class="hive-post-pfp">
-                                    <a href="/geofpie"><img src="https://cloudhive-userdata.s3.amazonaws.com/profile-pics/365eed5344e1247a190441a6.blob?X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=ASIAYMHYVNWZLRQIFUCF%2F20240731%2Fus-east-1%2Fs3%2Faws4_request&amp;X-Amz-Date=20240731T143535Z&amp;X-Amz-Expires=3600&amp;X-Amz-Security-Token=IQoJb3JpZ2luX2VjEHYaCXVzLWVhc3QtMSJHMEUCIEWaDtaw00%2BeXiejO5YiZpvFWFYgYXg0VuMInUbHdBVSAiEA4eVIfSeCp%2B0EiU7b7%2Fti94IkwfWUExRRvKh3MKpnRvYqugUIXxAAGgw1NzYwNDcxMTU2OTgiDCldVpMdey8tayG65yqXBU50znjLjYfLqPrs02fPMRPqoLo4ikBf48iqZNbDaKUj4Nge2xwfEpV8ndvvSjajx9HK23xty9NbfRTXxn2Qqf86FEnOHn%2FWO3ay7R63uFFg3SYKWKWjzb71NLQbomRat8EQlZ1IDJkhhuelgbqbVCTVdOzABoQChryw20ISGUebsBJD0xp8d6%2BVuPaHeydWzCS5UIoGLQqIcGfr4qvYF0O8kjUjo1xuVj7o6p16NsN2dSqtZjtlXuSkbU0nG%2FUQSj4bV%2FKdk5OcJxZ9f%2FRpxTY1UBYklKnn9x%2FRyQ2BFLNUBX5b%2BVVX2NTzn6ZIMkFtAhWAhwQlPbgr87ediwEHqxRDn6D3LJ4Uz%2FvIF8noRxkh28oM72lgA1fTmlHjmMuLQYgUDLpIMLLC5XhjaDAfaSOxDr7RKCMny7UvhHRHE4IvIqftXeepL3fMckP1%2BiQVpQQAzmKrMQeOsBfQ%2BSNH%2FnntUdhzE5S%2BsoUy4HyHQJrSpuH6B3e0IYNwgjujf%2BDA805X%2FZI33vUC%2F4E1viuDUgRSqszDN%2FzOYH3uEUpJK1Ckqk%2B9YcBAi2NtYtkmsd9Xx9DQW08ukaOJZJcGqWmxJVndhfwusHiB5hRZxAWcqNMq5mXvXMS6cLzBzLbpNzmOs6jm%2FUeODSkBq0IcLlxbMp5C7OyOzN32YIf3RiZDJxAzUYt2VTHUZVfANbQcKuuHevmV2Dvxkcs1ITqkzkUKSPN1x7Un8EigdBUi5Xu%2B212OCxHZE5vxaCOAMYUj3PQ7ZdIAmbo75nAUNWhrvPDreaQIp5g1e0wYohISbgT22Y%2BYeUSkoq0ll3ALTebNx%2BHyfCjPWkGRPCH3MHzNxdnlBlptaOS4LLONqOvLDM6HYKdxTIvcVo3xozDF%2Fqi1BjqxASgJNeHeg36odzKzjVndA9JkROKnYR%2FabDYThnu%2By1ZUBsANO2hQxS2tZeeWxJHpxbvk9FEn618XslHI2AgcKTFH2W2jNGKyBUeIj2gUo2o0tJVXH7h7cESDR%2BQdI%2BiEbgNFgRIaAokhCTUzcU8GB6Tu5hmKpANttR25Wn4XwmpxX4%2BbEwB46EIjb%2B7cSeEarDqxZk1XwhRzIr4teuP5Lqionds3S8EwJPLDopVQzP91JA%3D%3D&amp;X-Amz-Signature=cf3de7770bfc2bed40aa588a46f0c17ac9aafe416953f80f778a7f09280511c0&amp;X-Amz-SignedHeaders=host" alt="Profile" class="post-profile-pic"></a>
-                                </div>
-                                <div class="col hive-user-details-text">
-                                    <a href="/geofpie" class="hive-post-username">Geoffrey</a>
-                                    <a href="/geofpie" class="hive-post-user-sub">@geofpie</a>
-                                </div>
-                                <div class="col hive-user-details-time">
-                                    <i class="fa fa-clock hive-post-time-icon" aria-hidden="true"></i>
-                                    <p class="hive-post-time">6 days ago</p>
-                                </div>
-                            </div>
-                            <div class="row hive-post-content">
-                                <p class="hive-post-text"></p>
-                                <div class="hive-post-image shadow"><img class="hive-post-img-src" data-src="https://cloudhive-userdata.s3.amazonaws.com/posts/17-b693f882c220.jpeg?X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=ASIAYMHYVNWZLRQIFUCF%2F20240731%2Fus-east-1%2Fs3%2Faws4_request&amp;X-Amz-Date=20240731T143535Z&amp;X-Amz-Expires=3600&amp;X-Amz-Security-Token=IQoJb3JpZ2luX2VjEHYaCXVzLWVhc3QtMSJHMEUCIEWaDtaw00%2BeXiejO5YiZpvFWFYgYXg0VuMInUbHdBVSAiEA4eVIfSeCp%2B0EiU7b7%2Fti94IkwfWUExRRvKh3MKpnRvYqugUIXxAAGgw1NzYwNDcxMTU2OTgiDCldVpMdey8tayG65yqXBU50znjLjYfLqPrs02fPMRPqoLo4ikBf48iqZNbDaKUj4Nge2xwfEpV8ndvvSjajx9HK23xty9NbfRTXxn2Qqf86FEnOHn%2FWO3ay7R63uFFg3SYKWKWjzb71NLQbomRat8EQlZ1IDJkhhuelgbqbVCTVdOzABoQChryw20ISGUebsBJD0xp8d6%2BVuPaHeydWzCS5UIoGLQqIcGfr4qvYF0O8kjUjo1xuVj7o6p16NsN2dSqtZjtlXuSkbU0nG%2FUQSj4bV%2FKdk5OcJxZ9f%2FRpxTY1UBYklKnn9x%2FRyQ2BFLNUBX5b%2BVVX2NTzn6ZIMkFtAhWAhwQlPbgr87ediwEHqxRDn6D3LJ4Uz%2FvIF8noRxkh28oM72lgA1fTmlHjmMuLQYgUDLpIMLLC5XhjaDAfaSOxDr7RKCMny7UvhHRHE4IvIqftXeepL3fMckP1%2BiQVpQQAzmKrMQeOsBfQ%2BSNH%2FnntUdhzE5S%2BsoUy4HyHQJrSpuH6B3e0IYNwgjujf%2BDA805X%2FZI33vUC%2F4E1viuDUgRSqszDN%2FzOYH3uEUpJK1Ckqk%2B9YcBAi2NtYtkmsd9Xx9DQW08ukaOJZJcGqWmxJVndhfwusHiB5hRZxAWcqNMq5mXvXMS6cLzBzLbpNzmOs6jm%2FUeODSkBq0IcLlxbMp5C7OyOzN32YIf3RiZDJxAzUYt2VTHUZVfANbQcKuuHevmV2Dvxkcs1ITqkzkUKSPN1x7Un8EigdBUi5Xu%2B212OCxHZE5vxaCOAMYUj3PQ7ZdIAmbo75nAUNWhrvPDreaQIp5g1e0wYohISbgT22Y%2BYeUSkoq0ll3ALTebNx%2BHyfCjPWkGRPCH3MHzNxdnlBlptaOS4LLONqOvLDM6HYKdxTIvcVo3xozDF%2Fqi1BjqxASgJNeHeg36odzKzjVndA9JkROKnYR%2FabDYThnu%2By1ZUBsANO2hQxS2tZeeWxJHpxbvk9FEn618XslHI2AgcKTFH2W2jNGKyBUeIj2gUo2o0tJVXH7h7cESDR%2BQdI%2BiEbgNFgRIaAokhCTUzcU8GB6Tu5hmKpANttR25Wn4XwmpxX4%2BbEwB46EIjb%2B7cSeEarDqxZk1XwhRzIr4teuP5Lqionds3S8EwJPLDopVQzP91JA%3D%3D&amp;X-Amz-Signature=71c45bac4f1882d636cc096887146631ea118d06993d4009c3621edab9626817&amp;X-Amz-SignedHeaders=host" src="https://cloudhive-userdata.s3.amazonaws.com/posts/17-b693f882c220.jpeg?X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=ASIAYMHYVNWZLRQIFUCF%2F20240731%2Fus-east-1%2Fs3%2Faws4_request&amp;X-Amz-Date=20240731T143535Z&amp;X-Amz-Expires=3600&amp;X-Amz-Security-Token=IQoJb3JpZ2luX2VjEHYaCXVzLWVhc3QtMSJHMEUCIEWaDtaw00%2BeXiejO5YiZpvFWFYgYXg0VuMInUbHdBVSAiEA4eVIfSeCp%2B0EiU7b7%2Fti94IkwfWUExRRvKh3MKpnRvYqugUIXxAAGgw1NzYwNDcxMTU2OTgiDCldVpMdey8tayG65yqXBU50znjLjYfLqPrs02fPMRPqoLo4ikBf48iqZNbDaKUj4Nge2xwfEpV8ndvvSjajx9HK23xty9NbfRTXxn2Qqf86FEnOHn%2FWO3ay7R63uFFg3SYKWKWjzb71NLQbomRat8EQlZ1IDJkhhuelgbqbVCTVdOzABoQChryw20ISGUebsBJD0xp8d6%2BVuPaHeydWzCS5UIoGLQqIcGfr4qvYF0O8kjUjo1xuVj7o6p16NsN2dSqtZjtlXuSkbU0nG%2FUQSj4bV%2FKdk5OcJxZ9f%2FRpxTY1UBYklKnn9x%2FRyQ2BFLNUBX5b%2BVVX2NTzn6ZIMkFtAhWAhwQlPbgr87ediwEHqxRDn6D3LJ4Uz%2FvIF8noRxkh28oM72lgA1fTmlHjmMuLQYgUDLpIMLLC5XhjaDAfaSOxDr7RKCMny7UvhHRHE4IvIqftXeepL3fMckP1%2BiQVpQQAzmKrMQeOsBfQ%2BSNH%2FnntUdhzE5S%2BsoUy4HyHQJrSpuH6B3e0IYNwgjujf%2BDA805X%2FZI33vUC%2F4E1viuDUgRSqszDN%2FzOYH3uEUpJK1Ckqk%2B9YcBAi2NtYtkmsd9Xx9DQW08ukaOJZJcGqWmxJVndhfwusHiB5hRZxAWcqNMq5mXvXMS6cLzBzLbpNzmOs6jm%2FUeODSkBq0IcLlxbMp5C7OyOzN32YIf3RiZDJxAzUYt2VTHUZVfANbQcKuuHevmV2Dvxkcs1ITqkzkUKSPN1x7Un8EigdBUi5Xu%2B212OCxHZE5vxaCOAMYUj3PQ7ZdIAmbo75nAUNWhrvPDreaQIp5g1e0wYohISbgT22Y%2BYeUSkoq0ll3ALTebNx%2BHyfCjPWkGRPCH3MHzNxdnlBlptaOS4LLONqOvLDM6HYKdxTIvcVo3xozDF%2Fqi1BjqxASgJNeHeg36odzKzjVndA9JkROKnYR%2FabDYThnu%2By1ZUBsANO2hQxS2tZeeWxJHpxbvk9FEn618XslHI2AgcKTFH2W2jNGKyBUeIj2gUo2o0tJVXH7h7cESDR%2BQdI%2BiEbgNFgRIaAokhCTUzcU8GB6Tu5hmKpANttR25Wn4XwmpxX4%2BbEwB46EIjb%2B7cSeEarDqxZk1XwhRzIr4teuP5Lqionds3S8EwJPLDopVQzP91JA%3D%3D&amp;X-Amz-Signature=71c45bac4f1882d636cc096887146631ea118d06993d4009c3621edab9626817&amp;X-Amz-SignedHeaders=host" alt="Post Image"></div>
-                            </div>
-                            <div class="hive-social-stats">
-                                <p class="hive-stat-like"><strong>2</strong> likes</p>
-                                <hr>
-                                <div class="d-flex align-items-center">
-                                    <button class="hive-stat-like-btn liked" data-post-id="e909a272f89aa1e14ecbdce0f52644f3">
-                                        <img id="like-btn-hive" src="../assets/liked.svg" alt="Liked" style="width: 22px; height: 22px; vertical-align: middle;">
-                                    </button>
-                                    
-                                        <div class="post-options">
-                                            <button class="hive-stat-options-btn" onclick="toggleOptionsMenu(event)">
-                                                <img id="options-btn-hive" src="assets/options.svg" alt="Options" style="width: 22px; height: 22px;">
-                                            </button>
-                                            <div class="options-menu">
-                                                <ul>
-                                                    <li><a href="#" class="delete-post" data-id="e909a272f89aa1e14ecbdce0f52644f3">Delete</a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    
-                                </div>
-                            </div>
-                        </div>
-                        </div><div class="hive-post">
-                        <div class="col-md-4 hive-post-element mx-auto" data-post-id="b062a3e537184afb4dbfa746f08e9c21">
-                            <div class="row hive-post-user-details align-items-center">
-                                <div class="hive-post-pfp">
-                                    <a href="/geofpie"><img src="https://cloudhive-userdata.s3.amazonaws.com/profile-pics/365eed5344e1247a190441a6.blob?X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=ASIAYMHYVNWZLRQIFUCF%2F20240731%2Fus-east-1%2Fs3%2Faws4_request&amp;X-Amz-Date=20240731T143535Z&amp;X-Amz-Expires=3600&amp;X-Amz-Security-Token=IQoJb3JpZ2luX2VjEHYaCXVzLWVhc3QtMSJHMEUCIEWaDtaw00%2BeXiejO5YiZpvFWFYgYXg0VuMInUbHdBVSAiEA4eVIfSeCp%2B0EiU7b7%2Fti94IkwfWUExRRvKh3MKpnRvYqugUIXxAAGgw1NzYwNDcxMTU2OTgiDCldVpMdey8tayG65yqXBU50znjLjYfLqPrs02fPMRPqoLo4ikBf48iqZNbDaKUj4Nge2xwfEpV8ndvvSjajx9HK23xty9NbfRTXxn2Qqf86FEnOHn%2FWO3ay7R63uFFg3SYKWKWjzb71NLQbomRat8EQlZ1IDJkhhuelgbqbVCTVdOzABoQChryw20ISGUebsBJD0xp8d6%2BVuPaHeydWzCS5UIoGLQqIcGfr4qvYF0O8kjUjo1xuVj7o6p16NsN2dSqtZjtlXuSkbU0nG%2FUQSj4bV%2FKdk5OcJxZ9f%2FRpxTY1UBYklKnn9x%2FRyQ2BFLNUBX5b%2BVVX2NTzn6ZIMkFtAhWAhwQlPbgr87ediwEHqxRDn6D3LJ4Uz%2FvIF8noRxkh28oM72lgA1fTmlHjmMuLQYgUDLpIMLLC5XhjaDAfaSOxDr7RKCMny7UvhHRHE4IvIqftXeepL3fMckP1%2BiQVpQQAzmKrMQeOsBfQ%2BSNH%2FnntUdhzE5S%2BsoUy4HyHQJrSpuH6B3e0IYNwgjujf%2BDA805X%2FZI33vUC%2F4E1viuDUgRSqszDN%2FzOYH3uEUpJK1Ckqk%2B9YcBAi2NtYtkmsd9Xx9DQW08ukaOJZJcGqWmxJVndhfwusHiB5hRZxAWcqNMq5mXvXMS6cLzBzLbpNzmOs6jm%2FUeODSkBq0IcLlxbMp5C7OyOzN32YIf3RiZDJxAzUYt2VTHUZVfANbQcKuuHevmV2Dvxkcs1ITqkzkUKSPN1x7Un8EigdBUi5Xu%2B212OCxHZE5vxaCOAMYUj3PQ7ZdIAmbo75nAUNWhrvPDreaQIp5g1e0wYohISbgT22Y%2BYeUSkoq0ll3ALTebNx%2BHyfCjPWkGRPCH3MHzNxdnlBlptaOS4LLONqOvLDM6HYKdxTIvcVo3xozDF%2Fqi1BjqxASgJNeHeg36odzKzjVndA9JkROKnYR%2FabDYThnu%2By1ZUBsANO2hQxS2tZeeWxJHpxbvk9FEn618XslHI2AgcKTFH2W2jNGKyBUeIj2gUo2o0tJVXH7h7cESDR%2BQdI%2BiEbgNFgRIaAokhCTUzcU8GB6Tu5hmKpANttR25Wn4XwmpxX4%2BbEwB46EIjb%2B7cSeEarDqxZk1XwhRzIr4teuP5Lqionds3S8EwJPLDopVQzP91JA%3D%3D&amp;X-Amz-Signature=cf3de7770bfc2bed40aa588a46f0c17ac9aafe416953f80f778a7f09280511c0&amp;X-Amz-SignedHeaders=host" alt="Profile" class="post-profile-pic"></a>
-                                </div>
-                                <div class="col hive-user-details-text">
-                                    <a href="/geofpie" class="hive-post-username">Geoffrey</a>
-                                    <a href="/geofpie" class="hive-post-user-sub">@geofpie</a>
-                                </div>
-                                <div class="col hive-user-details-time">
-                                    <i class="fa fa-clock hive-post-time-icon" aria-hidden="true"></i>
-                                    <p class="hive-post-time">6 days ago</p>
-                                </div>
-                            </div>
-                            <div class="row hive-post-content">
-                                <p class="hive-post-text">What's up I'm not taking the micro credential previous trimester I didn't manage clear all the module so will re taking those modules again this trimester.</p>
-                                <div class="hive-post-image shadow"><img class="hive-post-img-src" data-src="https://cloudhive-userdata.s3.amazonaws.com/posts/17-0433f31e7bda.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=ASIAYMHYVNWZLRQIFUCF%2F20240731%2Fus-east-1%2Fs3%2Faws4_request&amp;X-Amz-Date=20240731T143535Z&amp;X-Amz-Expires=3600&amp;X-Amz-Security-Token=IQoJb3JpZ2luX2VjEHYaCXVzLWVhc3QtMSJHMEUCIEWaDtaw00%2BeXiejO5YiZpvFWFYgYXg0VuMInUbHdBVSAiEA4eVIfSeCp%2B0EiU7b7%2Fti94IkwfWUExRRvKh3MKpnRvYqugUIXxAAGgw1NzYwNDcxMTU2OTgiDCldVpMdey8tayG65yqXBU50znjLjYfLqPrs02fPMRPqoLo4ikBf48iqZNbDaKUj4Nge2xwfEpV8ndvvSjajx9HK23xty9NbfRTXxn2Qqf86FEnOHn%2FWO3ay7R63uFFg3SYKWKWjzb71NLQbomRat8EQlZ1IDJkhhuelgbqbVCTVdOzABoQChryw20ISGUebsBJD0xp8d6%2BVuPaHeydWzCS5UIoGLQqIcGfr4qvYF0O8kjUjo1xuVj7o6p16NsN2dSqtZjtlXuSkbU0nG%2FUQSj4bV%2FKdk5OcJxZ9f%2FRpxTY1UBYklKnn9x%2FRyQ2BFLNUBX5b%2BVVX2NTzn6ZIMkFtAhWAhwQlPbgr87ediwEHqxRDn6D3LJ4Uz%2FvIF8noRxkh28oM72lgA1fTmlHjmMuLQYgUDLpIMLLC5XhjaDAfaSOxDr7RKCMny7UvhHRHE4IvIqftXeepL3fMckP1%2BiQVpQQAzmKrMQeOsBfQ%2BSNH%2FnntUdhzE5S%2BsoUy4HyHQJrSpuH6B3e0IYNwgjujf%2BDA805X%2FZI33vUC%2F4E1viuDUgRSqszDN%2FzOYH3uEUpJK1Ckqk%2B9YcBAi2NtYtkmsd9Xx9DQW08ukaOJZJcGqWmxJVndhfwusHiB5hRZxAWcqNMq5mXvXMS6cLzBzLbpNzmOs6jm%2FUeODSkBq0IcLlxbMp5C7OyOzN32YIf3RiZDJxAzUYt2VTHUZVfANbQcKuuHevmV2Dvxkcs1ITqkzkUKSPN1x7Un8EigdBUi5Xu%2B212OCxHZE5vxaCOAMYUj3PQ7ZdIAmbo75nAUNWhrvPDreaQIp5g1e0wYohISbgT22Y%2BYeUSkoq0ll3ALTebNx%2BHyfCjPWkGRPCH3MHzNxdnlBlptaOS4LLONqOvLDM6HYKdxTIvcVo3xozDF%2Fqi1BjqxASgJNeHeg36odzKzjVndA9JkROKnYR%2FabDYThnu%2By1ZUBsANO2hQxS2tZeeWxJHpxbvk9FEn618XslHI2AgcKTFH2W2jNGKyBUeIj2gUo2o0tJVXH7h7cESDR%2BQdI%2BiEbgNFgRIaAokhCTUzcU8GB6Tu5hmKpANttR25Wn4XwmpxX4%2BbEwB46EIjb%2B7cSeEarDqxZk1XwhRzIr4teuP5Lqionds3S8EwJPLDopVQzP91JA%3D%3D&amp;X-Amz-Signature=d96e1b0106b69a4fd65b3383cd3e1a9cd5b2967c8c59a8785429773142e253ae&amp;X-Amz-SignedHeaders=host" src="https://cloudhive-userdata.s3.amazonaws.com/posts/17-0433f31e7bda.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=ASIAYMHYVNWZLRQIFUCF%2F20240731%2Fus-east-1%2Fs3%2Faws4_request&amp;X-Amz-Date=20240731T143535Z&amp;X-Amz-Expires=3600&amp;X-Amz-Security-Token=IQoJb3JpZ2luX2VjEHYaCXVzLWVhc3QtMSJHMEUCIEWaDtaw00%2BeXiejO5YiZpvFWFYgYXg0VuMInUbHdBVSAiEA4eVIfSeCp%2B0EiU7b7%2Fti94IkwfWUExRRvKh3MKpnRvYqugUIXxAAGgw1NzYwNDcxMTU2OTgiDCldVpMdey8tayG65yqXBU50znjLjYfLqPrs02fPMRPqoLo4ikBf48iqZNbDaKUj4Nge2xwfEpV8ndvvSjajx9HK23xty9NbfRTXxn2Qqf86FEnOHn%2FWO3ay7R63uFFg3SYKWKWjzb71NLQbomRat8EQlZ1IDJkhhuelgbqbVCTVdOzABoQChryw20ISGUebsBJD0xp8d6%2BVuPaHeydWzCS5UIoGLQqIcGfr4qvYF0O8kjUjo1xuVj7o6p16NsN2dSqtZjtlXuSkbU0nG%2FUQSj4bV%2FKdk5OcJxZ9f%2FRpxTY1UBYklKnn9x%2FRyQ2BFLNUBX5b%2BVVX2NTzn6ZIMkFtAhWAhwQlPbgr87ediwEHqxRDn6D3LJ4Uz%2FvIF8noRxkh28oM72lgA1fTmlHjmMuLQYgUDLpIMLLC5XhjaDAfaSOxDr7RKCMny7UvhHRHE4IvIqftXeepL3fMckP1%2BiQVpQQAzmKrMQeOsBfQ%2BSNH%2FnntUdhzE5S%2BsoUy4HyHQJrSpuH6B3e0IYNwgjujf%2BDA805X%2FZI33vUC%2F4E1viuDUgRSqszDN%2FzOYH3uEUpJK1Ckqk%2B9YcBAi2NtYtkmsd9Xx9DQW08ukaOJZJcGqWmxJVndhfwusHiB5hRZxAWcqNMq5mXvXMS6cLzBzLbpNzmOs6jm%2FUeODSkBq0IcLlxbMp5C7OyOzN32YIf3RiZDJxAzUYt2VTHUZVfANbQcKuuHevmV2Dvxkcs1ITqkzkUKSPN1x7Un8EigdBUi5Xu%2B212OCxHZE5vxaCOAMYUj3PQ7ZdIAmbo75nAUNWhrvPDreaQIp5g1e0wYohISbgT22Y%2BYeUSkoq0ll3ALTebNx%2BHyfCjPWkGRPCH3MHzNxdnlBlptaOS4LLONqOvLDM6HYKdxTIvcVo3xozDF%2Fqi1BjqxASgJNeHeg36odzKzjVndA9JkROKnYR%2FabDYThnu%2By1ZUBsANO2hQxS2tZeeWxJHpxbvk9FEn618XslHI2AgcKTFH2W2jNGKyBUeIj2gUo2o0tJVXH7h7cESDR%2BQdI%2BiEbgNFgRIaAokhCTUzcU8GB6Tu5hmKpANttR25Wn4XwmpxX4%2BbEwB46EIjb%2B7cSeEarDqxZk1XwhRzIr4teuP5Lqionds3S8EwJPLDopVQzP91JA%3D%3D&amp;X-Amz-Signature=d96e1b0106b69a4fd65b3383cd3e1a9cd5b2967c8c59a8785429773142e253ae&amp;X-Amz-SignedHeaders=host" alt="Post Image"></div>
-                            </div>
-                            <div class="hive-social-stats">
-                                <p class="hive-stat-like"><strong>2</strong> likes</p>
-                                <hr>
-                                <div class="d-flex align-items-center">
-                                    <button class="hive-stat-like-btn liked" data-post-id="b062a3e537184afb4dbfa746f08e9c21">
-                                        <img id="like-btn-hive" src="../assets/liked.svg" alt="Liked" style="width: 22px; height: 22px; vertical-align: middle;">
-                                    </button>
-                                    
-                                        <div class="post-options">
-                                            <button class="hive-stat-options-btn" onclick="toggleOptionsMenu(event)">
-                                                <img id="options-btn-hive" src="assets/options.svg" alt="Options" style="width: 22px; height: 22px;">
-                                            </button>
-                                            <div class="options-menu">
-                                                <ul>
-                                                    <li><a href="#" class="delete-post" data-id="b062a3e537184afb4dbfa746f08e9c21">Delete</a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    
-                                </div>
-                            </div>
-                        </div>
-                        </div><div class="hive-post">
-                        <div class="col-md-4 hive-post-element mx-auto" data-post-id="535d8ad31db42cbb93f6a5df569b9280">
-                            <div class="row hive-post-user-details align-items-center">
-                                <div class="hive-post-pfp">
-                                    <a href="/geofpie"><img src="https://cloudhive-userdata.s3.amazonaws.com/profile-pics/365eed5344e1247a190441a6.blob?X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=ASIAYMHYVNWZLRQIFUCF%2F20240731%2Fus-east-1%2Fs3%2Faws4_request&amp;X-Amz-Date=20240731T143535Z&amp;X-Amz-Expires=3600&amp;X-Amz-Security-Token=IQoJb3JpZ2luX2VjEHYaCXVzLWVhc3QtMSJHMEUCIEWaDtaw00%2BeXiejO5YiZpvFWFYgYXg0VuMInUbHdBVSAiEA4eVIfSeCp%2B0EiU7b7%2Fti94IkwfWUExRRvKh3MKpnRvYqugUIXxAAGgw1NzYwNDcxMTU2OTgiDCldVpMdey8tayG65yqXBU50znjLjYfLqPrs02fPMRPqoLo4ikBf48iqZNbDaKUj4Nge2xwfEpV8ndvvSjajx9HK23xty9NbfRTXxn2Qqf86FEnOHn%2FWO3ay7R63uFFg3SYKWKWjzb71NLQbomRat8EQlZ1IDJkhhuelgbqbVCTVdOzABoQChryw20ISGUebsBJD0xp8d6%2BVuPaHeydWzCS5UIoGLQqIcGfr4qvYF0O8kjUjo1xuVj7o6p16NsN2dSqtZjtlXuSkbU0nG%2FUQSj4bV%2FKdk5OcJxZ9f%2FRpxTY1UBYklKnn9x%2FRyQ2BFLNUBX5b%2BVVX2NTzn6ZIMkFtAhWAhwQlPbgr87ediwEHqxRDn6D3LJ4Uz%2FvIF8noRxkh28oM72lgA1fTmlHjmMuLQYgUDLpIMLLC5XhjaDAfaSOxDr7RKCMny7UvhHRHE4IvIqftXeepL3fMckP1%2BiQVpQQAzmKrMQeOsBfQ%2BSNH%2FnntUdhzE5S%2BsoUy4HyHQJrSpuH6B3e0IYNwgjujf%2BDA805X%2FZI33vUC%2F4E1viuDUgRSqszDN%2FzOYH3uEUpJK1Ckqk%2B9YcBAi2NtYtkmsd9Xx9DQW08ukaOJZJcGqWmxJVndhfwusHiB5hRZxAWcqNMq5mXvXMS6cLzBzLbpNzmOs6jm%2FUeODSkBq0IcLlxbMp5C7OyOzN32YIf3RiZDJxAzUYt2VTHUZVfANbQcKuuHevmV2Dvxkcs1ITqkzkUKSPN1x7Un8EigdBUi5Xu%2B212OCxHZE5vxaCOAMYUj3PQ7ZdIAmbo75nAUNWhrvPDreaQIp5g1e0wYohISbgT22Y%2BYeUSkoq0ll3ALTebNx%2BHyfCjPWkGRPCH3MHzNxdnlBlptaOS4LLONqOvLDM6HYKdxTIvcVo3xozDF%2Fqi1BjqxASgJNeHeg36odzKzjVndA9JkROKnYR%2FabDYThnu%2By1ZUBsANO2hQxS2tZeeWxJHpxbvk9FEn618XslHI2AgcKTFH2W2jNGKyBUeIj2gUo2o0tJVXH7h7cESDR%2BQdI%2BiEbgNFgRIaAokhCTUzcU8GB6Tu5hmKpANttR25Wn4XwmpxX4%2BbEwB46EIjb%2B7cSeEarDqxZk1XwhRzIr4teuP5Lqionds3S8EwJPLDopVQzP91JA%3D%3D&amp;X-Amz-Signature=cf3de7770bfc2bed40aa588a46f0c17ac9aafe416953f80f778a7f09280511c0&amp;X-Amz-SignedHeaders=host" alt="Profile" class="post-profile-pic"></a>
-                                </div>
-                                <div class="col hive-user-details-text">
-                                    <a href="/geofpie" class="hive-post-username">Geoffrey</a>
-                                    <a href="/geofpie" class="hive-post-user-sub">@geofpie</a>
-                                </div>
-                                <div class="col hive-user-details-time">
-                                    <i class="fa fa-clock hive-post-time-icon" aria-hidden="true"></i>
-                                    <p class="hive-post-time">6 days ago</p>
-                                </div>
-                            </div>
-                            <div class="row hive-post-content">
-                                <p class="hive-post-text">hi</p>
-                                
-                            </div>
-                            <div class="hive-social-stats">
-                                <p class="hive-stat-like"><strong>0</strong> likes</p>
-                                <hr>
-                                <div class="d-flex align-items-center">
-                                    <button class="hive-stat-like-btn " data-post-id="535d8ad31db42cbb93f6a5df569b9280">
-                                        <img id="like-btn-hive" src="../assets/unliked.svg" alt="Like" style="width: 22px; height: 22px; vertical-align: middle;">
-                                    </button>
-                                    
-                                        <div class="post-options">
-                                            <button class="hive-stat-options-btn" onclick="toggleOptionsMenu(event)">
-                                                <img id="options-btn-hive" src="assets/options.svg" alt="Options" style="width: 22px; height: 22px;">
-                                            </button>
-                                            <div class="options-menu">
-                                                <ul>
-                                                    <li><a href="#" class="delete-post" data-id="535d8ad31db42cbb93f6a5df569b9280">Delete</a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    
-                                </div>
-                            </div>
-                        </div>
-                        </div><div class="hive-post">
-                        <div class="col-md-4 hive-post-element mx-auto" data-post-id="afaef3e79f420ef5a6c250de6d93cd24">
-                            <div class="row hive-post-user-details align-items-center">
-                                <div class="hive-post-pfp">
-                                    <a href="/geofpie"><img src="https://cloudhive-userdata.s3.amazonaws.com/profile-pics/365eed5344e1247a190441a6.blob?X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=ASIAYMHYVNWZLRQIFUCF%2F20240731%2Fus-east-1%2Fs3%2Faws4_request&amp;X-Amz-Date=20240731T143535Z&amp;X-Amz-Expires=3600&amp;X-Amz-Security-Token=IQoJb3JpZ2luX2VjEHYaCXVzLWVhc3QtMSJHMEUCIEWaDtaw00%2BeXiejO5YiZpvFWFYgYXg0VuMInUbHdBVSAiEA4eVIfSeCp%2B0EiU7b7%2Fti94IkwfWUExRRvKh3MKpnRvYqugUIXxAAGgw1NzYwNDcxMTU2OTgiDCldVpMdey8tayG65yqXBU50znjLjYfLqPrs02fPMRPqoLo4ikBf48iqZNbDaKUj4Nge2xwfEpV8ndvvSjajx9HK23xty9NbfRTXxn2Qqf86FEnOHn%2FWO3ay7R63uFFg3SYKWKWjzb71NLQbomRat8EQlZ1IDJkhhuelgbqbVCTVdOzABoQChryw20ISGUebsBJD0xp8d6%2BVuPaHeydWzCS5UIoGLQqIcGfr4qvYF0O8kjUjo1xuVj7o6p16NsN2dSqtZjtlXuSkbU0nG%2FUQSj4bV%2FKdk5OcJxZ9f%2FRpxTY1UBYklKnn9x%2FRyQ2BFLNUBX5b%2BVVX2NTzn6ZIMkFtAhWAhwQlPbgr87ediwEHqxRDn6D3LJ4Uz%2FvIF8noRxkh28oM72lgA1fTmlHjmMuLQYgUDLpIMLLC5XhjaDAfaSOxDr7RKCMny7UvhHRHE4IvIqftXeepL3fMckP1%2BiQVpQQAzmKrMQeOsBfQ%2BSNH%2FnntUdhzE5S%2BsoUy4HyHQJrSpuH6B3e0IYNwgjujf%2BDA805X%2FZI33vUC%2F4E1viuDUgRSqszDN%2FzOYH3uEUpJK1Ckqk%2B9YcBAi2NtYtkmsd9Xx9DQW08ukaOJZJcGqWmxJVndhfwusHiB5hRZxAWcqNMq5mXvXMS6cLzBzLbpNzmOs6jm%2FUeODSkBq0IcLlxbMp5C7OyOzN32YIf3RiZDJxAzUYt2VTHUZVfANbQcKuuHevmV2Dvxkcs1ITqkzkUKSPN1x7Un8EigdBUi5Xu%2B212OCxHZE5vxaCOAMYUj3PQ7ZdIAmbo75nAUNWhrvPDreaQIp5g1e0wYohISbgT22Y%2BYeUSkoq0ll3ALTebNx%2BHyfCjPWkGRPCH3MHzNxdnlBlptaOS4LLONqOvLDM6HYKdxTIvcVo3xozDF%2Fqi1BjqxASgJNeHeg36odzKzjVndA9JkROKnYR%2FabDYThnu%2By1ZUBsANO2hQxS2tZeeWxJHpxbvk9FEn618XslHI2AgcKTFH2W2jNGKyBUeIj2gUo2o0tJVXH7h7cESDR%2BQdI%2BiEbgNFgRIaAokhCTUzcU8GB6Tu5hmKpANttR25Wn4XwmpxX4%2BbEwB46EIjb%2B7cSeEarDqxZk1XwhRzIr4teuP5Lqionds3S8EwJPLDopVQzP91JA%3D%3D&amp;X-Amz-Signature=cf3de7770bfc2bed40aa588a46f0c17ac9aafe416953f80f778a7f09280511c0&amp;X-Amz-SignedHeaders=host" alt="Profile" class="post-profile-pic"></a>
-                                </div>
-                                <div class="col hive-user-details-text">
-                                    <a href="/geofpie" class="hive-post-username">Geoffrey</a>
-                                    <a href="/geofpie" class="hive-post-user-sub">@geofpie</a>
-                                </div>
-                                <div class="col hive-user-details-time">
-                                    <i class="fa fa-clock hive-post-time-icon" aria-hidden="true"></i>
-                                    <p class="hive-post-time">6 days ago</p>
-                                </div>
-                            </div>
-                            <div class="row hive-post-content">
-                                <p class="hive-post-text">test</p>
-                                
-                            </div>
-                            <div class="hive-social-stats">
-                                <p class="hive-stat-like"><strong>0</strong> likes</p>
-                                <hr>
-                                <div class="d-flex align-items-center">
-                                    <button class="hive-stat-like-btn " data-post-id="afaef3e79f420ef5a6c250de6d93cd24">
-                                        <img id="like-btn-hive" src="../assets/unliked.svg" alt="Like" style="width: 22px; height: 22px; vertical-align: middle;">
-                                    </button>
-                                    
-                                        <div class="post-options">
-                                            <button class="hive-stat-options-btn" onclick="toggleOptionsMenu(event)">
-                                                <img id="options-btn-hive" src="assets/options.svg" alt="Options" style="width: 22px; height: 22px;">
-                                            </button>
-                                            <div class="options-menu">
-                                                <ul>
-                                                    <li><a href="#" class="delete-post" data-id="afaef3e79f420ef5a6c250de6d93cd24">Delete</a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    
-                                </div>
-                            </div>
-                        </div>
-                        </div></div>
-        <div class="d-flex">
-            
-                <div class="newsfeed-load-more-cont mx-auto">
-                    <button id="load-more" class="load-more-btn shadow" style="display: block;">Load More</button>
-                </div>
-            
-        </div>
-        
-    <!-- Create Post Modal -->
-    <div id="postModal" class="post-modal hidden">
-        <div class="post-modal-content">
-            <div class="post-modal-header align-items-center">
-                <img src="https://cloudhive-userdata.s3.amazonaws.com/profile-pics/365eed5344e1247a190441a6.blob?X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=ASIAYMHYVNWZLRQIFUCF%2F20240731%2Fus-east-1%2Fs3%2Faws4_request&amp;X-Amz-Date=20240731T143535Z&amp;X-Amz-Expires=3600&amp;X-Amz-Security-Token=IQoJb3JpZ2luX2VjEHYaCXVzLWVhc3QtMSJHMEUCIEWaDtaw00%2BeXiejO5YiZpvFWFYgYXg0VuMInUbHdBVSAiEA4eVIfSeCp%2B0EiU7b7%2Fti94IkwfWUExRRvKh3MKpnRvYqugUIXxAAGgw1NzYwNDcxMTU2OTgiDCldVpMdey8tayG65yqXBU50znjLjYfLqPrs02fPMRPqoLo4ikBf48iqZNbDaKUj4Nge2xwfEpV8ndvvSjajx9HK23xty9NbfRTXxn2Qqf86FEnOHn%2FWO3ay7R63uFFg3SYKWKWjzb71NLQbomRat8EQlZ1IDJkhhuelgbqbVCTVdOzABoQChryw20ISGUebsBJD0xp8d6%2BVuPaHeydWzCS5UIoGLQqIcGfr4qvYF0O8kjUjo1xuVj7o6p16NsN2dSqtZjtlXuSkbU0nG%2FUQSj4bV%2FKdk5OcJxZ9f%2FRpxTY1UBYklKnn9x%2FRyQ2BFLNUBX5b%2BVVX2NTzn6ZIMkFtAhWAhwQlPbgr87ediwEHqxRDn6D3LJ4Uz%2FvIF8noRxkh28oM72lgA1fTmlHjmMuLQYgUDLpIMLLC5XhjaDAfaSOxDr7RKCMny7UvhHRHE4IvIqftXeepL3fMckP1%2BiQVpQQAzmKrMQeOsBfQ%2BSNH%2FnntUdhzE5S%2BsoUy4HyHQJrSpuH6B3e0IYNwgjujf%2BDA805X%2FZI33vUC%2F4E1viuDUgRSqszDN%2FzOYH3uEUpJK1Ckqk%2B9YcBAi2NtYtkmsd9Xx9DQW08ukaOJZJcGqWmxJVndhfwusHiB5hRZxAWcqNMq5mXvXMS6cLzBzLbpNzmOs6jm%2FUeODSkBq0IcLlxbMp5C7OyOzN32YIf3RiZDJxAzUYt2VTHUZVfANbQcKuuHevmV2Dvxkcs1ITqkzkUKSPN1x7Un8EigdBUi5Xu%2B212OCxHZE5vxaCOAMYUj3PQ7ZdIAmbo75nAUNWhrvPDreaQIp5g1e0wYohISbgT22Y%2BYeUSkoq0ll3ALTebNx%2BHyfCjPWkGRPCH3MHzNxdnlBlptaOS4LLONqOvLDM6HYKdxTIvcVo3xozDF%2Fqi1BjqxASgJNeHeg36odzKzjVndA9JkROKnYR%2FabDYThnu%2By1ZUBsANO2hQxS2tZeeWxJHpxbvk9FEn618XslHI2AgcKTFH2W2jNGKyBUeIj2gUo2o0tJVXH7h7cESDR%2BQdI%2BiEbgNFgRIaAokhCTUzcU8GB6Tu5hmKpANttR25Wn4XwmpxX4%2BbEwB46EIjb%2B7cSeEarDqxZk1XwhRzIr4teuP5Lqionds3S8EwJPLDopVQzP91JA%3D%3D&amp;X-Amz-Signature=cf3de7770bfc2bed40aa588a46f0c17ac9aafe416953f80f778a7f09280511c0&amp;X-Amz-SignedHeaders=host" alt="Profile" class="post-modal-profile-pic">
-                <h2 class="post-modal-title">Share something</h2>
-                <button id="closeModal" class="post-modal-close"><img src="assets/closebtn.svg" class="post-modal-close-icon"></button>
-            </div>
-            <hr class="post-modal-divider">
-            <div class="post-modal-body">
-                <form id="writePostForm">
-                    <div class="form-group">
-                        <textarea class="form-control share-post-area" id="postContent" rows="3" placeholder="What's on your mind?"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <button type="button" id="attachImageButton" class="btn attach-image-btn"><i class="fa fa-image" aria-hidden="true"></i></button>
-                        <input type="file" id="postImage" class="form-control-file" style="display: none;">
-                    </div>
-                    <img id="imagePreview" src="#" alt="Image Preview" class="upload-img-preview" style="display: none;">
-                </form>
-            </div>
-            <div class="post-modal-footer">
-                <button type="button" id="submitPostButton" class="send-post-btn">
-                    <span class="btn-text">Post</span>
-                </button>
-            </div>
-        </div>
-    </div>
-
-<!-- Edit Profile Modal -->
-<div id="editProfileModal" class="edit-profile-modal hidden" "="">
-    <div class="edit-profile-modal-content">
-        <div class="edit-profile-modal-header">
-            <h2>Edit Profile</h2>
-            <button id="closeEditProfileModal" class="profile-modal-close-btn">×</button>
-        </div>
-        <div class="edit-profile-modal-body">
-            <form id="editProfileForm">
-                <div class="header-picture-container">
-                    <img id="headerPicPreview" class="edit-profile-header-preview" src="assets/loginbg.jpg" alt="Header Picture Preview">
-                    <div class="profile-picture-container">
-                        <div class="form-group">
-                            <img id="profilePicPreview" class="edit-profile-img-preview" src="#" alt="Profile Picture Preview" style="display: none;">
-                        </div>
-                    </div>
-                </div>
-                <div class="row profile-group-pre">
-                    <div class="form-group col header-img-selector-sect">
-                        <input type="file" id="profilePicInput" class="form-control-file edit-profile-pp-button" accept="image/*">
-                        <label for="profilePicInput" class="select-img-btn">Edit Profile Picture</label>
-                    </div>
-                    <div class="form-group col header-img-selector-sect">
-                        <input type="file" id="headerPicInput" class="form-control-file edit-profile-pp-button" accept="image/*">
-                        <label for="headerPicInput" class="select-img-btn">Edit Header Image</label>
-                    </div>
-                </div>
-                <div class="row profile-group">
-                    <div class="form-group col">
-                        <input type="text" id="firstName" class="edit-profile-text field-align-right" placeholder="First Name">
-                    </div>
-                    <div class="form-group col">
-                        <input type="text" id="lastName" class="edit-profile-text field-align-left" placeholder="Last Name">
-                    </div>
-                </div>
-                <div class="row profile-group">
-                    <div class="form-group col">
-                        <input type="text" id="username" class="edit-profile-user" placeholder="Username">
-                    </div>
-                </div>
-                <button type="button" id="submitEditProfileButton" class="edit-profile-btn">Save Changes</button>
-            </form>
-        </div>
-    </div>
-<!-- Follow Actions Modal -->
-<div id="followActionsModal" class="follow-modal">
-    <div class="follow-modal-dialog">
-        <div class="follow-modal-content">
-            <div class="follow-modal-header">
-                <h5 id="followActionsModalLabel">Confirm Action</h5>
-                <button type="button" class="follow-modal-close" onclick="closeFollowActionsModal()">×</button>
-            </div>
-            <div class="follow-modal-body">
-                Are you sure you want to <span id="followActionType"></span>?
-            </div>
-            <div class="follow-modal-footer">
-                <button type="button" class="follow-action-sec" onclick="closeFollowActionsModal()">Cancel</button>
-                <button type="button" class="follow-action-pri" id="confirmFollowAction" onclick="handleModalConfirm()">Confirm</button>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- Custom Modal for Image Crop -->
-<div id="cropModal" class="crop-modal">
-    <div class="crop-modal-dialog">
-        <div class="crop-modal-content">
-            <div class="crop-modal-header">
-                <h5 class="crop-modal-title">Crop Your Profile Picture</h5>
-                <button type="button" class="crop-modal-close" onclick="closeCropModal()">×</button>
-            </div>
-            <div class="crop-modal-body">
-                <div id="cropper-container">
-                    <img id="cropper-image" class="cropper-image" src="" alt="Image to crop">
-                </div>
-            </div>
-            <div class="crop-modal-footer">
-                <button type="button" class="crop-modal-cancel" onclick="closeCropModal()">Cancel</button>
-                <button id="crop-submit-btn" type="button" class="crop-modal-confirm">Crop Image</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<footer>
-    <div class="container d-flex">
-        <div class="row mx-auto">
-            <div class="col footer-center">
-                <img src="../assets/logo-dark.svg" width="46" height="46" alt="cloudhive">
-                <h6 class="footer-brand-name">cloudhive</h6>
-                <p class="footer-version">v0.3.0-beta-main</p>
-                <hr class="footer-divider">
-                <p class="footer-learn-more">cloudhive is a Web Application developed by <a href="https://github.com/geofpie">Geoffrey Lee</a> from Singapore Institute of Technology for a cloud computing project.</p>
-                <p class="footer-learn-more">Learn more about this project on <a href="https://github.com/geofpie/cloudhive">GitHub</a>.</p>
-            </div>
-        </div>
-    </div>
-</footer>
-</div></body>
+</body>
 </html>

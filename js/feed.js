@@ -651,35 +651,3 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 });
-
-// sidebar.js
-document.addEventListener('DOMContentLoaded', async () => {
-    const token = localStorage.getItem('authToken'); // Assuming token is stored in localStorage
-
-    const response = await fetch('/api/mutual-follows-status', {
-        headers: {
-            'Authorization': `Bearer ${token}`
-        }
-    });
-
-    if (!response.ok) {
-        console.error('Failed to fetch mutual follows status');
-        return;
-    }
-
-    const statuses = await response.json();
-    const statusList = document.getElementById('status-list');
-
-    statuses.forEach(status => {
-        const listItem = document.createElement('li');
-        listItem.className = `status-item ${status.status}`;
-        
-        listItem.innerHTML = `
-            <img src="path-to-user-avatar/${status.user_id}.jpg" alt="User Avatar" />
-            <div class="status-dot"></div>
-            <span>User ${status.user_id}</span>
-        `;
-
-        statusList.appendChild(listItem);
-    });
-});

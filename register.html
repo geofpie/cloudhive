@@ -39,42 +39,52 @@
             <div class="col-lg-7 d-flex flex-column position-relative p-0 hero-section">
                 <!-- Logo -->
                 <img src="assets/logo-dark.svg" class="logo-login" alt="Logo">
-    
+        
                 <div class="hero-content text-center animate-content">
                     <h6 class="header-hero-sub animate-text">cloudhive</h6>
                     <h1 class="header-login-hero animate-text">Connect, Share & Thrive<br>in Your Digital Community</h1>
                 </div>
                 <img src="assets/friends-header.svg" class="hero-image img-fluid animate-image" alt="Friends Header">
             </div>
-    
-            <!-- Right Side: Login Form -->
+        
+            <!-- Right Side: Register Form -->
             <div class="col-lg-5 d-flex align-items-center justify-content-center bg-light login-page-right">
                 <div class="login-page-inner-content">
-                    <h1 class="login-headline text-center">Hey, welcome back.</h1>
-                    <h6 class="login-subtitle text-center">Sign back in to get connected.</h6>
-                    <!-- Login Form -->
+                    <h1 class="login-headline text-center">Create Your Account</h1>
+                    <h6 class="login-subtitle text-center">Just a few details, and you're on your way.</h6>
+                    <!-- Registration Form -->
                     <div class="login-form-container">
-                        <form id="login-form" method="post" action="api/login_redirect">
+                        <form id="register-form" method="post" action="api/register_redirect">
                             <!-- Error Message Area -->
                             <div id="error-message" class="alert alert-danger d-none" role="alert"></div>
-    
+        
                             <!-- Username Field -->
                             <div class="form-group">
-                                <input id="login-field-username" class="new-login-field" type="text" name="username" placeholder="Username" required>
+                                <input id="register-field-username" class="new-login-field" type="text" name="username" placeholder="Username" required>
+                            </div>
+                            
+                            <!-- Email Field -->
+                            <div class="form-group">
+                                <input id="register-field-email" class="new-login-field" type="email" name="email" placeholder="Email" required>
                             </div>
                             
                             <!-- Password Field -->
                             <div class="form-group">
-                                <input id="login-field-password" class="new-login-field" type="password" name="password" placeholder="Password" required>
+                                <input id="register-field-password" class="new-login-field" type="password" name="password" placeholder="Password" required>
                             </div>
                             
-                            <!-- Login Button -->
-                            <button class="login-register-button shadow" id="login-button" type="submit">Login</button>
+                            <!-- Confirm Password Field -->
+                            <div class="form-group">
+                                <input id="register-field-confirm-password" class="new-login-field" type="password" name="confirm_password" placeholder="Confirm Password" required>
+                            </div>
+                            
+                            <!-- Register Button -->
+                            <button class="login-register-button shadow" id="register-button" type="submit">Register</button>
                         </form>
-    
-                        <!-- Register Form Toggle (Optional) -->
+        
+                        <!-- Login Form Toggle (Optional) -->
                         <div class="text-center mt-3">
-                            <p>Don't have an account? <a href="/register" id="show-register-form">Register here</a></p>
+                            <p>Already have an account? <a href="/" id="show-login-form">Login here</a></p>
                         </div>
                     </div>
                     <div class="instance-details">

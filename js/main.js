@@ -29,11 +29,18 @@ document.addEventListener('DOMContentLoaded', function() {
         const username = document.getElementById('register-field-username').value;
         const email = document.getElementById('register-field-email').value;
         const password = document.getElementById('register-field-password').value;
+        const confirmPassword = document.getElementById('register-field-confirm-password').value;
         const registerButton = document.getElementById('register-button');
         const originalButtonText = registerButton.innerHTML;
-    
+
+        // Check if passwords match
+        if (password !== confirmPassword) {
+            displayPopup('Passwords do not match', 'text-danger');
+            return;
+        }
+
         showSpinner(registerButton);
-    
+
         fetch('/api/register', {
             method: 'POST',
             headers: {
@@ -49,7 +56,7 @@ document.addEventListener('DOMContentLoaded', function() {
         })
         .then(data => {
             hideSpinner(registerButton, originalButtonText);
-    
+
             if (data.token) {
                 // Registration success with token
                 displayPopup('Registration was successful! You can proceed to login now.', 'text-success');
@@ -118,14 +125,12 @@ document.addEventListener('DOMContentLoaded', function() {
             hideSpinner(loginButton, originalButtonText);
         });
     });
-    
-    
+
     function setCookie(name, value, days) {
         const expires = new Date();
         expires.setTime(expires.getTime() + (days * 24 * 60 * 60 * 1000));
         document.cookie = `${name}=${value};expires=${expires.toUTCString()};path=/`;
     }
-    
 
     function switchForm(formToShow, formToHide) {
         formToShow.classList.add('fade-in', 'visible');
