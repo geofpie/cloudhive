@@ -1078,6 +1078,106 @@ a:hover {
     }
 }
 
+.logo-login {
+    width: 60px;
+    height: 60px;
+    margin: 18px 0 0 18px;
+}
+
+/* Full height for the row and manage the hero section */
+.hero-section {
+    position: relative;
+    height: 100%;
+    overflow: hidden;
+}
+
+/* Position hero-content and anchor it to the top center */
+.hero-content {
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    color: #666; /* Adjust color as needed */
+    text-align: center;
+}
+
+/* Ensure the image is anchored to the bottom and covers the section */
+.hero-image {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+/* Ensure the login form container takes full height and width of the right side */
+.login-page-right {
+    height: 100%;
+    background-color: white!important;
+    border-top-left-radius: 32px;
+    border-bottom-left-radius: 32px;
+}
+
+/* Adjust the login form container */
+.login-form-container {
+    width: 100%;
+    max-width: 600px; /* Optional: Limit max width */
+    padding: 20px; /* Add padding for better spacing */
+}
+
+.login-headline {
+    font-size: 32px;
+    margin-bottom: 18px;
+}
+
+.login-subtitle {
+    color: #999;
+    font-weight: 500;
+    margin-bottom: 22px;
+}
+
+.new-login-field {
+    outline: none;
+    padding: 18px 12px 18px 12px;
+    width: 100%;
+    border-radius: 18px;
+    border: 1px solid #ddd;
+    transition: 0.2s ease-in-out;
+    -webkit-transition: 0.2s ease-in-out;
+}
+
+.login-register-button {
+    padding: 18px 12px 18px 12px;
+    margin-top: 22px;
+    width: 100%;
+    border-radius: 18px;
+    border: none;
+    background-color: #6e00b3;
+    color: white;
+}
+
+@media screen and (max-width: 960px) {
+    .header-login-hero {
+        font-size: 28px;
+    }
+    
+    .hero-section {
+        height: 75%;
+    }
+
+    .login-page-right {
+        height: 75%;
+        border-top-right-radius: 18px;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+
+    .login-headline {
+        font-size: 26px;
+    }
+}
 .close-btn {
     color: #aaa;
     float: right;
