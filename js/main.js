@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             if (response.redirected) {
                 // Handle redirect
-                window.location.href = response.url;
+                window.location.href = '/onboarding';
                 return;
             }
 
