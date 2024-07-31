@@ -50,7 +50,10 @@ document.addEventListener('DOMContentLoaded', function() {
         })
         .then(response => {
             if (!response.ok) {
-                throw new Error('Network error');
+                return response.json().then(data => {
+                    const errorMessage = data.error || 'Registration failed';
+                    displayPopup(errorMessage, 'text-danger');
+                });
             }
             return response.json();
         })
@@ -60,10 +63,6 @@ document.addEventListener('DOMContentLoaded', function() {
             if (data.token) {
                 // Registration success with token
                 displayPopup('Registration was successful! You can proceed to login now.', 'text-success');
-            } else {
-                // Registration error (username or email exists)
-                const errorMessage = data.error || 'Unknown Error';
-                displayPopup(errorMessage, 'text-danger');
             }
         })
         .catch(error => {
@@ -93,13 +92,10 @@ document.addEventListener('DOMContentLoaded', function() {
         })
         .then(response => {
             if (!response.ok) {
-                if (response.status === 302) {
-                    return response.json().then(data => {
-                        window.location.href = data.redirect;
-                    });
-                } else {
-                    throw new Error('A network error occurred! This could mean we were unable to connect to the servers, or something else happened. If the issue persists, please contact support.');
-                }
+                return response.json().then(data => {
+                    const errorMessage = data.error || 'Invalid credentials';
+                    displayPopup(errorMessage, 'text-danger');
+                });
             }
             return response.json();
         })
@@ -112,10 +108,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 // Redirect to homepage
                 window.location.href = '/hive';
-            } else {
-                // Login error (invalid credentials)
-                const errorMessage = data.error || 'Invalid credentials';
-                displayPopup(errorMessage, 'text-danger');
             }
         })
         .catch(error => {
