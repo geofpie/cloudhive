@@ -503,8 +503,13 @@ a:hover {
 }
 
 .profile-user-name {
-    position: flex;
+    display: flex;
     z-index: 1;
+}
+
+.profile-user-name-class {
+    flex: 1;
+
 }
 
 @media screen and (min-width: 780px) {
