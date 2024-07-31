@@ -26,36 +26,31 @@ document.addEventListener('DOMContentLoaded', function() {
         })
         .then(response => {
             console.log('Response status:', response.status);
-            console.log('Response redirected:', response.redirected);
-
-            if (response.redirected) {
-                console.log('Redirecting to:', response.url);
-                window.location.href = response.url;
-                return;
-            }
-
-            if (!response.ok) {
-                return response.json().then(data => {
+            return response.json().then(data => {
+                if (response.status === 302) {
+                    // Handle the redirect manually
+                    console.log('Redirecting to:', data.redirect);
+                    window.location.href = data.redirect;
+                } else if (!response.ok) {
+                    // Handle other errors
                     const errorMessage = data.error || 'Invalid credentials';
                     console.log('Login error:', errorMessage);
                     displayPopup(errorMessage, 'text-danger');
-                });
-            }
+                } else {
+                    // Handle successful login
+                    console.log('Login successful, received data:', data);
+                    hideSpinner(loginButton, originalButtonText);
 
-            return response.json();
-        })
-        .then(data => {
-            console.log('Login successful, received data:', data);
-            hideSpinner(loginButton, originalButtonText);
+                    if (data.token) {
+                        // Set token as a cookie
+                        setCookie('token', data.token, 1);
 
-            if (data.token) {
-                // Set token as a cookie
-                setCookie('token', data.token, 1);
-
-                // Redirect to homepage
-                console.log('Redirecting to /hive');
-                window.location.href = '/hive';
-            }
+                        // Redirect to homepage
+                        console.log('Redirecting to /hive');
+                        window.location.href = '/hive';
+                    }
+                }
+            });
         })
         .catch(error => {
             console.error('Login failed with error:', error);
