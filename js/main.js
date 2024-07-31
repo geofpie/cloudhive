@@ -24,17 +24,24 @@ document.addEventListener('DOMContentLoaded', function() {
             body: JSON.stringify({ identifier, password }),
         })
         .then(response => {
+            hideSpinner(loginButton, originalButtonText);
+
+            if (response.redirected) {
+                // Handle redirect
+                window.location.href = response.url;
+                return;
+            }
+
             if (!response.ok) {
                 return response.json().then(data => {
                     const errorMessage = data.error || 'Invalid credentials';
                     displayPopup(errorMessage, 'text-danger');
                 });
             }
+
             return response.json();
         })
         .then(data => {
-            hideSpinner(loginButton, originalButtonText);
-
             if (data.token) {
                 // Set token as a cookie
                 setCookie('token', data.token, 1);
