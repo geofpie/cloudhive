@@ -1158,6 +1158,10 @@ a:hover {
     color: white;
 }
 
+.header-login-hero {
+    font-size: 32px;
+}
+
 @media screen and (max-width: 960px) {
     .header-login-hero {
         font-size: 28px;
