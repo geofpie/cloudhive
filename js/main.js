@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const originalButtonText = loginButton.innerHTML;
 
         showSpinner(loginButton);
+        console.log('Submitting login request for:', identifier);
 
         fetch('/api/login_redirect', {
             method: 'POST',
@@ -24,17 +25,19 @@ document.addEventListener('DOMContentLoaded', function() {
             body: JSON.stringify({ identifier, password }),
         })
         .then(response => {
-            hideSpinner(loginButton, originalButtonText);
+            console.log('Response status:', response.status);
+            console.log('Response redirected:', response.redirected);
 
             if (response.redirected) {
-                // Handle redirect
-                window.location.href = '/onboarding';
+                console.log('Redirecting to:', response.url);
+                window.location.href = response.url;
                 return;
             }
 
             if (!response.ok) {
                 return response.json().then(data => {
                     const errorMessage = data.error || 'Invalid credentials';
+                    console.log('Login error:', errorMessage);
                     displayPopup(errorMessage, 'text-danger');
                 });
             }
@@ -42,18 +45,23 @@ document.addEventListener('DOMContentLoaded', function() {
             return response.json();
         })
         .then(data => {
+            console.log('Login successful, received data:', data);
+            hideSpinner(loginButton, originalButtonText);
+
             if (data.token) {
                 // Set token as a cookie
                 setCookie('token', data.token, 1);
 
                 // Redirect to homepage
+                console.log('Redirecting to /hive');
                 window.location.href = '/hive';
             }
         })
         .catch(error => {
-            // Handle other login errors
+            console.error('Login failed with error:', error);
             const errorMessage = error.message || 'Failed to login';
             displayPopup(errorMessage, 'text-danger');
+            hideSpinner(loginButton, originalButtonText);
         });
     });
 
@@ -61,6 +69,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const expires = new Date();
         expires.setTime(expires.getTime() + (days * 24 * 60 * 60 * 1000));
         document.cookie = `${name}=${value};expires=${expires.toUTCString()};path=/`;
+        console.log('Cookie set:', name, value);
     }
 
     function switchForm(formToShow, formToHide) {
@@ -77,11 +86,13 @@ document.addEventListener('DOMContentLoaded', function() {
     function showSpinner(button) {
         button.innerHTML = '<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>';
         button.disabled = true;
+        console.log('Spinner shown');
     }
 
     function hideSpinner(button, originalText) {
         button.innerHTML = originalText;
         button.disabled = false;
+        console.log('Spinner hidden');
     }
 
     function displayPopup(message, className) {
@@ -113,5 +124,6 @@ document.addEventListener('DOMContentLoaded', function() {
     
         // Append popup to body
         document.body.appendChild(popup);
+        console.log('Popup displayed with message:', message);
     }
 });
