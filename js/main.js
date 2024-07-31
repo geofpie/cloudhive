@@ -6,12 +6,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const spinnerWrapper = document.querySelector('.spinner-wrapper');
     const container = document.querySelector('.container-fluid');
 
-    loginLink.addEventListener('click', function(event) {
-        event.preventDefault();
-        switchForm(loginForm, registerForm);
-        switchActiveLink(loginLink, registerLink);
-    });
-
     registerLink.addEventListener('click', function(event) {
         event.preventDefault();
         switchForm(registerForm, loginForm);
