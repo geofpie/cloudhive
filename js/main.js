@@ -6,6 +6,56 @@ document.addEventListener('DOMContentLoaded', function() {
     const spinnerWrapper = document.querySelector('.spinner-wrapper');
     const container = document.querySelector('.container-fluid');
 
+    registerForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+    
+        const username = document.getElementById('register-field-username').value;
+        const email = document.getElementById('register-field-email').value;
+        const password = document.getElementById('register-field-password').value;
+        const confirmPassword = document.getElementById('register-field-confirm-password').value;
+        const registerButton = document.getElementById('register-button');
+        const originalButtonText = registerButton.innerHTML;
+
+        // Check if passwords match
+        if (password !== confirmPassword) {
+            displayPopup('Passwords do not match', 'text-danger');
+            return;
+        }
+
+        showSpinner(registerButton);
+
+        fetch('/api/register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ username, email, password }),
+        })
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(data => {
+                    const errorMessage = data.error || 'Registration failed';
+                    displayPopup(errorMessage, 'text-danger');
+                });
+            }
+            return response.json();
+        })
+        .then(data => {
+            hideSpinner(registerButton, originalButtonText);
+
+            if (data.token) {
+                // Registration success with token
+                displayPopup('Registration was successful! You can proceed to login now.', 'text-success');
+            }
+        })
+        .catch(error => {
+            // Handle other errors
+            const errorMessage = error.message || 'Failed to register user';
+            displayPopup(errorMessage, 'text-danger');
+            hideSpinner(registerButton, originalButtonText);
+        });
+    });
+
     loginForm.addEventListener('submit', function(event) {
         event.preventDefault();
 
@@ -24,17 +74,24 @@ document.addEventListener('DOMContentLoaded', function() {
             body: JSON.stringify({ identifier, password }),
         })
         .then(response => {
+            hideSpinner(loginButton, originalButtonText);
+            
+            if (response.redirected) {
+                // Handle redirect
+                window.location.href = response.url;
+                return;
+            }
+
             if (!response.ok) {
                 return response.json().then(data => {
                     const errorMessage = data.error || 'Invalid credentials';
                     displayPopup(errorMessage, 'text-danger');
                 });
             }
+
             return response.json();
         })
         .then(data => {
-            hideSpinner(loginButton, originalButtonText);
-
             if (data.token) {
                 // Set token as a cookie
                 setCookie('token', data.token, 1);
@@ -47,7 +104,6 @@ document.addEventListener('DOMContentLoaded', function() {
             // Handle other login errors
             const errorMessage = error.message || 'Failed to login';
             displayPopup(errorMessage, 'text-danger');
-            hideSpinner(loginButton, originalButtonText);
         });
     });
 
