@@ -1178,10 +1178,8 @@ a:hover {
         font-size: 26px;
     }
 
-    .login-form-container {
-        max-width: 90%;
-    }
 }
+
 .close-btn {
     color: #aaa;
     float: right;
