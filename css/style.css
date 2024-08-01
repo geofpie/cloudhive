@@ -94,7 +94,7 @@ a:hover {
     border-radius: 16px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Box shadow for depth */
     text-align: center;
-    max-width: 90%; /* Maximum width of the popup */
+    max-width: 400px; /* Maximum width of the popup */
     overflow-wrap: break-word; /* Wrap long words */
     position: relative;
     transition: 0.6s;
@@ -288,7 +288,6 @@ a:hover {
     color: #aaa; /* Placeholder text color */
 }
 
-
 .img-preview {
     width: 200px;
     height: 200px;
@@ -367,6 +366,7 @@ a:hover {
 
 .hive-user-details-text {
     display: inline;
+    padding-left: 8px;
 }
 
 .hive-post-username {
@@ -1159,6 +1159,11 @@ a:hover {
     -webkit-transition: 0.2s ease-in-out;
 }
 
+.new-login-field:focus {
+    border-color: #6e00b3;
+    border-width: 1px;
+}
+
 .login-register-button {
     padding: 18px 12px 18px 12px;
     margin-top: 22px;
@@ -1167,10 +1172,21 @@ a:hover {
     border: none;
     background-color: #6e00b3;
     color: white;
+    transition: 0.2s ease-in-out;
+    -webkit-transition: 0.2s ease-in-out;
 }
 
 .header-login-hero {
     font-size: 32px;
+}
+
+.login-register-button:hover {
+    background-color: #5a0092;
+}
+
+.login-register-button:hover {
+    background-color: #500081;
+    outline: none;
 }
 
 @media screen and (max-width: 960px) {
@@ -1339,11 +1355,11 @@ a:hover {
 }
 
 .field-align-right {
-    text-align: right;
+    text-align: center;
 }
 
 .field-align-left {
-    text-align: left;
+    text-align: center;
 }
 
 .edit-profile-user {
@@ -1550,6 +1566,89 @@ a:hover {
     color: #fff;
 }
 
+.form-group.profile-pic-ob-select {
+    text-align: center; /* Center content */
+}
+
+.img-preview-wrapper {
+    display: inline-block; /* Center the preview container */
+    margin-bottom: 10px;
+}
+
+.img-preview {
+    width: 200px; /* Adjust width as needed */
+    height: 200px; /* Adjust height as needed */
+    background-color: #eaeaea; /* Light gray background */
+    border-radius: 50%; /* Round shape */
+    display: inline-block; /* Center the preview */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.custom-file-button {
+    display: block; /* Align button next to the preview */
+    cursor: pointer;
+    background-color: #6e00b3; /* Blue background */
+    color: white;
+    border: none;
+    border-radius: 50%;
+    padding: 10px 20px;
+    font-size: 16px;
+    text-align: left;
+    width: 42px;
+    height: 42px;
+    margin-right: auto;
+    margin-left: auto;
+    margin-bottom: 32px;
+    transition: 0.2s ease-in-out;
+    -webkit-transition: 0.2s ease-in-out;
+}
+
+.custom-file-button:hover {
+    background-color: #57008d;
+}
+
+.ob-field {
+    padding: 18px 12px 18px 12px;
+    width: 100%;
+    background: none;
+    border: none;
+    border-bottom: 1.4px solid #333;
+    font-size: 24px;
+    text-align: center;
+    color: #333;
+    transition: 0.2s ease-in-out;
+    -webkit-transition: 0.2s ease-in-out;
+}
+
+.ob-field:focus {
+    outline: none;
+    border: none;
+    border-bottom: 1.4px solid #6e00b3;
+}
+
+.ob-add-img {
+    position: relative;
+    left: -13px;
+    top: -4px;
+    filter: invert(97%) sepia(3%) saturate(0%) hue-rotate(213deg) brightness(102%) contrast(105%);
+}
+
+.custom-file-button input[type="file"] {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: auto;
+    height: auto;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.custom-file-button span {
+    display: block;
+}
+
 /* Basic custom modal styles */
 .crop-modal {
     display: none; /* Hidden by default */
@@ -1572,7 +1671,7 @@ a:hover {
 
 .crop-modal-content {
     background-color: #fff;
-    border-radius: 5px;
+    border-radius: 22px;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
     padding: 20px;
     position: relative;
@@ -1896,13 +1995,6 @@ a:hover {
     border-bottom: 1px solid #ddd;
 }
 
-.profile-pic {
-    border-radius: 50%;
-    width: 100px;
-    height: 100px;
-    object-fit: cover;
-}
-
 .user-fullname {
     font-size: 22px;
     margin-bottom: 0;
@@ -1978,6 +2070,7 @@ a:hover {
 
     .hive-searchbar, .hive-searchbar-btn {
         background: rgba(255, 255, 255, 0.2);
+        color: white;
         border: none;
     }
 
@@ -1990,7 +2083,7 @@ a:hover {
     }
 
     .hive-post-action-bar, .user-not-followed, .follow-modal-content {
-        background-color: #333;
+        background-color: #222;
     }
 
     .follow-modal-header {
@@ -2006,7 +2099,7 @@ a:hover {
     }
 
     .share-post-button {
-        background-color: #222;
+        background-color: #333;
         color: white;
     }
 
@@ -2015,16 +2108,16 @@ a:hover {
     }
 
     .write-post-btn  {
-        background-color: #333;
+        background-color: #222;
         color: white;
     }
 
     .write-post-btn:hover {
-        background-color: #222;
+        background-color: #111;
     }
 
     .hive-post-element {
-        background-color: #333;
+        background-color: #222;
     }
 
     .hive-post-username {
@@ -2036,7 +2129,7 @@ a:hover {
     }
 
     .hive-stat-like-btn, .hive-stat-options-btn {
-        background-color: #222;
+        background-color: #333;
     }
 
     .hive-stat-like-btn img, .hive-stat-options-btn img {
@@ -2087,7 +2180,7 @@ a:hover {
         color: white!important;
     }
 
-    .navbar-toggler-icon {
+    .navbar-toggler-icon, .close-button {
         filter: invert(97%) sepia(3%) saturate(0%) hue-rotate(213deg) brightness(102%) contrast(105%);
     }
 
@@ -2141,5 +2234,28 @@ a:hover {
 
     .login-page-right {
         background-color: #222!important;
+    }
+
+    .popup-content {
+        background-color: #222;
+    }
+
+    .new-login-field { 
+        background-color: #333;
+        border: 1px solid #333;
+        color: white;
+    }
+
+    .ob-field {
+        border-bottom: 1.4px solid white;
+        color: white;
+    }
+
+    .hive-post-image-skelly, .hive-pfp-skeleton, .hive-user-acc-deets, .hive-stat-skelly, .hive-like-btn-skeleton {
+        background-color: #333;
+    }
+
+    .divider-skelly {
+        border-color: #333;
     }
 }

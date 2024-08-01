@@ -59,22 +59,24 @@
                             <div id="error-message" class="alert alert-danger d-none" role="alert"></div>
         
                             <!-- Profile Picture Field -->
-                            <div class="form-group">
-                                <label for="profile-pic">
-                                    <div id="profile-pic-preview" class="img-preview" style="background-size: cover;"></div>
-                                </label>
-                                <div class="custom-file">
-                                    <input type="file" class="custom-file-input" id="profile-pic" name="profile-pic" accept="image/*" required>
-                                    <label class="custom-file-label" for="profile-pic">Choose file</label>
+                            <div class="form-group profile-pic-ob-select">
+                                <!-- Preview Field -->
+                                <div class="img-preview-wrapper">
+                                    <div id="profile-pic-preview" class="img-preview" style="background: url('assets/default-profile.jpg'); background-size: cover;"></div>
                                 </div>
-                            </div>                    
+                                <!-- File Input Button -->
+                                <label class="custom-file-button">
+                                    <input type="file" id="profile-pic" name="profile-pic" accept="image/*" required>
+                                    <img src="assets/addimage.svg" width="32px" height="32px" class="ob-add-img">
+                                </label>
+                            </div>
                             <!-- Name Fields -->
                             <div class="form-group row">
                                 <div class="col">
-                                    <input id="first-name" class="form-control" type="text" name="first-name" placeholder="First Name" maxlength="50" required>
+                                    <input id="first-name" class="ob-field" type="text" name="first-name" placeholder="First Name" maxlength="50" required>
                                 </div>
                                 <div class="col">
-                                    <input id="last-name" class="form-control" type="text" name="last-name" placeholder="Last Name" maxlength="50" required>
+                                    <input id="last-name" class="ob-field" type="text" name="last-name" placeholder="Last Name" maxlength="50" required>
                                 </div>
                             </div>
                             <!-- Submit Button -->
@@ -90,7 +92,7 @@
                             <p class="logged-in-user-email" id="logged-in-user-email"></p>
                         </div>
                         <div class="col text-right">
-                            <a class="btn btn-link" href="/"><i class="fa fa-sign-out"></i> Sign Out</a>
+                            <a class="ob-logout" href="/"><i class="fa fa-sign-out"></i> Sign Out</a>
                         </div>
                     </div>
                 </div>
@@ -107,7 +109,7 @@
                 </div>
                 <div class="crop-modal-body">
                     <div id="cropper-container">
-                        <img id="cropper-image" class="" src="" alt="Image to crop">
+                        <img id="cropper-image" class="cropper-image" src="" alt="Image to crop">
                     </div>
                 </div>
                 <div class="crop-modal-footer">
