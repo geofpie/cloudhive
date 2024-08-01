@@ -8,12 +8,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const cropModelCancel = cropModal.querySelector('.crop-modal-cancel');
     let cropper;
 
-    // Function to hide spinner and show content
-    function showContent() {
-        spinnerWrapper.style.display = 'none';
-        document.querySelector('.container-fluid').classList.add('visible');
-    }
-
     // Function to fetch logged-in user information
     function fetchLoggedInUserInfo() {
         console.log('Fetching logged-in user info...');
@@ -145,7 +139,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });    
 
     // Select the form element
-    const onboardingForm = document.querySelector('.onboarding-form');
+    const onboardingForm = document.getElementById('onboarding-form');
 
     // Event listener for form submission
     onboardingForm.addEventListener('submit', function(e) {
