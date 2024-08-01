@@ -581,17 +581,13 @@ a:hover {
     background: rgba(255, 255, 255, 0.7);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-    border-color: #999999;
-    border-right: none;
+    border: none;
     outline: none;
 }
 
 .hive-searchbar-btn {
     border-radius: 16px;
-    border-color: #999999!important;
-    border: solid;
-    border-width: 1px;
-    border-left: none;
+    border: none;
     background: rgba(255, 255, 255, 0.7);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
@@ -611,6 +607,10 @@ a:hover {
 
 .hive-searchbar-btn-icon {
     color: #999999;
+}
+
+.hive-searchbar-btn-icon:hover {
+    color: white;
 }
 
 .hive-feed-area {
@@ -2033,7 +2033,7 @@ a:hover {
         border: none;
     }
 
-    .post-modal-close-icon, .notifications-modal-close, .profile-modal-close-btn {
+    .post-modal-close-icon, .notifications-modal-close, .profile-modal-close-btn, .logo-login {
         filter: invert(97%) sepia(3%) saturate(0%) hue-rotate(213deg) brightness(102%) contrast(105%);
     }
 
@@ -2122,5 +2122,9 @@ a:hover {
 
     hr {
         border-color: #444;
+    }
+
+    .login-page-right {
+        background-color: #222!important;
     }
 }

@@ -70,7 +70,10 @@
                             
                             <!-- Password Field -->
                             <div class="form-group">
-                                <input id="register-field-password" class="new-login-field" type="password" name="password" placeholder="Password" required>
+                                <input id="register-field-password" class="new-login-field" type="password" name="password" placeholder="Password" 
+                                    pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}" 
+                                    title="Password must be at least 8 characters long and include at least one number, one uppercase letter, one lowercase letter, and one special character." 
+                                    required>
                             </div>
                             
                             <!-- Confirm Password Field -->
