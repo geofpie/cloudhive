@@ -1408,6 +1408,10 @@ a:hover {
     cursor: pointer;
 }
 
+.login-page-inner-content {
+    padding: 20px;
+}
+
 .notifications-list-group {
     list-style-type: none;
     padding: 0;
