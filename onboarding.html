@@ -39,14 +39,14 @@
             <div class="col-lg-7 d-flex flex-column position-relative p-0 hero-section">
                 <!-- Logo -->
                 <img src="assets/logo-dark.svg" class="logo-login" alt="Logo">
-
+    
                 <div class="hero-content text-center animate-content">
                     <h6 class="header-hero-sub animate-text">cloudhive</h6>
                     <h1 class="header-login-hero animate-text">Connect, Share & Thrive<br>in Your Digital Community</h1>
                 </div>
                 <img src="assets/friends-header.svg" class="hero-image img-fluid animate-image" alt="Friends Header">
             </div>
-        
+    
             <!-- Right Side: Onboarding Form -->
             <div class="col-lg-5 d-flex align-items-center justify-content-center bg-light login-page-right">
                 <div class="login-page-inner-content">
@@ -54,7 +54,7 @@
                     <h6 class="login-subtitle text-center">You are almost there! Complete your profile, and you're all set.</h6>
                     <!-- Onboarding Form -->
                     <div class="login-form-container">
-                        <form id="onboard-form" class="onboarding-form" method="post" action="api/onboard_profile_update">
+                        <form id="onboard-form" method="post" action="api/onboard_profile_update">
                             <!-- Error Message Area -->
                             <div id="error-message" class="alert alert-danger d-none" role="alert"></div>
         
@@ -69,7 +69,7 @@
                                 </div>
                             </div>                    
                             <!-- Name Fields -->
-                            <div class="form-group onboard-name-row row">
+                            <div class="form-group row">
                                 <div class="col">
                                     <input id="first-name" class="form-control" type="text" name="first-name" placeholder="First Name" maxlength="50" required>
                                 </div>
@@ -101,8 +101,8 @@
                             <p class="logged-in-user" id="logged-in-user"></p>
                             <p class="logged-in-user-email" id="logged-in-user-email"></p>
                         </div>
-                        <div class="col ob-signout-row text-right">
-                            <a class="ob-logout" href="#"><i class="fa fa-sign-out"></i>Sign Out</a>
+                        <div class="col text-right">
+                            <a class="btn btn-link" href="#"><i class="fa fa-sign-out"></i> Sign Out</a>
                         </div>
                     </div>
                 </div>
