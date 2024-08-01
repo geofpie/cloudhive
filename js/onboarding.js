@@ -42,7 +42,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Event listener for window load event
     window.addEventListener('load', function() {
-        showContent();
         fetchLoggedInUserInfo(); // Fetch logged-in user info on page load
     });
 
@@ -139,7 +138,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });    
 
     // Select the form element
-    const onboardingForm = document.getElementById('onboarding-form');
+    const onboardingForm = document.getElementById('onboard-form');
 
     // Event listener for form submission
     onboardingForm.addEventListener('submit', function(e) {
