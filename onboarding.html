@@ -26,11 +26,11 @@
     <script src="https://cdn.jsdelivr.net/npm/dayjs/dayjs.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/dayjs/plugin/relativeTime.js"></script>
     <!-- Favicon -->
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-    <link rel="manifest" href="/site.webmanifest">
-    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+    <link rel="manifest" href="/favicon/site.webmanifest">
+    <link rel="mask-icon" href="/favicon/safari-pinned-tab.svg" color="#5bbad5">
     <meta name="msapplication-TileColor" content="#9f00a7">
     <meta name="theme-color" content="#ffffff">
 </head>
@@ -59,27 +59,29 @@
                             <div id="error-message" class="alert alert-danger d-none" role="alert"></div>
         
                             <!-- Profile Picture Field -->
-                            <div class="form-group">
-                                <label for="profile-pic">
-                                    <div id="profile-pic-preview" class="img-preview" style="background-size: cover;"></div>
-                                </label>
-                                <div class="custom-file">
-                                    <input type="file" class="custom-file-input" id="profile-pic" name="profile-pic" accept="image/*" required>
-                                    <label class="custom-file-label" for="profile-pic">Choose file</label>
+                            <div class="form-group profile-pic-ob-select">
+                                <!-- Preview Field -->
+                                <div class="img-preview-wrapper">
+                                    <div id="profile-pic-preview" class="img-preview" style="background: url('assets/default-profile.jpg'); background-size: cover;"></div>
                                 </div>
-                            </div>                    
+                                <!-- File Input Button -->
+                                <label class="custom-file-button">
+                                    <input type="file" id="profile-pic" name="profile-pic" accept="image/*" required>
+                                    <img src="assets/addimage.svg" width="32px" height="32px" class="ob-add-img">
+                                </label>
+                            </div>
                             <!-- Name Fields -->
                             <div class="form-group row">
                                 <div class="col">
-                                    <input id="first-name" class="form-control" type="text" name="first-name" placeholder="First Name" maxlength="50" required>
+                                    <input id="first-name" class="ob-field" type="text" name="first-name" placeholder="First Name" maxlength="50" required>
                                 </div>
                                 <div class="col">
-                                    <input id="last-name" class="form-control" type="text" name="last-name" placeholder="Last Name" maxlength="50" required>
+                                    <input id="last-name" class="ob-field" type="text" name="last-name" placeholder="Last Name" maxlength="50" required>
                                 </div>
                             </div>
                             <!-- Submit Button -->
                             <div class="form-group">
-                                <button class="btn btn-primary btn-block shadow" id="ob-submit-button" type="submit">Continue <span class="spinner-grow" role="status" aria-hidden="true" style="display: none;"></span></button>
+                                <button class="login-register-button shadow" id="ob-submit-button" type="submit">Continue <span class="spinner-grow" role="status" aria-hidden="true" style="display: none;"></span></button>
                             </div>
                         </form>     
                     </div>
@@ -90,7 +92,7 @@
                             <p class="logged-in-user-email" id="logged-in-user-email"></p>
                         </div>
                         <div class="col text-right">
-                            <a class="btn btn-link" href="/"><i class="fa fa-sign-out"></i> Sign Out</a>
+                            <a class="ob-logout" href="/"><i class="fa fa-sign-out"></i> Sign Out</a>
                         </div>
                     </div>
                 </div>
@@ -107,7 +109,7 @@
                 </div>
                 <div class="crop-modal-body">
                     <div id="cropper-container">
-                        <img id="cropper-image" class="" src="" alt="Image to crop">
+                        <img id="cropper-image" class="cropper-image" src="" alt="Image to crop">
                     </div>
                 </div>
                 <div class="crop-modal-footer">
