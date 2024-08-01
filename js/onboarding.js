@@ -28,8 +28,10 @@ document.addEventListener('DOMContentLoaded', function() {
             // Update logged-in user fields
             const loggedInUserName = document.getElementById('logged-in-user');
             const loggedInUserEmail = document.getElementById('logged-in-user-email');
+            const greetUser = document.querySelector('.herogreet');
             loggedInUserName.textContent = data.userInfo.username;
             loggedInUserEmail.textContent = data.userInfo.email;
+            greetUser.textContent = data.userInfo.username;
 
             // Log user information to console
             console.log('Logged-in User:', data.userInfo.username);
