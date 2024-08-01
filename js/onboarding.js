@@ -154,11 +154,9 @@ document.addEventListener('DOMContentLoaded', function() {
             // Add first-name, last-name, and country to FormData
             const firstName = document.getElementById('first-name').value;
             const lastName = document.getElementById('last-name').value;
-            const country = document.getElementById('country').value;
 
             formData.append('first-name', firstName);
             formData.append('last-name', lastName);
-            formData.append('country', country);
 
             // Log the FormData entries
             for (let [key, value] of formData.entries()) {
