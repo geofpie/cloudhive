@@ -1716,17 +1716,21 @@ a:hover {
     color: #fff;
     border: none;
     padding: 10px 20px;
-    border-radius: 5px;
+    border-radius: 12px;
     cursor: pointer;
+    transition: 0.2s ease-in-out;
+    -webkit-transition: 0.2s ease-in-out;
 }
 
 .crop-modal-confirm {
-    background: #007bff;
+    background: #6e00b3;
     color: #fff;
     border: none;
     padding: 10px 20px;
-    border-radius: 5px;
+    border-radius: 12px;
     cursor: pointer;
+    transition: 0.2s ease-in-out;
+    -webkit-transition: 0.2s ease-in-out;
 }
 
 .crop-modal-confirm:hover,
@@ -2192,7 +2196,7 @@ a:hover {
         color: white!important;
     }
 
-    .navbar-toggler-icon, .close-button {
+    .navbar-toggler-icon, .close-button, .crop-modal-close {
         filter: invert(97%) sepia(3%) saturate(0%) hue-rotate(213deg) brightness(102%) contrast(105%);
     }
 
@@ -2269,5 +2273,9 @@ a:hover {
 
     .divider-skelly {
         border-color: #333;
+    }
+
+    .crop-modal-content {
+        background-color: #333;
     }
 }
