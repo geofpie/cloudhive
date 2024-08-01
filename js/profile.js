@@ -251,7 +251,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         fetch(url)
             .then(response => {
                 if (!response.ok) {
-                    throw new Error('Network response was not ok');
+                    throw new Error('Server returned an error');
                 }
                 return response.json();
             })
@@ -450,7 +450,7 @@ function sendFollowRequest(username) {
     fetch(`/api/follow/${username}`)
         .then(response => {
             if (!response.ok) {
-                throw new Error('Network response was not ok');
+                throw new Error('Server returned an error');
             }
             return response.text();
         })
@@ -728,7 +728,7 @@ document.getElementById('submitEditProfileButton').addEventListener('click', asy
         });
 
         if (!response.ok) {
-            throw new Error('Network response was not ok');
+            throw new Error('Error');
         }
 
         const data = await response.json();
@@ -891,7 +891,7 @@ function cancelFollowRequest(username) {
     fetch(`/api/cancel-follow/${username}`, { method: 'DELETE' })
         .then(response => {
             if (!response.ok) {
-                throw new Error('Network response was not ok');
+                throw new Error('Error');
             }
             return response.json(); // Parse the JSON response
         })
@@ -922,7 +922,7 @@ function unfollowUser(username) {
     fetch(`/api/unfollow/${username}`, { method: 'DELETE' })
         .then(response => {
             if (!response.ok) {
-                throw new Error('Network response was not ok');
+                throw new Error('Server returned an error');
             }
             return response.json(); // Parse the JSON response
         })
