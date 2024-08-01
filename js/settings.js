@@ -196,6 +196,6 @@ function denyFollowRequest(username) {
 }
 
 $(document).ready(function() {
-    // Initialize tooltips
+    // Initialise tooltips
     $('[data-toggle="tooltip"]').tooltip();
 });

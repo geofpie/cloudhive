@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', (event) => {
-    fetchUserInfo();
+    fetchUserInfo(); // fetch user info on page load 
 });
 
 const notificationsModal = document.getElementById('notificationsModal');
@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const postsContainer = document.getElementById('hive-feed-area');
     const loadMoreButton = document.getElementById('load-more');
     let isFetching = false;
-    const username = window.location.pathname.split('/').pop(); // Get the username from the URL
+    const username = window.location.pathname.split('/').pop();
     const fetchedPostIds = new Set();
     let currentAction = null;
     let currentUsername = null;
@@ -54,9 +54,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
         const file = postImageInput.files[0];
         if (file) {
             const resizedFile = await resizeImage(file);
-            console.log('Original file size:', file.size); // Log the original file size
-            console.log('Resized file size:', resizedFile.size); // Log the resized file size
-
             const reader = new FileReader();
             reader.onload = (e) => {
                 imagePreview.src = e.target.result;
@@ -65,7 +62,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
             reader.readAsDataURL(resizedFile);
 
             // Update the file input to use the resized file
-            // Workaround for updating file input value
             const dataTransfer = new DataTransfer();
             dataTransfer.items.add(resizedFile);
             postImageInput.files = dataTransfer.files;
@@ -77,10 +73,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
         const postImage = postImageInput.files[0];
         
         if (postContent.value.trim() || postImage) {
-            showSpinner(submitPostButton); // Show spinner during upload
+            showSpinner(submitPostButton); 
             submitPost(postContent.value, postImage)
                 .then(() => {
-                    hideSpinner(submitPostButton); // Hide spinner after upload
+                    hideSpinner(submitPostButton); 
                     postContent.value = ''; // Clear the text field
                     postImageInput.value = ''; // Clear the file input
                     document.getElementById('imagePreview').style.display = 'none'; // Hide image preview if needed
@@ -126,7 +122,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
         const canvas = document.createElement('canvas');
         const ctx = canvas.getContext('2d');
-        const MAX_WIDTH = 800; // Desired width
+        const MAX_WIDTH = 800;
         const scaleFactor = MAX_WIDTH / img.width;
 
         canvas.width = MAX_WIDTH;
@@ -138,10 +134,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
         // Compress the image and get it as a Blob
         return new Promise((resolve) => {
             canvas.toBlob((blob) => {
-                console.log('Original file size:', file.size); // Log original file size
-                console.log('Compressed file size:', blob.size); // Log compressed file size
                 resolve(new File([blob], file.name, { type: file.type }));
-            }, 'image/jpeg', 0.6); // Adjust quality (0.6 for 60% quality)
+            }, 'image/jpeg', 0.6);
         });
     }
 
@@ -170,13 +164,13 @@ document.addEventListener('DOMContentLoaded', (event) => {
         })
         .then(data => {
             console.log('Post created successfully:', data);
-            hideModal(); // Hide modal after successful post
-            refreshFeed(); // Clear current feed and fetch new posts
-            return data; // Return data for chaining
+            hideModal(); 
+            refreshFeed();
+            return data;
         })
         .catch(error => {
             console.error('Error creating post:', error);
-            throw error; // Re-throw the error for handling in the caller
+            throw error;
         });
     }
     
@@ -251,7 +245,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         fetch(url)
             .then(response => {
                 if (!response.ok) {
-                    throw new Error('Network response was not ok');
+                    throw new Error('Server returned an error');
                 }
                 return response.json();
             })
@@ -271,7 +265,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                         console.log('Post data:', post);
     
                         // Determine if the post is liked by the current user
-                        const isLiked = post.isLiked; // Ensure `isLiked` is provided by the backend
+                        const isLiked = post.isLiked;
     
                         // Update button appearance based on the `isLiked` status
                         const likeButtonIcon = isLiked ? '../assets/liked.svg' : '../assets/unliked.svg';
@@ -335,14 +329,14 @@ document.addEventListener('DOMContentLoaded', (event) => {
                     lastTimestamp = data.LastEvaluatedKey || null;
                     console.log('Updated lastTimestamp:', lastTimestamp);
     
-                    // Show/hide load more button based on availability of more posts
+                    // Show/hide load more button if there are more posts to be fetched
                     loadMoreButton.style.display = lastTimestamp ? 'block' : 'none';
                 } else {
                     // No new posts, or all posts have been fetched
                     loadMoreButton.style.display = 'none';
                 }
     
-                handleImageLoad(); // Ensure this function is defined and properly handles image loading
+                handleImageLoad();
     
                 isFetching = false;
                 removeSkeletonLoader();
@@ -356,13 +350,12 @@ document.addEventListener('DOMContentLoaded', (event) => {
     
     loadMoreButton.addEventListener('click', fetchPosts);
     
-    // Initial fetch
     fetchPosts();
     
     function clearFeed() {
         document.getElementById('hive-feed-area').innerHTML = '';
         lastTimestamp = null;
-        fetchedPostIds.clear(); // Optionally clear fetched post IDs
+        fetchedPostIds.clear(); 
     }
     
     function refreshFeed() {
@@ -377,7 +370,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     }
 });
 
-    // Event delegation to handle clicks on dynamically added like buttons
+    // Handle clicks on dynamically added like buttons
     postsContainer.addEventListener('click', function(event) {
         if (event.target.closest('.hive-stat-like-btn')) {
             const likeButton = event.target.closest('.hive-stat-like-btn');
@@ -408,10 +401,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 // Toggle the liked class based on response
                 if (data.message === 'Like added') {
                     likeButton.classList.add('liked');
-                    likeButtonIcon.src = '../assets/liked.svg'; // Change to liked icon
+                    likeButtonIcon.src = '../assets/liked.svg';
                 } else {
                     likeButton.classList.remove('liked');
-                    likeButtonIcon.src = '../assets/unliked.svg'; // Change to unliked icon
+                    likeButtonIcon.src = '../assets/unliked.svg';
                 }
 
                 // Update like count
@@ -432,16 +425,12 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
 });
 
-// Function to extract username from URL
+// Extract username from URL function
 function getUsernameFromURL() {
     // Get the current path from the URL
     const path = window.location.pathname;
-
-    // Split the path by '/' and get the username part
     const pathParts = path.split('/');
-    const username = pathParts[1]; // Assuming the username is the first part after the initial '/'
-
-    console.log('username:', username);
+    const username = pathParts[1]; 
     return username;
 }
 
@@ -450,7 +439,7 @@ function sendFollowRequest(username) {
     fetch(`/api/follow/${username}`)
         .then(response => {
             if (!response.ok) {
-                throw new Error('Network response was not ok');
+                throw new Error('Server returned an error');
             }
             return response.text();
         })
@@ -477,6 +466,7 @@ function sendFollowRequest(username) {
         });
 }
 
+// Listen for notification button click
 document.querySelectorAll('.notifications-link').forEach(link => {
     link.addEventListener('click', function() {
         fetch('/api/follow-requests')
@@ -535,15 +525,16 @@ function acceptFollowRequest(username) {
     .then(response => response.text())
     .then(data => {
         alert(data);
-        // Remove the request from the list or update the UI to show it as accepted
+        // Remove the request from the list
         const followItem = document.querySelector(`.follow-container[data-username="${username}"]`);
         if (followItem) {
-            followItem.remove(); // Remove the follow request from the UI
+            followItem.remove(); // Remove the follow request from the list
         }
     })
     .catch(error => console.error('Error:', error));
 }
 
+// Function to deny follow request
 function denyFollowRequest(username) {
     fetch('/api/follow-requests/deny', {
         method: 'POST',
@@ -558,7 +549,7 @@ function denyFollowRequest(username) {
         // Remove the request from the list
         const followItem = document.querySelector(`.follow-container[data-username="${username}"]`);
         if (followItem) {
-            followItem.remove(); // Remove the follow request from the UI
+            followItem.remove(); // Remove the follow request from the list
         }
     })
     .catch(error => console.error('Error:', error));
@@ -582,7 +573,7 @@ function fetchUserInfo() {
             console.log('Response status:', response.status);
             console.log('Response headers:', response.headers);
             window.location.href = '/';
-            return; // Stop further processing
+            return;
         }
         
         if (!response.ok) {
@@ -606,6 +597,7 @@ function fetchUserInfo() {
     });
 }
 
+// Function to update user profile
 function updateUserProfile(user) {
     const loggedInUserPic = document.getElementById('hive-logged-in-dp');
     const loggedInUserPicMob = document.getElementById('hive-logged-in-dp-mob');
@@ -620,6 +612,7 @@ function updateUserProfile(user) {
     document.querySelector('.post-modal-profile-pic').src = user.profile_picture_url;
 }
 
+// DayJS to get relative time 
 dayjs.extend(dayjs_plugin_relativeTime);
 
 // Get the modal and button
@@ -690,71 +683,90 @@ document.getElementById('headerPicInput').addEventListener('change', function(e)
 
 let profileImageFile = null; 
 
-// Listen for form submit
 document.getElementById('submitEditProfileButton').addEventListener('click', async function() {
-    // Gather form data
-    const firstName = document.getElementById('firstName').value;
-    const lastName = document.getElementById('lastName').value;
-    const username = document.getElementById('username').value;
+    // Show spinner and disable button
+    showSpinner(this);
 
-    // Prepare data for upload
-    const formData = new FormData();
-    formData.append('firstName', firstName);
-    formData.append('lastName', lastName);
-    formData.append('username', username);
+    try {
+        // Gather form data
+        const firstName = document.getElementById('firstName').value;
+        const lastName = document.getElementById('lastName').value;
+        const username = document.getElementById('username').value;
 
-    // Handle header image upload if exists
-    if (headerImageFile) {
-        console.log(headerImageFile);
-        const compressedBlob = await compressImage(headerImageFile);
-        console.log(compressedBlob);
-        formData.append('headerPic', compressedBlob, headerImageFile.name);
-    }
+        // Prepare data for upload
+        const formData = new FormData();
+        formData.append('firstName', firstName);
+        formData.append('lastName', lastName);
+        formData.append('username', username);
 
-    if (profileImageFile) {
-        const compressedProfilePicBlob = await compressImage(profileImageFile);
-        console.log(compressedProfilePicBlob);
-        formData.append('profilePic', compressedProfilePicBlob, profileImageFile.name);
-        console.log(formData);
-    }
+        // Handle header image upload if exists
+        if (headerImageFile) {
+            console.log(headerImageFile);
+            const compressedBlob = await compressImage(headerImageFile);
+            console.log(compressedBlob);
+            formData.append('headerPic', compressedBlob, headerImageFile.name);
+        }
 
-    // Send form data to backend (e.g., to update user profile)
-    fetch('/api/update_profile', {
-        method: 'POST',
-        body: formData
-    })
-    .then(response => response.json())
-    .then(data => {
-        console.log('Profile updated successfully:', data);
+        // Handle profile image upload if exists
+        if (profileImageFile) {
+            const compressedProfilePicBlob = await compressImage(profileImageFile);
+            console.log(compressedProfilePicBlob);
+            formData.append('profilePic', compressedProfilePicBlob, profileImageFile.name);
+        }
+
+        // Send form data to backend (e.g., to update user profile)
+        const response = await fetch('/api/update_profile', {
+            method: 'POST',
+            body: formData
+        });
+
+        if (!response.ok) {
+            throw new Error('Error');
+        }
+
+        const data = await response.json();
         alert('Profile updated successfully!');
         document.getElementById('editProfileModal').classList.add('hidden');
         window.location.reload();
-    })
-    .catch(error => {
-        console.error('Error updating profile:', error);
-    });
+
+    } catch (error) {
+        alert('Error updating profile. Please try again.');
+    } finally {
+        hideSpinner(this, 'Save Changes');
+    }
 });
 
-// Function to compress image using HTML5 canvas with target quality
+function showSpinner(button) {
+    const spinner = button.querySelector('#submitButtonSpinner');
+    const text = button.querySelector('#submitButtonText');
+    spinner.classList.remove('d-none'); 
+    text.classList.add('d-none');
+    button.disabled = true;
+}
+
+function hideSpinner(button, originalText) {
+    const spinner = button.querySelector('#submitButtonSpinner');
+    const text = button.querySelector('#submitButtonText');
+    spinner.classList.add('d-none');
+    text.classList.remove('d-none');
+    button.disabled = false;
+}
+
+// Function to compress image
 function compressImage(file, targetQuality = 0.8) {
     return new Promise((resolve, reject) => {
         const reader = new FileReader();
         reader.onload = function(event) {
             const img = new Image();
             img.onload = function() {
-                // Create canvas element
                 const canvas = document.createElement('canvas');
                 const ctx = canvas.getContext('2d');
-                
-                // Set canvas dimensions to the image dimensions
                 canvas.width = img.width;
                 canvas.height = img.height;
                 ctx.drawImage(img, 0, 0, img.width, img.height);
-                
-                // Convert canvas to blob with target quality
                 canvas.toBlob(function(blob) {
                     resolve(blob);
-                }, 'image/jpeg', targetQuality); // Set quality parameter
+                }, 'image/jpeg', targetQuality);
             };
             img.src = event.target.result;
         };
@@ -762,6 +774,7 @@ function compressImage(file, targetQuality = 0.8) {
     });
 }
 
+// Function to check user header pic lightness 
 function getImageLightness(imageElement, callback) {
     const canvas = document.createElement('canvas');
     const ctx = canvas.getContext('2d');
@@ -827,9 +840,9 @@ function adjustTextColorBasedOnImage(imageSelector) {
     }
 }
 
-// Function to show the modal
+// Function to show the follow/unfollow modal
 function showFollowActionsModal(action, username) {
-    currentAction = action; // Set the current action
+    currentAction = action;
     currentUsername = username;
 
     const modal = document.getElementById('followActionsModal');
@@ -841,7 +854,7 @@ function showFollowActionsModal(action, username) {
         actionType.textContent = 'unfollow this user';
     }
 
-    modal.style.display = 'block'; // Show the modal
+    modal.style.display = 'block';
 }
 
 // Function to close the modal
@@ -852,11 +865,11 @@ function closeFollowActionsModal() {
 
 function handleModalConfirm() {
     if (currentAction === 'cancel') {
-        cancelFollowRequest(currentUsername); // Call your cancel function
+        cancelFollowRequest(currentUsername); 
     } else if (currentAction === 'unfollow') {
-        unfollowUser(currentUsername); // Call your unfollow function
+        unfollowUser(currentUsername);
     }
-    closeFollowActionsModal(); // Close the modal after action
+    closeFollowActionsModal();
 }
 
 // Function to cancel follow request
@@ -864,22 +877,19 @@ function cancelFollowRequest(username) {
     fetch(`/api/cancel-follow/${username}`, { method: 'DELETE' })
         .then(response => {
             if (!response.ok) {
-                throw new Error('Network response was not ok');
+                throw new Error('Error');
             }
-            return response.json(); // Parse the JSON response
+            return response.json(); 
         })
         .then(data => {
-            alert(data.message); // Show the message from the JSON response
+            alert(data.message);
 
             // Find the button by ID using the username
             const button = document.getElementById(`follow-button-${username}`);
             if (button) {
-                // Update button text
                 button.innerHTML = '<i class="fa fa-user-plus uab"></i>Follow';
-
-                // Update button attributes
-                button.removeAttribute('data-status'); // Remove data-status if present
-                button.setAttribute('onclick', `sendFollowRequest('${username}')`); // Set onclick to call sendFollowRequest
+                button.removeAttribute('data-status'); 
+                button.setAttribute('onclick', `sendFollowRequest('${username}')`); 
             } else {
                 console.error('Button not found for username:', username);
             }
@@ -895,22 +905,19 @@ function unfollowUser(username) {
     fetch(`/api/unfollow/${username}`, { method: 'DELETE' })
         .then(response => {
             if (!response.ok) {
-                throw new Error('Network response was not ok');
+                throw new Error('Server returned an error');
             }
-            return response.json(); // Parse the JSON response
+            return response.json();
         })
         .then(data => {
-            alert(data.message); // Show the message from the JSON response
+            alert(data.message);
 
-            // Find the button by ID using the username
+            // Find the button by id using the username
             const button = document.getElementById(`follow-button-${username}`);
             if (button) {
-                // Update button text
                 button.innerHTML = '<i class="fa fa-user-plus uab"></i>Follow';
-
-                // Update button attributes
-                button.removeAttribute('data-status'); // Remove data-status if present
-                button.setAttribute('onclick', `sendFollowRequest('${username}')`); // Set onclick to call sendFollowRequest
+                button.removeAttribute('data-status'); 
+                button.setAttribute('onclick', `sendFollowRequest('${username}')`);
 
                 window.location.reload();
             } else {
@@ -938,7 +945,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
         const reader = new FileReader();
         reader.onload = function(e) {
-            // Destroy previous Cropper instance if it exists
             if (cropper) {
                 cropper.destroy();
             }
@@ -1005,8 +1011,8 @@ document.addEventListener('DOMContentLoaded', function() {
         cropSubmitBtn.addEventListener('click', function() {
             if (cropper) {
                 cropper.getCroppedCanvas({
-                    width: 500, // Desired width
-                    height: 500, // Desired height
+                    width: 500,
+                    height: 500,
                 }).toBlob(function(blob) {
                     // Store the blob in a variable for later use
                     window.croppedImageBlob = blob;
@@ -1055,9 +1061,7 @@ document.addEventListener('click', function(event) {
 });
 
 document.addEventListener('DOMContentLoaded', function () {
-    // Attach event listener to the document
     document.addEventListener('click', function (event) {
-        // Check if the clicked element is a delete button
         if (event.target && event.target.classList.contains('delete-post')) {
             event.preventDefault();
 
@@ -1095,6 +1099,6 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 $(document).ready(function() {
-    // Initialize tooltips
+    // Initialise tooltips
     $('[data-toggle="tooltip"]').tooltip();
 });

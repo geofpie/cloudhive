@@ -2,9 +2,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const spinnerWrapper = document.querySelector('.spinner-wrapper');
     const profilePicInput = document.getElementById('profile-pic');
     const cropModal = document.getElementById('cropModal');
-    const cropModalDialog = cropModal.querySelector('.crop-modal-dialog'); // Custom modal dialog
-    const cropModalClose = cropModal.querySelector('.crop-modal-close'); // Custom close button
-    const cropSubmitBtn = document.getElementById('crop-submit-btn'); // Crop button in custom modal
+    const cropModalDialog = cropModal.querySelector('.crop-modal-dialog'); 
+    const cropModalClose = cropModal.querySelector('.crop-modal-close');
+    const cropSubmitBtn = document.getElementById('crop-submit-btn');
     const cropModelCancel = cropModal.querySelector('.crop-modal-cancel');
     let cropper;
 
@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Event listener for window load event
     window.addEventListener('load', function() {
-        fetchLoggedInUserInfo(); // Fetch logged-in user info on page load
+        fetchLoggedInUserInfo(); 
     });
 
     // Event listener for opening crop modal when profile pic input changes
@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             // Check if the image source is loaded
             image.onload = function() {
-                // Initialize Cropper.js
+                // Initialise Cropper.js instance
                 cropper = new Cropper(image, {
                     dragMode: 'move',
                     aspectRatio: 1 / 1,
@@ -121,13 +121,11 @@ document.addEventListener('DOMContentLoaded', function() {
     cropSubmitBtn.addEventListener('click', function() {
         if (cropper) {
             cropper.getCroppedCanvas({
-                width: 500, // Desired width
-                height: 500, // Desired height
+                // in pixels 
+                width: 500, 
+                height: 500,
             }).toBlob(function(blob) {
-                // Store the blob in a variable for later use
                 window.croppedImageBlob = blob;
-
-                // Create a URL for the cropped image
                 const croppedImageUrl = URL.createObjectURL(blob);
 
                 // Update the background image of the preview div
@@ -139,12 +137,11 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });    
 
-    // Select the form element
     const onboardingForm = document.getElementById('onboard-form');
 
     // Event listener for form submission
     onboardingForm.addEventListener('submit', function(e) {
-        e.preventDefault(); // Prevent default form submission
+        e.preventDefault(); 
 
         // Ensure the cropped image blob is available
         if (window.croppedImageBlob) {
@@ -163,19 +160,19 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.log(`FormData key: ${key}, value: ${value}`);
             }
 
-            // Show loading indicator (spinner) on submit button
+            // Show loading indicator on submit button
             const submitButton = document.getElementById('ob-submit-button');
             const originalButtonText = submitButton.innerHTML;
             showSpinner(submitButton);
 
-            // Send the file and additional data to the server using form's action attribute
+            // Send the file and additional data to the backend 
             fetch('/api/onboard_profile_update', {
                 method: 'POST',
                 body: formData,
                 headers: {
                     'Accept': 'application/json',
                 },
-                credentials: 'same-origin' // Include cookies with request if needed
+                credentials: 'same-origin'
             })
             .then(response => response.json())
             .then(data => {
@@ -210,9 +207,4 @@ document.addEventListener('DOMContentLoaded', function() {
         button.innerHTML = originalText;
         button.disabled = false;
     }
-
-    // Add a class to trigger the animation after a short delay
-    setTimeout(function() {
-        onboardingForm.classList.add('show');
-    }, 100); // Adjust delay as needed
 });

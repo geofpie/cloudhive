@@ -247,6 +247,6 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 $(document).ready(function() {
-    // Initialize tooltips
+    // Initialise tooltips
     $('[data-toggle="tooltip"]').tooltip();
 });
