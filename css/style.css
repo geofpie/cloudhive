@@ -2082,6 +2082,10 @@ a:hover {
         border: none;
     }
 
+    .hive-searchbar:focus {
+        color: white;
+    }
+
     .profile-user-stats {
         background: rgba(0, 0, 0, 0.3);
     }
