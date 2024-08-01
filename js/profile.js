@@ -690,50 +690,77 @@ document.getElementById('headerPicInput').addEventListener('change', function(e)
 
 let profileImageFile = null; 
 
-// Listen for form submit
 document.getElementById('submitEditProfileButton').addEventListener('click', async function() {
-    // Gather form data
-    const firstName = document.getElementById('firstName').value;
-    const lastName = document.getElementById('lastName').value;
-    const username = document.getElementById('username').value;
+    // Show spinner and disable button
+    showSpinner(this);
 
-    // Prepare data for upload
-    const formData = new FormData();
-    formData.append('firstName', firstName);
-    formData.append('lastName', lastName);
-    formData.append('username', username);
+    try {
+        // Gather form data
+        const firstName = document.getElementById('firstName').value;
+        const lastName = document.getElementById('lastName').value;
+        const username = document.getElementById('username').value;
 
-    // Handle header image upload if exists
-    if (headerImageFile) {
-        console.log(headerImageFile);
-        const compressedBlob = await compressImage(headerImageFile);
-        console.log(compressedBlob);
-        formData.append('headerPic', compressedBlob, headerImageFile.name);
-    }
+        // Prepare data for upload
+        const formData = new FormData();
+        formData.append('firstName', firstName);
+        formData.append('lastName', lastName);
+        formData.append('username', username);
 
-    if (profileImageFile) {
-        const compressedProfilePicBlob = await compressImage(profileImageFile);
-        console.log(compressedProfilePicBlob);
-        formData.append('profilePic', compressedProfilePicBlob, profileImageFile.name);
-        console.log(formData);
-    }
+        // Handle header image upload if exists
+        if (headerImageFile) {
+            console.log(headerImageFile);
+            const compressedBlob = await compressImage(headerImageFile);
+            console.log(compressedBlob);
+            formData.append('headerPic', compressedBlob, headerImageFile.name);
+        }
 
-    // Send form data to backend (e.g., to update user profile)
-    fetch('/api/update_profile', {
-        method: 'POST',
-        body: formData
-    })
-    .then(response => response.json())
-    .then(data => {
+        // Handle profile image upload if exists
+        if (profileImageFile) {
+            const compressedProfilePicBlob = await compressImage(profileImageFile);
+            console.log(compressedProfilePicBlob);
+            formData.append('profilePic', compressedProfilePicBlob, profileImageFile.name);
+        }
+
+        // Send form data to backend (e.g., to update user profile)
+        const response = await fetch('/api/update_profile', {
+            method: 'POST',
+            body: formData
+        });
+
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+
+        const data = await response.json();
         console.log('Profile updated successfully:', data);
         alert('Profile updated successfully!');
         document.getElementById('editProfileModal').classList.add('hidden');
         window.location.reload();
-    })
-    .catch(error => {
+
+    } catch (error) {
         console.error('Error updating profile:', error);
-    });
+        alert('Error updating profile. Please try again.');
+    } finally {
+        // Hide spinner and re-enable button
+        hideSpinner(this, 'Save Changes');
+    }
 });
+
+function showSpinner(button) {
+    const spinner = button.querySelector('#submitButtonSpinner');
+    const text = button.querySelector('#submitButtonText');
+    spinner.classList.remove('d-none'); // Show the spinner
+    text.classList.add('d-none'); // Hide the text
+    button.disabled = true;
+}
+
+function hideSpinner(button, originalText) {
+    const spinner = button.querySelector('#submitButtonSpinner');
+    const text = button.querySelector('#submitButtonText');
+    spinner.classList.add('d-none'); // Hide the spinner
+    text.classList.remove('d-none'); // Show the text
+    button.disabled = false;
+}
 
 // Function to compress image using HTML5 canvas with target quality
 function compressImage(file, targetQuality = 0.8) {
