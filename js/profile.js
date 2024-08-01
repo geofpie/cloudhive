@@ -1,99 +1,3 @@
-// Function to show the modal
-function showFollowActionsModal(action, username) {
-    currentAction = action; // Set the current action
-    currentUsername = username;
-
-    const modal = document.getElementById('followActionsModal');
-    const actionType = document.getElementById('followActionType');
-
-    if (action === 'cancel') {
-        actionType.textContent = 'cancel your follow request';
-    } else if (action === 'unfollow') {
-        actionType.textContent = 'unfollow this user';
-    }
-
-    modal.style.display = 'block'; // Show the modal
-}
-
-// Function to close the modal
-function closeFollowActionsModal() {
-    const modal = document.getElementById('followActionsModal');
-    modal.style.display = 'none'; // Hide the modal
-}
-
-function handleModalConfirm() {
-    if (currentAction === 'cancel') {
-        cancelFollowRequest(currentUsername); // Call your cancel function
-    } else if (currentAction === 'unfollow') {
-        unfollowUser(currentUsername); // Call your unfollow function
-    }
-    closeFollowActionsModal(); // Close the modal after action
-}
-
-// Function to cancel follow request
-function cancelFollowRequest(username) {
-    fetch(`/api/cancel-follow/${username}`, { method: 'DELETE' })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json(); // Parse the JSON response
-        })
-        .then(data => {
-            alert(data.message); // Show the message from the JSON response
-
-            // Find the button by ID using the username
-            const button = document.getElementById(`follow-button-${username}`);
-            if (button) {
-                // Update button text
-                button.innerHTML = '<i class="fa fa-user-plus uab"></i>Follow';
-
-                // Update button attributes
-                button.removeAttribute('data-status'); // Remove data-status if present
-                button.setAttribute('onclick', `sendFollowRequest('${username}')`); // Set onclick to call sendFollowRequest
-            } else {
-                console.error('Button not found for username:', username);
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('Error canceling follow request');
-        });
-}
-
-// Function to handle unfollow request
-function unfollowUser(username) {
-    fetch(`/api/unfollow/${username}`, { method: 'DELETE' })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json(); // Parse the JSON response
-        })
-        .then(data => {
-            alert(data.message); // Show the message from the JSON response
-
-            // Find the button by ID using the username
-            const button = document.getElementById(`follow-button-${username}`);
-            if (button) {
-                // Update button text
-                button.innerHTML = '<i class="fa fa-user-plus uab"></i>Follow';
-
-                // Update button attributes
-                button.removeAttribute('data-status'); // Remove data-status if present
-                button.setAttribute('onclick', `sendFollowRequest('${username}')`); // Set onclick to call sendFollowRequest
-
-                window.location.reload();
-            } else {
-                console.error('Button not found for username:', username);
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('Error unfollowing user');
-        });
-}
-
 document.addEventListener('DOMContentLoaded', (event) => {
     fetchUserInfo();
 });
@@ -921,6 +825,102 @@ function adjustTextColorBasedOnImage(imageSelector) {
             });
         });
     }
+}
+
+// Function to show the modal
+function showFollowActionsModal(action, username) {
+    currentAction = action; // Set the current action
+    currentUsername = username;
+
+    const modal = document.getElementById('followActionsModal');
+    const actionType = document.getElementById('followActionType');
+
+    if (action === 'cancel') {
+        actionType.textContent = 'cancel your follow request';
+    } else if (action === 'unfollow') {
+        actionType.textContent = 'unfollow this user';
+    }
+
+    modal.style.display = 'block'; // Show the modal
+}
+
+// Function to close the modal
+function closeFollowActionsModal() {
+    const modal = document.getElementById('followActionsModal');
+    modal.style.display = 'none'; // Hide the modal
+}
+
+function handleModalConfirm() {
+    if (currentAction === 'cancel') {
+        cancelFollowRequest(currentUsername); // Call your cancel function
+    } else if (currentAction === 'unfollow') {
+        unfollowUser(currentUsername); // Call your unfollow function
+    }
+    closeFollowActionsModal(); // Close the modal after action
+}
+
+// Function to cancel follow request
+function cancelFollowRequest(username) {
+    fetch(`/api/cancel-follow/${username}`, { method: 'DELETE' })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json(); // Parse the JSON response
+        })
+        .then(data => {
+            alert(data.message); // Show the message from the JSON response
+
+            // Find the button by ID using the username
+            const button = document.getElementById(`follow-button-${username}`);
+            if (button) {
+                // Update button text
+                button.innerHTML = '<i class="fa fa-user-plus uab"></i>Follow';
+
+                // Update button attributes
+                button.removeAttribute('data-status'); // Remove data-status if present
+                button.setAttribute('onclick', `sendFollowRequest('${username}')`); // Set onclick to call sendFollowRequest
+            } else {
+                console.error('Button not found for username:', username);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error canceling follow request');
+        });
+}
+
+// Function to handle unfollow request
+function unfollowUser(username) {
+    fetch(`/api/unfollow/${username}`, { method: 'DELETE' })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json(); // Parse the JSON response
+        })
+        .then(data => {
+            alert(data.message); // Show the message from the JSON response
+
+            // Find the button by ID using the username
+            const button = document.getElementById(`follow-button-${username}`);
+            if (button) {
+                // Update button text
+                button.innerHTML = '<i class="fa fa-user-plus uab"></i>Follow';
+
+                // Update button attributes
+                button.removeAttribute('data-status'); // Remove data-status if present
+                button.setAttribute('onclick', `sendFollowRequest('${username}')`); // Set onclick to call sendFollowRequest
+
+                window.location.reload();
+            } else {
+                console.error('Button not found for username:', username);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error unfollowing user');
+        });
 }
 
 document.addEventListener('DOMContentLoaded', function() {
